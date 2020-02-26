@@ -1,5 +1,5 @@
-# Flesh
- and Bones Tactics
+# Flesh and Bones Tactics
+ 
 Project by Wyatt Dorn
 
 
