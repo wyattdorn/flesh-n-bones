@@ -73,7 +73,7 @@ function createDummyCreatures(){
   myCreatures.push(new Creature("Gobbo", b, 'media/images/character-sprites/goblin-1.png'));
   myCreatures.push(new Creature("Goblina", b, 'media/images/character-sprites/goblin-1.png'));
   myCreatures.push(new Creature("Flambo", b, 'media/images/character-sprites/fireelemental-1.png'));
-  myCreatures.push(new Creature("Orky", b, 'media/images/character-sprites/orc-1.png'));
+  myCreatures.push(new PlayerCharacter("Orky", b, 'media/images/character-sprites/orc-1.png'));
   myCreatures[0].setLocation(2,2);
   myCreatures[1].setLocation(0,4);
   myCreatures[2].setLocation(0,3);

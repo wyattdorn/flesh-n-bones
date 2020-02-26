@@ -53,11 +53,22 @@ class GUI {
     this.drawUnitInfo(2, 10, 130);
     this.drawUnitInfo(3, 10, 190);
 
+    this.drawPlayerInfo(500,500);
 
 
 
 
   }//end draw()
+
+  drawPlayerInfo(x, y){
+    ctx.save();
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "white";
+
+    ctx.fillText("Souls owned: " + numOfAssets, x, y+20);
+
+    ctx.restore;
+  }//end drawPlayerInfo()
 
   drawUnitInfo(creature, x, y){
     ctx.save();

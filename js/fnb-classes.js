@@ -83,6 +83,11 @@ class Creature {
 
 }
 
+class PlayerCharacter extends Creature{
+  exp = 0;
+  level = 1;
+}
+
 function Node(value) {
 
     this.value = value;
