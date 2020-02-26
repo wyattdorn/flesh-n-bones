@@ -1,0 +1,60 @@
+body {
+	text-align: center;
+	background-color: #000;
+	/*background-image: url(../images/ends/backgrounds/swamp-hut.jpg);
+	margin: 0;
+	display: flex;
+	flex-direction: column;*/
+}
+
+#canvas{
+	position:fixed;
+	z-index: -2;
+	cursor: pointer;
+}
+
+/*https://www.ffonts.net/Voodoo-Spirits.font*/
+@font-face {
+    font-family: 'Voodoo-Spirits';
+    src:url('/wyattdorn/fonts/Voodoo-Spirits.ttf.woff') format('woff'),
+        url('Voodoo-Spirits.ttf.svg#Voodoo-Spirits') format('svg'),
+        url('Voodoo-Spirits.ttf.eot'),
+        url('Voodoo-Spirits.ttf.eot?#iefix') format('embedded-opentype');
+        font-weight: normal;
+        font-style: normal;
+}
+
+#gameText{
+	font-family: 'Voodoo-Spirits';
+	font-size: 75px;
+	color: #551A8B;
+	width: 66%;
+	margin-left: auto;
+  margin-right: auto;
+}
+
+#navTools{
+	font-family: 'Voodoo-Spirits';
+	/*font-family: 'Special Elite', cursive;*/
+	font-size: 25px;
+	color: #551A8B;
+}
+
+.main{
+	z-index: 1;
+}
+
+img{
+	height: 900px;
+}
+
+
+a {
+	  text-decoration: none;
+		color: #4CBB17;
+		cursor: pointer;
+}
+
+.main a:active{
+	  top: 2px;
+}

@@ -1,0 +1,26 @@
+3 prime stats
+6 sub-stats
+
+players put points into sub-stats, prime stats are the average of their two sub-stats
+
+UNIT:
+SPEED
+-DEX (How good you are with SPEED weapons)
+-AGI (Damage reduction to physical attacks)
+STRENGTH
+-MIGHT (How good you are with BODY weapons)
+-FORTITUDE (How much HP you have)
+MIND
+-INT (How much MANA you have)
+-WITS (damage reduction from spell attacks)
+
+
+
+ENEMY:
+
+PLAYER:
+
+
+      for(var y = 0; y < y+1; y++){
+        //ctx.fillText(x + ", " + y, layerStart+(200*y)+200, x*diamondHeight+100);
+      }

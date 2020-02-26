@@ -1,0 +1,5 @@
+-Every unit has a SPEED stat (1-100). Highe # = fast, low # = slow.
+
+-The unit with the highest SPEED stat goes first. (In case of a tie, the player unit goes first. If there is still a tie, the decision is randomized)
+
+-Each action (attack, move, use item, use ability, etc) has a TIME stat that determines how long the action takes. The time it takes is reduces by the unit's SPEED stat. Formula: effective time = TIME - (TIME/2)(SPEED/100).
