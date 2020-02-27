@@ -9,8 +9,6 @@ const guiBarHeight = 300;
 var combatTimer; //Integer tracker for combat rounds
 //var myMap;
 var canvas, canvasWidth, canvasHeight;
-var diamondWidth;
-var mapSize, firstSquare;
 var myBattleMap;
 
 var creature, myCreatures, enemyCreatures, selectedCreature; //arrays of enemy and allied creatures
@@ -25,11 +23,8 @@ function init(){
   creatureImages = [];
   mapSize = 5;
 
-
-  diamondWidth = 200;
   canvasWidth = 1500;//window.outerWidth * window.devicePixelRatio;
   canvasHeight = 800;//window.innerHeight * window.devicePixelRatio;
-  firstSquare = [canvasWidth/2-diamondWidth/2, 100]; //Starting location for drawing the battle map on the canvas
   canvas = document.getElementById('canvas');
   myGUI = new GUI(ctx, canvas, guiBarHeight);
   canvas.style.left = "0px";

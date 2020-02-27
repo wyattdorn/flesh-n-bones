@@ -18,9 +18,18 @@ class Guts {
   }
 }
 
-//Body of a creature, consisting of Skin, Bones, and Guts
+class Soul{
+  constructor(temperment){
+    this.temperment = temperment;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Body of a creature, consisting of Soul, Skin, Bones, and Guts
+////////////////////////////////////////////////////////////////////////////////
 class Body {
-  constructor(skin, bones, guts) {
+  constructor(soul, skin, bones, guts) {
+    this.Soul = soul;
     this.Skin = skin;
     this.Bones = bones;
     this.Guts = guts;
@@ -39,12 +48,9 @@ class Body {
   }
 }
 
-class Soul{
-  constructor(temperment){
-    this.temperment = temperment;
-  }
-}
-
+////////////////////////////////////////////////////////////////////////////////
+// Creature is a generic class for all units (enemy and ally) in game.
+////////////////////////////////////////////////////////////////////////////////
 class Creature {
   constructor(name, body, path) {
     this.name = name;
@@ -83,9 +89,13 @@ class Creature {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// PlayerCharacter class is a Creature type that describes all units controlled
+// by the player.
+////////////////////////////////////////////////////////////////////////////////
 class PlayerCharacter extends Creature{
-  exp = 0;
-  level = 1;
+  exp = 0;      //Starting experience for all PlayerCharacters is 0
+  level = 1;    //Starting level for all PlayerCharacters is 1
 }
 
 function Node(value) {
