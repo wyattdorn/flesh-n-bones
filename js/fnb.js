@@ -13,6 +13,8 @@ var myBattleMap;
 
 var creature, myCreatures, enemyCreatures, selectedCreature; //arrays of enemy and allied creatures
 
+var combatScreen;
+
 var ctx;  //canvas context
 var myGUI;  //GUI class instance
 
@@ -46,6 +48,8 @@ function init(){
   //myMap = new Map(10,10);
 
   createDummyCreatures();
+
+  combatScreen = new CombatScreen(myCreatures, enemyCreatures);
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
