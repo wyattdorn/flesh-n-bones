@@ -40,25 +40,46 @@ class GUI {
   //Draws bottom bar gui along with all buttons on said bar
   draw(){
 
+    ctx.fillStyle = "#051005";//"#303030";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    //this.drawRandomSquares(0,0,0,0,0);
+
+/*
+    //pink bar
     ctx.fillStyle = "#af197b";//"#303030";
     ctx.fillRect(0, 0, 250, canvas.height);
 
+    //red bar
     ctx.fillStyle = "#441111";//"#303030";
     ctx.fillRect(0, canvas.height-this.barHeight, canvas.width, this.barHeight);
-
-
-
-    this.drawUnitInfo(0, 10, 10);
-    this.drawUnitInfo(1, 10, 70);
-    this.drawUnitInfo(2, 10, 130);
-    this.drawUnitInfo(3, 10, 190);
+    */
 
     this.drawPlayerInfo(500,500);
 
 
-
-
   }//end draw()
+
+  /*
+  drawRandomSquares(baseColor, startX, endX, startY, endY){
+
+    for(var x=0; x<1000; x++){
+      var size = Math.floor(Math.random() * 5)+7
+      ctx.fillStyle = "#303030";//"#303030";
+      ctx.fillRect(ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
+    }
+    for(var x=0; x<1000; x++){
+      var size = Math.floor(Math.random() * 5)+7
+      ctx.fillStyle = "#009000";//"#303030";
+      ctx.fillRect(ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
+    }
+    for(var x=0; x<1000; x++){
+      var size = Math.floor(Math.random() * 5)+7
+      ctx.fillStyle = "#003000";//"#303030";
+      ctx.fillRect(ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
+    }
+  }
+  *///old drawRandomSquares()
 
   drawPlayerInfo(x, y){
     ctx.save();

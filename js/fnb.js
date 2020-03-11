@@ -11,9 +11,16 @@ var combatTimer; //Integer tracker for combat rounds
 var canvas, canvasWidth, canvasHeight;
 var myBattleMap;
 
-var creature, myCreatures, enemyCreatures, selectedCreature; //arrays of enemy and allied creatures
+// 1=combat
+// 2=menus
+// 3=overworld
+var gameMode;
 
-var combatScreen;
+var myCombatScreen;
+
+var unitBarWidth;
+
+var creature, myCreatures, enemyCreatures; //arrays of enemy and allied creatures
 
 var ctx;  //canvas context
 var myGUI;  //GUI class instance
@@ -23,15 +30,23 @@ function init(){
   myCreatures = [];
   enemyCreatures = [];
   creatureImages = [];
-  mapSize = 5;
 
-  canvasWidth = 1500;//window.outerWidth * window.devicePixelRatio;
+  unitBarWidth = 250;
+
+
+
+  //for testing purposes, the game starts in combat mode
+  gameMode = 1;
+
+  canvasWidth = 1200;//window.outerWidth * window.devicePixelRatio;
   canvasHeight = 800;//window.innerHeight * window.devicePixelRatio;
   canvas = document.getElementById('canvas');
   myGUI = new GUI(ctx, canvas, guiBarHeight);
   canvas.style.left = "0px";
   canvas.style.top = "0px";
   canvas.style.position = "absolute";
+  canvas.height = canvasHeight;
+  canvas.width = canvasWidth;
   canvas.onclick = logMouseClick;
 
   if (canvas.getContext) {
@@ -49,14 +64,32 @@ function init(){
 
   createDummyCreatures();
 
-  combatScreen = new CombatScreen(myCreatures, enemyCreatures);
+  //combatScreen = new CombatScreen();
+
+  myCombatScreen = new CombatScreen(ctx, canvas);
+  //myCombatScreen.init(myCreatures, enemyCreatures, true, ctx, canvas);
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
-  draw();
+  //draw();
 
+  myCombatScreen.init(myCreatures, enemyCreatures, true);
+
+
+  //ctx.save();
+  //ctx.translate(0, 0);
+  var tempo = new Image();
+
+  tempo.onload = function(){
+    console.log("loaded");
+    //console.log("Goblin loaded");
+  }
+
+  tempo.src = 'https://www.tutorialspoint.com/images/seaborn-4.jpg?v=2';// '' + myCreatures[0].imgSrc;
+  ctx.drawImage(tempo, 0, 0);
+  //ctx.restore;
 
 } //end init()
 
@@ -66,17 +99,11 @@ function createDummyCreatures(){
   var s = new Skin('fire');
   var b = new Body(s, new Bones('ice'), new Guts('air'));
 
-  selectedCreature = 0;
-
   //Friendly Creatures
-  myCreatures.push(new Creature("Gobbo", b, 'media/images/character-sprites/goblin-1.png'));
-  myCreatures.push(new Creature("Goblina", b, 'media/images/character-sprites/goblin-1.png'));
-  myCreatures.push(new Creature("Flambo", b, 'media/images/character-sprites/fireelemental-1.png'));
+  myCreatures.push(new PlayerCharacter("Gobbo", b, 'media/images/character-sprites/goblin-1.png'));
+  myCreatures.push(new PlayerCharacter("Goblina", b, 'media/images/character-sprites/goblin-1.png'));
+  myCreatures.push(new PlayerCharacter("Flambo", b, 'media/images/character-sprites/fireelemental-1.png'));
   myCreatures.push(new PlayerCharacter("Orky", b, 'media/images/character-sprites/orc-1.png'));
-  myCreatures[0].setLocation(2,2);
-  myCreatures[1].setLocation(0,4);
-  myCreatures[2].setLocation(0,3);
-  myCreatures[3].setLocation(1,4);
 
   myCreatures[0].maxHP = 10;
   myCreatures[1].maxHP = 1;
@@ -85,9 +112,10 @@ function createDummyCreatures(){
 
   myCreatures[0].levelUp();
   myCreatures[0].levelUp();
-  myCreatures[1].levelUp();
   myCreatures[2].levelUp();
   myCreatures[3].levelUp();
+
+  enemyCreatures.push(new Creature("chonk", b, 'media/images/character-sprites/skeleman-1.png'));
 
 
 }
@@ -114,7 +142,23 @@ function logMouseClick(e){
 
   console.log(clickPosition.y);
 
-  draw();
+  //The following switch statements passes the coodinates of the mouse click to
+  // the appropriate handler function based on the current game mode.
+  switch(gameMode) {
+  case 1:
+    myCombatScreen.combatClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case 2:
+    // menu click handler
+    break;
+  case 2:
+    // overworld click handler
+    break;
+  default:
+    // code block
+  }
+
+  //draw();
 }//end logMouseClick()
 
 function guiEventHandler(x,y){
@@ -128,10 +172,10 @@ function draw() {
   ctx.font = "30px Arial";
   ctx.canvas.height = canvasHeight;
   ctx.canvas.width = canvasWidth;
-  ctx.fillStyle = "#051005";//"#303030";
+  ctx.fillStyle = "000000";//"#051005";//"#303030";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
 
-  myGUI.draw();
+  //myGUI.draw();
 }
