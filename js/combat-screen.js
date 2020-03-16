@@ -1,3 +1,5 @@
+//Written by Wyatt Dorn
+
 class CombatScreen{
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -89,8 +91,8 @@ class CombatScreen{
     ctx.font = "20px Arial";
     ctx.fillStyle = "white";
 
-    ctx.fillText(myCreatures[creature].name, x, y+20);
-    ctx.fillText('Level: ' + myCreatures[creature].level, x, y+40);
+    ctx.fillText(player.myCreatures[creature].name, x, y+20);
+    ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+40);
     this.drawHPBar(creature, x,y);
 
 
@@ -99,11 +101,11 @@ class CombatScreen{
 
   drawHPBar(creature, x, y){
     ctx.save();
-    var percentHP = myCreatures[creature].currentHP/myCreatures[creature].maxHP;
+    var percentHP = player.myCreatures[creature].currentHP/player.myCreatures[creature].maxHP;
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText('HP: ' + myCreatures[creature].currentHP+'/'+myCreatures[creature].maxHP, x+105, y+10);
+    ctx.fillText('HP: ' + player.myCreatures[creature].currentHP+'/'+player.myCreatures[creature].maxHP, x+105, y+10);
     ctx.fillRect(x+105, y+15, 102, 12);
     //Fill bar with respective amount of HP
     if(percentHP>0.50){
@@ -122,17 +124,17 @@ class CombatScreen{
 
   drawFriendlyUnits(){
 
-    this.drawUnit(myCreatures[0].imgSrc, unitBarWidth + 50, 50);
+    this.drawUnit(player.myCreatures[0].imgSrc, unitBarWidth + 50, 50);
 
-    this.drawUnit(myCreatures[1].imgSrc, unitBarWidth + 50, 200);
+    this.drawUnit(player.myCreatures[1].imgSrc, unitBarWidth + 50, 200);
 
-    this.drawUnit(myCreatures[2].imgSrc, unitBarWidth + 50, 350);
+    this.drawUnit(player.myCreatures[2].imgSrc, unitBarWidth + 50, 350);
 
-    this.drawUnit(myCreatures[2].imgSrc, unitBarWidth + 200, 50);
+    this.drawUnit(player.myCreatures[2].imgSrc, unitBarWidth + 200, 50);
 
-    this.drawUnit(myCreatures[3].imgSrc, unitBarWidth + 200, 200);
+    this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 200);
 
-    this.drawUnit(myCreatures[3].imgSrc, unitBarWidth + 200, 350);
+    this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 350);
 
   }//end drawFriendlyUnits()
 

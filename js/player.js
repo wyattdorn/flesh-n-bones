@@ -1,3 +1,5 @@
+//Written by Wyatt Dorn
+
 class Deity{
 
   /////////////////////////////////////////////////////////////////////////////
@@ -8,8 +10,9 @@ class Deity{
   constructor() {
     this.soulsOwned = 0;
     this.souls = [];
-    this.obsidian = 0; //The money used in this world
+    this.malachite = 0; //The money used in this world
     this.impetus = 0; //Basically exp for the PC
+    this.myCreatures = [];
   }//end constructor
 
   addSoul(newSoul){

@@ -3,7 +3,7 @@
 //Orc sprite found at: http://www.gamebuildingtools.com/product/lumbering-orc-club/
 //Fire Elementaql sprite found at: http://wiki.rivalkingdomsgame.com/summons:greater-fire-elemental
 
-const numOfAssets = 3; //Number of assets that must be loaded in before a given scene can be rendered
+//const numOfAssets = 3; //Number of assets that must be loaded in before a given scene can be rendered
 const guiBarHeight = 300;
 
 var combatTimer; //Integer tracker for combat rounds
@@ -20,12 +20,15 @@ var myCombatScreen;
 
 var unitBarWidth;
 
-var creature, myCreatures, enemyCreatures; //arrays of enemy and allied creatures
+var player;
+var creature, enemyCreatures; //arrays of enemy and allied creatures
 
 var ctx;  //canvas context
 var myGUI;  //GUI class instance
 
 function init(){
+
+  player = new Deity();
 
   myCreatures = [];
   enemyCreatures = [];
@@ -62,6 +65,8 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
   //myMap = new Map(10,10);
 
+  player.soulsOwned = 6;
+
   createDummyCreatures();
 
   //combatScreen = new CombatScreen();
@@ -75,7 +80,7 @@ function init(){
 
   //draw();
 
-  myCombatScreen.init(myCreatures, enemyCreatures, true);
+  myCombatScreen.init(player.myCreatures, enemyCreatures, true);
 
 
   //ctx.save();
@@ -87,7 +92,7 @@ function init(){
     //console.log("Goblin loaded");
   }
 
-  tempo.src = 'https://www.tutorialspoint.com/images/seaborn-4.jpg?v=2';// '' + myCreatures[0].imgSrc;
+  //tempo.src = 'https://www.tutorialspoint.com/images/seaborn-4.jpg?v=2';// '' + myCreatures[0].imgSrc;
   ctx.drawImage(tempo, 0, 0);
   //ctx.restore;
 
@@ -96,26 +101,27 @@ function init(){
 
 function createDummyCreatures(){
 
+  var soul = new Soul("fiery");
   var s = new Skin('fire');
   var b = new Body(s, new Bones('ice'), new Guts('air'));
 
   //Friendly Creatures
-  myCreatures.push(new PlayerCharacter("Gobbo", b, 'media/images/character-sprites/goblin-1.png'));
-  myCreatures.push(new PlayerCharacter("Goblina", b, 'media/images/character-sprites/goblin-1.png'));
-  myCreatures.push(new PlayerCharacter("Flambo", b, 'media/images/character-sprites/fireelemental-1.png'));
-  myCreatures.push(new PlayerCharacter("Orky", b, 'media/images/character-sprites/orc-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
 
-  myCreatures[0].maxHP = 10;
-  myCreatures[1].maxHP = 1;
-  myCreatures[2].maxHP = 2;
-  myCreatures[3].maxHP = 5;
+  player.myCreatures[0].maxHP = 10;
+  player.myCreatures[1].maxHP = 1;
+  player.myCreatures[2].maxHP = 2;
+  player.myCreatures[3].maxHP = 5;
 
-  myCreatures[0].levelUp();
-  myCreatures[0].levelUp();
-  myCreatures[2].levelUp();
-  myCreatures[3].levelUp();
+  player.myCreatures[0].levelUp();
+  player.myCreatures[0].levelUp();
+  player.myCreatures[2].levelUp();
+  player.myCreatures[3].levelUp();
 
-  enemyCreatures.push(new Creature("chonk", b, 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
 
 
 }
