@@ -71,9 +71,9 @@ class CombatScreen{
     ctx.fillRect(0, 0, unitBarWidth, canvas.height);
 
     this.drawUnitInfo(0, 10, 10);
-    this.drawUnitInfo(1, 10, 70);
-    this.drawUnitInfo(2, 10, 130);
-    this.drawUnitInfo(3, 10, 190);
+    this.drawUnitInfo(1, 10, 100);
+    this.drawUnitInfo(2, 10, 190);
+    this.drawUnitInfo(3, 10, 280);
 
   }//end drawUnitBar
 
@@ -88,12 +88,13 @@ class CombatScreen{
 
   drawUnitInfo(creature, x, y){
     ctx.save();
-    ctx.font = "20px Arial";
+    ctx.font = "25px Arial";
     ctx.fillStyle = "white";
 
-    ctx.fillText(player.myCreatures[creature].name, x, y+20);
-    ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+40);
-    this.drawHPBar(creature, x,y);
+    ctx.fillText(player.myCreatures[creature].name, x, y+30);
+    ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+60);
+    this.drawHPBar(creature, x,y+5);
+    this.drawSpiritBar(creature, x, y + 38);
 
 
     ctx.restore;
@@ -118,6 +119,21 @@ class CombatScreen{
       ctx.fillStyle = "red";
     }
     ctx.fillRect(x+106, y+16, percentHP*100, 10);
+    ctx.restore;
+
+  } //end drawHPBar()
+
+  drawSpiritBar(creature, x, y){
+    ctx.save();
+    var percentSpirit = player.myCreatures[creature].currentSpirit/player.myCreatures[creature].maxSpirit;
+    ctx.font = "12px Arial";
+    //Draw outline of HP Bar
+    ctx.fillStyle = "black";
+    ctx.fillText('Spirit: ' + player.myCreatures[creature].currentSpirit+'/'+player.myCreatures[creature].maxSpirit, x+105, y+10);
+    ctx.fillRect(x+105, y+15, 102, 12);
+    //Fill bar with respective amount of HP
+    ctx.fillStyle = "blue";
+    ctx.fillRect(x+106, y+16, percentSpirit*100, 10);
     ctx.restore;
 
   } //end drawHPBar()

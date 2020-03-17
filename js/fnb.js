@@ -111,10 +111,22 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
   player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
 
-  player.myCreatures[0].maxHP = 10;
-  player.myCreatures[1].maxHP = 1;
-  player.myCreatures[2].maxHP = 2;
-  player.myCreatures[3].maxHP = 5;
+
+  player.myCreatures[0].generateDummyStats(10, 5, 3);
+  player.myCreatures[0].currentHP = 3;
+
+  player.myCreatures[1].generateDummyStats(2, 13, 3);
+  player.myCreatures[1].currentSpirit = 10;
+
+  player.myCreatures[2].generateDummyStats(5, 10, 4);
+  player.myCreatures[2].currentHP = 1;
+  player.myCreatures[2].currentSpirit = 1;
+
+  player.myCreatures[3].generateDummyStats(7, 8, 6);
+  player.myCreatures[3].currentHP = 6;
+  player.myCreatures[3].currentSpirit = 5;
+
+
 
   player.myCreatures[0].levelUp();
   player.myCreatures[0].levelUp();

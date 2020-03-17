@@ -114,7 +114,18 @@ class PlayerCharacter extends Creature{
     this.mind = Math.floor((this.intelegence + this.wits)/2);
     this.currentHP = 1;
     this.maxHP = 1;
-    this.spirit = 1; //spirit is mana
+    this.currentSpirit = 1; //spirit is mana
+    this.maxSpirit = 1;
+    this.attackPower = 1;
+  }
+
+  //For use in testing only.
+  generateDummyStats(hp, mana, attackPower){
+      this.maxHP = hp;
+      this.currentHP = hp;
+      this.maxSpirit = mana;
+      this.currentSpirit = mana;
+      this.attackPower = attackPower;
   }
 
 }
@@ -126,6 +137,17 @@ class PlayerCharacter extends Creature{
 class EnemyCreature extends Creature{
   expGranted = 0;         //The amount of experience given for killing this creature
   malachiteGranted = 0;   //The amount of money given for killing this creature
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Skills are abilities that can be learned by creatures for use in combat.
+////////////////////////////////////////////////////////////////////////////////
+class Skill{
+  constructor(name, idNum){
+    this.name = name;
+    this.ID = idNum;
+  }
 }
 
 function Node(value) {
