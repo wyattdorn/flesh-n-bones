@@ -34,15 +34,21 @@ class CombatScreen{
     this.drawEnemyUnits();
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  To be used to handle all click events wneh in the game's combat screen
+  //////////////////////////////////////////////////////////////////////////////
   combatClickHandler(x,y){
     console.log("Combat click: (", x, ",",y,")");
-  }
+  }// end combatClickHandler()
 
+  //  For testing purposes
   printNumAllies(){
     console.log(this.numAllies);
   }
 
-  // drawRandomSquares() creates a textured background for the combat screen
+  //////////////////////////////////////////////////////////////////////////////
+  // Creates a textured background for the combat screen
+  //////////////////////////////////////////////////////////////////////////////
   drawRandomSquares(baseColor, startX, endX, startY, endY){
 
     for(var x=0; x<1000; x++){
@@ -60,10 +66,12 @@ class CombatScreen{
       ctx.fillStyle = "#003000";//"#303030";
       ctx.fillRect(ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
     }
-  } //end drawRandomSquares
+  } //end drawRandomSquares()
 
 
-  // drawUnitBar() draws the bar containing unit invormation of the left of the screen
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws the bar containing unit invormation of the left of the screen
+  //////////////////////////////////////////////////////////////////////////////
   drawUnitBar(){
 
     //pink bar
@@ -77,7 +85,9 @@ class CombatScreen{
 
   }//end drawUnitBar
 
-  // drawControlBar() draws the bar containing the control buttons onmm the bottom of the screen
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws the bar containing the control buttons onmm the bottom of the screen
+  //////////////////////////////////////////////////////////////////////////////
   drawControlBar(){
 
     //red bar
@@ -86,20 +96,25 @@ class CombatScreen{
 
   }//end drawControlBar
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws to the screen a given unit's name, hp bar, and spirit bar.
+  //////////////////////////////////////////////////////////////////////////////
   drawUnitInfo(creature, x, y){
     ctx.save();
+
     ctx.font = "25px Arial";
     ctx.fillStyle = "white";
-
     ctx.fillText(player.myCreatures[creature].name, x, y+30);
     ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+60);
     this.drawHPBar(creature, x,y+5);
     this.drawSpiritBar(creature, x, y + 38);
 
-
     ctx.restore;
   }//end drawUnitInfo()
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws to the screen a hp bar. Called by drawUnitInfo().
+  //////////////////////////////////////////////////////////////////////////////
   drawHPBar(creature, x, y){
     ctx.save();
     var percentHP = player.myCreatures[creature].currentHP/player.myCreatures[creature].maxHP;
@@ -108,7 +123,7 @@ class CombatScreen{
     ctx.fillStyle = "black";
     ctx.fillText('HP: ' + player.myCreatures[creature].currentHP+'/'+player.myCreatures[creature].maxHP, x+105, y+10);
     ctx.fillRect(x+105, y+15, 102, 12);
-    //Fill bar with respective amount of HP
+    //The HP bar will be colored according to how full the unit's health is
     if(percentHP>0.50){
       ctx.fillStyle = "green";
     }
@@ -118,11 +133,15 @@ class CombatScreen{
     else{
       ctx.fillStyle = "red";
     }
+    //Fill bar with respective amount of HP
     ctx.fillRect(x+106, y+16, percentHP*100, 10);
     ctx.restore;
 
   } //end drawHPBar()
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws to the screen a spirit bar. Called by drawUnitInfo().
+  //////////////////////////////////////////////////////////////////////////////
   drawSpiritBar(creature, x, y){
     ctx.save();
     var percentSpirit = player.myCreatures[creature].currentSpirit/player.myCreatures[creature].maxSpirit;
@@ -136,7 +155,7 @@ class CombatScreen{
     ctx.fillRect(x+106, y+16, percentSpirit*100, 10);
     ctx.restore;
 
-  } //end drawHPBar()
+  } //end drawSpiritBar()
 
   drawFriendlyUnits(){
 
