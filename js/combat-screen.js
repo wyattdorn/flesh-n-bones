@@ -8,9 +8,9 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////////////
 
 
-  //////////////////////////////////////////////////////////////////////////////////////
-  //    The arrays of enemy and player-controlled units are passed to the constructor
-  //////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////\
+  //    Constructor
+  /////////////////////////////////////////////////////////////////////////////\
   constructor(context, canvas){
 
       this.ctx = context;
@@ -32,6 +32,10 @@ class CombatScreen{
 
     this.drawFriendlyUnits();
     this.drawEnemyUnits();
+
+    this.drawFlourish(10,70);
+    this.drawFlourish(10,160);
+    this.drawFlourish(10,250);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -191,6 +195,20 @@ class CombatScreen{
     }, false);
 
     newImg.src = '' + source;
+
+  }//end drawUnit()
+
+
+  drawFlourish(x, y){
+
+    var newImg = new Image();
+
+    newImg.addEventListener('load',function(){
+      ctx.drawImage(newImg, x, y, 230, 45);
+      console.log('poof');
+    }, false);
+
+    newImg.src = 'media/images/gui/style/flourish-1.png';
 
   }//end drawUnit()
 
