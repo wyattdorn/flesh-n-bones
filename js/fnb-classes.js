@@ -86,6 +86,12 @@ class Creature {
     console.log('(' + this.location[0] + ', ' + this.location[1] + ')');
   }
 
+  //Returns a boolean, if the given creature's HP is less than half
+  isBloodied(){
+    if(this.currentHP/this.maxHP>=0.5){return false;}
+    else{return true;}
+  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

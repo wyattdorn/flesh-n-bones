@@ -36,13 +36,17 @@ class CombatScreen{
     this.drawFlourish(10,70);
     this.drawFlourish(10,160);
     this.drawFlourish(10,250);
+
+    this.drawWounds(unitBarWidth + 50, 50);
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
   //  To be used to handle all click events wneh in the game's combat screen
   //////////////////////////////////////////////////////////////////////////////
   combatClickHandler(x,y){
-    console.log("Combat click: (", x, ",",y,")");
+    console.log("Booger");
+    this.drawWounds(unitBarWidth + 50, 50);
   }// end combatClickHandler()
 
   //  For testing purposes
@@ -71,6 +75,25 @@ class CombatScreen{
       ctx.fillRect(ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
     }
   } //end drawRandomSquares()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Dwaws red "wounds" over character sprite to signify their healtrh being below 50%
+  //////////////////////////////////////////////////////////////////////////////
+  drawWounds(startX, startY){
+
+    //100ms delay set to give sprites time to be drawn under wounds
+    setTimeout(function(){
+      for(var x=0; x<30; x++){
+        var xRand = Math.floor(Math.random()*100);
+        var yRand = Math.floor(Math.random()*90);
+        ctx.fillStyle = "#771111";//"#303030";
+        ctx.fillRect(startX + xRand, startY + yRand, 4, 13);
+      }
+
+      console.log("blood");
+      }, 100);
+  } //end drawWounds()
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -165,6 +188,8 @@ class CombatScreen{
 
     this.drawUnit(player.myCreatures[0].imgSrc, unitBarWidth + 50, 50);
 
+    //this.drawWounds(0,0);
+
     this.drawUnit(player.myCreatures[1].imgSrc, unitBarWidth + 50, 200);
 
     this.drawUnit(player.myCreatures[2].imgSrc, unitBarWidth + 50, 350);
@@ -174,6 +199,8 @@ class CombatScreen{
     this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 200);
 
     this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 350);
+
+    //this.drawWounds(0,0);
 
   }//end drawFriendlyUnits()
 
@@ -185,6 +212,9 @@ class CombatScreen{
     this.drawUnit(enemyCreatures[0].imgSrc, unitBarWidth + 750, 350);
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws a single unit sprite given the sprite file's location and x/y coodinates
+  //////////////////////////////////////////////////////////////////////////////
   drawUnit(source, x, y){
 
     var newImg = new Image();
@@ -195,6 +225,8 @@ class CombatScreen{
     }, false);
 
     newImg.src = '' + source;
+
+    console.log("drawn unit");
 
   }//end drawUnit()
 
