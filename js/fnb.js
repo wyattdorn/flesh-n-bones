@@ -26,9 +26,13 @@ var creature, enemyCreatures; //arrays of enemy and allied creatures
 var ctx;  //canvas context
 var myGUI;  //GUI class instance
 
+var skills;
+
 function init(){
 
   player = new Deity();
+
+  skills = new Skill();
 
   myCreatures = [];
   enemyCreatures = [];

@@ -146,15 +146,6 @@ class EnemyCreature extends Creature{
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
-// Skills are abilities that can be learned by creatures for use in combat.
-////////////////////////////////////////////////////////////////////////////////
-class Skill{
-  constructor(name, idNum){
-    this.name = name;
-    this.ID = idNum;
-  }
-}
 
 function Node(value) {
 

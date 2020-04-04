@@ -104,23 +104,6 @@ class GUI {
     ctx.restore;
   }//end drawUnitInfo()
 
-  //Draws the arrows used to move the indivisual creatures
-  drawArrows(){
-    ctx.save();
-    ctx.font = "40px Arial";
-    ctx.fillStyle = "black";
-    ctx.translate(this.borderWidth, this.canvas.height  - this.barHeight + this.borderWidth);
-
-
-    //            images        x-position      y-position       width           heigh
-    ctx.drawImage(this.NWarrow, 0,              0,               this.arrowSize, this.arrowSize);
-    ctx.drawImage(this.NEarrow, this.arrowSize, 0,               this.arrowSize, this.arrowSize);
-    ctx.drawImage(this.SWarrow, 0,              this.arrowSize,  this.arrowSize, this.arrowSize);
-    ctx.drawImage(this.SEarrow, this.arrowSize, this.arrowSize,  this.arrowSize, this.arrowSize);
-
-    ctx.restore();
-  }//end drawArrows()
-
   //Calculates and draws the HP bar for a given creature.
   drawHPBar(creature, x, y){
     ctx.save();
@@ -144,9 +127,6 @@ class GUI {
     ctx.restore;
 
   }
-
-
-
 
   //Draws the zoom in/out icons to the UI Bar
   drawZoomIcon(){

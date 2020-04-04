@@ -85,8 +85,8 @@ class CombatScreen{
     //100ms delay set to give sprites time to be drawn under wounds
     setTimeout(function(){
       for(var x=0; x<30; x++){
-        var xRand = Math.floor(Math.random()*100);
-        var yRand = Math.floor(Math.random()*90);
+        var xRand = Math.floor(Math.random()*140);
+        var yRand = Math.floor(Math.random()*130);
         ctx.fillStyle = "#771111";//"#303030";
         ctx.fillRect(startX + xRand, startY + yRand, 4, 13);
       }
