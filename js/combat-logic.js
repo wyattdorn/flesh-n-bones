@@ -1,9 +1,9 @@
-
+//Written by Wyatt Dorn
 
 
 class CombatLogic{
   constructor(){
-    init();
+    this.init();
   }//end constructor()
 
   //////////////////////////
@@ -20,12 +20,22 @@ class CombatLogic{
 
   init(){
     //init
-
   }//end init()
 
   healUnit(num, unit){
+
+    do{//do-while loop until unit is selected?
+      console.log("loop is good");
+      break;
+    }while(true);
+    unit.giveHealth(num);
+
+  }//end healUnit()
+
+  damageUnit(num, unit){
     //while loop until unit is selected?
-  }
+    unit.removeHealth(num);
+  }//end damageUnit()
 
   useSkill(num, unit){
     switch (num) {

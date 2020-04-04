@@ -1,3 +1,4 @@
+//Written by Wyatt Dorn
 ////////////////////////////////////////////////////////////////////////////////
 // Skills are abilities that can be learned by creatures for use in combat.
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,5 +34,5 @@ class Skill{
     this.skillList[3] = [3,      "Explode",  7,      "level",      1.0,       "damage"];
   }//end init()
 
-  
+
 }

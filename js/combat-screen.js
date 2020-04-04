@@ -2,10 +2,10 @@
 
 class CombatScreen{
 
-  //////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////\
   //    This class will handle displaying the combat screen as well as the
   //    action that takes place in combat
-  //////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////\
 
 
   /////////////////////////////////////////////////////////////////////////////\
@@ -23,6 +23,8 @@ class CombatScreen{
     this.numEnemies = enemyCreatures.length;
     this.numAllies = playerCreatures.length;
 
+    console.log(this.numAllies);
+
     ctx.fillStyle = "#444444";//"#303030";
     ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
 
@@ -33,9 +35,7 @@ class CombatScreen{
     this.drawFriendlyUnits();
     this.drawEnemyUnits();
 
-    this.drawFlourish(10,70);
-    this.drawFlourish(10,160);
-    this.drawFlourish(10,250);
+
 
     this.drawWounds(unitBarWidth + 50, 50);
 
@@ -84,15 +84,18 @@ class CombatScreen{
 
     //100ms delay set to give sprites time to be drawn under wounds
     setTimeout(function(){
+
+      //Loop 30 times to create 30 "blood streaks"
       for(var x=0; x<30; x++){
+        //Randomly fenerate the x and y coordinates
         var xRand = Math.floor(Math.random()*140);
         var yRand = Math.floor(Math.random()*130);
-        ctx.fillStyle = "#771111";//"#303030";
+
+        //Fill style is red with a touch of tranparency
+        ctx.fillStyle = "#771111cc";//"#303030";
         ctx.fillRect(startX + xRand, startY + yRand, 4, 13);
       }
-
-      console.log("blood");
-      }, 100);
+    }, 100);
   } //end drawWounds()
 
 
@@ -105,10 +108,10 @@ class CombatScreen{
     ctx.fillStyle = "#af197b";//"#303030";
     ctx.fillRect(0, 0, unitBarWidth, canvas.height);
 
-    this.drawUnitInfo(0, 10, 10);
-    this.drawUnitInfo(1, 10, 100);
-    this.drawUnitInfo(2, 10, 190);
-    this.drawUnitInfo(3, 10, 280);
+    this.drawUnitInfo();//0, 10, 10);
+    //this.drawUnitInfo(1, 10, 100);
+    //this.drawUnitInfo(2, 10, 190);
+    //this.drawUnitInfo(3, 10, 280);
 
   }//end drawUnitBar
 
@@ -126,15 +129,26 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   // Draws to the screen a given unit's name, hp bar, and spirit bar.
   //////////////////////////////////////////////////////////////////////////////
-  drawUnitInfo(creature, x, y){
+  drawUnitInfo(){
     ctx.save();
 
-    ctx.font = "25px Arial";
-    ctx.fillStyle = "white";
-    ctx.fillText(player.myCreatures[creature].name, x, y+30);
-    ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+60);
-    this.drawHPBar(creature, x,y+5);
-    this.drawSpiritBar(creature, x, y + 38);
+    for(var i = 0; i < this.numAllies; i++){
+      ctx.font = "25px Arial";
+      ctx.fillStyle = "white";
+      ctx.fillText(player.myCreatures[i].name, 10, 30+(90*i));
+      ctx.fillText('Level: ' + player.myCreatures[i].level, 10, 65+(90*i));
+      this.drawHPBar(i, 10, 5);
+      this.drawSpiritBar(i, 10, 38);
+    }
+
+    this.drawFlourish();
+
+    //ctx.font = "25px Arial";
+    //ctx.fillStyle = "white";
+    //ctx.fillText(player.myCreatures[creature].name, x, y+30);
+    //ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+60);
+    //this.drawHPBar(creature, x,y+5);
+    //this.drawSpiritBar(creature, x, y + 38);
 
     ctx.restore;
   }//end drawUnitInfo()
@@ -186,30 +200,30 @@ class CombatScreen{
 
   drawFriendlyUnits(){
 
-    this.drawUnit(player.myCreatures[0].imgSrc, unitBarWidth + 50, 50);
+    //Atarting x position is unitBarWidth plus 50
+    var baseX = unitBarWidth + 50;
 
-    //this.drawWounds(0,0);
-
-    this.drawUnit(player.myCreatures[1].imgSrc, unitBarWidth + 50, 200);
-
-    this.drawUnit(player.myCreatures[2].imgSrc, unitBarWidth + 50, 350);
-
-    this.drawUnit(player.myCreatures[2].imgSrc, unitBarWidth + 200, 50);
-
-    this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 200);
-
-    this.drawUnit(player.myCreatures[3].imgSrc, unitBarWidth + 200, 350);
-
-    //this.drawWounds(0,0);
+    //Loop through all the allies we have in combat
+    for(var x = 0; x < this.numAllies; x++){
+       //If we have more than 3 allies, the next row is 150 pixels to the right
+      if(x==3){baseX += 150};
+      this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+    }
 
   }//end drawFriendlyUnits()
 
   drawEnemyUnits(){
-    this.drawUnit(enemyCreatures[0].imgSrc, unitBarWidth + 750, 50);
 
-    this.drawUnit(enemyCreatures[0].imgSrc, unitBarWidth + 750, 200);
+    //Atarting x position is unitBarWidth plus 50
+    var baseX = unitBarWidth + 750;
 
-    this.drawUnit(enemyCreatures[0].imgSrc, unitBarWidth + 750, 350);
+    //Loop through all the allies we have in combat
+    for(var x = 0; x < this.numEnemies; x++){
+       //If we have more than 3 allies, the next row is 150 pixels to the right
+      if(x==3){baseX -= 150};
+      this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+    }
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -221,23 +235,21 @@ class CombatScreen{
 
     newImg.addEventListener('load',function(){
       ctx.drawImage(newImg, x, y, 150, 150);
-      console.log('poof');
     }, false);
 
     newImg.src = '' + source;
 
-    console.log("drawn unit");
-
   }//end drawUnit()
 
 
-  drawFlourish(x, y){
+  drawFlourish(){
 
     var newImg = new Image();
 
     newImg.addEventListener('load',function(){
-      ctx.drawImage(newImg, x, y, 230, 45);
-      console.log('poof');
+      for(var x = 0; x < 5; x++){
+        ctx.drawImage(newImg, 10, 65+(90*x), 230, 45);
+      }
     }, false);
 
     newImg.src = 'media/images/gui/style/flourish-1.png';

@@ -134,6 +134,16 @@ class PlayerCharacter extends Creature{
       this.attackPower = attackPower;
   }
 
+  removeHealth(num){
+    this.currentHP = this.currentHP - num;
+    if(this.currentHP < 0){this.currentHP = 0;}
+  }
+
+  giveHealth(num){
+    this.currentHP = this.currentHP + num;
+    if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
+  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

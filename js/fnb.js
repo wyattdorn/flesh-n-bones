@@ -9,7 +9,6 @@ const guiBarHeight = 300;
 var combatTimer; //Integer tracker for combat rounds
 //var myMap;
 var canvas, canvasWidth, canvasHeight;
-var myBattleMap;
 
 // 1=combat
 // 2=menus
@@ -27,12 +26,13 @@ var ctx;  //canvas context
 var myGUI;  //GUI class instance
 
 var skills;
+var combatLogi;
 
 function init(){
 
   player = new Deity();
-
   skills = new Skill();
+  combatLogi = new CombatLogic();
 
   myCreatures = [];
   enemyCreatures = [];
@@ -113,7 +113,9 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, 'media/images/character-sprites/goblin-1.png'));
   player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
   player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
   player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
 
 
   player.myCreatures[0].generateDummyStats(10, 5, 3);
@@ -130,6 +132,14 @@ function createDummyCreatures(){
   player.myCreatures[3].currentHP = 6;
   player.myCreatures[3].currentSpirit = 5;
 
+  player.myCreatures[4].generateDummyStats(7, 8, 6);
+  player.myCreatures[4].currentHP = 6;
+  player.myCreatures[4].currentSpirit = 5;
+
+  player.myCreatures[5].generateDummyStats(7, 8, 6);
+  player.myCreatures[5].currentHP = 6;
+  player.myCreatures[5].currentSpirit = 5;
+
 
 
   player.myCreatures[0].levelUp();
@@ -137,6 +147,10 @@ function createDummyCreatures(){
   player.myCreatures[2].levelUp();
   player.myCreatures[3].levelUp();
 
+  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
 
 

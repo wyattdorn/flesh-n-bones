@@ -1,3 +1,5 @@
+//Written by Wyatt Dorn
+
 class GUI {
 
   //The gui bar has a border around it (where no buttons will appear) with a width of 1/6 the height of the bar
