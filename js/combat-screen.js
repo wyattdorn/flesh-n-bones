@@ -143,27 +143,20 @@ class CombatScreen{
 
     this.drawFlourish();
 
-    //ctx.font = "25px Arial";
-    //ctx.fillStyle = "white";
-    //ctx.fillText(player.myCreatures[creature].name, x, y+30);
-    //ctx.fillText('Level: ' + player.myCreatures[creature].level, x, y+60);
-    //this.drawHPBar(creature, x,y+5);
-    //this.drawSpiritBar(creature, x, y + 38);
-
     ctx.restore;
   }//end drawUnitInfo()
 
   //////////////////////////////////////////////////////////////////////////////
   // Draws to the screen a hp bar. Called by drawUnitInfo().
   //////////////////////////////////////////////////////////////////////////////
-  drawHPBar(creature, x, y){
+  drawHPBar(creature){
     ctx.save();
     var percentHP = player.myCreatures[creature].currentHP/player.myCreatures[creature].maxHP;
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText('HP: ' + player.myCreatures[creature].currentHP+'/'+player.myCreatures[creature].maxHP, x+105, y+10);
-    ctx.fillRect(x+105, y+15, 102, 12);
+    ctx.fillText('HP: ' + player.myCreatures[creature].currentHP+'/'+player.myCreatures[creature].maxHP, 115, 20+(creature*90));
+    ctx.fillRect(115, 25+(creature*90), 102, 12);
     //The HP bar will be colored according to how full the unit's health is
     if(percentHP>0.50){
       ctx.fillStyle = "green";
@@ -175,7 +168,7 @@ class CombatScreen{
       ctx.fillStyle = "red";
     }
     //Fill bar with respective amount of HP
-    ctx.fillRect(x+106, y+16, percentHP*100, 10);
+    ctx.fillRect(116, 26+(creature*90), percentHP*100, 10);
     ctx.restore;
 
   } //end drawHPBar()
@@ -189,11 +182,11 @@ class CombatScreen{
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText('Spirit: ' + player.myCreatures[creature].currentSpirit+'/'+player.myCreatures[creature].maxSpirit, x+105, y+10);
-    ctx.fillRect(x+105, y+15, 102, 12);
+    ctx.fillText('Spirit: ' + player.myCreatures[creature].currentSpirit+'/'+player.myCreatures[creature].maxSpirit, 115, 50+(creature*90));
+    ctx.fillRect(115, 55+(creature*90), 102, 12);
     //Fill bar with respective amount of HP
     ctx.fillStyle = "blue";
-    ctx.fillRect(x+106, y+16, percentSpirit*100, 10);
+    ctx.fillRect(116, 56+(creature*90), percentSpirit*100, 10);
     ctx.restore;
 
   } //end drawSpiritBar()
