@@ -111,47 +111,48 @@ function createDummyCreatures(){
 
   //Friendly Creatures
   player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
-
-
   player.myCreatures[0].generateDummyStats(10, 5, 3);
   player.myCreatures[0].currentHP = 3;
+  player.myCreatures[0].levelUp();
+  player.myCreatures[0].levelUp();
 
+  player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
   player.myCreatures[1].generateDummyStats(2, 13, 3);
   player.myCreatures[1].currentSpirit = 10;
 
+  player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
   player.myCreatures[2].generateDummyStats(5, 10, 4);
   player.myCreatures[2].currentHP = 1;
   player.myCreatures[2].currentSpirit = 1;
+  player.myCreatures[2].levelUp();
 
+  player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
   player.myCreatures[3].generateDummyStats(7, 8, 6);
   player.myCreatures[3].currentHP = 6;
   player.myCreatures[3].currentSpirit = 5;
+  player.myCreatures[3].levelUp();
 
+  player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
   player.myCreatures[4].generateDummyStats(7, 8, 6);
-  player.myCreatures[4].currentHP = 6;
+  player.myCreatures[4].currentHP = 1;
   player.myCreatures[4].currentSpirit = 5;
 
+  /*
+  player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
   player.myCreatures[5].generateDummyStats(7, 8, 6);
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
+  */
 
-
-
-  player.myCreatures[0].levelUp();
-  player.myCreatures[0].levelUp();
-  player.myCreatures[2].levelUp();
-  player.myCreatures[3].levelUp();
-
-  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures[0].maxHP=10;
+  enemyCreatures[0].currentHP = 4;
+  enemyCreatures.push(new EnemyCreature("chonk 2", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures[4].maxHP=10;
+  enemyCreatures[4].currentHP = 4;
 
 
 }
@@ -176,7 +177,7 @@ function logMouseClick(e){
     guiEventHandler(clickPosition.x, clickPosition.y);
   }
 
-  console.log(clickPosition.y);
+  console.log("Y pos: " + clickPosition.y);
 
   //The following switch statements passes the coodinates of the mouse click to
   // the appropriate handler function based on the current game mode.

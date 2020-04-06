@@ -37,8 +37,7 @@ class CombatScreen{
 
 
 
-    this.drawWounds(unitBarWidth + 50, 50);
-
+    this.checkForWounds();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -46,13 +45,30 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   combatClickHandler(x,y){
     console.log("Booger");
-    this.drawWounds(unitBarWidth + 50, 50);
+    //this.drawWounds(unitBarWidth + 50, 50);
   }// end combatClickHandler()
 
-  //  For testing purposes
-  printNumAllies(){
-    console.log(this.numAllies);
-  }
+  //////////////////////////////////////////////////////////////////////////////
+  //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
+  //////////////////////////////////////////////////////////////////////////////
+  checkForWounds(){
+
+    //Check all allies first
+    for(var x = 0; x < this.numAllies; x++){
+      if(player.myCreatures[x].currentHP <= (player.myCreatures[x].maxHP/2)){
+        this.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
+        console.log("wounded: " + x);
+      }
+    }
+
+    //Check all enemies second
+    for(var x = 0; x < this.numEnemies; x++){
+      if(enemyCreatures[x].currentHP <= (enemyCreatures[x].maxHP/2)){
+        this.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
+        console.log("wounded enemy: " + x);
+      }
+    }
+  }//wnd checkForWounds()
 
   //////////////////////////////////////////////////////////////////////////////
   // Creates a textured background for the combat screen
@@ -76,7 +92,6 @@ class CombatScreen{
     }
   } //end drawRandomSquares()
 
-
   //////////////////////////////////////////////////////////////////////////////
   // Dwaws red "wounds" over character sprite to signify their healtrh being below 50%
   //////////////////////////////////////////////////////////////////////////////
@@ -97,7 +112,6 @@ class CombatScreen{
       }
     }, 100);
   } //end drawWounds()
-
 
   //////////////////////////////////////////////////////////////////////////////
   // Draws the bar containing unit invormation of the left of the screen
@@ -191,6 +205,9 @@ class CombatScreen{
 
   } //end drawSpiritBar()
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws all friendly units to the screen by calling drawUnit().
+  //////////////////////////////////////////////////////////////////////////////
   drawFriendlyUnits(){
 
     //Atarting x position is unitBarWidth plus 50
@@ -205,6 +222,9 @@ class CombatScreen{
 
   }//end drawFriendlyUnits()
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws all enemy units to the screen by calling drawUnit().
+  //////////////////////////////////////////////////////////////////////////////
   drawEnemyUnits(){
 
     //Atarting x position is unitBarWidth plus 50
@@ -234,7 +254,9 @@ class CombatScreen{
 
   }//end drawUnit()
 
-
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws flourishes to the Unit Bar to seperate info for each unit.
+  //////////////////////////////////////////////////////////////////////////////
   drawFlourish(){
 
     var newImg = new Image();
@@ -247,7 +269,7 @@ class CombatScreen{
 
     newImg.src = 'media/images/gui/style/flourish-1.png';
 
-  }//end drawUnit()
+  }//end drawFlourish()
 
 }
 
