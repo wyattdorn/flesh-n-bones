@@ -23,8 +23,6 @@ class CombatScreen{
     this.numEnemies = enemyCreatures.length;
     this.numAllies = playerCreatures.length;
 
-    console.log(this.numAllies);
-
     ctx.fillStyle = "#444444";//"#303030";
     ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
 
@@ -35,18 +33,8 @@ class CombatScreen{
     this.drawFriendlyUnits();
     this.drawEnemyUnits();
 
-
-
     this.checkForWounds();
   }
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  To be used to handle all click events wneh in the game's combat screen
-  //////////////////////////////////////////////////////////////////////////////
-  combatClickHandler(x,y){
-    console.log("Booger");
-    //this.drawWounds(unitBarWidth + 50, 50);
-  }// end combatClickHandler()
 
   //////////////////////////////////////////////////////////////////////////////
   //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
@@ -57,7 +45,6 @@ class CombatScreen{
     for(var x = 0; x < this.numAllies; x++){
       if(player.myCreatures[x].currentHP <= (player.myCreatures[x].maxHP/2)){
         this.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
-        console.log("wounded: " + x);
       }
     }
 
@@ -65,7 +52,6 @@ class CombatScreen{
     for(var x = 0; x < this.numEnemies; x++){
       if(enemyCreatures[x].currentHP <= (enemyCreatures[x].maxHP/2)){
         this.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
-        console.log("wounded enemy: " + x);
       }
     }
   }//wnd checkForWounds()

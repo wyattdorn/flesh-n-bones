@@ -48,7 +48,7 @@ function init(){
   canvasWidth = 1200;//window.outerWidth * window.devicePixelRatio;
   canvasHeight = 800;//window.innerHeight * window.devicePixelRatio;
   canvas = document.getElementById('canvas');
-  myGUI = new GUI(ctx, canvas, guiBarHeight);
+  //myGUI = new GUI(ctx, canvas, guiBarHeight);
   canvas.style.left = "0px";
   canvas.style.top = "0px";
   canvas.style.position = "absolute";
@@ -137,12 +137,11 @@ function createDummyCreatures(){
   player.myCreatures[4].currentHP = 1;
   player.myCreatures[4].currentSpirit = 5;
 
-  /*
   player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
   player.myCreatures[5].generateDummyStats(7, 8, 6);
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
-  */
+
 
   enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=10;
@@ -153,7 +152,6 @@ function createDummyCreatures(){
   enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[4].maxHP=10;
   enemyCreatures[4].currentHP = 4;
-
 
 }
 
@@ -174,16 +172,16 @@ function logMouseClick(e){
     }
 
   if(clickPosition.y> canvas.height - guiBarHeight ){
-    guiEventHandler(clickPosition.x, clickPosition.y);
+    //guiEventHandler(clickPosition.x, clickPosition.y);
   }
 
-  console.log("Y pos: " + clickPosition.y);
+  //console.log("Y pos: " + clickPosition.y);
 
   //The following switch statements passes the coodinates of the mouse click to
   // the appropriate handler function based on the current game mode.
   switch(gameMode) {
   case 1:
-    myCombatScreen.combatClickHandler(clickPosition.x,clickPosition.y);
+    combatLogi.combatClickHandler(clickPosition.x,clickPosition.y);
     break;
   case 2:
     // menu click handler
@@ -197,11 +195,6 @@ function logMouseClick(e){
 
   //draw();
 }//end logMouseClick()
-
-function guiEventHandler(x,y){
-  console.log('Clicked in gui');
-  myGUI.clickEvent(x,y);
-}//end guiEventHandler()
 
 function draw() {
   console.log('draw');
