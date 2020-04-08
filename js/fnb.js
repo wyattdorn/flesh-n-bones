@@ -40,7 +40,7 @@ function init(){
   creatureImages = [];
 
   unitBarWidth = 250;
-  controlBarHeight = 550;
+  controlBarHeight = 250;
 
 
   //for testing purposes, the game starts in combat mode

@@ -32,12 +32,25 @@ class CombatLogic{
   combatClickHandler(clickPositionX,clickPositionY){
 
     //First, check if the click was inb the Control Bar at the bottom of the screen
-    if(clickPositionY >= (canvas.height/3)*2){
-      this.clickedField[0] = 1;
+    if(clickPositionY >= (canvas.height - controlBarHeight)){
+      this.clickedField = [1, 0, 0];
+      /*      Control Bar Column Description
+      The Control Bar is broken into 9 columns, the first being the blank space
+      before the first buttons, the next column has a pair of buttons, with that
+      pattern repeating until the final row. Actions are only taken if the click
+      is in column with buttons.
+      */
+      if(clickPositionX < 25){
+        this.clickedField[1] = 0;
+      }
+      else if(){
+        //
+      }
+
     }
     //Next check if the click was in thje Unit bar on the left of the screen
     else if(clickPositionX < unitBarWidth){
-      this.clickedField[0] = 2;
+      this.clickedField = [2, 0, 0];
     }
     //If the click was not in either of the bars, it must be in the Combat Field
     else{
@@ -49,7 +62,7 @@ class CombatLogic{
       spaced on the right of the screen. We only act if the click in in the 2nd,
       3rd, 5th, or 6th columns, all other inputs are useless.
       */
-      this.clickedField[0] = 3;
+      this.clickedField = [3, 0, 0];
       if(clickPositionX >= unitBarWidth + 50 && clickPositionX < unitBarWidth + 200){//Column 2
         //click is in column 2
         this.clickedField[1] = 2;
