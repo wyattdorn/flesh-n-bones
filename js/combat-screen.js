@@ -59,13 +59,88 @@ class CombatScreen{
     }
   }//end checkForWounds()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws the buttons in the Control Bar. Called by drawControlBar().
+  //////////////////////////////////////////////////////////////////////////////
   drawButtons(){
     //ctx.save();
 
+    //Draw the buttons in black
     ctx.fillStyle = "#000000";
-    ctx.fillRect(50, controlBarHeight, 100, canvasHeight-controlBarHeight);
+    ctx.fillRect(20, controlBarHeight + 20 , 200, 100);
+
+    ctx.fillRect(20, controlBarHeight + 130 , 200, 100);
+
+    ctx.fillRect(245, controlBarHeight + 20 , 400, 100);
+
+    ctx.fillRect(245, controlBarHeight + 130 , 400, 100);
+
+    ctx.fillRect(655, controlBarHeight + 20 , 400, 100);
+
+    ctx.fillRect(655, controlBarHeight + 130 , 400, 100);
+
+    ctx.fillRect(1080, controlBarHeight + 20 , 100, 100);
+
+    ctx.fillRect(1080, controlBarHeight + 130 , 100, 100);
+
+
+
+    //Draw text for buttons in white
+    ctx.fillStyle = "#cccccc";
+    ctx.font = "25px Arial";
+    ctx.fillText("Menu", 50, controlBarHeight + 50);
+
+    ctx.fillText("Items", 50, controlBarHeight + 160);
+
+    ctx.fillText("Skill 1", 275, controlBarHeight + 50);
+
+    ctx.fillText("Skill 3", 275, controlBarHeight + 160);
+
+    ctx.fillText("Skill 2", 675, controlBarHeight + 50);
+
+    ctx.fillText("Skill 4", 675, controlBarHeight + 160);
+
+    this.drawMultipleLines("END TURN", 4, 25, 1095, controlBarHeight + 65);
+
+    ctx.fillText("Run", 1100, controlBarHeight + 160);
+
+    ctx.font = "15px Arial";
+    ctx.fillStyle = "#aaaaaa";
+    this.drawMultipleLines("This is a piece of sample flavor text for the first skill on screen.", 51, 20, 275, controlBarHeight + 80);
 
   }//end drawButtons()
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws multiple lines of text from a single string
+  //////////////////////////////////////////////////////////////////////////////
+  drawMultipleLines(myString, maxLength, lineHeight, startX, startY){
+    var tempString = "";
+
+    for(var x = 0; x < (myString.length/maxLength); x++){
+      tempString = "";
+      for(var y = 0; y < maxLength; y++){
+        if(myString.length <= y+(maxLength*x)){
+          break;
+        }
+        tempString += ("" + myString[y + (maxLength * x)]);
+      }
+      ctx.fillText(tempString, startX, startY + (lineHeight * x));
+    }
+
+    /*prototype:
+    for(var x = 0; x < (textString.length/10); x++){
+      tempString = "";
+      for(var y = 0; y < 10; y++){
+        if(textString.length <= y+(10*x)){
+          break;
+        }
+        tempString += ("" + textString[y+(10*x)]);
+      }
+      ctx.fillText(tempString, 275, controlBarHeight +70+(20*x));
+      console.log(tempString + " - run: " + x);
+    }
+    */
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Creates a textured background for the combat screen
