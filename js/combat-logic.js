@@ -107,7 +107,6 @@ class CombatLogic{
   }
 
   healUnit(num, unit){
-
     do{//do-while loop until unit is selected?
       console.log("loop is good");
       break;

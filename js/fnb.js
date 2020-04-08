@@ -2,6 +2,7 @@
 //Goblin sprite found at: https://gameartpartners.com/downloads/goblin-medieval-character-art/
 //Orc sprite found at: http://www.gamebuildingtools.com/product/lumbering-orc-club/
 //Fire Elementaql sprite found at: http://wiki.rivalkingdomsgame.com/summons:greater-fire-elemental
+//Skull sprite found at: https://www.pixilart.com/art/skull-pixelart-fecd760036053e9
 
 //const numOfAssets = 3; //Number of assets that must be loaded in before a given scene can be rendered
 const guiBarHeight = 300;
@@ -17,7 +18,7 @@ var gameMode;
 
 var myCombatScreen;
 
-var unitBarWidth;
+var unitBarWidth, controlBarHeight;
 
 var player;
 var creature, enemyCreatures; //arrays of enemy and allied creatures
@@ -39,7 +40,7 @@ function init(){
   creatureImages = [];
 
   unitBarWidth = 250;
-
+  controlBarHeight = 550;
 
 
   //for testing purposes, the game starts in combat mode
@@ -67,7 +68,6 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
-  //myMap = new Map(10,10);
 
   player.soulsOwned = 6;
 
@@ -76,36 +76,19 @@ function init(){
   //combatScreen = new CombatScreen();
 
   myCombatScreen = new CombatScreen(ctx, canvas);
-  //myCombatScreen.init(myCreatures, enemyCreatures, true, ctx, canvas);
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
-  //draw();
-
   myCombatScreen.init(player.myCreatures, enemyCreatures, true);
-
-
-  //ctx.save();
-  //ctx.translate(0, 0);
-  var tempo = new Image();
-
-  tempo.onload = function(){
-    console.log("loaded");
-    //console.log("Goblin loaded");
-  }
-
-  //tempo.src = 'https://www.tutorialspoint.com/images/seaborn-4.jpg?v=2';// '' + myCreatures[0].imgSrc;
-  ctx.drawImage(tempo, 0, 0);
-  //ctx.restore;
 
 } //end init()
 
 
 function createDummyCreatures(){
 
-  var soul = new Soul("fiery");
+  var soul = new Soul("stone");
   var s = new Skin('fire');
   var b = new Body(s, new Bones('ice'), new Guts('air'));
 

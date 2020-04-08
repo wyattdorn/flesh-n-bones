@@ -32,6 +32,9 @@ class CombatScreen{
 
     this.drawFriendlyUnits();
     this.drawEnemyUnits();
+    this.drawSkulls();
+
+    this.drawButtons();
 
     this.checkForWounds();
   }
@@ -54,7 +57,15 @@ class CombatScreen{
         this.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
       }
     }
-  }//wnd checkForWounds()
+  }//end checkForWounds()
+
+  drawButtons(){
+    //ctx.save();
+
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(50, controlBarHeight, 100, canvasHeight-controlBarHeight);
+
+  }//end drawButtons()
 
   //////////////////////////////////////////////////////////////////////////////
   // Creates a textured background for the combat screen
@@ -122,7 +133,7 @@ class CombatScreen{
 
     //red bar
     ctx.fillStyle = "#441111";//"#303030";
-    ctx.fillRect(0, (canvas.height/3)*2, canvas.width, canvas.height/3);
+    ctx.fillRect(0, controlBarHeight, canvas.width, canvasHeight-controlBarHeight);
 
   }//end drawControlBar
 
@@ -256,6 +267,25 @@ class CombatScreen{
     newImg.src = 'media/images/gui/style/flourish-1.png';
 
   }//end drawFlourish()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws line of skulls above the Control Bar
+  //////////////////////////////////////////////////////////////////////////////
+  drawSkulls(){
+
+    //IN THE FUTURE, THIS SHOULD DRAW DIFFERENT COLORED SKULLS BASED ON THE TERRAIN TYPE
+
+    var newImg = new Image();
+
+    newImg.addEventListener('load',function(){
+      for(var x = 0; x < 60; x++){
+        ctx.drawImage(newImg, 20*x-2, 526, 24, 30);
+      }
+    }, false);
+
+    newImg.src = 'media/images/gui/style/skull1-green.png';
+
+  }//end drawSkulls()
 
 }
 
