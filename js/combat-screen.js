@@ -23,7 +23,7 @@ class CombatScreen{
     this.numEnemies = enemyCreatures.length;
     this.numAllies = playerCreatures.length;
 
-    ctx.fillStyle = "#444444";//"#303030";
+    ctx.fillStyle = "#171b04";//"#303030";
     ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
 
     this.drawRandomSquares();
