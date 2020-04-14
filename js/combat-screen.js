@@ -46,14 +46,14 @@ class CombatScreen{
       this.drawUnitBar();
     }
     if(controlBar){
-      this.drawControlBar();
+      //The buttons are the only part of the Control Bar that need updating once
+      //combat starts, so the buttons are the only part that is redrawn.
+      this.drawButtons();
     }
     if(combatField){
       //this.drawUnitBar();
       // WORK IN PROGRESS
     }
-    //Because skulls overlap the other three fields, the skulls will always be redrawn
-    this.drawSkulls();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -214,9 +214,9 @@ class CombatScreen{
 
     //pink bar
     ctx.fillStyle = "#60584f";//"#af197b";//"#303030";
-    ctx.fillRect(0, 0, unitBarWidth, canvas.height - controlBarHeight);
+    ctx.fillRect(0, 0, unitBarWidth, canvas.height - controlBarHeight-24);
 
-    this.drawUnitInfo();//0, 10, 10);
+    this.drawUnitInfoBar();//0, 10, 10);
     //this.drawUnitInfo(1, 10, 100);
     //this.drawUnitInfo(2, 10, 190);
     //this.drawUnitInfo(3, 10, 280);
@@ -239,10 +239,22 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   // Draws to the screen a given unit's name, hp bar, and spirit bar.
   //////////////////////////////////////////////////////////////////////////////
-  drawUnitInfo(){
-    ctx.save();
+  drawUnitInfoBar(){
 
-    for(var i = 0; i < this.numAllies; i++){
+      for(var i = 0; i < this.numAllies; i++){
+        this.drawUnitInfo(i);
+        this.drawHPBar(i, 10, 5);
+        this.drawSpiritBar(i, 10, 38);
+      }
+      this.drawFlourish();
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Draws to the screen a given unit's name, hp bar, and spirit bar.
+  //////////////////////////////////////////////////////////////////////////////
+  drawUnitInfo(i){
+
+
       ctx.font = "25px Arial";
       ctx.fillStyle = "#cccccc";
       if(combatLogi.selectedAlly == i){
@@ -251,13 +263,7 @@ class CombatScreen{
       ctx.fillText(player.myCreatures[i].name, 10, 30+(90*i));
       ctx.fillText('Level: ' + player.myCreatures[i].level, 10, 65+(90*i));
 
-      this.drawHPBar(i, 10, 5);
-      this.drawSpiritBar(i, 10, 38);
-    }
 
-    this.drawFlourish();
-
-    ctx.restore;
   }//end drawUnitInfo()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -379,6 +385,9 @@ class CombatScreen{
     //IN THE FUTURE, THIS SHOULD DRAW DIFFERENT COLORED SKULLS BASED ON THE TERRAIN TYPE
 
     var newImg = new Image();
+
+    ctx.fillStyle = "#191919";
+    ctx.fillRect(0, 526, canvasWidth, 30);
 
     newImg.addEventListener('load',function(){
       for(var x = 0; x < 60; x++){
