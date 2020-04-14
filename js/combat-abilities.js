@@ -32,6 +32,8 @@ class Skill{
     this.skillList[1] = [1,      "Defend",   2,      "fortitude",  1.2,       "buff",     "Give yourself a buff to your defense for a single turn."];
     this.skillList[2] = [2,      "Heal",     3,      "wits" ,      1.5,       "heal",     "Heal a single unit."];
     this.skillList[3] = [3,      "Explode",  7,      "level",      1.0,       "damage",   "Damage all creature on the field, including allies."];
+    this.skillList[4] = [4,      "Scythe",   6,      "might",      2.0,       "damage",   "Damage all enemy heroes on the field."]
+    this.skillList[5] = [5,      "Orc Smash",8,      "might",      3.0,       "damage",   "Damage an enemy and yourself for the same amount (avaialble to orcs only)."]
   }//end init()
 
 

@@ -123,7 +123,7 @@ class PlayerCharacter extends Creature{
     this.currentSpirit = 1; //spirit is mana
     this.maxSpirit = 1;
     this.attackPower = 1;
-    this.creatureSkills = [];
+    this.skillList = [];
   }
 
   //For use in testing only.

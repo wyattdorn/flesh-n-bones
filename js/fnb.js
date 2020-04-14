@@ -125,9 +125,15 @@ function createDummyCreatures(){
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
 
-  for(var x = 0; x < player.myCreatures.length; x++){
-    player.myCreatures.forEach(PlayerCharacter => PlayerCharacter.creatureSkills[x] = skills.skillList[x]);//creatureSkills[0] = skills.skillList[3]);
+  for(var x = 0; x < 4; x++){
+    player.myCreatures.forEach(PlayerCharacter => PlayerCharacter.skillList[x] = skills.skillList[x]);//creatureSkills[0] = skills.skillList[3]);
   }
+
+  player.myCreatures[0].skillList[0] = skills.skillList[4];
+  player.myCreatures[4].skillList[2] = skills.skillList[5];
+  player.myCreatures[5].skillList[2] = skills.skillList[5];
+
+  //player.myCreatures[0].creatureSkills[3] = null;
 
 
   enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));

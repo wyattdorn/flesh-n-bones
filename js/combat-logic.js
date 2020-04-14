@@ -238,6 +238,8 @@ class CombatLogic{
       this.clickedField = [2, 0, 0];
       console.log(clickPositionY + " " + Math.floor(clickPositionY/90));
       this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
+      this.selectedAlly = Math.floor(clickPositionY/90);
+      myCombatScreen.updateScreen(1,1,0);
     }
     //If the click was not in either of the bars, it must be in the Combat Field
     else{

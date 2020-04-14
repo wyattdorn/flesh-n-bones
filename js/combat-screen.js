@@ -109,13 +109,14 @@ class CombatScreen{
 
     ctx.fillText("Items", 50, canvas.height - controlBarHeight + 160);
 
-    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[0][1], 275, canvas.height - controlBarHeight + 50);
-
-    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[1][1], 275, canvas.height - controlBarHeight + 160);
-
-    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[2][1], 675, canvas.height - controlBarHeight + 50);
-
-    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[3][1], 675, canvas.height - controlBarHeight + 160);
+    for(var i = 0; i < player.myCreatures[combatLogi.selectedAlly].skillList.length; i++){
+      ctx.fillStyle = "#cccccc";
+      var x = 275;
+      if(i%2==1){x = 675;}
+      var y = 50;
+      if(i>1){y=160;}
+      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][1], x, canvas.height - controlBarHeight + y);
+    }
 
     this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
 
@@ -123,7 +124,11 @@ class CombatScreen{
 
     ctx.font = "15px Arial";
     ctx.fillStyle = "#aaaaaa";
-    this.drawMultipleLines("This is a piece of sample flavor text for the first skill on screen.", 51, 20, 275, canvas.height - controlBarHeight + 80);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][6], 51, 20, 275, canvas.height - controlBarHeight + 80);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][6], 51, 20, 675, canvas.height - controlBarHeight + 80);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][6], 51, 20, 275, canvas.height - controlBarHeight + 190);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][6], 51, 20, 675, canvas.height - controlBarHeight + 190);
+
 
   }//end drawButtons()
 
@@ -240,8 +245,12 @@ class CombatScreen{
     for(var i = 0; i < this.numAllies; i++){
       ctx.font = "25px Arial";
       ctx.fillStyle = "#cccccc";
+      if(combatLogi.selectedAlly == i){
+        ctx.fillStyle = "#fcc201";
+      }
       ctx.fillText(player.myCreatures[i].name, 10, 30+(90*i));
       ctx.fillText('Level: ' + player.myCreatures[i].level, 10, 65+(90*i));
+
       this.drawHPBar(i, 10, 5);
       this.drawSpiritBar(i, 10, 38);
     }
