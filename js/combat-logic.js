@@ -19,6 +19,10 @@ class CombatLogic{
   /////////////////////////
 
   init(){
+
+    //When combat starts, by default, your first allied creature is selected
+    this.selectedAlly = 0;
+
     //A variable to determine if a function is waiting for an input
     this.waitingFunction = 0;
     //When a click is made, the following variable stores the associated information
@@ -48,6 +52,7 @@ class CombatLogic{
     this.controlBarFunctions[73] = this.runAway;
 
 
+
   }//end init()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -60,17 +65,15 @@ class CombatLogic{
       if(player.myCreatures.length >= this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1))){
         console.log("Friendly unit: " + (this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1) ) ) );
       }
-      else{
+      else{//If the click is in a spot that COULD contain an ally, but doesn't
         console.log("Not enough allies.");
       }
     }
     else{//Through process of elimination, we know the only remaining columns are the enemy columns
-      console.log(enemyCreatures.length);
-
       if(enemyCreatures.length >= this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))){
-        console.log("Friendly unit: " + (this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))) );
+        console.log("Enemyy unit: " + (this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))) );
       }
-      else{
+      else{//If the click is in a spot that COULD contain an enemy, but doesn't
         console.log("Not enough enemies.");
       }
     }
@@ -80,17 +83,6 @@ class CombatLogic{
   //  Called by combatClickHandler() after click location is determined
   //////////////////////////////////////////////////////////////////////////////
   combatClickResolution(){
-
-    /*
-    var temp = this.clickedField[1]+","+this.clickedField[2];
-
-    console.log(this.clickedField[1]+","+this.clickedField[2]);
-    this.openMenu[temp]();
-    */
-
-    var contr = [this.openMenu, this.openItemSelection];
-    contr[11]=this.openMenu;
-    //contr[this.clickedField[1]]();
 
     if(!(this.clickedField[1] == 0 || this.clickedField[2] == 0)){
       switch (this.clickedField[0]){
@@ -135,6 +127,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   skill1(){
     console.log("Skill 1 used!");
+    combatLogi.damageAll(1);
   }//end skill1()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -170,6 +163,9 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   openItemSelection(){
     console.log("Item selection opened!");
+    player.myCreatures.forEach(Creature => Creature.removeHealth(1));
+    myCombatScreen.drawUnitBar();
+    myCombatScreen.drawSkulls();
   }//end openItemSelection()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -240,6 +236,8 @@ class CombatLogic{
     //Next check if the click was in thje Unit bar on the left of the screen
     else if(clickPositionX < unitBarWidth){
       this.clickedField = [2, 0, 0];
+      console.log(clickPositionY + " " + Math.floor(clickPositionY/90));
+      this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
     }
     //If the click was not in either of the bars, it must be in the Combat Field
     else{
@@ -324,6 +322,14 @@ class CombatLogic{
     //while loop until unit is selected?
     unit.removeHealth(num);
   }//end damageUnit()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Function removes a given number of hit points from all creatures in combat
+  //////////////////////////////////////////////////////////////////////////////
+  damageAll(num){
+    player.myCreatures.forEach(Creature => Creature.removeHealth(num));
+    myCombatScreen.updateScreen(true, false, true);
+  }//end damageAll()
 
   useSkill(num, unit){
     switch (num) {

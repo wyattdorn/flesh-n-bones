@@ -16,7 +16,7 @@ class CombatScreen{
       this.ctx = context;
       this.canvas = canvas;
 
-  }
+  }//end constructor()
 
   init(playerCreatures, enemyCreatures, isPlayerTurn, context, canvas){
 
@@ -34,9 +34,26 @@ class CombatScreen{
     this.drawEnemyUnits();
     this.drawSkulls();
 
-    this.drawButtons();
-
     this.checkForWounds();
+  }//end init()
+
+  /////////////////////////////////////////////////////////////////////////////\
+  //    This function takes three boolean inputs and redraws parts of the screen
+  //    based on the inputs recieved.
+  /////////////////////////////////////////////////////////////////////////////\
+  updateScreen(unitBar, controlBar, combatField){
+    if(unitBar){
+      this.drawUnitBar();
+    }
+    if(controlBar){
+      this.drawControlBar();
+    }
+    if(combatField){
+      //this.drawUnitBar();
+      // WORK IN PROGRESS
+    }
+    //Because skulls overlap the other three fields, the skulls will always be redrawn
+    this.drawSkulls();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -92,13 +109,13 @@ class CombatScreen{
 
     ctx.fillText("Items", 50, canvas.height - controlBarHeight + 160);
 
-    ctx.fillText("Skill 1", 275, canvas.height - controlBarHeight + 50);
+    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[0][1], 275, canvas.height - controlBarHeight + 50);
 
-    ctx.fillText("Skill 3", 275, canvas.height - controlBarHeight + 160);
+    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[1][1], 275, canvas.height - controlBarHeight + 160);
 
-    ctx.fillText("Skill 2", 675, canvas.height - controlBarHeight + 50);
+    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[2][1], 675, canvas.height - controlBarHeight + 50);
 
-    ctx.fillText("Skill 4", 675, canvas.height - controlBarHeight + 160);
+    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].creatureSkills[3][1], 675, canvas.height - controlBarHeight + 160);
 
     this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
 
@@ -191,8 +208,8 @@ class CombatScreen{
   drawUnitBar(){
 
     //pink bar
-    ctx.fillStyle = "#af197b";//"#303030";
-    ctx.fillRect(0, 0, unitBarWidth, canvas.height);
+    ctx.fillStyle = "#60584f";//"#af197b";//"#303030";
+    ctx.fillRect(0, 0, unitBarWidth, canvas.height - controlBarHeight);
 
     this.drawUnitInfo();//0, 10, 10);
     //this.drawUnitInfo(1, 10, 100);
@@ -210,6 +227,8 @@ class CombatScreen{
     ctx.fillStyle = "#441111";//"#303030";
     ctx.fillRect(0, canvas.height - controlBarHeight, canvas.width, controlBarHeight);
 
+    this.drawButtons();
+
   }//end drawControlBar
 
   //////////////////////////////////////////////////////////////////////////////
@@ -220,7 +239,7 @@ class CombatScreen{
 
     for(var i = 0; i < this.numAllies; i++){
       ctx.font = "25px Arial";
-      ctx.fillStyle = "white";
+      ctx.fillStyle = "#cccccc";
       ctx.fillText(player.myCreatures[i].name, 10, 30+(90*i));
       ctx.fillText('Level: ' + player.myCreatures[i].level, 10, 65+(90*i));
       this.drawHPBar(i, 10, 5);

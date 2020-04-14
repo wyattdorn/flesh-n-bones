@@ -125,16 +125,20 @@ function createDummyCreatures(){
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
 
+  for(var x = 0; x < player.myCreatures.length; x++){
+    player.myCreatures.forEach(PlayerCharacter => PlayerCharacter.creatureSkills[x] = skills.skillList[x]);//creatureSkills[0] = skills.skillList[3]);
+  }
+
 
   enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=10;
   enemyCreatures[0].currentHP = 4;
   enemyCreatures.push(new EnemyCreature("chonk 2", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures[4].maxHP=10;
-  enemyCreatures[4].currentHP = 4;
+  //enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
+  //enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
+  //enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
+  //enemyCreatures[4].maxHP=10;
+  //enemyCreatures[4].currentHP = 4;
 
 }
 

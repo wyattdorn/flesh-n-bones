@@ -27,12 +27,14 @@ class Skill{
       this.skillList[x][0] = x;
     }
 
-    //                  Number  Name        Target  Ability        Multiplier  Type
-    this.skillList[0] = [0,      "Attack",   4,      "might",      1.5,       "damage"];
-    this.skillList[1] = [1,      "Defend",   2,      "fortitude",  1.2,       "buff"];
-    this.skillList[2] = [2,      "Heal",     3,      "wits" ,      1.5,       "heal"];
-    this.skillList[3] = [3,      "Explode",  7,      "level",      1.0,       "damage"];
+    //                  Number  Name        Target  Ability        Multiplier  Type       Description
+    this.skillList[0] = [0,      "Attack",   4,      "might",      1.5,       "damage",   "Damage a single enemy."];
+    this.skillList[1] = [1,      "Defend",   2,      "fortitude",  1.2,       "buff",     "Give yourself a buff to your defense for a single turn."];
+    this.skillList[2] = [2,      "Heal",     3,      "wits" ,      1.5,       "heal",     "Heal a single unit."];
+    this.skillList[3] = [3,      "Explode",  7,      "level",      1.0,       "damage",   "Damage all creature on the field, including allies."];
   }//end init()
+
+
 
 
 }
