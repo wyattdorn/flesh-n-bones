@@ -20,6 +20,10 @@ class CombatScreen{
 
   init(playerCreatures, enemyCreatures, isPlayerTurn, context, canvas){
 
+    this.currentTime = new Date;//.getTime();
+    this.randSeed = this.currentTime.getTime();
+    Math.seedrandom(this.randSeed);
+
     this.numEnemies = enemyCreatures.length;
     this.numAllies = playerCreatures.length;
 
@@ -56,10 +60,15 @@ class CombatScreen{
     if(combatField){
       //this.drawUnitInfoBar();
       // WORK IN PROGRESS
+      this.drawRandomSquares();
+      this.drawFriendlyUnits();
+      this.drawEnemyUnits();
+      this.checkForWounds();
     }
     this.testDrawEnemyHealth();
-    Math.seedrandom('fire')
-    console.log("fire " + Math.random());
+
+    //this.drawRandomSquares();
+
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -174,21 +183,23 @@ class CombatScreen{
   // Creates a textured background for the combat screen
   //////////////////////////////////////////////////////////////////////////////
   drawRandomSquares(baseColor, startX, endX, startY, endY){
+    //Set the seed every time the function is called
+    Math.seedrandom(this.randSeed);
 
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = "#303030";//"#303030";
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
+      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = "#009000";//"#303030";
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random()), size, size);
+      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = "#003000";//"#303030";
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-20, size, size);
+      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
   } //end drawRandomSquares()
 
@@ -196,6 +207,9 @@ class CombatScreen{
   // Dwaws red "wounds" over character sprite to signify their healtrh being below 50%
   //////////////////////////////////////////////////////////////////////////////
   drawWounds(startX, startY){
+
+    //Set the seed every time the function is called
+    Math.seedrandom(this.randSeed + startX + startY);
 
     //100ms delay set to give sprites time to be drawn under wounds
     setTimeout(function(){

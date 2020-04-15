@@ -71,6 +71,7 @@ class Creature {
     this.spirit = 1; //spirit is mana
     this.moveSpeed = 4;
     this.movesLeft = this.moveSpeed;
+    this.skillList = [];
   }
 
   levelUp(){
@@ -133,7 +134,6 @@ class PlayerCharacter extends Creature{
     this.currentSpirit = 1; //spirit is mana
     this.maxSpirit = 1;
     this.attackPower = 1;
-    this.skillList = [];
   }
 
   //For use in testing only.

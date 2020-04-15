@@ -51,6 +51,8 @@ class CombatLogic{
     this.controlBarFunctions[71] = this.endTurn;
     this.controlBarFunctions[73] = this.runAway;
 
+    console.log("Selected unit: " + this.selectedAlly);
+
 
 
   }//end init()
@@ -113,6 +115,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   endTurn(){
     console.log("Turn ended!");
+    myCombatScreen.updateScreen(1,1,1);
   }//end endTurn()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -126,29 +129,31 @@ class CombatLogic{
   //  Creature skill in slot 1
   //////////////////////////////////////////////////////////////////////////////
   skill1(){
-    console.log("Skill 1 used!");
-    combatLogi.damageAll(1);
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[0][1] + "!");
+    //skills.skillScythe(player.myCreatures[combatLogi.selectedAlly]);
+    player.myCreatures[combatLogi.selectedAlly].skillList[0][0](player.myCreatures[combatLogi.selectedAlly]);
   }//end skill1()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 2
   //////////////////////////////////////////////////////////////////////////////
   skill2(){
-    console.log("Skill 2 used!");
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[1][1] + "!");
   }//end openMenu()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 3
   //////////////////////////////////////////////////////////////////////////////
   skill3(){
-    console.log("Skill 3 used!");
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[2][1] + "!");
   }//end skill2()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 4
   //////////////////////////////////////////////////////////////////////////////
   skill4(){
-    console.log("Skill 4 used!");
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[3][1] + "!");
+    player.myCreatures[combatLogi.selectedAlly].skillList[3][0](player.myCreatures[combatLogi.selectedAlly]);
   }//end skill4()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -305,34 +310,6 @@ class CombatLogic{
       console.log("Field: " + this.clickedField[0] + " - (" + this.clickedField[1] + ", " + this.clickedField[2] + ")");
   }//end checkWaitingFunctions()
 
-  //////////////////////////////////////////////////////////////////////////////
-  //  Function heals a given unit a given number of hit points
-  //////////////////////////////////////////////////////////////////////////////
-  healUnit(num, unit){
-    do{//do-while loop until unit is selected?
-      console.log("loop is good");
-      break;
-    }while(true);
-    unit.giveHealth(num);
-
-  }//end healUnit()
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  Function removes a given number of hit points from a creature's currentHP
-  //////////////////////////////////////////////////////////////////////////////
-  damageUnit(num, unit){
-    //while loop until unit is selected?
-    unit.removeHealth(num);
-  }//end damageUnit()
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  Function removes a given number of hit points from all creatures in combat
-  //////////////////////////////////////////////////////////////////////////////
-  damageAll(num){
-    player.myCreatures.forEach(Creature => Creature.removeHealth(num));
-    enemyCreatures.forEach(Creature => Creature.removeHealth(num));
-    myCombatScreen.updateScreen(true, false, true);
-  }//end damageAll()
 
   useSkill(num, unit){
     switch (num) {
