@@ -330,6 +330,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   damageAll(num){
     player.myCreatures.forEach(Creature => Creature.removeHealth(num));
+    enemyCreatures.forEach(Creature => Creature.removeHealth(num));
     myCombatScreen.updateScreen(true, false, true);
   }//end damageAll()
 

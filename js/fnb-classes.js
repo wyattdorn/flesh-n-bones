@@ -92,6 +92,16 @@ class Creature {
     else{return true;}
   }
 
+  removeHealth(num){
+    this.currentHP = this.currentHP - num;
+    if(this.currentHP < 0){this.currentHP = 0;}
+  }
+
+  giveHealth(num){
+    this.currentHP = this.currentHP + num;
+    if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
+  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,16 +143,6 @@ class PlayerCharacter extends Creature{
       this.maxSpirit = mana;
       this.currentSpirit = mana;
       this.attackPower = attackPower;
-  }
-
-  removeHealth(num){
-    this.currentHP = this.currentHP - num;
-    if(this.currentHP < 0){this.currentHP = 0;}
-  }
-
-  giveHealth(num){
-    this.currentHP = this.currentHP + num;
-    if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
   }
 
 }
