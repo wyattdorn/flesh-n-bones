@@ -49,6 +49,7 @@ class CombatScreen{
   //    based on the inputs recieved.
   /////////////////////////////////////////////////////////////////////////////\
   updateScreen(unitBar, controlBar, combatField){
+    console.log("Updated screen.");
     if(unitBar){
       this.drawUnitInfoBar();
     }

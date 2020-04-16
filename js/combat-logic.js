@@ -138,6 +138,21 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   skill1(){
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + "!");
+
+
+    switch(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]){
+      case 4:
+      combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][0] + " to " + combatLogi.waitingOffensiveFunction[1]);
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + " stored.");
+      break;
+
+      case 1: case 2: case 5: case 6: case 7:
+      player.myCreatures[combatLogi.selectedAlly].skillList[0][1](player.myCreatures[combatLogi.selectedAlly]);
+      break;
+
+    }
+    /*
     //skills.skillScythe(player.myCreatures[combatLogi.selectedAlly]);
     if(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]==4){
       combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
@@ -146,21 +161,49 @@ class CombatLogic{
     }
     else{
       player.myCreatures[combatLogi.selectedAlly].skillList[0][1](player.myCreatures[combatLogi.selectedAlly]);
-    }
+    }*/
   }//end skill1()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 2
   //////////////////////////////////////////////////////////////////////////////
   skill2(){
-    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[1][1] + "!");
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[1][2] + "!");
+
+
+    switch(player.myCreatures[combatLogi.selectedAlly].skillList[1][3]){
+      case 4:
+      combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[1][0]];
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[1][0] + " to " + combatLogi.waitingOffensiveFunction[1]);
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[1][2] + " stored.");
+      break;
+
+      case 1: case 2: case 5: case 6: case 7:
+      player.myCreatures[combatLogi.selectedAlly].skillList[1][1](player.myCreatures[combatLogi.selectedAlly]);
+      break;
+
+    }
   }//end openMenu()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 3
   //////////////////////////////////////////////////////////////////////////////
   skill3(){
-    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[2][1] + "!");
+    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[2][2] + "!");
+
+
+    switch(player.myCreatures[combatLogi.selectedAlly].skillList[2][3]){
+      case 4:
+      combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[2][0]];
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[2][0] + " to " + combatLogi.waitingOffensiveFunction[1]);
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[2][2] + " stored.");
+      break;
+
+      case 1: case 2: case 5: case 6: case 7:
+      player.myCreatures[combatLogi.selectedAlly].skillList[2][1](player.myCreatures[combatLogi.selectedAlly]);
+      break;
+
+    }
   }//end skill2()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -173,7 +216,7 @@ class CombatLogic{
 
     switch(player.myCreatures[combatLogi.selectedAlly].skillList[3][3]){
       case 4:
-      combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
+      combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[3][0]];
       console.log(player.myCreatures[combatLogi.selectedAlly].skillList[3][0] + " to " + combatLogi.waitingOffensiveFunction[1]);
       console.log(player.myCreatures[combatLogi.selectedAlly].skillList[3][2] + " stored.");
       break;
@@ -354,7 +397,7 @@ class CombatLogic{
     skills.skillList[this.waitingOffensiveFunction[1]][1](player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     //skills.skillAttack(player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     this.waitingOffensiveFunction = [null, null];
-    myCombatScreen.updateScreen(0,0,1);
+    myCombatScreen.updateScreen(1,0,1);
   }//end checkOffensiveFuntions()
 
   //////////////////////////////////////////////////////////////////////////////
