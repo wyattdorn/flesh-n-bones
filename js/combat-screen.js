@@ -130,7 +130,7 @@ class CombatScreen{
       if(i%2==1){x = 675;}
       var y = 50;
       if(i>1){y=160;}
-      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][1], x, canvas.height - controlBarHeight + y);
+      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x, canvas.height - controlBarHeight + y);
     }
 
     this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
@@ -139,10 +139,10 @@ class CombatScreen{
 
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][6], 42, 20, 265, canvas.height - controlBarHeight + 80);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][6], 42, 20, 665, canvas.height - controlBarHeight + 80);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][6], 42, 20, 265, canvas.height - controlBarHeight + 190);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][6], 42, 20, 665, canvas.height - controlBarHeight + 190);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
 
 
   }//end drawButtons()
