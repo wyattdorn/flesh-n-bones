@@ -53,11 +53,49 @@ class CombatLogic{
     this.controlBarFunctions[71] = this.endTurn;
     this.controlBarFunctions[73] = this.runAway;
 
-    console.log("Selected unit: " + this.selectedAlly);
-
-
+    //console.log("Selected unit: " + this.selectedAlly);
 
   }//end init()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Checks all creatures in combat for status conditions
+  //////////////////////////////////////////////////////////////////////////////
+  checkCreatureStatuses(){
+    for(var x = 0; x < player.myCreatures.length; x++){
+      if(player.myCreatures[x].isBloodied()){
+        console.log("wounds");
+        myCombatScreen.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
+      }
+    }
+
+    //Check all enemies second
+    for(var x = 0; x < enemyCreatures.length; x++){
+      if(enemyCreatures[x].isBloodied()){
+        myCombatScreen.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
+      }
+    }
+
+  }//end checkCreatureStatuses()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
+  //////////////////////////////////////////////////////////////////////////////
+  checkForWounds(){
+    //Check all allies first
+    for(var x = 0; x < player.myCreatures.length; x++){
+      if(player.myCreatures[x].currentHP <= (player.myCreatures[x].maxHP/2)){
+        console.log("wounds");
+        myCombatScreen.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
+      }
+    }
+
+    //Check all enemies second
+    for(var x = 0; x < enemyCreatures.length; x++){
+      if(enemyCreatures[x].currentHP <= (enemyCreatures[x].maxHP/2)){
+        myCombatScreen.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
+      }
+    }
+  }//end checkForWounds()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Called by combatClickResolution() when a creature in the combat field is clicked on

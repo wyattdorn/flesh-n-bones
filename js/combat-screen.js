@@ -28,7 +28,7 @@ class CombatScreen{
     this.numAllies = playerCreatures.length;
 
     ctx.fillStyle = "#171b04";//"#303030";
-    ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
+    ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
 
     this.drawRandomSquares();
     ctx.fillStyle = "#60584f";//"#af197b";//"#303030";
@@ -41,7 +41,7 @@ class CombatScreen{
     this.drawSkulls();
     this.drawFlourish();
 
-    this.checkForWounds();
+    combatLogi.checkCreatureStatuses();
   }//end init()
 
   /////////////////////////////////////////////////////////////////////////////\
@@ -61,36 +61,18 @@ class CombatScreen{
     if(combatField){
       //this.drawUnitInfoBar();
       // WORK IN PROGRESS
+      ctx.fillStyle = "#171b04";//"#303030";
+      ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
       this.drawRandomSquares();
       this.drawFriendlyUnits();
       this.drawEnemyUnits();
-      this.checkForWounds();
+      combatLogi.checkCreatureStatuses();
     }
     this.testDrawEnemyHealth();
 
     //this.drawRandomSquares();
 
   }
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
-  //////////////////////////////////////////////////////////////////////////////
-  checkForWounds(){
-
-    //Check all allies first
-    for(var x = 0; x < this.numAllies; x++){
-      if(player.myCreatures[x].currentHP <= (player.myCreatures[x].maxHP/2)){
-        this.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
-      }
-    }
-
-    //Check all enemies second
-    for(var x = 0; x < this.numEnemies; x++){
-      if(enemyCreatures[x].currentHP <= (enemyCreatures[x].maxHP/2)){
-        this.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
-      }
-    }
-  }//end checkForWounds()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draws the buttons in the Control Bar. Called by drawControlBar().
@@ -330,7 +312,12 @@ class CombatScreen{
     for(var x = 0; x < this.numAllies; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
-      this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+      if(player.myCreatures[x].isDead()){
+        this.drawUnit('media/images/character-sprites/pile-of-bones.png', baseX, 50+(150*(x%3)));
+      }
+      else{
+        this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+      }
     }
 
   }//end drawFriendlyUnits()
@@ -347,7 +334,14 @@ class CombatScreen{
     for(var x = 0; x < this.numEnemies; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX -= 150};
-      this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+
+      if(enemyCreatures[x].isDead()){
+        this.drawUnit('media/images/character-sprites/pile-of-bones.png', baseX, 50+(150*(x%3)));
+      }
+      else{
+        this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+      }
+      //this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
     }
 
     this.testDrawEnemyHealth();
