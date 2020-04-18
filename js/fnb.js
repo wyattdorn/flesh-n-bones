@@ -4,12 +4,19 @@
 //Fire Elementaql sprite found at: http://wiki.rivalkingdomsgame.com/summons:greater-fire-elemental
 //Skull sprite found at: https://www.pixilart.com/art/skull-pixelart-fecd760036053e9
 
-//const numOfAssets = 3; //Number of assets that must be loaded in before a given scene can be rendered
+//Setting the dimentions of te gui assets in the Combat Screen
 const guiBarHeight = 300;
+const unitBarWidth = 250;
+const controlBarHeight = 250;
+
+//The width and height of the canvas used in the game
+const canvasWidth = 1200;
+const canvasHeight = 800;
 
 var combatTimer; //Integer tracker for combat rounds
-//var myMap;
-var canvas, canvasWidth, canvasHeight;
+
+//Variables for the canvas and canvas context used in game
+var canvas, ctx;
 
 // 1=combat
 // 2=menus
@@ -18,13 +25,8 @@ var gameMode;
 
 var myCombatScreen;
 
-var unitBarWidth, controlBarHeight;
-
 var player;
 var creature, enemyCreatures; //arrays of enemy and allied creatures
-
-var ctx;  //canvas context
-var myGUI;  //GUI class instance
 
 var skills;
 var combatLogi;
@@ -39,17 +41,10 @@ function init(){
   enemyCreatures = [];
   creatureImages = [];
 
-  unitBarWidth = 250;
-  controlBarHeight = 250;
-
-
   //for testing purposes, the game starts in combat mode
   gameMode = 1;
 
-  canvasWidth = 1200;//window.outerWidth * window.devicePixelRatio;
-  canvasHeight = 800;//window.innerHeight * window.devicePixelRatio;
   canvas = document.getElementById('canvas');
-  //myGUI = new GUI(ctx, canvas, guiBarHeight);
   canvas.style.left = "0px";
   canvas.style.top = "0px";
   canvas.style.position = "absolute";
@@ -64,6 +59,7 @@ function init(){
     return false;
   }
 
+  myCombatScreen = new CombatScreen(ctx, canvas);
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
@@ -72,10 +68,6 @@ function init(){
   player.soulsOwned = 6;
 
   createDummyCreatures();
-
-  //combatScreen = new CombatScreen();
-
-  myCombatScreen = new CombatScreen(ctx, canvas);
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
@@ -86,6 +78,9 @@ function init(){
 } //end init()
 
 
+///////////////////////////////////////////////////////////////////////////////\
+// FOR TESTING PURPOSES ONLY!!! - Create dummy crreatures to be used in testing
+///////////////////////////////////////////////////////////////////////////////\
 function createDummyCreatures(){
 
   var soul = new Soul("stone");
@@ -146,8 +141,11 @@ function createDummyCreatures(){
   //enemyCreatures[4].maxHP=10;
   //enemyCreatures[4].currentHP = 4;
 
-}
+}//end createDummyCreatures()
 
+///////////////////////////////////////////////////////////////////////////////\
+//Collects data every time the mouse is clicked somewhere within the canvas
+///////////////////////////////////////////////////////////////////////////////\
 function logMouseClick(e){
   console.log("Mouse clicked");
   var clickPosition = [];
@@ -163,12 +161,6 @@ function logMouseClick(e){
   if (mouseYPos === undefined) {
         clickPosition.y = e.clientY;// + document.body.scrollLeft + document.documentElement.scrollLeft;
     }
-
-  if(clickPosition.y> canvas.height - guiBarHeight ){
-    //guiEventHandler(clickPosition.x, clickPosition.y);
-  }
-
-  //console.log("Y pos: " + clickPosition.y);
 
   //The following switch statements passes the coodinates of the mouse click to
   // the appropriate handler function based on the current game mode.
@@ -186,19 +178,4 @@ function logMouseClick(e){
     // code block
   }
 
-  //draw();
 }//end logMouseClick()
-
-function draw() {
-  console.log('draw');
-
-  ctx.font = "30px Arial";
-  ctx.canvas.height = canvasHeight;
-  ctx.canvas.width = canvasWidth;
-  ctx.fillStyle = "000000";//"#051005";//"#303030";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-
-
-  //myGUI.draw();
-}
