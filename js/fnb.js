@@ -125,6 +125,8 @@ function createDummyCreatures(){
   }
 
   player.myCreatures[0].skillList[0] = skills.skillList[4];
+  player.myCreatures[2].skillList[1] = skills.skillList[6];
+  player.myCreatures[3].skillList[1] = skills.skillList[6];
   player.myCreatures[4].skillList[2] = skills.skillList[5];
   player.myCreatures[5].skillList[2] = skills.skillList[5];
 
