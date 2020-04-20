@@ -37,13 +37,23 @@ class Skill{
     this.skillList[6] = [6, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       "damage",   "Expend spirit to damage a single enemy."];
   }//end init()
 
+
   //////////////////////////////////////////////////////////////////////////////
-  //  SPirit Dagger skill - Damages a single enemy unit based on attacker's wits.
+  //  Heal skill - Damages a single enemy unit based on attacker's wits.
+  //////////////////////////////////////////////////////////////////////////////
+  skillHeal(creature, target){
+    console.log(creature.name + " heals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name);
+    skills.healUnit(Math.floor(creature.wits * 1.5), target);
+  }//end skillHeal()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Spirit Dagger skill - Damages a single enemy unit based on attacker's wits.
   //////////////////////////////////////////////////////////////////////////////
   skillSpiritDagger(creature, target){
     console.log(creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name);
     skills.damageUnit(Math.floor(creature.wits * 2.0), target);
-  }//end skillExplode()
+  }//end skillSpiritDagger()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Orc Smash skill - Damages a single enemy unit and attacker based on attacker's might.
@@ -52,7 +62,7 @@ class Skill{
     console.log(creature.name + " deals " + Math.floor(creature.might * 3) + " damage to " + target.name + " and themself!");
     skills.damageUnit(Math.floor(creature.might * 3), target);
     skills.damageUnit(Math.floor(creature.might * 3), creature);
-  }//end skillExplode()
+  }//end skillOrcSmash()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Attack skill - Damages a single enemy unit based on attacker's might.
@@ -60,7 +70,7 @@ class Skill{
   skillAttack(creature, target){
     console.log(creature.name + " deals " + Math.floor(creature.might * 1.5) + " damage to " + target.name);
     skills.damageUnit(Math.floor(creature.might * 1.5), target);
-  }//end skillExplode()
+  }//end skillAttack()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Explode skill - Damages all units on field an amount equal to the level of the unit that used the skill.
@@ -77,16 +87,13 @@ class Skill{
     console.log(creature.name + " deals " + Math.floor(creature.might) + " damage to all enemies");
     skills.damageAllEnemies(Math.floor(creature.might));
     myCombatScreen.updateScreen(true, false, true);
-  }//end skillExplode()
+  }//end skillScythe()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Function heals a given unit a given number of hit points
   //////////////////////////////////////////////////////////////////////////////
   healUnit(num, unit){
-    do{//do-while loop until unit is selected?
-      console.log("loop is good");
-      break;
-    }while(true);
+
     unit.giveHealth(num);
 
   }//end healUnit()
