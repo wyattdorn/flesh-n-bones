@@ -39,7 +39,17 @@ class Skill{
 
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Heal skill - Damages a single enemy unit based on attacker's wits.
+  //  Defend skill - Damages a single enemy unit based on attacker's wits.
+  //  NEED TO BE IMPLEMENTED
+  //////////////////////////////////////////////////////////////////////////////
+  skillDefend(creature, target){
+    console.log(creature.name + " defends " + target.name);
+    //skills.healUnit(Math.floor(creature.wits * 1.5), target);
+  }//end skillHeal()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Heal skill - Heals a single ally based on caster's wits
   //////////////////////////////////////////////////////////////////////////////
   skillHeal(creature, target){
     console.log(creature.name + " heals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name);

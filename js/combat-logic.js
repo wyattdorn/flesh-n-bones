@@ -26,10 +26,7 @@ class CombatLogic{
 
     //A variable to determine if a function is waiting for an input
     //Stores the index of the unit using the skill and the index of the skill in the master skill list
-    this.waitingFunction = [];
-    this.waitingFunction = null;
-    //this.waitingFunction[1] = [];
-    //this.waitingFunction[1] = [];
+    this.clearWaitingFunction();
 
     //When a click is made, the following variable stores the associated information
     //                   field    column  row
@@ -48,6 +45,13 @@ class CombatLogic{
     //console.log("Selected unit: " + this.selectedAlly);
 
   }//end init()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Sets the waitingFunction variable to [-1, -1] to indicate there is no waiting function
+  //////////////////////////////////////////////////////////////////////////////
+  clearWaitingFunction(){
+    this.waitingFunction = [-1, -1];
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   //  Checks all creatures in combat for status conditions
@@ -90,22 +94,39 @@ class CombatLogic{
   }//end checkForWounds()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Called by combatClickResolution() when a creature in the combat field is clicked on
+  //  Called when a friendly unit is clicked to determine if they should be selected or have a skill acted upon them
   //////////////////////////////////////////////////////////////////////////////
-  selectUnit(){
-    //First, check that the click was in the twwo that hold allied
+  selectFriendlyUnit(unitNum){
+    //If there is a waiting defensive skill, we act upon it
+    if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+      //execute stored skill
+      console.log("Healsss");
+      this.clearWaitingFunction();
+    }
+    //If there is no waiting defensive skill, we select the friendly unit
+    else{
+      this.clearWaitingFunction();
+      this.selectedAlly = unitNum;
+      console.log("Selected: " + player.myCreatures[unitNum].name);
+    }
+    myCombatScreen.updateScreen(1,1,0);
+  }// end selectFriendlyUnit()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Called when a click occurs in the combatField
+  //////////////////////////////////////////////////////////////////////////////
+  combatFieldClickHandler(){
+    //First, check that the click was in the two that hold allied
     if(this.clickedField[1] == 1 || this.clickedField[1] == 2){
       //We check the clicked slot has a friendly unit in it
       if(player.myCreatures.length >= this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1))){
         console.log("Friendly unit: " + (this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1) ) ) );
-        this.selectedAlly = (this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1) ) ) - 1;
-        if(skills.skillList[combatLogi.waitingFunction[1]][3] == 3){
-          console.log("Healsss");
-        }
-        console.log("Healzzz");
-        myCombatScreen.updateScreen(1,1,0);
+        //If the click is in a valid square containing an ally, we call selectFriendlyUnit() and pass the unit number to that function
+        this.selectFriendlyUnit((this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1) ) ) - 1);
+
       }
-      else{//If the click is in a spot that COULD contain an ally, but doesn't
+      //If the click is in a spot that COULD contain an ally, but doesn't
+      else{
         console.log("Not enough allies.");
       }
     }
@@ -120,7 +141,7 @@ class CombatLogic{
         console.log("Not enough enemies.");
       }
     }
-  }//end selectUnit()
+  }//end combatFieldClickHandler()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Called by combatClickHandler() after click location is determined
@@ -133,21 +154,14 @@ class CombatLogic{
           this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
         break;
         case 3:
-          this.selectUnit();
+          this.combatFieldClickHandler();
         break;
       }
     }
     else{
       console.log("Invalid selection.");
     }
-    /*
-    switch (this.clickedField[0]){
-      case 1:
-        //controlBarFunctions[this.clickedField[1], this.clickedField[2]]();
-        contr[this.clickedField[1]+ 10* this.clickedField[2]]();
-      break;
-    }
-    */
+
 
   }//end combatClickResolution()
 
@@ -167,34 +181,41 @@ class CombatLogic{
   }//end runAway()
 
   //////////////////////////////////////////////////////////////////////////////
+  //  Function is called when a skill button is pressed
+  //////////////////////////////////////////////////////////////////////////////
+  skillButtonPress(skillNum){
+    console.log("skillButtonPressed()");
+    //console.log(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][2]);
+    this.clearWaitingFunction();
+
+    switch(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][3]){
+
+      //Skill requires a target and is then stored
+      case 4: case 3:
+      combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0]];
+      //console.log(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0] + " top " + combatLogi.waitingFunction[1]);
+      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][2] + " stored.");
+      break;
+
+      //Skill does not require a target and is executed immediately
+      case 1: case 2: case 5: case 6: case 7:
+      player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][1](player.myCreatures[combatLogi.selectedAlly]);
+      break;
+
+    }
+
+    console.log(this.waitingFunction[0]+ " --- " + this.waitingFunction[1]);
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 1
   //////////////////////////////////////////////////////////////////////////////
   skill1(){
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + "!");
 
+    combatLogi.skillButtonPress(0);
 
-    switch(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]){
-      case 4: case 3:
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][0] + " to " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + " stored.");
-      break;
-
-      case 1: case 2: case 5: case 6: case 7:
-      player.myCreatures[combatLogi.selectedAlly].skillList[0][1](player.myCreatures[combatLogi.selectedAlly]);
-      break;
-
-    }
-    /*
-    //skills.skillScythe(player.myCreatures[combatLogi.selectedAlly]);
-    if(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]==4){
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][0] + " to " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + " stored.");
-    }
-    else{
-      player.myCreatures[combatLogi.selectedAlly].skillList[0][1](player.myCreatures[combatLogi.selectedAlly]);
-    }*/
   }//end skill1()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -203,26 +224,7 @@ class CombatLogic{
   skill2(){
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[1][2] + "!");
 
-
-    switch(player.myCreatures[combatLogi.selectedAlly].skillList[1][3]){
-      case 4: case 3:
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[1][0]];
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[1][0] + " to " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[1][2] + " stored.");
-      break;
-
-      case 3:
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[1][0]];
-      break;
-
-      case 1: case 2: case 5: case 6: case 7:
-      player.myCreatures[combatLogi.selectedAlly].skillList[1][1](player.myCreatures[combatLogi.selectedAlly]);
-      break;
-
-
-
-    }
-
+    combatLogi.skillButtonPress(1);
 
   }//end openMenu()
 
@@ -233,21 +235,7 @@ class CombatLogic{
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[2][2] + "!");
 
 
-    switch(player.myCreatures[combatLogi.selectedAlly].skillList[2][3]){
-      case 4:  case 3:
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[2][0]];
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[2][0] + " to " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[2][2] + " stored.");
-      break;
-
-
-      case 1: case 2: case 5: case 6: case 7:
-      player.myCreatures[combatLogi.selectedAlly].skillList[2][1](player.myCreatures[combatLogi.selectedAlly]);
-      break;
-
-
-
-    }
+    combatLogi.skillButtonPress(2);
 
     //console.log("apple: "+ this.waitingFunction[1]);
   }//end skill2()
@@ -260,23 +248,8 @@ class CombatLogic{
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[3][2] + "!");
     //skills.skillScythe(player.myCreatures[combatLogi.selectedAlly]);
 
-    switch(player.myCreatures[combatLogi.selectedAlly].skillList[3][3]){
-      case 4: case 3:
-      combatLogi.waitingFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[3][0]];
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[3][0] + " to " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[combatLogi.selectedAlly].skillList[3][2] + " stored.");
-      break;
+    combatLogi.skillButtonPress(3);
 
-      case 1: case 2: case 5: case 6: case 7:
-      player.myCreatures[combatLogi.selectedAlly].skillList[3][1](player.myCreatures[combatLogi.selectedAlly]);
-      break;
-
-    }
-
-    /*
-    console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[3][2] + "!");
-    player.myCreatures[combatLogi.selectedAlly].skillList[3][1](player.myCreatures[combatLogi.selectedAlly]);
-    */
   }//end skill4()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -303,7 +276,7 @@ class CombatLogic{
 
     this.clickedcreatureType = null;
 
-    //First, check if the click was inb the Control Bar at the bottom of the screen
+    //First, check if the click was in the Control Bar at the bottom of the screen
     if(clickPositionY >= (canvas.height - controlBarHeight)){
       this.clickedField = [1, 0, 0];
       /*      Control Bar Column Description
@@ -363,7 +336,7 @@ class CombatLogic{
       }
 
     }
-    //Next check if the click was in thje Unit bar on the left of the screen
+    //Next check if the click was in the Unit bar on the left of the screen
     else if(clickPositionX < unitBarWidth){
       this.clickedField = [2, 0, 0];
       console.log(clickPositionY + " " + Math.floor(clickPositionY/90));
@@ -372,6 +345,7 @@ class CombatLogic{
       //First we see if there is a defensive function waiting to be acted upon
       //console.log(this.waitingFunction[1][3]);
       //console.log("io" + combatLogi.waitingFunction[1]);
+      /*
       if(combatLogi.waitingFunction != null){
         if(skills.skillList[combatLogi.waitingFunction[1]][3] == 3){
           console.log("this is good");
@@ -380,8 +354,17 @@ class CombatLogic{
         else{//if there is no waiting defensive function, we select the unit
           this.selectedAlly = Math.floor(clickPositionY/90);
         }
+      }*/
+      if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+        //If we clicked on an ally, and the waiting function targets an ally
+        this.checkWaitingFunction(Math.floor(clickPositionY/90));
       }
-      myCombatScreen.updateScreen(1,1,0);
+      else{
+        this.selectFriendlyUnit(Math.floor(clickPositionY/90));
+      }
+
+      console.log(combatLogi.waitingFunction[0] + "  " + combatLogi.waitingFunction[1]);
+
     }
     //If the click was not in either of the bars, it must be in the Combat Field
     else{
@@ -441,18 +424,9 @@ class CombatLogic{
   }// end combatClickHandler()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Called by combatClickResolution() once a valid input is determined
-  //////////////////////////////////////////////////////////////////////////////
-  checkWaitingFunctions(){
-      console.log("Field: " + this.clickedField[0] + " - (" + this.clickedField[1] + ", " + this.clickedField[2] + ")");
-      console.log("You have selected ally: " + this.selectedAlly);
-  }//end checkWaitingFunctions()
-
-
-  //////////////////////////////////////////////////////////////////////////////
   //  Checks waiting function and acts upon it
   //////////////////////////////////////////////////////////////////////////////
-  checkWaitingFunction(){
+  checkWaitingFunction(target){
 
     switch(skills.skillList[combatLogi.waitingFunction[1]][3] == 3){
       case 4: //targets enemy
@@ -462,7 +436,8 @@ class CombatLogic{
       break;
 
       case 3: //targets ally
-
+        console.log(player.myCreatures[combatLogi.selectedAlly].skillList[2][0] + " to " + combatLogi.waitingFunction[1]);
+        skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.selectedAlly], player.MyCreatures[target]);
       break;
 
 
@@ -475,7 +450,7 @@ class CombatLogic{
     //console.log(skills.skillList[0][1](player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]));
     skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     //skills.skillAttack(player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
-    this.waitingFunction = [null, null];
+    this.clearWaitingFunction();
     myCombatScreen.updateScreen(1,0,1);
   }//end checkWaitingFunction()
 

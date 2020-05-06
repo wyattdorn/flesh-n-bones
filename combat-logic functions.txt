@@ -1,0 +1,5 @@
+openItemSelection()
+
+
+skills can only be selected if the click is in the control bar
+skills can only be executed if the click is not in the control bar
