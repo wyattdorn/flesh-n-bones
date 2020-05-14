@@ -93,14 +93,13 @@ class CombatLogic{
     }
   }//end checkForWounds()
 
-
-    // Pass in skill number (index from master list) and target crfeature Object
-    executeSkill(target){
-      console.log("execute: " + skills.skillList[this.waitingFunction[1]][2]);
-      console.log(this.waitingFunction[1] + " ------ " + player.myCreatures[this.waitingFunction[0]].skillList[this.waitingFunction[1]][0]);
-      //console.log("ward: " + skills.skillList[this.waitingFunction[1]]);
-      skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
-    }//end executeSkill()
+  //////////////////////////////////////////////////////////////////////////////
+  // Pass in creature Object and execute the waiting skill upon the given target
+  //////////////////////////////////////////////////////////////////////////////
+  executeSkill(target){
+    skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
+    this.clearWaitingFunction();
+  }//end executeSkill()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Called when a friendly unit is clicked to determine if they should be selected or have a skill acted upon them
@@ -127,10 +126,12 @@ class CombatLogic{
   //  Called when an enemy unit is clicked to determine if they should be acted upon
   //////////////////////////////////////////////////////////////////////////////
   selectEnemyUnit(unitNum){
+    console.log("Clicked enemy: " + unitNum);
     //If there is a waiting offesnive skill, we act upon it
     if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 4){
       //execute stored skill
       console.log("Damage bad guy.");
+      this.executeSkill(enemyCreatures[unitNum]);
       this.clearWaitingFunction();
       myCombatScreen.updateScreen(1,1,0);
     }
@@ -158,39 +159,17 @@ class CombatLogic{
     }
     else{//Through process of elimination, we know the only remaining columns are the enemy columns
       if(enemyCreatures.length >= this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))){
-        console.log("Enemyy unit: " + (this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))) );
+        //console.log("Enemyy unit: " + (this.clickedField[2] - 1 + (3 * (5-this.clickedField[1]))) );
         this.selectedEnemy = (this.clickedField[2] - 1 + (3 * (5-this.clickedField[1])) - 1);
 
-        this.checkWaitingFunction(this.selectEnemy);
+        this.selectEnemyUnit(this.selectedEnemy);
+        //this.checkWaitingFunction(this.selectEnemy);
       }
       else{//If the click is in a spot that COULD contain an enemy, but doesn't
         console.log("Not enough enemies.");
       }
     }
   }//end combatFieldClickHandler()
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  Called by combatClickHandler() after click location is determined
-  //  ***************SOON TO BE DELTED *** NO LONGER IN USE********************
-  //////////////////////////////////////////////////////////////////////////////
-  combatClickResolution(){
-
-    if(!(this.clickedField[1] == 0 || this.clickedField[2] == 0)){
-      switch (this.clickedField[0]){
-        case 1:
-          this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
-        break;
-        case 3:
-          this.combatFieldClickHandler();
-        break;
-      }
-    }
-    else{
-      //console.log("Invalid selection.");
-    }
-
-
-  }//end combatClickResolution()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Ends the player's turn
@@ -212,7 +191,6 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   skillButtonPress(skillNum){
     console.log("skillButtonPressed()");
-    //console.log(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][2]);
     this.clearWaitingFunction();
 
     switch(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][3]){
@@ -452,9 +430,10 @@ class CombatLogic{
         //click is in a blank row
         this.clickedField[2] = 0;
       }
+      this.combatFieldClickHandler();
     }
 
-    this.combatFieldClickHandler();
+
 
   }// end combatClickHandler()
 
