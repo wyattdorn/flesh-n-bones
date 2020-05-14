@@ -134,10 +134,10 @@ function createDummyCreatures(){
   //player.myCreatures[0].creatureSkills[3] = null;
 
 
-  enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=100;
   enemyCreatures[0].currentHP = 94;
-  enemyCreatures.push(new EnemyCreature("chonk 2", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));

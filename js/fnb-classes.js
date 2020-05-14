@@ -105,6 +105,7 @@ class Creature {
   }
 
   giveHealth(num){
+    console.log("Healing for: " + num);
     this.currentHP = this.currentHP + num;
     if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
   }
