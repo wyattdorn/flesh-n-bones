@@ -72,6 +72,7 @@ class Creature {
     this.moveSpeed = 4;
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
+    this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
   levelUp(){

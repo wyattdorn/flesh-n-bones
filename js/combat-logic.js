@@ -44,7 +44,12 @@ class CombatLogic{
 
     //console.log("Selected unit: " + this.selectedAlly);
 
+    //myCombatScreen.drawCheckMark(20,20);
+
   }//end init()
+
+
+
 
   //////////////////////////////////////////////////////////////////////////////
   //  Sets the waitingFunction variable to [-1, -1] to indicate there is no waiting function
@@ -104,10 +109,12 @@ class CombatLogic{
   executeSkill(target){
     if(player.myCreatures[this.waitingFunction[0]].currentSpirit >= skills.skillList[this.waitingFunction[1]][6]){
       skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
+      player.myCreatures[this.waitingFunction[0]].hasAction = false;
       if(this.checkCreatureStatuses){
         myCombatScreen.updateScreen(1,0,1);
       }
       player.myCreatures[this.waitingFunction[0]].removeSpirit(skills.skillList[this.waitingFunction[1]][6]);
+
     }
     else{
       console.log("Not enough spirit!")
@@ -202,6 +209,12 @@ class CombatLogic{
     console.log("skillButtonPressed()");
     this.clearWaitingFunction();
 
+    //If the unit does not have any actions left this round, then we do not allow them to act
+    if(player.myCreatures[this.selectedAlly].hasAction == false){
+      console.log("No actions left!");
+      return;
+    }
+
     //First, we check that the unit has enough Spirit to use the selected ability
     if(player.myCreatures[this.selectedAlly].currentSpirit >= player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][6]){
 
@@ -219,6 +232,8 @@ class CombatLogic{
           //Now we execute the skill, and decrement the unit's Spirit accordingly
           player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][1](player.myCreatures[combatLogi.selectedAlly]);
           player.myCreatures[combatLogi.selectedAlly].removeSpirit(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][6]);
+          //We note that the unit has acted this round
+          player.myCreatures[combatLogi.selectedAlly].hasAction = false;
           //Update the Unit Bar to reflect the Spirit spent
           myCombatScreen.updateScreen(1,0,0);
           //If any unit died or is now bloodied, we redraw the Combat Field too

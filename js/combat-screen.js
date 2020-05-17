@@ -18,14 +18,15 @@ class CombatScreen{
 
   }//end constructor()
 
-  init(playerCreatures, enemyCreatures, isPlayerTurn, context, canvas){
+  init(isPlayerTurn, context, canvas){
 
     this.currentTime = new Date;//.getTime();
     this.randSeed = this.currentTime.getTime();
     Math.seedrandom(this.randSeed);
 
-    this.numEnemies = enemyCreatures.length;
-    this.numAllies = playerCreatures.length;
+    //enemyCreatures.length;
+    //this.numEnemies = enemyCreatures.length;
+    //this.numAllies = player.myCreatures.length;
 
     ctx.fillStyle = "#171b04";//"#303030";
     ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
@@ -42,7 +43,28 @@ class CombatScreen{
     this.drawFlourish();
 
     combatLogi.checkCreatureStatuses();
+
   }//end init()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Testing drawing a check mark
+
+  drawCheckMark(startX, startY){
+    ctx.save();
+    console.log("Drawing check!");
+    ctx.fillStyle = "red";
+    //ctx.fillRect(10, 10, 100, 1000);
+    ctx.beginPath();
+    ctx.moveTo(startX+5, startY+7);
+    ctx.lineTo(startX+0, startY+13);
+    ctx.lineTo(startX+13, startY+25);
+    ctx.lineTo(startX+32, startY+6);
+    ctx.lineTo(startX+26, startY+0);
+    ctx.lineTo(startX+13, startY+15);
+    ctx.fill();
+    ctx.restore();
+  }
 
   /////////////////////////////////////////////////////////////////////////////\
   //    This function takes three boolean inputs and redraws parts of the screen
@@ -217,11 +239,14 @@ class CombatScreen{
 
     ctx.fillStyle = "#60584f";
 
-    for(var i = 0; i < this.numAllies; i++){
+    for(var i = 0; i < player.myCreatures.length; i++){
       ctx.fillRect(0, 10+(i*90), unitBarWidth, 65);
       this.drawUnitInfo(i);
       this.drawHPBar(i, 10, 5);
       this.drawSpiritBar(i, 10, 38);
+      if(player.myCreatures[i].hasAction == false){
+        this.drawCheckMark(215, 35 + 90*i);
+      }
     }
 
   }//end drawUnitInfoBar
@@ -309,7 +334,7 @@ class CombatScreen{
     var baseX = unitBarWidth + 50;
 
     //Loop through all the allies we have in combat
-    for(var x = 0; x < this.numAllies; x++){
+    for(var x = 0; x < player.myCreatures.length; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
       if(player.myCreatures[x].isDead()){
@@ -331,7 +356,7 @@ class CombatScreen{
     var baseX = unitBarWidth + 750;
 
     //Loop through all the allies we have in combat
-    for(var x = 0; x < this.numEnemies; x++){
+    for(var x = 0; x < enemyCreatures.length; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX -= 150};
 
@@ -357,7 +382,7 @@ class CombatScreen{
     var baseX = unitBarWidth + 750;
 
     //Loop through all the allies we have in combat
-    for(var x = 0; x < this.numEnemies; x++){
+    for(var x = 0; x < enemyCreatures.length; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX -= 150};
       ctx.fillStyle = "black";

@@ -33,10 +33,6 @@ var combatLogi;
 
 function init(){
 
-  player = new Deity();
-  skills = new Skill();
-  combatLogi = new CombatLogic();
-
   myCreatures = [];
   enemyCreatures = [];
   creatureImages = [];
@@ -59,7 +55,12 @@ function init(){
     return false;
   }
 
+
+  player = new Deity();
+  skills = new Skill();
   myCombatScreen = new CombatScreen(ctx, canvas);
+
+  combatLogi = new CombatLogic();
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
@@ -73,7 +74,11 @@ function init(){
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
-  myCombatScreen.init(player.myCreatures, enemyCreatures, true);
+
+  myCombatScreen.init(true);
+
+
+
 
 } //end init()
 
