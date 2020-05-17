@@ -150,7 +150,7 @@ function createDummyCreatures(){
 //Collects data every time the mouse is clicked somewhere within the canvas
 ///////////////////////////////////////////////////////////////////////////////\
 function logMouseClick(e){
-  console.log("Mouse clicked");
+  console.log("***Mouse clicked***");
   var clickPosition = [];
 
   //get mouse location at time of click
