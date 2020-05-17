@@ -102,11 +102,17 @@ class CombatLogic{
   // Pass in creature Object and execute the waiting skill upon the given target
   //////////////////////////////////////////////////////////////////////////////
   executeSkill(target){
-    skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
-    this.clearWaitingFunction();
-    if(this.checkCreatureStatuses){
-      myCombatScreen.updateScreen(1,0,1);
+    if(player.myCreatures[this.waitingFunction[0]].currentSpirit >= skills.skillList[this.waitingFunction[1]][6]){
+      skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
+      if(this.checkCreatureStatuses){
+        myCombatScreen.updateScreen(1,0,1);
+      }
+      player.myCreatures[this.waitingFunction[0]].removeSpirit(skills.skillList[this.waitingFunction[1]][6]);
     }
+    else{
+      console.log("Not enough spirit!")
+    }
+    this.clearWaitingFunction();
   }//end executeSkill()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -196,23 +202,38 @@ class CombatLogic{
     console.log("skillButtonPressed()");
     this.clearWaitingFunction();
 
-    switch(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][3]){
+    //First, we check that the unit has enough Spirit to use the selected ability
+    if(player.myCreatures[this.selectedAlly].currentSpirit >= player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][6]){
 
-      //Skill requires a target and is then stored
-      case 4: case 3:
-      combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0]];
-      //console.log(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0] + " top " + combatLogi.waitingFunction[1]);
-      console.log(player.myCreatures[this.selectedAlly].skillList[skillNum][2] + " stored for " + player.myCreatures[this.selectedAlly].name);
-      break;
+      switch(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][3]){
+        //Skill requires a target and is then stored
+        case 4: case 3:
+        //We store the unit number and skill number for the skill waiting for a target to be selected
+        combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0]];
+        console.log(player.myCreatures[this.selectedAlly].skillList[skillNum][2] + " stored for " + player.myCreatures[this.selectedAlly].name);
+        //Spirit is not spent until the skill is actually used.
+        break;
 
-      //Skill does not require a target and is executed immediately
-      case 1: case 2: case 5: case 6: case 7:
-      player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][1](player.myCreatures[combatLogi.selectedAlly]);
-      break;
-
+        //Skill does not require a target and is executed immediately
+        case 1: case 2: case 5: case 6: case 7:
+          //Now we execute the skill, and decrement the unit's Spirit accordingly
+          player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][1](player.myCreatures[combatLogi.selectedAlly]);
+          player.myCreatures[combatLogi.selectedAlly].removeSpirit(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][6]);
+          //Update the Unit Bar to reflect the Spirit spent
+          myCombatScreen.updateScreen(1,0,0);
+          //If any unit died or is now bloodied, we redraw the Combat Field too
+          if(this.checkCreatureStatuses){
+            myCombatScreen.updateScreen(0,0,1);
+          }
+        //Clear the waiting function
+        this.clearWaitingFunction();
+        break;
+      }
     }
-
-    console.log(this.waitingFunction[0]+ " --- " + this.waitingFunction[1]);
+    //If the unit does not have enough Spirit, we do nothing.
+    else{
+      console.log("Not enough spirit!")
+    }
 
   }//end skillButtonPress()
 

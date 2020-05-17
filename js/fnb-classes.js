@@ -110,6 +110,11 @@ class Creature {
     if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
   }
 
+  removeSpirit(num){
+    console.log("Spending " + num + " spirit!");
+    this.currentSpirit = this.currentSpirit - num;
+  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
