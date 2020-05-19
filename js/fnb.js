@@ -73,7 +73,16 @@ function init(){
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< Updated upstream
   myCombatScreen.init(player.myCreatures, enemyCreatures, true);
+=======
+
+  myCombatScreen.init(true);
+
+  combatLogi.beginCombat();
+
+
+>>>>>>> Stashed changes
 
 } //end init()
 

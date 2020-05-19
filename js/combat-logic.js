@@ -53,10 +53,34 @@ class CombatLogic{
     this.controlBarFunctions[71] = this.endTurn;
     this.controlBarFunctions[73] = this.runAway;
 
+    this.displayMessage = "COMBAT HAS BEGUN!";
+
+
+
     //console.log("Selected unit: " + this.selectedAlly);
 
   }//end init()
 
+<<<<<<< Updated upstream
+=======
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Set of functions to be run once combat has begun
+  //////////////////////////////////////////////////////////////////////////////
+  beginCombat(){
+    myCombatScreen.printMessageBar(this.displayMessage);
+  }
+
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Sets the waitingFunction variable to [-1, -1] to indicate there is no waiting function
+  //////////////////////////////////////////////////////////////////////////////
+  clearWaitingFunction(){
+    this.waitingFunction = [-1, -1];
+  }
+
+>>>>>>> Stashed changes
   //////////////////////////////////////////////////////////////////////////////
   //  Checks all creatures in combat for status conditions
   //////////////////////////////////////////////////////////////////////////////
@@ -100,8 +124,66 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   //  Called by combatClickResolution() when a creature in the combat field is clicked on
   //////////////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream
   selectUnit(){
     //First, check that the click was in the twwo that hold allied
+=======
+  executeSkill(target){
+    if(player.myCreatures[this.waitingFunction[0]].currentSpirit >= skills.skillList[this.waitingFunction[1]][6]){
+      skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
+      player.myCreatures[this.waitingFunction[0]].hasAction = false;
+      if(this.checkCreatureStatuses){
+        myCombatScreen.updateScreen(1,0,1);
+      }
+    }
+    else{
+      this.displayMessage = (player.myCreatures[this.waitingFunction[0]].name + " does not have enough Spirit for that skill!");
+      myCombatScreen.printMessageBar(this.displayMessage);
+      console.log("Not enough spirit!")
+    }
+    this.clearWaitingFunction();
+  }//end executeSkill()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Called when a friendly unit is clicked to determine if they should be selected or have a skill acted upon them
+  //////////////////////////////////////////////////////////////////////////////
+  selectFriendlyUnit(unitNum){
+    //If there is a waiting defensive skill, we act upon it
+    if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+      //execute stored skill
+      this.executeSkill(player.myCreatures[unitNum]);
+      this.clearWaitingFunction();
+    }
+    //If there is no waiting defensive skill, we select the friendly unit
+    else{
+      this.clearWaitingFunction();
+      this.selectedAlly = unitNum;
+      console.log("Selected unit number: " + unitNum + ", Name: " + player.myCreatures[unitNum].name);
+    }
+    myCombatScreen.updateScreen(1,1,0);
+  }// end selectFriendlyUnit()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Called when an enemy unit is clicked to determine if they should be acted upon
+  //////////////////////////////////////////////////////////////////////////////
+  selectEnemyUnit(unitNum){
+    console.log("Clicked enemy: " + unitNum);
+    //If there is a waiting offesnive skill, we act upon it
+    if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 4){
+      this.executeSkill(enemyCreatures[unitNum]);
+      this.clearWaitingFunction();
+      myCombatScreen.updateScreen(1,1,0);
+    }
+    //If there is no waiting offesnive skill, we do nothing
+
+  }// end selectEnemyUnit()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Called when a click occurs in the combatField
+  //////////////////////////////////////////////////////////////////////////////
+  combatFieldClickHandler(){
+    //First, check that the click was in the two that hold allied
+>>>>>>> Stashed changes
     if(this.clickedField[1] == 1 || this.clickedField[1] == 2){
       //We check the clicked slot has a friendly unit in it
       if(player.myCreatures.length >= this.clickedField[2] - 1 + (3 * (this.clickedField[1]-1))){
@@ -177,6 +259,21 @@ class CombatLogic{
   skill1(){
     console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + "!");
 
+<<<<<<< Updated upstream
+=======
+    //If the unit does not have any actions left this round, then we do not allow them to act
+    if(player.myCreatures[this.selectedAlly].canAct() == false){
+      if(player.myCreatures[this.selectedAlly].isDead()){
+        this.displayMessage = (player.myCreatures[this.selectedAlly].name + " is dead, and cannot act :'(");
+        myCombatScreen.printMessageBar(this.displayMessage);
+      }
+      else if (player.myCreatures[this.selectedAlly].hasAction == false) {
+        this.displayMessage = (player.myCreatures[this.selectedAlly].name + " has already acted this round, and cannot act again!");
+        myCombatScreen.printMessageBar(this.displayMessage);
+      }
+      return;
+    }
+>>>>>>> Stashed changes
 
     switch(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]){
       case 4:
@@ -190,12 +287,20 @@ class CombatLogic{
       break;
 
     }
+<<<<<<< Updated upstream
     /*
     //skills.skillScythe(player.myCreatures[combatLogi.selectedAlly]);
     if(player.myCreatures[combatLogi.selectedAlly].skillList[0][3]==4){
       combatLogi.waitingOffensiveFunction = [player.myCreatures[combatLogi.selectedAlly], player.myCreatures[combatLogi.selectedAlly].skillList[0][0]];
       console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][0] + " to " + combatLogi.waitingOffensiveFunction[1]);
       console.log(player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + " stored.");
+=======
+    //If the unit does not have enough Spirit, we do nothing.
+    else{
+      this.displayMessage = (player.myCreatures[this.selectedAlly].name + " does not have enough Spirit for that skill!");
+      myCombatScreen.printMessageBar(this.displayMessage);
+      console.log("Not enough spirit!")
+>>>>>>> Stashed changes
     }
     else{
       player.myCreatures[combatLogi.selectedAlly].skillList[0][1](player.myCreatures[combatLogi.selectedAlly]);

@@ -44,6 +44,45 @@ class CombatScreen{
     combatLogi.checkCreatureStatuses();
   }//end init()
 
+<<<<<<< Updated upstream
+=======
+  //////////////////////////////////////////////////////////////////////////////
+  //  Prints a message to the onscreen Message Bar
+  //////////////////////////////////////////////////////////////////////////////
+  printMessageBar(myString){
+    console.log("Printing: " + myString);
+    ctx.save();
+    console.log("Drawing check!");
+    ctx.fillStyle = "black";
+    ctx.fillRect(unitBarWidth, 526, canvasWidth, 30);
+
+    ctx.font = "20px Courier";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText(myString, unitBarWidth + 5, 546);
+    ctx.restore();
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Testing drawing a check mark
+
+  drawCheckMark(startX, startY){
+    ctx.save();
+    console.log("Drawing check!");
+    ctx.fillStyle = "red";
+    //ctx.fillRect(10, 10, 100, 1000);
+    ctx.beginPath();
+    ctx.moveTo(startX+5, startY+7);
+    ctx.lineTo(startX+0, startY+13);
+    ctx.lineTo(startX+13, startY+25);
+    ctx.lineTo(startX+32, startY+6);
+    ctx.lineTo(startX+26, startY+0);
+    ctx.lineTo(startX+13, startY+15);
+    ctx.fill();
+    ctx.restore();
+  }
+
+>>>>>>> Stashed changes
   /////////////////////////////////////////////////////////////////////////////\
   //    This function takes three boolean inputs and redraws parts of the screen
   //    based on the inputs recieved.
@@ -413,12 +452,14 @@ class CombatScreen{
     ctx.fillRect(0, 526, canvasWidth, 30);
 
     newImg.addEventListener('load',function(){
-      for(var x = 0; x < 60; x++){
-        ctx.drawImage(newImg, 20*x-2, 526, 24, 30);
+      for(var x = 0; x < 13; x++){
+        ctx.drawImage(newImg, 20*x-13, 526, 24, 30);
       }
     }, false);
 
     newImg.src = 'media/images/gui/style/skull1-green.png';
+
+    this.printMessageBar();
 
   }//end drawSkulls()
 

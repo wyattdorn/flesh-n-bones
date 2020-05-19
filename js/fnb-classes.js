@@ -74,6 +74,17 @@ class Creature {
     this.skillList = [];
   }
 
+  //////////////////////////////////////////////////////////////////////////////////////
+  //    Returns a boolean, if the Creature is capable of acting at this time
+  //////////////////////////////////////////////////////////////////////////////////////
+  canAct(){
+    if(this.hasAction == true && this.isDead() == false){
+      return true;
+    }
+    console.log("Unit cannot act.");
+    return false;
+  }
+
   levelUp(){
     this.level++;
   }

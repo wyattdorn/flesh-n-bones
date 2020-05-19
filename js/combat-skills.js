@@ -38,10 +38,30 @@ class Skill{
   }//end init()
 
   //////////////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream
   //  SPirit Dagger skill - Damages a single enemy unit based on attacker's wits.
   //////////////////////////////////////////////////////////////////////////////
   skillSpiritDagger(creature, target){
     console.log(creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name);
+=======
+  //  Heal skill - Heals a single ally based on caster's wits
+  //////////////////////////////////////////////////////////////////////////////
+  skillHeal(creature, target){
+    combatLogi.displayMessage = (creature.name + " heals " + Math.floor(creature.wits * 2.0) + " health to " + target.name + "!");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
+    console.log(creature.name + " heals " + Math.floor(creature.wits * 2.0) + " health to " + target.name);
+    skills.healUnit(Math.floor(creature.wits * 1.5), target);
+  }//end skillHeal()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Spirit Dagger skill - Damages a single enemy unit based on attacker's wits.
+  //////////////////////////////////////////////////////////////////////////////
+  skillSpiritDagger(creature, target){
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with Spirit Dagger.");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
+    console.log(creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with Spirit Dagger.");
+>>>>>>> Stashed changes
     skills.damageUnit(Math.floor(creature.wits * 2.0), target);
   }//end skillExplode()
 
