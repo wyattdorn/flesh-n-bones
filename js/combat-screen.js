@@ -147,13 +147,20 @@ class CombatScreen{
 
     for(var i = 0; i < player.myCreatures[combatLogi.selectedAlly].skillList.length; i++){
       ctx.fillStyle = "#cccccc";
+      ctx.font = "25px Arial";
       var x = 275;
       if(i%2==1){x = 675;}
       var y = 50;
       if(i>1){y=160;}
-      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x, canvas.height - controlBarHeight + y);
+      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x + 30, canvas.height - controlBarHeight + y);
+      ctx.fillStyle = "#8099ff";
+      ctx.font = "10px Arial";
+      ctx.fillText("Cost: ", x - 12 , canvas.height - controlBarHeight + y - 12);
+      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][6], x - 5 , canvas.height - controlBarHeight + y + 3);
     }
 
+    ctx.fillStyle = "#cccccc";
+    ctx.font = "25px Arial";
     this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
 
     ctx.fillText("Run", 1100, canvas.height - controlBarHeight + 160);
