@@ -72,6 +72,7 @@ class Creature {
     this.moveSpeed = 4;
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
+    this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +101,6 @@ class Creature {
 
   //Returns a boolean, if the given creature's HP is less than half
   isBloodied(){
-    console.log("fires" + this.currentHP/this.maxHP);
     if(this.currentHP/this.maxHP < 0.5 && !this.isDead()){return true;}
     else{return false;}
   }//end isBloodied()
@@ -117,8 +117,14 @@ class Creature {
   }
 
   giveHealth(num){
+    console.log("Healing for: " + num);
     this.currentHP = this.currentHP + num;
     if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
+  }
+
+  removeSpirit(num){
+    console.log("Spending " + num + " spirit!");
+    this.currentSpirit = this.currentSpirit - num;
   }
 
 }

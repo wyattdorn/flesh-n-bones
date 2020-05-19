@@ -33,10 +33,6 @@ var combatLogi;
 
 function init(){
 
-  player = new Deity();
-  skills = new Skill();
-  combatLogi = new CombatLogic();
-
   myCreatures = [];
   enemyCreatures = [];
   creatureImages = [];
@@ -59,7 +55,12 @@ function init(){
     return false;
   }
 
+
+  player = new Deity();
+  skills = new Skill();
   myCombatScreen = new CombatScreen(ctx, canvas);
+
+  combatLogi = new CombatLogic();
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
@@ -73,16 +74,12 @@ function init(){
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< Updated upstream
-  myCombatScreen.init(player.myCreatures, enemyCreatures, true);
-=======
 
   myCombatScreen.init(true);
 
   combatLogi.beginCombat();
 
 
->>>>>>> Stashed changes
 
 } //end init()
 
@@ -134,6 +131,7 @@ function createDummyCreatures(){
   }
 
   player.myCreatures[0].skillList[0] = skills.skillList[4];
+  player.myCreatures[0].skillList[1] = skills.skillList[0];
   player.myCreatures[2].skillList[1] = skills.skillList[6];
   player.myCreatures[3].skillList[1] = skills.skillList[6];
   player.myCreatures[4].skillList[2] = skills.skillList[5];
@@ -142,10 +140,10 @@ function createDummyCreatures(){
   //player.myCreatures[0].creatureSkills[3] = null;
 
 
-  enemyCreatures.push(new EnemyCreature("chonk 1", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=100;
   enemyCreatures[0].currentHP = 94;
-  enemyCreatures.push(new EnemyCreature("chonk 2", 'media/images/character-sprites/skeleman-1.png'));
+  enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
   //enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
@@ -158,7 +156,7 @@ function createDummyCreatures(){
 //Collects data every time the mouse is clicked somewhere within the canvas
 ///////////////////////////////////////////////////////////////////////////////\
 function logMouseClick(e){
-  console.log("Mouse clicked");
+  console.log("***Mouse clicked***");
   var clickPosition = [];
 
   //get mouse location at time of click
