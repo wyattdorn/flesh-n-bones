@@ -153,6 +153,10 @@ class CombatScreen{
       var y = 50;
       if(i>1){y=160;}
       ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x + 30, canvas.height - controlBarHeight + y);
+
+      ctx.fillStyle = "red";
+      //ctx.fillRect(x-27, canvas.height - controlBarHeight + y - 26 , 40, 40);
+
       ctx.fillStyle = "#8099ff";
       ctx.font = "10px Arial";
       ctx.fillText("Cost: ", x - 12 , canvas.height - controlBarHeight + y - 12);

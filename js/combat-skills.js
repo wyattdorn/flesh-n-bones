@@ -44,7 +44,9 @@ class Skill{
   //  NEED TO BE IMPLEMENTED
   //////////////////////////////////////////////////////////////////////////////
   skillDefend(creature, target){
-    console.log(creature.name + " defends " + target.name);
+    combatLogi.displayMessage = (creature.name + " moves to defend " + target.name + ".");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
+    console.log(creature.name + " moves to defend " + target.name + ".");
     //skills.healUnit(Math.floor(creature.wits * 1.5), target);
   }//end skillHeal()
 
@@ -64,7 +66,7 @@ class Skill{
   //  Spirit Dagger skill - Damages a single enemy unit based on attacker's wits.
   //////////////////////////////////////////////////////////////////////////////
   skillSpiritDagger(creature, target){
-    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with Spirit Dagger.");
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with " + skills.skillList[6][2] + ".");
     myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with Spirit Dagger.");
     skills.damageUnit(Math.floor(creature.wits * 2.0), target);
@@ -74,6 +76,8 @@ class Skill{
   //  Orc Smash skill - Damages a single enemy unit and attacker based on attacker's might.
   //////////////////////////////////////////////////////////////////////////////
   skillOrcSmash(creature, target){
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.might * 3) + " damage to " + target.name + " and themself!");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.might * 3) + " damage to " + target.name + " and themself!");
     skills.damageUnit(Math.floor(creature.might * 3), target);
     skills.damageUnit(Math.floor(creature.might * 3), creature);
@@ -83,6 +87,8 @@ class Skill{
   //  Attack skill - Damages a single enemy unit based on attacker's might.
   //////////////////////////////////////////////////////////////////////////////
   skillAttack(creature, target){
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.might * 1.5) + " damage to " + target.name + " with Attack.");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.might * 1.5) + " damage to " + target.name + " with Attack.");
     skills.damageUnit(Math.floor(creature.might * 1.5), target);
   }//end skillAttack()
@@ -91,6 +97,8 @@ class Skill{
   //  Explode skill - Damages all units on field an amount equal to the level of the unit that used the skill.
   //////////////////////////////////////////////////////////////////////////////
   skillExplode(creature){
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.level) + " damage to all creatures!");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.level) + " damage to all creatures!");
     skills.damageAll(creature.level);
   }//end skillExplode()
@@ -99,9 +107,10 @@ class Skill{
   //  Scythe skill - Damages all enemy units an amount equal to 2x the unit's might.
   //////////////////////////////////////////////////////////////////////////////
   skillScythe(creature){
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.might) + " damage to all enemies");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.might) + " damage to all enemies");
     skills.damageAllEnemies(Math.floor(creature.might));
-    myCombatScreen.updateScreen(true, false, true);
   }//end skillScythe()
 
   //////////////////////////////////////////////////////////////////////////////
