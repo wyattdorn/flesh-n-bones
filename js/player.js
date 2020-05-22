@@ -13,6 +13,7 @@ class Deity{
     this.malachite = 0; //The money used in this world
     this.impetus = 0; //Basically exp for the PC
     this.myCreatures = [];
+    this.isPlayerTurn = true;
   }//end constructor
 
   addSoul(newSoul){

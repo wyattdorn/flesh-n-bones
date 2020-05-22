@@ -1,7 +1,8 @@
 //Written by Wyatt Dorn
 
-
 class CombatLogic{
+
+
   constructor(){
     this.init();
   }//end constructor()
@@ -44,11 +45,7 @@ class CombatLogic{
 
     this.displayMessage = "COMBAT HAS BEGUN!";
 
-
-
-    //console.log("Selected unit: " + this.selectedAlly);
-
-    //myCombatScreen.drawCheckMark(20,20);
+    this.newAI = new enemyAI();
 
   }//end init()
 
@@ -200,13 +197,39 @@ class CombatLogic{
     }
   }//end combatFieldClickHandler()
 
+
+
   //////////////////////////////////////////////////////////////////////////////
   //  Ends the player's turn
   //////////////////////////////////////////////////////////////////////////////
   endTurn(){
     console.log("Turn ended!");
-    myCombatScreen.updateScreen(1,1,1);
+    player.isPlayerTurn = false;
+    combatLogi.beginEnemyTurn();
+    //myCombatScreen.updateScreen(1,1,1);
   }//end endTurn()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Base function that handles all events taking place during the enemy's turn
+  //////////////////////////////////////////////////////////////////////////////
+  beginEnemyTurn(){
+    this.displayMessage = "The enemy moves in to position.";
+    myCombatScreen.printMessageBar(this.displayMessage);
+
+    enemyCreatures.forEach((Creature) =>  skills.skillList[0][1](Creature, player.myCreatures[combatLogi.newAI.random()]));
+
+
+    this.endEnemyTurn();
+  }//end beginEnemyTurn()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Ends the enemy turn
+  //////////////////////////////////////////////////////////////////////////////
+  endEnemyTurn(){
+    console.log("lll");
+    player.myCreatures.forEach(Creature => Creature.hasAction = true);
+    myCombatScreen.updateScreen(1,1,1);
+  }//end beginEnemyTurn()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Player flees combat
@@ -316,6 +339,8 @@ class CombatLogic{
   //  Function opens menu in combat
   //////////////////////////////////////////////////////////////////////////////
   openMenu(){
+    this.displayMessage = "Opening options menu.";
+    myCombatScreen.printMessageBar(this.displayMessage);
     console.log("Menu opened!");
   }//end openMenu()
 
@@ -323,9 +348,9 @@ class CombatLogic{
   //  Function opens item selection screen in combat
   //////////////////////////////////////////////////////////////////////////////
   openItemSelection(){
+    this.displayMessage = "Item menu opened.";
+    myCombatScreen.printMessageBar(this.displayMessage);
     console.log("Item selection opened!");
-    player.myCreatures.forEach(Creature => Creature.removeHealth(1));
-    myCombatScreen.updateScreen(1,1,0);
     //myCombatScreen.drawUnitBar();
     //myCombatScreen.drawSkulls();
   }//end openItemSelection()
