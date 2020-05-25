@@ -343,6 +343,10 @@ class CombatLogic{
         //Spirit is not spent until the skill is actually used.
         break;
 
+        case 0:
+          //This is reserved for clicking a button with no skill attached to it
+        break;
+
         //Skill does not require a target and is executed immediately
         case 1: case 2: case 5: case 6: case 7:
           //Now we execute the skill, and decrement the unit's Spirit accordingly

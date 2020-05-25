@@ -9,6 +9,7 @@ class Skill{
 
   //////////////////////////
   //  Target Types:
+  //  0: NO SKILL
   //  1: None
   //  2: Self
   //  3: Ally
@@ -35,7 +36,7 @@ class Skill{
     this.skillList[4] = [4, this.skillScythe,        "Scythe",   6,      "might",      1.0,       2,    "Damage all enemy heroes on the field."];
     this.skillList[5] = [5, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only)."];
     this.skillList[6] = [6, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy."];
-    this.skillList[7] = [7, this.noSkill, "No Skill", 1, "", 0, 0, "- - - - - - - -"];
+    this.skillList[7] = [7, this.noSkill,             "No Skill", 0, "", 0, 0, "- - - - - - - -"];
 
   }//end init()
 
