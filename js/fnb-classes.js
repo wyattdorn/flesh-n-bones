@@ -3,19 +3,54 @@
 class Skin {
   constructor(element) {
     this.element = element;
+    this.init();
+  }
+
+  init(){
+    this.skinList = new Array(1);
+    this.skinList[0] = [];
+
+    //                      function()               Name        Target  Ability       Multiplier Cost       Description
+    this.skinList[0] = [0, "No Skin", 7, "Creature has no skin."];
+    this.skinList[1] = [1, "Goblin Skin", 4, "Goblin skin grants the Scythe skill."];
+    this.skinList[2] = [2, "Orc Skin", 5, "Orc skin grants the Orc Smash skill."];
+    this.skinList[3] = [3, "Mage Skin", 6, "Mage skin grants the Spirit Dagger skill."];
   }
 }
 
 class Bones {
   constructor(element) {
     this.element = element;
+    this.init();
   }
+
+  init(){
+    this.boneList = new Array(1);
+    this.boneList[0] = [];
+
+    //                      function()               Name        Target  Ability       Multiplier Cost       Description
+    this.boneList[0] = [0, "Old Bones", 0, "Any old pile of bones can attack."];
+    this.boneList[1] = [1, "Brittle Bones", 2, "Brittle bones grants the Heal skill."];
+    this.boneList[2] = [2, "Big Bones", 1, "Big bones grant the Defend skill."];
+  }
+
 }
 
 class Guts {
   constructor(element) {
     this.element = element;
+    this.init();
   }
+
+  init(){
+    this.gutsList = new Array(1);
+    this.gutsList[0] = [];
+
+    //                      function()               Name        Target  Ability       Multiplier Cost       Description
+    this.gutsList[0] = [0, "No Guts", 7, "Creature has no guts."];
+    this.gutsList[1] = [1, "Explosive Guts", 3, "Explosive guts grants the Explode skill."];
+  }
+
 }
 
 class Soul{
@@ -73,6 +108,9 @@ class Creature {
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
     this.myItem = items.itemList[0];
+    this.mySkin = skins.skinList[0];
+    this.myBones = bones.boneList[0];
+    this.myGuts = guts.gutsList[0];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
