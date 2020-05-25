@@ -30,6 +30,7 @@ var creature, enemyCreatures; //arrays of enemy and allied creatures
 
 var skills;
 var combatLogi;
+var items;
 
 function init(){
 
@@ -55,7 +56,7 @@ function init(){
     return false;
   }
 
-
+  items = new Item();
   player = new Deity();
   skills = new Skill();
   myCombatScreen = new CombatScreen(ctx, canvas);
@@ -136,6 +137,12 @@ function createDummyCreatures(){
   player.myCreatures[3].skillList[1] = skills.skillList[6];
   player.myCreatures[4].skillList[2] = skills.skillList[5];
   player.myCreatures[5].skillList[2] = skills.skillList[5];
+
+
+  player.myCreatures[0].myItem = items.itemList[1];
+  player.myCreatures[1].myItem = items.itemList[2];
+  player.myCreatures[2].myItem = items.itemList[3];
+  player.myCreatures[3].myItem = items.itemList[1];
 
   //player.myCreatures[0].creatureSkills[3] = null;
 

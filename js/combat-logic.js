@@ -35,7 +35,7 @@ class CombatLogic{
 
     this.controlBarFunctions = [];
     this.controlBarFunctions[11] = this.openMenu;
-    this.controlBarFunctions[13] = this.openItemSelection;
+    this.controlBarFunctions[13] = this.useItem;
     this.controlBarFunctions[31] = this.skill1;
     this.controlBarFunctions[33] = this.skill3;
     this.controlBarFunctions[51] = this.skill2;
@@ -272,24 +272,22 @@ class CombatLogic{
     myCombatScreen.printMessageBar(this.displayMessage);
 
     enemyCreatures.forEach((Creature) =>  {
-
+      //Ensure there are living allies to hit
       if(this.areWeDeadYet()){
         this.endEnemyTurn();
         return;
       }
-
+      //temporary variable to store random value
       var temp;
-
+      //target random allied creature, if that creature is already dead, pick a new one
       do{
         temp = combatLogi.newAI.random();
         console.log(temp);
       }while(player.myCreatures[temp].isDead()==true);
-
-
-
-    if(Creature.isDead()==false){
-      skills.skillList[0][1](Creature, player.myCreatures[temp]);
-    }
+      //Only allow enemy unit to attack it it is not dead
+      if(Creature.isDead()==false){
+        skills.skillList[0][1](Creature, player.myCreatures[temp]);
+      }
 
     });
 
@@ -422,13 +420,23 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   //  Function opens item selection screen in combat
   //////////////////////////////////////////////////////////////////////////////
-  openItemSelection(){
-    this.displayMessage = "Item menu opened.";
-    myCombatScreen.printMessageBar(this.displayMessage);
-    console.log("Item selection opened!");
+  useItem(){
+    if(player.myCreatures[combatLogi.selectedAlly].myItem[0]!=0){
+      console.log(combatLogi.selectedAlly);
+      this.displayMessage = player.myCreatures[combatLogi.selectedAlly].name + " uses " + player.myCreatures[combatLogi.selectedAlly].myItem[1] + "!";
+      myCombatScreen.printMessageBar(this.displayMessage);
+      items.itemList[player.myCreatures[combatLogi.selectedAlly].myItem[0]][2](player.myCreatures[combatLogi.selectedAlly]);
+      console.log("Using equipped item!");
+      player.myCreatures[combatLogi.selectedAlly].myItem = items.itemList[0];
+      myCombatScreen.updateScreen(1,1,1);
+    }
+    else{
+      this.displayMessage = player.myCreatures[combatLogi.selectedAlly].name + " does not have an item equipped!";
+      myCombatScreen.printMessageBar(this.displayMessage);
+    }
     //myCombatScreen.drawUnitBar();
     //myCombatScreen.drawSkulls();
-  }//end openItemSelection()
+  }//end useItem()
 
   //////////////////////////////////////////////////////////////////////////////
   //  To be used to handle all click events when in the game's combat screen

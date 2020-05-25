@@ -143,7 +143,20 @@ class CombatScreen{
     ctx.font = "25px Arial";
     ctx.fillText("Menu", 50, canvas.height - controlBarHeight + 50);
 
-    ctx.fillText("Items", 50, canvas.height - controlBarHeight + 160);
+    //Display info for the selected Creature's equipped item
+    ctx.fillStyle = "#cccccc";
+    ctx.font = "20px Arial";
+    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].myItem[1], 30, canvas.height - controlBarHeight + 160);
+    ctx.font = "15px Courier";
+    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].myItem[3], 20, 20, 30, canvas.height - controlBarHeight + 180);
+
+    var newImg = new Image();
+
+    newImg.addEventListener('load',function(){
+      ctx.drawImage(newImg, 175, canvas.height - controlBarHeight + 140, 35, 25);
+    }, false);
+
+    newImg.src = '' + player.myCreatures[combatLogi.selectedAlly].myItem[4];
 
     for(var i = 0; i < player.myCreatures[combatLogi.selectedAlly].skillList.length; i++){
       ctx.fillStyle = "#cccccc";

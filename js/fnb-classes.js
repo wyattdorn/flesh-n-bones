@@ -72,6 +72,7 @@ class Creature {
     this.moveSpeed = 4;
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
+    this.myItem = items.itemList[0];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
@@ -125,6 +126,12 @@ class Creature {
   removeSpirit(num){
     console.log("Spending " + num + " spirit!");
     this.currentSpirit = this.currentSpirit - num;
+  }
+
+  giveSpirit(num){
+    console.log("Spending " + num + " spirit!");
+    this.currentSpirit = this.currentSpirit + num;
+    if(this.currentSpirit > this.maxSpirit){this.currentSpirit = this.maxSpirit;}
   }
 
 }
