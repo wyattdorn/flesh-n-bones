@@ -55,7 +55,62 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   beginCombat(){
     myCombatScreen.printMessageBar(this.displayMessage);
-  }
+  }//end beginCombat()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Check if either team has been killed completely
+  //////////////////////////////////////////////////////////////////////////////
+  checkforCombatEnd(){
+    if(this.areWeDeadYet()){
+      this.displayMessage = "All allied units are dead, combat is ended.";
+      myCombatScreen.printMessageBar(this.displayMessage);
+      console.log("ALL ALLIES DEAD");
+      return true;
+    }
+
+    if(this.areTheyDeadYet()){
+      this.displayMessage = "All enemies units are dead. You win!";
+      myCombatScreen.printMessageBar(this.displayMessage);
+      console.log("ALL ENEMIES DEAD");
+      return true;
+    }
+
+    return false;
+  }//end checkforCombatEnd()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Placeholder function to check if all allies are dead.
+  //////////////////////////////////////////////////////////////////////////////
+  areWeDeadYet(){
+    console.log();
+    var counter = 0;
+    player.myCreatures.forEach((Creature) => {if(Creature.isDead()) counter++});
+    console.log(counter + " dead out of " + player.myCreatures.length);
+    if(counter == player.myCreatures.length){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }//end areWeDeadYet()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Placeholder function to check if all enemies are dead.
+  //////////////////////////////////////////////////////////////////////////////
+  areTheyDeadYet(){
+    console.log();
+    var counter = 0;
+    enemyCreatures.forEach((Creature) => {if(Creature.isDead()) counter++});
+    console.log(counter + " dead out of " + enemyCreatures.length);
+    if(counter == enemyCreatures.length){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }//end areTheyDeadYet()
 
 
 
@@ -216,8 +271,27 @@ class CombatLogic{
     this.displayMessage = "The enemy moves in to position.";
     myCombatScreen.printMessageBar(this.displayMessage);
 
-    enemyCreatures.forEach((Creature) =>  skills.skillList[0][1](Creature, player.myCreatures[combatLogi.newAI.random()]));
+    enemyCreatures.forEach((Creature) =>  {
 
+      if(this.areWeDeadYet()){
+        this.endEnemyTurn();
+        return;
+      }
+
+      var temp;
+
+      do{
+        temp = combatLogi.newAI.random();
+        console.log(temp);
+      }while(player.myCreatures[temp].isDead()==true);
+
+
+
+    if(Creature.isDead()==false){
+      skills.skillList[0][1](Creature, player.myCreatures[temp]);
+    }
+
+    });
 
     this.endEnemyTurn();
   }//end beginEnemyTurn()
@@ -229,6 +303,7 @@ class CombatLogic{
     console.log("lll");
     player.myCreatures.forEach(Creature => Creature.hasAction = true);
     myCombatScreen.updateScreen(1,1,1);
+    this.checkforCombatEnd();
   }//end beginEnemyTurn()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -495,7 +570,7 @@ class CombatLogic{
       this.combatFieldClickHandler();
     }
 
-
+    this.checkforCombatEnd();
 
   }// end combatClickHandler()
 
