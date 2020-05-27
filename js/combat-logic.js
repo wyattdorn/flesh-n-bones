@@ -119,7 +119,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   clearWaitingFunction(){
     this.waitingFunction = [-1, -1];
-  }
+  }//end clearWaitingFunction()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Checks all creatures in combat for status conditions
@@ -182,7 +182,6 @@ class CombatLogic{
     else{
       this.displayMessage = (player.myCreatures[this.waitingFunction[0]].name + " does not have enough Spirit for that skill!");
       myCombatScreen.printMessageBar(this.displayMessage);
-      console.log("Not enough spirit!")
     }
     this.clearWaitingFunction();
   }//end executeSkill()
@@ -379,41 +378,32 @@ class CombatLogic{
   //  Creature skill in slot 1
   //////////////////////////////////////////////////////////////////////////////
   skill1(){
-    //console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[0][2] + "!");
     combatLogi.skillButtonPress(0);
-
   }//end skill1()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 2
   //////////////////////////////////////////////////////////////////////////////
   skill2(){
-    //console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[1][2] + "!");
     combatLogi.skillButtonPress(1);
-
   }//end openMenu()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 3
   //////////////////////////////////////////////////////////////////////////////
   skill3(){
-    //console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[2][2] + "!");
     combatLogi.skillButtonPress(2);
-
-    //console.log("apple: "+ this.waitingFunction[1]);
   }//end skill2()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 4
   //////////////////////////////////////////////////////////////////////////////
   skill4(){
-    //console.log(player.myCreatures[combatLogi.selectedAlly].name + " used: " + player.myCreatures[combatLogi.selectedAlly].skillList[3][2] + "!");
     combatLogi.skillButtonPress(3);
-
   }//end skill4()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Function opens menu in combat
+  //  Function opens menu in combat -TO BE COMPLETED-
   //////////////////////////////////////////////////////////////////////////////
   openMenu(){
     this.displayMessage = "Opening options menu.";
@@ -425,21 +415,23 @@ class CombatLogic{
   //  Function opens item selection screen in combat
   //////////////////////////////////////////////////////////////////////////////
   useItem(){
+    //First, we check to see if the unit has an Item equipped
     if(player.myCreatures[combatLogi.selectedAlly].myItem[0]!=0){
-      console.log(combatLogi.selectedAlly);
+      //Display message announcing that the unit has used their item
       this.displayMessage = player.myCreatures[combatLogi.selectedAlly].name + " uses " + player.myCreatures[combatLogi.selectedAlly].myItem[1] + "!";
       myCombatScreen.printMessageBar(this.displayMessage);
+      //Execute the items associated function
       items.itemList[player.myCreatures[combatLogi.selectedAlly].myItem[0]][2](player.myCreatures[combatLogi.selectedAlly]);
       console.log("Using equipped item!");
+      //Remove the item from the unit, and update the screen
       player.myCreatures[combatLogi.selectedAlly].myItem = items.itemList[0];
       myCombatScreen.updateScreen(1,1,1);
     }
     else{
+      //If the unit does not have an equipped item, we display a message, and nothing else
       this.displayMessage = player.myCreatures[combatLogi.selectedAlly].name + " does not have an item equipped!";
       myCombatScreen.printMessageBar(this.displayMessage);
     }
-    //myCombatScreen.drawUnitBar();
-    //myCombatScreen.drawSkulls();
   }//end useItem()
 
   //////////////////////////////////////////////////////////////////////////////

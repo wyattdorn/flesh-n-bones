@@ -143,7 +143,7 @@ class CombatScreen{
     ctx.font = "25px Arial";
     ctx.fillText("Menu", 50, canvas.height - controlBarHeight + 50);
 
-    //Display info for the selected Creature's equipped item
+    //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
     ctx.font = "20px Arial";
     ctx.fillText(player.myCreatures[combatLogi.selectedAlly].myItem[1], 30, canvas.height - controlBarHeight + 160);
@@ -158,6 +158,7 @@ class CombatScreen{
 
     newImg.src = '' + player.myCreatures[combatLogi.selectedAlly].myItem[4];
 
+    //Print Skill text to the skill buttons
     for(var i = 0; i < player.myCreatures[combatLogi.selectedAlly].skillList.length; i++){
       ctx.fillStyle = "#cccccc";
       ctx.font = "25px Arial";
@@ -166,21 +167,11 @@ class CombatScreen{
       var y = 50;
       if(i>1){y=160;}
       ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x + 30, canvas.height - controlBarHeight + y);
-
-      ctx.fillStyle = "red";
-      //ctx.fillRect(x-27, canvas.height - controlBarHeight + y - 26 , 40, 40);
-
       ctx.fillStyle = "#8099ff";
       ctx.font = "10px Arial";
       ctx.fillText("Cost: ", x - 12 , canvas.height - controlBarHeight + y - 12);
       ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][6], x - 5 , canvas.height - controlBarHeight + y + 3);
     }
-
-    ctx.fillStyle = "#cccccc";
-    ctx.font = "25px Arial";
-    this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
-
-    ctx.fillText("Run", 1100, canvas.height - controlBarHeight + 160);
 
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
@@ -189,6 +180,12 @@ class CombatScreen{
     this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
     this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
 
+    //Print text to the "RUN" and "END TURN" buttons
+    ctx.fillStyle = "#cccccc";
+    ctx.font = "25px Arial";
+    this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
+
+    ctx.fillText("RUN", 1105, canvas.height - controlBarHeight + 185);
 
   }//end drawButtons()
 
@@ -208,20 +205,6 @@ class CombatScreen{
       }
       ctx.fillText(tempString, startX, startY + (lineHeight * x));
     }
-
-    /*prototype:
-    for(var x = 0; x < (textString.length/10); x++){
-      tempString = "";
-      for(var y = 0; y < 10; y++){
-        if(textString.length <= y+(10*x)){
-          break;
-        }
-        tempString += ("" + textString[y+(10*x)]);
-      }
-      ctx.fillText(tempString, 275, canvas.height - controlBarHeight +70+(20*x));
-      console.log(tempString + " - run: " + x);
-    }
-    */
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -231,19 +214,22 @@ class CombatScreen{
     //Set the seed every time the function is called
     Math.seedrandom(this.randSeed);
 
+    //First itteration (first color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#303030";//"#303030";
+      ctx.fillStyle = "#303030";
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
+    //Second itteration (second color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#009000";//"#303030";
+      ctx.fillStyle = "#009000";
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
+    //Third itteration (third color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#003000";//"#303030";
+      ctx.fillStyle = "#003000";
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
   } //end drawRandomSquares()
@@ -295,9 +281,8 @@ class CombatScreen{
   // Draws the bar containing the control buttons onmm the bottom of the screen
   //////////////////////////////////////////////////////////////////////////////
   drawControlBar(){
-
     //red bar
-    ctx.fillStyle = "#441111";//"#303030";
+    ctx.fillStyle = "#441111";
     ctx.fillRect(0, canvas.height - controlBarHeight, canvas.width, controlBarHeight);
 
     this.drawButtons();
@@ -411,7 +396,7 @@ class CombatScreen{
 
     this.testDrawEnemyHealth();
 
-  }
+  }//end drawEnemyUnits()
 
   //////////////////////////////////////////////////////////////////////////////
   // FOR TESTING PURPOSES ONLY. Draws the health of enemy units to the screen
@@ -488,21 +473,5 @@ class CombatScreen{
     this.printMessageBar();
 
   }//end drawSkulls()
-
-}
-
-
-class CombatGrid{
-  //////////////////////////////////////////////////////////////////////////////////////
-  //
-  //   Allies     Enemies
-  //   [][]       [][]
-  //   [][]       [][]
-  //   [][]       [][]
-  //
-  //
-  //
-  //
-  //////////////////////////////////////////////////////////////////////////////////////
 
 }

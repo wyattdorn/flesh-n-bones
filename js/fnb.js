@@ -161,27 +161,10 @@ function createDummyCreatures(){
     PlayerCharacter.skillList[2] = skills.skillList[PlayerCharacter.myGuts[2]];
   });
 
-  /*
-  player.myCreatures.forEach(PlayerCharacter => {
-    PlayerCharacter.skillList[0] = skills.skillList[PlayerCharacter.mySkin[2]];//skills.skillList[0];
-  });
-
-  /*
-  player.myCreatures[0].skillList[0] = skills.skillList[4];
-  player.myCreatures[0].skillList[1] = skills.skillList[0];
-  player.myCreatures[2].skillList[1] = skills.skillList[6];
-  player.myCreatures[3].skillList[1] = skills.skillList[6];
-  player.myCreatures[4].skillList[2] = skills.skillList[5];
-  player.myCreatures[5].skillList[2] = skills.skillList[5];
-  */
-
   player.myCreatures[0].myItem = items.itemList[1];
   player.myCreatures[1].myItem = items.itemList[2];
   player.myCreatures[2].myItem = items.itemList[3];
   player.myCreatures[3].myItem = items.itemList[1];
-
-  //player.myCreatures[0].creatureSkills[3] = null;
-
 
   enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=100;
@@ -229,7 +212,6 @@ function logMouseClick(e){
     // overworld click handler
     break;
   default:
-    // code block
   }
 
 }//end logMouseClick()
