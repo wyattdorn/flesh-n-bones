@@ -23,7 +23,7 @@ var canvas, ctx;
 // 3=overworld
 var gameMode;
 
-var myCombatScreen;
+var myCombatScreen, creatureEditorScreen, menuSelectionScreen;
 
 var player;
 var creature, enemyCreatures; //arrays of enemy and allied creatures
@@ -40,7 +40,7 @@ function init(){
   creatureImages = [];
 
   //for testing purposes, the game starts in combat mode
-  gameMode = 1;
+  gameMode = 2;
 
   canvas = document.getElementById('canvas');
   canvas.style.left = "0px";
@@ -57,15 +57,15 @@ function init(){
     return false;
   }
 
+  menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
+  creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   skins = new Skin();
   bones = new Bones();
   guts = new Guts();
   items = new Item();
   player = new Deity();
   skills = new Skill();
-  myCombatScreen = new CombatScreen(ctx, canvas);
 
-  combatLogi = new CombatLogic();
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
@@ -73,21 +73,27 @@ function init(){
 
   player.soulsOwned = 6;
 
-  createDummyCreatures();
-
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
   //////////////////////////////////////////////////////////////////////////////////////
 
 
-  myCombatScreen.init(true);
-
-  combatLogi.beginCombat();
-
+  //initiateCombat();
 
 
 } //end init()
 
+function initiateCombat(){
+  myCombatScreen = new CombatScreen(ctx, canvas);
+  combatLogi = new CombatLogic();
+  this.createDummyCreatures();
+  myCombatScreen.init(true);
+  combatLogi.beginCombat();
+}//end initiateCombat()
+
+function launchCreatureEditor(){
+  creatureEditorScreen.init();
+}//end launchCreatureEditor()
 
 ///////////////////////////////////////////////////////////////////////////////\
 // FOR TESTING PURPOSES ONLY!!! - Create dummy crreatures to be used in testing
@@ -206,7 +212,7 @@ function logMouseClick(e){
     combatLogi.combatClickHandler(clickPosition.x,clickPosition.y);
     break;
   case 2:
-    // menu click handler
+    menuSelectionScreen.menuSelectionClickHandler(clickPosition.x,clickPosition.y);
     break;
   case 2:
     // overworld click handler
