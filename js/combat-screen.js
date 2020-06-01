@@ -80,7 +80,7 @@ class CombatScreen{
     ctx.lineTo(startX+13, startY+15);
     ctx.fill();
     ctx.restore();
-  }
+  }//end drawCheckMark()
 
   /////////////////////////////////////////////////////////////////////////////\
   //    This function takes three boolean inputs and redraws parts of the screen

@@ -10,7 +10,7 @@ class Skin {
     this.skinList = new Array(1);
     this.skinList[0] = [];
 
-    //                      function()               Name        Target  Ability       Multiplier Cost       Description
+    //                  index, name, skill num, info 
     this.skinList[0] = [0, "No Skin", 7, "Creature has no skin."];
     this.skinList[1] = [1, "Goblin Skin", 4, "Goblin skin grants the Scythe skill."];
     this.skinList[2] = [2, "Orc Skin", 5, "Orc skin grants the Orc Smash skill."];

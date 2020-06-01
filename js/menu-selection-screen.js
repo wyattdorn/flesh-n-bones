@@ -32,6 +32,7 @@ class MenuSelectionScreen{
   menuSelectionClickHandler(clickPositionX,clickPositionY){
     if(clickPositionX > 5 && clickPositionX < this.canvas.width/2-5){
       console.log("LEFT");
+      gameMode = 3;
       launchCreatureEditor();
     }
     else if(clickPositionX > this.canvas.width/2+5 && clickPositionX < this.canvas.width-5){

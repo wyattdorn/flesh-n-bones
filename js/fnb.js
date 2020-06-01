@@ -20,7 +20,7 @@ var canvas, ctx;
 
 // 1=combat
 // 2=menus
-// 3=overworld
+// 3=Creature Editor
 var gameMode;
 
 var myCombatScreen, creatureEditorScreen, menuSelectionScreen;
@@ -72,6 +72,7 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
 
   player.soulsOwned = 6;
+  this.createDummyCreatures();
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
@@ -86,12 +87,26 @@ function init(){
 function initiateCombat(){
   myCombatScreen = new CombatScreen(ctx, canvas);
   combatLogi = new CombatLogic();
-  this.createDummyCreatures();
   myCombatScreen.init(true);
   combatLogi.beginCombat();
 }//end initiateCombat()
 
 function launchCreatureEditor(){
+  //Create a bunch more dummy creatures for testing pusposes
+  var soul = new Soul("stone");
+  var s = new Skin('fire');
+  var b = new Body(s, new Bones('ice'), new Guts('air'));
+  player.myCreatures.push(new PlayerCharacter("Zappo", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Chip", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Flak", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Rhombuz", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Mallow", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Wumba", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Yach", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Fungus", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Lobe", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Grand Master", b, soul, 'media/images/character-sprites/goblin-1.png'));
+
   creatureEditorScreen.init();
 }//end launchCreatureEditor()
 
@@ -214,8 +229,8 @@ function logMouseClick(e){
   case 2:
     menuSelectionScreen.menuSelectionClickHandler(clickPosition.x,clickPosition.y);
     break;
-  case 2:
-    // overworld click handler
+  case 3:
+    creatureEditorScreen.creatuerEditorClickHandler(clickPosition.x,clickPosition.y);
     break;
   default:
   }
