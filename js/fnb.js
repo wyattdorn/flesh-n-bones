@@ -56,7 +56,7 @@ function init(){
   else{
     return false;
   }
-
+  myCombatScreen = new CombatScreen(ctx, canvas);
   menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   skins = new Skin();
@@ -84,14 +84,42 @@ function init(){
 
 } //end init()
 
+///////////////////////////////////////////////////////////////////////////////
+//   TEST CODE
+///////////////////////////////////////////////////////////////////////////////
+function generateDummyBodies(){
+  var tempSoul = new Soul("Grenda", "crude");
+  player.myBones.push(bones.boneList[1]);
+  player.myBones.push(bones.boneList[3]);
+  player.myBones.push(bones.boneList[1]);
+  player.myBones.push(bones.boneList[2]);
+  player.myBones.push(bones.boneList[2]);
+
+  player.mySkins.push(skins.skinList[1]);
+  player.mySkins.push(skins.skinList[2]);
+  player.mySkins.push(skins.skinList[1]);
+  player.mySkins.push(skins.skinList[3]);
+  player.mySkins.push(skins.skinList[1]);
+
+  player.myGuts.push(guts.gutsList[1]);
+  player.myGuts.push(guts.gutsList[2]);
+  player.myGuts.push(guts.gutsList[1]);
+
+
+}
+
 function initiateCombat(){
-  myCombatScreen = new CombatScreen(ctx, canvas);
+
   combatLogi = new CombatLogic();
   myCombatScreen.init(true);
   combatLogi.beginCombat();
 }//end initiateCombat()
 
 function launchCreatureEditor(){
+
+  //building dummy inventory of body parts
+  this.generateDummyBodies();
+
   //Create a bunch more dummy creatures for testing pusposes
   var soul = new Soul("stone");
   var s = new Skin('fire');
@@ -108,6 +136,8 @@ function launchCreatureEditor(){
   player.myCreatures.push(new PlayerCharacter("Grand Master", b, soul, 'media/images/character-sprites/goblin-1.png'));
 
   creatureEditorScreen.init();
+
+
 }//end launchCreatureEditor()
 
 ///////////////////////////////////////////////////////////////////////////////\
@@ -126,14 +156,14 @@ function createDummyCreatures(){
   player.myCreatures[0].levelUp();
   player.myCreatures[0].levelUp();
   player.myCreatures[0].mySkin = skins.skinList[1]; //goblin
-  player.myCreatures[0].myBones = bones.boneList[2]; //big
+  player.myCreatures[0].myBones = bones.boneList[3]; //big
   player.myCreatures[0].myGuts = guts.gutsList[0]; //none
 
   player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
   player.myCreatures[1].generateDummyStats(2, 13, 3);
   player.myCreatures[1].currentSpirit = 10;
   player.myCreatures[1].mySkin = skins.skinList[1];
-  player.myCreatures[1].myBones = bones.boneList[1]; //brittle
+  player.myCreatures[1].myBones = bones.boneList[2]; //brittle
   player.myCreatures[1].myGuts = guts.gutsList[1];
 
   player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
@@ -142,7 +172,7 @@ function createDummyCreatures(){
   player.myCreatures[2].currentSpirit = 1;
   player.myCreatures[2].levelUp();
   player.myCreatures[2].mySkin = skins.skinList[3];
-  player.myCreatures[2].myBones = bones.boneList[1];
+  player.myCreatures[2].myBones = bones.boneList[2];
   player.myCreatures[2].myGuts = guts.gutsList[1];
 
   player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
@@ -151,7 +181,7 @@ function createDummyCreatures(){
   player.myCreatures[3].currentSpirit = 5;
   player.myCreatures[3].levelUp();
   player.myCreatures[3].mySkin = skins.skinList[3];
-  player.myCreatures[3].myBones = bones.boneList[0];
+  player.myCreatures[3].myBones = bones.boneList[1];
   player.myCreatures[3].myGuts = guts.gutsList[1];
 
   player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
@@ -159,15 +189,15 @@ function createDummyCreatures(){
   player.myCreatures[4].currentHP = 1;
   player.myCreatures[4].currentSpirit = 5;
   player.myCreatures[4].mySkin = skins.skinList[2];
-  player.myCreatures[4].myBones = bones.boneList[0];
+  player.myCreatures[4].myBones = bones.boneList[1];
   player.myCreatures[4].myGuts = guts.gutsList[1];
 
   player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
   player.myCreatures[5].generateDummyStats(7, 8, 6);
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
-  player.myCreatures[5].mySkin = skins.skinList[2];
-  player.myCreatures[5].myBones = bones.boneList[0];
+  //player.myCreatures[5].mySkin = skins.skinList[2];
+  player.myCreatures[5].myBones = bones.boneList[1];
   player.myCreatures[5].myGuts = guts.gutsList[1];
 
 

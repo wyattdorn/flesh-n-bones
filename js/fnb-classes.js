@@ -10,7 +10,7 @@ class Skin {
     this.skinList = new Array(1);
     this.skinList[0] = [];
 
-    //                  index, name, skill num, info 
+    //                  index, name, skill num, info
     this.skinList[0] = [0, "No Skin", 7, "Creature has no skin."];
     this.skinList[1] = [1, "Goblin Skin", 4, "Goblin skin grants the Scythe skill."];
     this.skinList[2] = [2, "Orc Skin", 5, "Orc skin grants the Orc Smash skill."];
@@ -29,9 +29,10 @@ class Bones {
     this.boneList[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.boneList[0] = [0, "Old Bones", 0, "Any old pile of bones can attack."];
-    this.boneList[1] = [1, "Brittle Bones", 2, "Brittle bones grants the Heal skill."];
-    this.boneList[2] = [2, "Big Bones", 1, "Big bones grant the Defend skill."];
+    this.boneList[0] = [0, "No Bones", 7, "Creature has no bones."];
+    this.boneList[1] = [1, "Old Bones", 0, "Any old pile of bones can attack."];
+    this.boneList[2] = [2, "Brittle Bones", 2, "Brittle bones grants the Heal skill."];
+    this.boneList[3] = [3, "Big Bones", 1, "Big bones grant the Defend skill."];
   }
 
 }
@@ -49,13 +50,15 @@ class Guts {
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
     this.gutsList[0] = [0, "No Guts", 7, "Creature has no guts."];
     this.gutsList[1] = [1, "Explosive Guts", 3, "Explosive guts grants the Explode skill."];
+    this.gutsList[2] = [2, "Dubious Guts", 7, "No one knows what these guts do..."];
   }
 
 }
 
 class Soul{
-  constructor(temperment){
+  constructor(name, temperment){
     this.temperment = temperment;
+    this.name = name;
   }
 }
 
@@ -91,27 +94,37 @@ class Creature {
     this.name = name;
     this.imgSrc = path;
     this.level = 0;
-    this.location = [0,0];
     this.dexterity = 10;
     this.agility = 10;
     this.might = 10;
     this.fortitude = 10;
-    this.intelegence = 10;
+    this.intelligence = 10;
     this.wits = 10;
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
-    this.mind = Math.floor((this.intelegence + this.wits)/2);
+    this.mind = Math.floor((this.intelligence + this.wits)/2);
     this.currentHP = 1;
     this.maxHP = 1;
     this.spirit = 1; //spirit is mana
-    this.moveSpeed = 4;
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
     this.myItem = items.itemList[0];
     this.mySkin = skins.skinList[0];
     this.myBones = bones.boneList[0];
     this.myGuts = guts.gutsList[0];
+    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
+  }
+
+  giveOrgan(organ){
+    if(organ.class == Bone){
+      console.log("BOOOONE");
+    }
+  }
+
+  getOrgan(index){
+    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
+    return this.myOrgans[index];
   }
 
   //////////////////////////////////////////////////////////////////////////////////////

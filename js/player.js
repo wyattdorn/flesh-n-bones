@@ -14,6 +14,11 @@ class Deity{
     this.impetus = 0; //Basically exp for the PC
     this.myCreatures = [];
     this.isPlayerTurn = true;
+    this.mySkins = [];
+    this.myBones = [];
+    this.myGuts = [];
+    this.mySouls = [];
+    this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
   }//end constructor
 
   addSoul(newSoul){
