@@ -265,7 +265,11 @@ class CombatScreen{
 
     ctx.fillStyle = "#60584f";
 
-    for(var i = 0; i < player.myCreatures.length; i++){
+    if(player.myCreatures.length<6){ this.max = myCreatures.length;}
+    else{this.max = 6;}
+
+    //Loop through all the allies we have in combat
+    for(var i = 0; i < this.max; i++){
       ctx.fillRect(0, 10+(i*90), unitBarWidth, 65);
       this.drawUnitInfo(i);
       this.drawHPBar(i, 10, 5);
@@ -358,8 +362,11 @@ class CombatScreen{
     //Atarting x position is unitBarWidth plus 50
     var baseX = unitBarWidth + 50;
 
+    if(player.myCreatures.length<6){ this.max = myCreatures.length;}
+    else{this.max = 6;}
+
     //Loop through all the allies we have in combat
-    for(var x = 0; x < player.myCreatures.length; x++){
+    for(var x = 0; x < this.max; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
       if(player.myCreatures[x].isDead()){

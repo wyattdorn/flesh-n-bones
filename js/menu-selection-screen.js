@@ -11,6 +11,12 @@ class MenuSelectionScreen{
   }//end constructor()
 
   init(){
+    this.updatgeScreen();
+  }
+
+  updatgeScreen(){
+    ctx.fillStyle = "black";//"#303030";
+    ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
     this.drawButtons();
   }
 
@@ -32,13 +38,11 @@ class MenuSelectionScreen{
   menuSelectionClickHandler(clickPositionX,clickPositionY){
     if(clickPositionX > 5 && clickPositionX < this.canvas.width/2-5){
       console.log("LEFT");
-      gameMode = 3;
-      launchCreatureEditor();
+      setGameMode(3);
     }
     else if(clickPositionX > this.canvas.width/2+5 && clickPositionX < this.canvas.width-5){
       console.log("RIGHT");
-      gameMode = 1;
-      initiateCombat();
+      setGameMode(1);
     }
   }
 

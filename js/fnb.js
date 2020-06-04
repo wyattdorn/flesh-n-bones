@@ -39,8 +39,7 @@ function init(){
   enemyCreatures = [];
   creatureImages = [];
 
-  //for testing purposes, the game starts in combat mode
-  gameMode = 2;
+
 
   canvas = document.getElementById('canvas');
   canvas.style.left = "0px";
@@ -57,7 +56,6 @@ function init(){
     return false;
   }
   myCombatScreen = new CombatScreen(ctx, canvas);
-  menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   skins = new Skin();
   bones = new Bones();
@@ -65,6 +63,10 @@ function init(){
   items = new Item();
   player = new Deity();
   skills = new Skill();
+
+  //for testing purposes, the game starts at the Menu Selection Screen
+  gameMode = 2;
+  setGameMode(gameMode);
 
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +85,31 @@ function init(){
 
 
 } //end init()
+
+///////////////////////////////////////////////////////////////////////////////
+//   Sets game mode
+///////////////////////////////////////////////////////////////////////////////
+function setGameMode(mode){
+
+  // 1=combat
+  // 2=menus
+  // 3=Creature Editor
+
+  gameMode = mode;
+  switch (gameMode) {
+    case 1:
+      initiateCombat();
+      break;
+    case 2:
+      menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
+      break;
+    case 3:
+      launchCreatureEditor();
+      break;
+    default:
+
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //   TEST CODE

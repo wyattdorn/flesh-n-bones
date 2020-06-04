@@ -18,6 +18,7 @@ class CreatureEditorScreen{
     this.organScrollIndex = 0;
     this.selectedCreature = 0;
     this.selectedOrganType = 0;//at launch, Bones are selected by default
+    this.statBlockStart = [210, 215];
 
     this.updateScreen();
   } //end init()
@@ -139,6 +140,7 @@ class CreatureEditorScreen{
     this.drawSelectedCreature();
     this.drawButtons();
     this.drawOrganList();
+    this.drawBackButton();
   }//end updateScreen()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -226,27 +228,46 @@ class CreatureEditorScreen{
   //  Draw the selected Creature's stats
   //////////////////////////////////////////////////////////////////////////////
   drawStats(){
+
     ctx.save();
 
     ctx.fillStyle = "#771111";
-    ctx.fillRect(210, 190, 210, 400);
+    ctx.fillRect(this.statBlockStart[0], this.statBlockStart[1], 210, 390);
 
     ctx.font = "30px Arial";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText(player.myCreatures[this.selectedCreature].name, 220, 225);
+    ctx.fillText(player.myCreatures[this.selectedCreature].name, this.statBlockStart[0] + 10, this.statBlockStart[1] + 30);
     ctx.font = "20px Courier";
-    ctx.fillText("Level:        " + player.myCreatures[this.selectedCreature].level, 220, 250);
-    ctx.fillText("HP:           " + player.myCreatures[this.selectedCreature].maxHP, 220, 275);
-    ctx.fillText("Spirit:       " + player.myCreatures[this.selectedCreature].maxSpirit, 220, 300);
-    ctx.fillText("Dexterity:    " + player.myCreatures[this.selectedCreature].dexterity, 220, 325);
-    ctx.fillText("Agility:      " + player.myCreatures[this.selectedCreature].agility, 220, 350);
-    ctx.fillText("Might:        " + player.myCreatures[this.selectedCreature].might, 220, 375);
-    ctx.fillText("Fortitude:    " + player.myCreatures[this.selectedCreature].fortitude, 220, 400);
-    ctx.fillText("Intelligence: " + player.myCreatures[this.selectedCreature].intelligence, 220, 425);
-    ctx.fillText("Wits:         " + player.myCreatures[this.selectedCreature].wits, 220, 450);
+    ctx.fillText("Level:        " + player.myCreatures[this.selectedCreature].level,        this.statBlockStart[0]+10, this.statBlockStart[1] + 55);
+    ctx.fillText("HP:           " + player.myCreatures[this.selectedCreature].maxHP,        this.statBlockStart[0]+10, this.statBlockStart[1] + 80);
+    ctx.fillText("Spirit:       " + player.myCreatures[this.selectedCreature].maxSpirit,    this.statBlockStart[0]+10, this.statBlockStart[1] + 105);
+    ctx.fillText("Dexterity:    " + player.myCreatures[this.selectedCreature].dexterity,    this.statBlockStart[0]+10, this.statBlockStart[1] + 130);
+    ctx.fillText("Agility:      " + player.myCreatures[this.selectedCreature].agility,      this.statBlockStart[0]+10, this.statBlockStart[1] + 155);
+    ctx.fillText("Might:        " + player.myCreatures[this.selectedCreature].might,        this.statBlockStart[0]+10, this.statBlockStart[1] + 180);
+    ctx.fillText("Fortitude:    " + player.myCreatures[this.selectedCreature].fortitude,    this.statBlockStart[0]+10, this.statBlockStart[1] + 205);
+    ctx.fillText("Intelligence: " + player.myCreatures[this.selectedCreature].intelligence, this.statBlockStart[0]+10, this.statBlockStart[1] + 230);
+    ctx.fillText("Wits:         " + player.myCreatures[this.selectedCreature].wits,         this.statBlockStart[0]+10, this.statBlockStart[1] + 255);
 
     ctx.restore();
   }//end drawStats();
+
+  drawBackButton(){
+    ctx.save();
+
+    ctx.fillStyle = "#771111";
+    ctx.fillRect(canvas.width - 60, 10, 50, 20);
+    ctx.beginPath();
+    ctx.moveTo(canvas.width - 60, 10);
+    ctx.lineTo(canvas.width - 60, 30);
+    ctx.lineTo(canvas.width - 70, 20);
+    ctx.fill();
+
+    ctx.font = "19px Courier";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText("BACK", canvas.width - 60, 25);
+
+    ctx.restore();
+  }
 
   creatuerEditorClickHandler(clickPositionX,clickPositionY){
     //First we check if the click was in the creature list on the left of the screen
@@ -315,8 +336,35 @@ class CreatureEditorScreen{
 
     if(clickPositionY > 764 && clickPositionY < 785){
       console.log("eq");
+
+      if(clickPositionX > 420 && clickPositionX < 485){
+        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex][1]);
+        //this.equipOrgan(this.organScrollIndex);
+      }
+      else if(clickPositionX > 620 && clickPositionX < 685){
+        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 1][1]);
+
+      }
+      else if(clickPositionX > 820 && clickPositionX < 885){
+        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 2][1]);
+
+      }
+      else if(clickPositionX > 1020 && clickPositionX < 1085){
+        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 3][1]);
+
+      }
+
+    }
+
+    if(clickPositionX > canvas.width - 70 && clickPositionX < canvas.width - 10 && clickPositionY > 10 && clickPositionY < 30){
+      console.log("BACK");
+      setGameMode(2);
     }
 
   }//end creatuerEditorClickHandler()
+
+  equipOrgan(index){
+
+  }//end equipOrgan()
 
 }
