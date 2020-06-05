@@ -116,10 +116,21 @@ class Creature {
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
-  giveOrgan(organ){
-    if(organ.class == Bone){
-      console.log("BOOOONE");
+  giveOrgan(organ, organType){
+    console.log(organ[1]);
+    switch (organType) {
+      case 0: //bone
+          this.myBones = organ;
+          console.log(this.myBones[1]);
+        break;
+      case 1: //guts
+          this.myGuts = organ;
+        break;
+      case 2: //skin
+          this.mySkin = organ;
+        break;
     }
+    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
   }
 
   getOrgan(index){

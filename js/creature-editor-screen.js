@@ -175,7 +175,7 @@ class CreatureEditorScreen{
 
     //If there are less than 4 of a given organ type, only print that many,
     //If there's 4 or more of the organ type, print 4 at a time
-    if(player.myOrgans[this.selectedOrganType].length<4){ this.max = player.myOrgans[this.selectedOrganType].length;}
+    if(player.myOrgans[this.selectedOrganType].length < 4){this.max = player.myOrgans[this.selectedOrganType].length;}
     else{this.max = 4;}
 
     //Print out the name and description of the owned organs
@@ -339,19 +339,19 @@ class CreatureEditorScreen{
 
       if(clickPositionX > 420 && clickPositionX < 485){
         console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex][1]);
-        //this.equipOrgan(this.organScrollIndex);
+        this.equipOrgan(this.organScrollIndex);
       }
       else if(clickPositionX > 620 && clickPositionX < 685){
         console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 1][1]);
-
+        this.equipOrgan(this.organScrollIndex + 1);
       }
       else if(clickPositionX > 820 && clickPositionX < 885){
         console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 2][1]);
-
+        this.equipOrgan(this.organScrollIndex + 2);
       }
       else if(clickPositionX > 1020 && clickPositionX < 1085){
         console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 3][1]);
-
+        this.equipOrgan(this.organScrollIndex + 3);
       }
 
     }
@@ -364,6 +364,21 @@ class CreatureEditorScreen{
   }//end creatuerEditorClickHandler()
 
   equipOrgan(index){
+    //If the Creature does not already have an organ of this type, they are given
+    //the organ, ant it it removed from the Player's list of organs
+    if(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType][0] == 0){
+      player.myCreatures[this.selectedCreature].giveOrgan(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
+      player.myOrgans[this.selectedOrganType].splice(index, 1);
+    }
+    //If the Creature already has an organ of this type, we remove the organ they
+    //had originally and place it at the back of the Player's list
+    else{
+      player.myOrgans[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);
+      player.myCreatures[this.selectedCreature].giveOrgan(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
+      player.myOrgans[this.selectedOrganType].splice(index, 1);
+    }
+    this.updateScreen();
+
 
   }//end equipOrgan()
 
