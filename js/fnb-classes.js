@@ -131,6 +131,10 @@ class Creature {
         break;
     }
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
+    //Update this creature's skill list based on their new organ(s)
+    for(var x = 0; x < 3; x++){
+      this.skillList[x] = skills.skillList[this.myOrgans[x][2]];
+    }
   }
 
   getOrgan(index){

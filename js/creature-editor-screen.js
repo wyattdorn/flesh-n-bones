@@ -7,8 +7,6 @@ class CreatureEditorScreen{
       this.ctx = context;
       this.canvas = canvas;
 
-
-
   }//end constructor()
 
   init(){
@@ -23,18 +21,18 @@ class CreatureEditorScreen{
     this.updateScreen();
   } //end init()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws a black rectangle over the screen to clear it out between drawings
+  //////////////////////////////////////////////////////////////////////////////
   clearScreen(){
     //black out the screen, covering whatever was drawn previously
     ctx.fillStyle = "#272727";
     ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
   }//end clearScreen()
 
-  drawText(){
-    ctx.font = "20px Courier";
-    ctx.fillStyle = "white";
-    ctx.fillText("Creature Editor", 10, 30);
-  }//end drawText()
-
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws buttons for scrolling up/down the list of owned Creatures
+  //////////////////////////////////////////////////////////////////////////////
   drawScrollButtons(){
     ctx.save();
     ctx.fillStyle = "white";
@@ -55,7 +53,7 @@ class CreatureEditorScreen{
   }//end drawScrollButtons()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Draws buttons
+  //  Draws buttons for selecting what list of organs is viweable
   //////////////////////////////////////////////////////////////////////////////
   drawButtons(){
     ctx.save();
@@ -182,12 +180,18 @@ class CreatureEditorScreen{
     for(var x = 0; x < this.max; x++){
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
+      //Print the name of the organ
       ctx.fillText(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][1], this.creatureListWidth + 160 + (200 * x), 650);
+      ctx.font = "10px Arial";
+      ctx.fillStyle = "#999999";
+      ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
+      //Print the flavor text for the organ
       myCombatScreen.drawMultipleLines(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
+      //Draw the "EQUIP" buttons
       ctx.fillText("EQUIP", 420 + (200 * x), 780);
     }
 
@@ -207,14 +211,31 @@ class CreatureEditorScreen{
   //  Draw the creature's equipped organs
   //////////////////////////////////////////////////////////////////////////////
   drawCreatureOrgans(){
+    ctx.save();
     ctx.fillStyle = "#771111";
     ctx.fillRect(430, 15, 200, 190);
-    ctx.fillRect(430, 215, 200, 190);
-    ctx.fillRect(430, 415, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(630, 15);
+    ctx.lineTo(630, 205);
+    ctx.lineTo(650, 110);
+    ctx.fill();
 
-    //ctx.fillText(player.myCreatures[this.selectedCreature].myOrgans[0][1], 435, 25 + (190));
+    ctx.fillRect(430, 215, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(630, 215);
+    ctx.lineTo(630, 405);
+    ctx.lineTo(650, 310);
+    ctx.fill();
+
+    ctx.fillRect(430, 415, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(630, 415);
+    ctx.lineTo(630, 605);
+    ctx.lineTo(650, 510);
+    ctx.fill();
 
     for(var x = 0; x < 3; x++){
+      //Print the name & description of the Creature's equipped Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
       ctx.fillText(player.myCreatures[this.selectedCreature].getOrgan(x)[1], 435, 40 + (200 * x));
@@ -222,7 +243,57 @@ class CreatureEditorScreen{
       ctx.fillStyle = "#aaaaaa";
       myCombatScreen.drawMultipleLines(player.myCreatures[this.selectedCreature].myOrgans[x][3], 20, 20, 435, 65 + (200 * x));
     }
+    ctx.restore();
+
+    this.drawCreatureSkills();
   }//end drawCreatureOrgans()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the selected Creature's skills based on their equipped organs
+  //////////////////////////////////////////////////////////////////////////////
+  drawCreatureSkills(){
+    ctx.save();
+    ctx.fillStyle = "#771111";
+    ctx.fillRect(660, 15, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(640, 15);
+    ctx.lineTo(660, 110);
+    ctx.lineTo(640, 205);
+    ctx.lineTo(660, 205);
+    ctx.lineTo(660, 15);
+    ctx.fill();
+
+    ctx.fillRect(660, 215, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(640, 215);
+    ctx.lineTo(660, 310);
+    ctx.lineTo(640, 405);
+    ctx.lineTo(660, 405);
+    ctx.lineTo(660, 215);
+    ctx.fill();
+
+    ctx.fillRect(660, 415, 200, 190);
+    ctx.beginPath();
+    ctx.moveTo(640, 415);
+    ctx.lineTo(660, 510);
+    ctx.lineTo(640, 605);
+    ctx.lineTo(660, 605);
+    ctx.lineTo(660, 415);
+    ctx.fill();
+
+    for(var x = 0; x < 3; x++){
+
+      //Print the name & description of the skills associated with this Creature's Organs
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][2], 670, 40 + (200 * x));
+      ctx.font = "15px Courier";
+      ctx.fillStyle = "#aaaaaa";
+      myCombatScreen.drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][7], 20, 20, 670, 65 + (200 * x));
+
+    }
+    ctx.restore();
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draw the selected Creature's stats
@@ -251,6 +322,9 @@ class CreatureEditorScreen{
     ctx.restore();
   }//end drawStats();
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws "BACK" button to return to the previous screen
+  //////////////////////////////////////////////////////////////////////////////
   drawBackButton(){
     ctx.save();
 
@@ -269,6 +343,9 @@ class CreatureEditorScreen{
     ctx.restore();
   }
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Click Handler function for teh Creature Editor screen
+  //////////////////////////////////////////////////////////////////////////////
   creatuerEditorClickHandler(clickPositionX,clickPositionY){
     //First we check if the click was in the creature list on the left of the screen
     if(clickPositionX < this.creatureListWidth){
@@ -299,6 +376,7 @@ class CreatureEditorScreen{
       }
     }
 
+    //Check if the click was on the left/right scroll buttons for the Organ list
     if(clickPositionX > 310 && clickPositionX < 345 && clickPositionY > 620 && clickPositionY < 790){
       if(this.organScrollIndex > 0){
         this.organScrollIndex--;
@@ -334,9 +412,8 @@ class CreatureEditorScreen{
       }
     }
 
+    //Checking if the click was on one of the "Equip" organ buttons
     if(clickPositionY > 764 && clickPositionY < 785){
-      console.log("eq");
-
       if(clickPositionX > 420 && clickPositionX < 485){
         console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex][1]);
         this.equipOrgan(this.organScrollIndex);
@@ -356,6 +433,7 @@ class CreatureEditorScreen{
 
     }
 
+    //Checking if the click was on the "BACK" button
     if(clickPositionX > canvas.width - 70 && clickPositionX < canvas.width - 10 && clickPositionY > 10 && clickPositionY < 30){
       console.log("BACK");
       setGameMode(2);
@@ -363,6 +441,9 @@ class CreatureEditorScreen{
 
   }//end creatuerEditorClickHandler()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Equips a given organ to the currently selected Creature
+  //////////////////////////////////////////////////////////////////////////////
   equipOrgan(index){
     //If the Creature does not already have an organ of this type, they are given
     //the organ, ant it it removed from the Player's list of organs
@@ -378,8 +459,6 @@ class CreatureEditorScreen{
       player.myOrgans[this.selectedOrganType].splice(index, 1);
     }
     this.updateScreen();
-
-
   }//end equipOrgan()
 
 }

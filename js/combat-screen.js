@@ -24,10 +24,6 @@ class CombatScreen{
     this.randSeed = this.currentTime.getTime();
     Math.seedrandom(this.randSeed);
 
-    //enemyCreatures.length;
-    //this.numEnemies = enemyCreatures.length;
-    //this.numAllies = player.myCreatures.length;
-
     ctx.fillStyle = "#171b04";//"#303030";
     ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
 
@@ -60,12 +56,12 @@ class CombatScreen{
     ctx.fillStyle = "#cccccc";
     ctx.fillText(myString, unitBarWidth + 5, 546);
     ctx.restore();
-  }
+  }//end printMessageBar()
 
 
   //////////////////////////////////////////////////////////////////////////////
   // Testing drawing a check mark
-
+  //////////////////////////////////////////////////////////////////////////////
   drawCheckMark(startX, startY){
     ctx.save();
     console.log("Drawing check!");

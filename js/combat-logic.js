@@ -202,6 +202,7 @@ class CombatLogic{
       this.selectedAlly = unitNum;
       console.log("Selected unit number: " + unitNum + ", Name: " + player.myCreatures[unitNum].name);
     }
+    console.log(player.myCreatures[this.selectedAlly].myBones[1]);
     myCombatScreen.updateScreen(1,1,0);
   }// end selectFriendlyUnit()
 
