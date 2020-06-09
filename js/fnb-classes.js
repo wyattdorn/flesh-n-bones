@@ -108,12 +108,29 @@ class Creature {
     this.spirit = 1; //spirit is mana
     this.movesLeft = this.moveSpeed;
     this.skillList = [];
+    this.memorizedSkills = [];//This is a list of skills the Creature has used enough to memorize
+    //   memorizedSkills[0] = skill index, [1] = times the skill has been used, [2] = if the skill has been memorized (bool)
     this.myItem = items.itemList[0];
     this.mySkin = skins.skinList[0];
     this.myBones = bones.boneList[0];
     this.myGuts = guts.gutsList[0];
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Each time a Creature uses a skill, they make progress towards learning it,
+  // this skill is then called to mark that progress
+  ////////////////////////////////////////////////////////////////////////////////
+  learnSkill(skillNum){
+    //Check all the skills in this Creature's list of memorized skills
+    for(var x = 0; x < this.memorizedSkills.length; x++){
+      if(this.memorizedSkills[x][0] == skillNum){
+        this.memorizedSkills[x][1]++;
+        return;
+      }
+    }
+    this.memorizedSkills.push([skillNum, 1]);
   }
 
   giveOrgan(organ, organType){

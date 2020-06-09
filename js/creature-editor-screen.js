@@ -138,6 +138,7 @@ class CreatureEditorScreen{
     this.drawSelectedCreature();
     this.drawButtons();
     this.drawOrganList();
+    this.drawMemorizedSkills();
     this.drawBackButton();
   }//end updateScreen()
 
@@ -197,6 +198,63 @@ class CreatureEditorScreen{
 
     ctx.restore();
   }//end drawOrganList()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the list of memorized skills for the selected Creature
+  //////////////////////////////////////////////////////////////////////////////
+  drawMemorizedSkills(){
+    ctx.save();
+    ctx.fillStyle = "#771111";
+    ctx.fillRect(870, 100, 320, 305);
+
+    if(player.myCreatures[this.selectedCreature].memorizedSkills.length == 0){
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "#cccccc";
+      //Draw the "EQUIP" buttons
+      ctx.fillText("No skills memorized", 880, 125);
+    }
+    else{
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "#cccccc";
+      for(var x = 0; x < player.myCreatures[this.selectedCreature].memorizedSkills.length; x++){
+        ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[x][0]][2], 880, 125 + (x * 50));
+        //ctx.fillText(player.myCreatures[this.selectedCreature].memorizedSkills[x][1], 1080, 125 + (x * 50));
+        this.drawMemorizationBar(x);
+      }
+    }
+
+    ctx.restore();
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the progress bar of how much progress a Creature has made to memorizing a new skill
+  //////////////////////////////////////////////////////////////////////////////
+  drawMemorizationBar(index){
+    ctx.save();
+    var percentMemorized = player.myCreatures[this.selectedCreature].memorizedSkills[index][1] / skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[index][0]][8]; //.currentHP/player.myCreatures[creature].maxHP;
+    ctx.font = "12px Arial";
+    //Draw outline of HP Bar
+    ctx.fillStyle = "black";
+    ctx.fillText(percentMemorized, 1080, 125 + (index * 50));
+
+
+    ctx.fillRect(1080, 113 + (index * 50), 102, 12);
+    //The HP bar will be colored according to how full the unit's health is
+    if(percentMemorized>0.50){
+      ctx.fillStyle = "green";
+    }
+    else if(percentMemorized>0.25){
+      ctx.fillStyle = "yellow";
+    }
+    else{
+      ctx.fillStyle = "red";
+    }
+    //Fill bar with respective amount of HP
+    ctx.fillRect(1081, 114 + (index * 50), percentMemorized*100, 10);
+
+    ctx.restore();
+  }//end drawMemorizationBar()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draw the selected Creature's sprite, along with their pertinent information

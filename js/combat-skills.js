@@ -28,14 +28,15 @@ class Skill{
       this.skillList[x][0] = x;
     }
 
+    //                   0  1                         2           3       4             5         6           7                           8
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.skillList[0] = [0, this.skillAttack,        "Attack",   4,      "might",      1.5,       0,      "Damage a single enemy."];
-    this.skillList[1] = [1, this.skillDefend,        "Defend",   3,      "fortitude",  1.2,       0,     "Give an ally a buff to their defense for asingle turn."];
-    this.skillList[2] = [2, this.skillHeal,          "Heal",     3,      "wits" ,      1.5,       3,     "Heal a single unit."];
-    this.skillList[3] = [3, this.skillExplode,       "Explode",  7,      "level",      1.0,       1,    "Damage all creature on the field, includ- ing allies."];
-    this.skillList[4] = [4, this.skillScythe,        "Scythe",   6,      "might",      1.0,       2,    "Damage all enemy heroes on the field."];
-    this.skillList[5] = [5, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only)."];
-    this.skillList[6] = [6, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy."];
+    this.skillList[0] = [0, this.skillAttack,        "Attack",   4,      "might",      1.5,       0,      "Damage a single enemy.", 10];
+    this.skillList[1] = [1, this.skillDefend,        "Defend",   3,      "fortitude",  1.2,       0,     "Give an ally a buff to their defense for asingle turn.", 10];
+    this.skillList[2] = [2, this.skillHeal,          "Heal",     3,      "wits" ,      1.5,       3,     "Heal a single unit.", 10];
+    this.skillList[3] = [3, this.skillExplode,       "Explode",  7,      "level",      1.0,       1,    "Damage all creature on the field, includ- ing allies.", 10];
+    this.skillList[4] = [4, this.skillScythe,        "Scythe",   6,      "might",      1.0,       2,    "Damage all enemy heroes on the field.", 10];
+    this.skillList[5] = [5, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only).", 10];
+    this.skillList[6] = [6, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy.", 10];
     this.skillList[7] = [7, this.noSkill,             "No Skill",     0,  "",           0,        0,      "- - - - - - - -"];
 
   }//end init()

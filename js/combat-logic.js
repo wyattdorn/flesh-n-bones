@@ -172,6 +172,7 @@ class CombatLogic{
   executeSkill(target){
     if(player.myCreatures[this.waitingFunction[0]].currentSpirit >= skills.skillList[this.waitingFunction[1]][6]){
       skills.skillList[this.waitingFunction[1]][1](player.myCreatures[this.waitingFunction[0]], target);
+      player.myCreatures[this.waitingFunction[0]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[this.waitingFunction[0]].hasAction = false;
       if(this.checkCreatureStatuses){
         myCombatScreen.updateScreen(1,0,1);
@@ -352,6 +353,7 @@ class CombatLogic{
         case 1: case 2: case 5: case 6: case 7:
           //Now we execute the skill, and decrement the unit's Spirit accordingly
           player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][1](player.myCreatures[combatLogi.selectedAlly]);
+          player.myCreatures[combatLogi.selectedAlly].learnSkill(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][0]);
           player.myCreatures[combatLogi.selectedAlly].removeSpirit(player.myCreatures[combatLogi.selectedAlly].skillList[skillNum][6]);
           //We note that the unit has acted this round
           player.myCreatures[combatLogi.selectedAlly].hasAction = false;
