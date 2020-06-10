@@ -144,7 +144,7 @@ class CombatScreen{
     ctx.font = "20px Arial";
     ctx.fillText(player.myCreatures[combatLogi.selectedAlly].myItem[1], 30, canvas.height - controlBarHeight + 160);
     ctx.font = "15px Courier";
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].myItem[3], 20, 20, 30, canvas.height - controlBarHeight + 180);
+    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].myItem[3], 20, 20, 30, canvas.height - controlBarHeight + 180);
 
     var newImg = new Image();
 
@@ -171,37 +171,21 @@ class CombatScreen{
 
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
-    this.drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
+    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
+    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
+    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
+    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
 
     //Print text to the "RUN" and "END TURN" buttons
     ctx.fillStyle = "#cccccc";
     ctx.font = "25px Arial";
-    this.drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
+    drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
 
     ctx.fillText("RUN", 1105, canvas.height - controlBarHeight + 185);
 
   }//end drawButtons()
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Draws multiple lines of text from a single string
-  //////////////////////////////////////////////////////////////////////////////
-  drawMultipleLines(myString, maxLength, lineHeight, startX, startY){
-    var tempString = "";
 
-    for(var x = 0; x < (myString.length/maxLength); x++){
-      tempString = "";
-      for(var y = 0; y < maxLength; y++){
-        if(myString.length <= y+(maxLength*x)){
-          break;
-        }
-        tempString += ("" + myString[y + (maxLength * x)]);
-      }
-      ctx.fillText(tempString, startX, startY + (lineHeight * x));
-    }
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // Creates a textured background for the combat screen

@@ -126,7 +126,10 @@ class Creature {
     //Check all the skills in this Creature's list of memorized skills
     for(var x = 0; x < this.memorizedSkills.length; x++){
       if(this.memorizedSkills[x][0] == skillNum){
-        this.memorizedSkills[x][1]++;
+        if(this.memorizedSkills[x][1] < skills.skillList[this.memorizedSkills[x][0]][8]){
+          this.memorizedSkills[x][1]++;
+          console.log("ALL FULL!");
+        }
         return;
       }
     }

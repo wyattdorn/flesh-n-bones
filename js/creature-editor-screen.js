@@ -189,7 +189,7 @@ class CreatureEditorScreen{
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
       //Print the flavor text for the organ
-      myCombatScreen.drawMultipleLines(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+      drawMultipleLines(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
       //Draw the "EQUIP" buttons
@@ -241,7 +241,10 @@ class CreatureEditorScreen{
 
     ctx.fillRect(1080, 113 + (index * 50), 102, 12);
     //The HP bar will be colored according to how full the unit's health is
-    if(percentMemorized>0.50){
+    if(percentMemorized >= 1){
+      ctx.fillStyle = "blue";
+    }
+    else if(percentMemorized>0.50){
       ctx.fillStyle = "green";
     }
     else if(percentMemorized>0.25){
@@ -299,7 +302,7 @@ class CreatureEditorScreen{
       ctx.fillText(player.myCreatures[this.selectedCreature].getOrgan(x)[1], 435, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      myCombatScreen.drawMultipleLines(player.myCreatures[this.selectedCreature].myOrgans[x][3], 20, 20, 435, 65 + (200 * x));
+      drawMultipleLines(player.myCreatures[this.selectedCreature].myOrgans[x][3], 20, 20, 435, 65 + (200 * x));
     }
     ctx.restore();
 
@@ -347,7 +350,7 @@ class CreatureEditorScreen{
       ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][2], 670, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      myCombatScreen.drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][7], 20, 20, 670, 65 + (200 * x));
+      drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][7], 20, 20, 670, 65 + (200 * x));
 
     }
     ctx.restore();
