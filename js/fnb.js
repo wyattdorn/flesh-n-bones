@@ -112,6 +112,8 @@ function setGameMode(mode){
 ///////////////////////////////////////////////////////////////////////////////
 function initiateCombat(){
 
+  generateCombatSquad();
+
   combatLogi = new CombatLogic();
   myCombatScreen.init(true);
   combatLogi.beginCombat();
@@ -126,7 +128,6 @@ function launchCreatureEditor(){
   //test code
   generateDummyBodies();
   createMoreDummyCreatures();
-
   //end test code
 
   creatureEditorScreen.init();

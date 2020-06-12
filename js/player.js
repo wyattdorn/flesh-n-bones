@@ -13,6 +13,7 @@ class Deity{
     this.malachite = 0; //The money used in this world
     this.impetus = 0; //Basically exp for the PC
     this.myCreatures = [];
+    this.myCombatCreatures = []; //List of Creatures that will enter combat
     this.isPlayerTurn = true;
     this.mySkins = [];
     this.myBones = [];

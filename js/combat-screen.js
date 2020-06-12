@@ -142,9 +142,9 @@ class CombatScreen{
     //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
     ctx.font = "20px Arial";
-    ctx.fillText(player.myCreatures[combatLogi.selectedAlly].myItem[1], 30, canvas.height - controlBarHeight + 160);
+    ctx.fillText(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem[1], 30, canvas.height - controlBarHeight + 160);
     ctx.font = "15px Courier";
-    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].myItem[3], 20, 20, 30, canvas.height - controlBarHeight + 180);
+    drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem[3], 20, 20, 30, canvas.height - controlBarHeight + 180);
 
     var newImg = new Image();
 
@@ -152,29 +152,29 @@ class CombatScreen{
       ctx.drawImage(newImg, 175, canvas.height - controlBarHeight + 140, 35, 25);
     }, false);
 
-    newImg.src = '' + player.myCreatures[combatLogi.selectedAlly].myItem[4];
+    newImg.src = '' + player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem[4];
 
     //Print Skill text to the skill buttons
-    for(var i = 0; i < player.myCreatures[combatLogi.selectedAlly].skillList.length; i++){
+    for(var i = 0; i < player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
       ctx.fillStyle = "#cccccc";
       ctx.font = "25px Arial";
       var x = 275;
       if(i%2==1){x = 675;}
       var y = 50;
       if(i>1){y=160;}
-      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][2], x + 30, canvas.height - controlBarHeight + y);
+      ctx.fillText(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i][2], x + 30, canvas.height - controlBarHeight + y);
       ctx.fillStyle = "#8099ff";
       ctx.font = "10px Arial";
       ctx.fillText("Cost: ", x - 12 , canvas.height - controlBarHeight + y - 12);
-      ctx.fillText(player.myCreatures[combatLogi.selectedAlly].skillList[i][6], x - 5 , canvas.height - controlBarHeight + y + 3);
+      ctx.fillText(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i][6], x - 5 , canvas.height - controlBarHeight + y + 3);
     }
 
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
-    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
-    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
-    drawMultipleLines(player.myCreatures[combatLogi.selectedAlly].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
+    drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
+    drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
+    drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
+    drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[3][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
 
     //Print text to the "RUN" and "END TURN" buttons
     ctx.fillStyle = "#cccccc";
@@ -236,7 +236,7 @@ class CombatScreen{
         ctx.fillRect(startX + xRand, startY + yRand, 4, 13);
       }
     }, 100);
-  } //end drawWounds()
+  }//end drawWounds()
 
   //////////////////////////////////////////////////////////////////////////////
   // Draws the bar containing unit invormation of the left of the screen
@@ -245,7 +245,7 @@ class CombatScreen{
 
     ctx.fillStyle = "#60584f";
 
-    if(player.myCreatures.length<6){ this.max = myCreatures.length;}
+    if(player.myCombatCreatures.length<6){ this.max = player.myCombatCreatures.length;}
     else{this.max = 6;}
 
     //Loop through all the allies we have in combat
@@ -254,7 +254,7 @@ class CombatScreen{
       this.drawUnitInfo(i);
       this.drawHPBar(i, 10, 5);
       this.drawSpiritBar(i, 10, 38);
-      if(player.myCreatures[i].hasAction == false){
+      if(player.myCreatures[player.myCombatCreatures[i]].hasAction == false){
         this.drawCheckMark(215, 35 + 90*i);
       }
     }
@@ -283,8 +283,8 @@ class CombatScreen{
       if(combatLogi.selectedAlly == i){
         ctx.fillStyle = "#fcc201";
       }
-      ctx.fillText(player.myCreatures[i].name, 10, 30+(90*i));
-      ctx.fillText('Level: ' + player.myCreatures[i].level, 10, 65+(90*i));
+      ctx.fillText(player.myCreatures[player.myCombatCreatures[i]].name, 10, 30+(90*i));
+      ctx.fillText('Level: ' + player.myCreatures[player.myCombatCreatures[i]].level, 10, 65+(90*i));
       ctx.restore();
 
   }//end drawUnitInfo()
@@ -294,11 +294,11 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawHPBar(creature){
     ctx.save();
-    var percentHP = player.myCreatures[creature].currentHP/player.myCreatures[creature].maxHP;
+    var percentHP = player.myCreatures[player.myCombatCreatures[creature]].currentHP/player.myCreatures[player.myCombatCreatures[creature]].maxHP;
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText('HP: ' + player.myCreatures[creature].currentHP+'/'+player.myCreatures[creature].maxHP, 115, 20+(creature*90));
+    ctx.fillText('HP: ' + player.myCreatures[player.myCombatCreatures[creature]].currentHP+'/'+player.myCreatures[player.myCombatCreatures[creature]].maxHP, 115, 20+(creature*90));
     ctx.fillRect(115, 25+(creature*90), 102, 12);
     //The HP bar will be colored according to how full the unit's health is
     if(percentHP>0.50){
@@ -321,11 +321,11 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawSpiritBar(creature, x, y){
     ctx.save();
-    var percentSpirit = player.myCreatures[creature].currentSpirit/player.myCreatures[creature].maxSpirit;
+    var percentSpirit = player.myCreatures[player.myCombatCreatures[creature]].currentSpirit/player.myCreatures[player.myCombatCreatures[creature]].maxSpirit;
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText('Spirit: ' + player.myCreatures[creature].currentSpirit+'/'+player.myCreatures[creature].maxSpirit, 115, 50+(creature*90));
+    ctx.fillText('Spirit: ' + player.myCreatures[player.myCombatCreatures[creature]].currentSpirit+'/'+player.myCreatures[player.myCombatCreatures[creature]].maxSpirit, 115, 50+(creature*90));
     ctx.fillRect(115, 55+(creature*90), 102, 12);
     //Fill bar with respective amount of HP
     ctx.fillStyle = "blue";
@@ -342,20 +342,25 @@ class CombatScreen{
     //Atarting x position is unitBarWidth plus 50
     var baseX = unitBarWidth + 50;
 
-    if(player.myCreatures.length<6){ this.max = myCreatures.length;}
+    console.log("Buddies: " + player.myCombatCreatures.length);
+
+    if(player.myCombatCreatures.length<6){ this.max = player.myCombatCreatures.length;}
     else{this.max = 6;}
 
     //Loop through all the allies we have in combat
     for(var x = 0; x < this.max; x++){
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
-      if(player.myCreatures[x].isDead()){
+      if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
         this.drawUnit('media/images/character-sprites/pile-of-bones.png', baseX, 50+(150*(x%3)));
       }
       else{
-        this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+        this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)));
+        //this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
       }
     }
+
+    //this.drawUnit('media/images/character-sprites/pile-of-bones.png', 500, 500);
 
   }//end drawFriendlyUnits()
 

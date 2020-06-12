@@ -188,7 +188,7 @@ class Creature {
 
   //Returns a boolean, if the given creature's HP is less than half
   isBloodied(){
-    if(this.currentHP/this.maxHP < 0.5 && !this.isDead()){return true;}
+    if(this.currentHP/this.maxHP <= 0.5 && !this.isDead()){return true;}
     else{return false;}
   }//end isBloodied()
 

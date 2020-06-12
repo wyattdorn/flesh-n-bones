@@ -36,6 +36,31 @@ function generateDummyBodies(){
 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//   Create list of Creatures that Player will send into combat
+///////////////////////////////////////////////////////////////////////////////
+function generateCombatSquad(){
+  for(var x = 4; x >= 0; x--){
+    //player.myCombatCreatures[x] = x;
+    //console.log(player.myCreatures[player.myCombatCreatures[x]].name);
+
+    player.myCombatCreatures[1] = 3;
+    player.myCombatCreatures[3] = 2;
+    player.myCombatCreatures[0] = 1;
+    player.myCombatCreatures[2] = 0;
+
+  }
+
+
+
+
+  for(var x = 0; x < 6; x++){
+    //player.myCombatCreatures[x] = x;
+    //console.log(player.myCreatures[player.myCombatCreatures[x]].name);
+  }
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////\
 // FOR TESTING PURPOSES ONLY!!! - Create dummy crreatures to be used in testing
