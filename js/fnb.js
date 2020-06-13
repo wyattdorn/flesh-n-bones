@@ -75,6 +75,7 @@ function init(){
 
   player.soulsOwned = 6;
   createDummyCreatures();
+  generateEquipableItems();
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //

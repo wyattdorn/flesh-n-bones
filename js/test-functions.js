@@ -36,6 +36,23 @@ function generateDummyBodies(){
 
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+//   Create list of player owned eqipable items
+///////////////////////////////////////////////////////////////////////////////
+function generateEquipableItems(){
+
+  player.gainNewEquipableItem(2);
+  player.gainNewEquipableItem(1);
+  player.gainNewEquipableItem(3);
+  player.gainNewEquipableItem(2);
+  player.gainNewEquipableItem(1);
+  player.gainNewEquipableItem(3);
+  player.gainNewEquipableItem(2);
+
+  console.log(player.myEquipableItems[0]);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //   Create list of Creatures that Player will send into combat
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,9 +67,6 @@ function generateCombatSquad(){
     player.myCombatCreatures[2] = 0;
 
   }
-
-
-
 
   for(var x = 0; x < 6; x++){
     //player.myCombatCreatures[x] = x;
@@ -157,10 +171,10 @@ function createDummyCreatures(){
     PlayerCharacter.skillList[2] = skills.skillList[PlayerCharacter.myGuts[2]];
   });
 
-  player.myCreatures[0].myItem = items.itemList[1];
-  player.myCreatures[1].myItem = items.itemList[2];
-  player.myCreatures[2].myItem = items.itemList[3];
-  player.myCreatures[3].myItem = items.itemList[1];
+  player.myCreatures[0].myItem = 1;// items.itemList[1];
+  player.myCreatures[1].myItem = 2;// items.itemList[2];
+  player.myCreatures[2].myItem = 3;// items.itemList[3];
+  player.myCreatures[3].myItem = 1;// items.itemList[1];
 
   enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
   enemyCreatures[0].maxHP=100;

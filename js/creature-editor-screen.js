@@ -18,6 +18,8 @@ class CreatureEditorScreen{
     this.selectedOrganType = 0;//at launch, Bones are selected by default
     this.statBlockStart = [210, 215];
 
+    //this.inventoryList = [player.myOrgans[0], player.myOrgans[1], player.myOrgans[2], player.myEquipableItems];
+
     this.updateScreen();
   } //end init()
 
@@ -58,20 +60,29 @@ class CreatureEditorScreen{
   drawButtons(){
     ctx.save();
     ctx.fillStyle = "#771111";
-    ctx.fillRect(this.creatureListWidth + 10, 620, 90, 50);
-    ctx.fillRect(this.creatureListWidth + 10, 680, 90, 50);
-    ctx.fillRect(this.creatureListWidth + 10, 740, 90, 50);
+
+    for(var x = 0; x < 4; x++){
+      ctx.fillRect(this.creatureListWidth + 10, 620 + (45 * x), 90, 35);
+    }
+
+    //ctx.fillRect(this.creatureListWidth + 10, 620, 90, 35);
+    //ctx.fillRect(this.creatureListWidth + 10, 665, 90, 35);
+    //ctx.fillRect(this.creatureListWidth + 10, 710, 90, 35);
+    //ctx.fillRect(this.creatureListWidth + 10, 755, 90, 35);
 
     ctx.font = "25px Arial";
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 0){ctx.fillStyle = "#fcc201";}
-    ctx.fillText('Bones', this.creatureListWidth + 15, 650);
+    ctx.fillText('Bones', this.creatureListWidth + 15, 645);
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 1){ctx.fillStyle = "#fcc201";}
-    ctx.fillText('Guts', this.creatureListWidth + 15, 715);
+    ctx.fillText('Guts', this.creatureListWidth + 15, 690);
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 2){ctx.fillStyle = "#fcc201";}
-    ctx.fillText('Skin', this.creatureListWidth + 15, 775);
+    ctx.fillText('Skin', this.creatureListWidth + 15, 735);
+    ctx.fillStyle = "#cccccc";
+    if(this.selectedOrganType == 3){ctx.fillStyle = "#fcc201";}
+    ctx.fillText('Items', this.creatureListWidth + 15, 780);
 
     ctx.restore();
   }//end drawButtons()
@@ -140,6 +151,10 @@ class CreatureEditorScreen{
     this.drawOrganList();
     this.drawMemorizedSkills();
     this.drawBackButton();
+    this.drawEquippedItem();
+
+    console.log(items.itemList[player.inventoryList[3][0]][1]);
+
   }//end updateScreen()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -174,26 +189,50 @@ class CreatureEditorScreen{
 
     //If there are less than 4 of a given organ type, only print that many,
     //If there's 4 or more of the organ type, print 4 at a time
-    if(player.myOrgans[this.selectedOrganType].length < 4){this.max = player.myOrgans[this.selectedOrganType].length;}
+    if(player.inventoryList[this.selectedOrganType].length < 4){this.max = player.inventoryList[this.selectedOrganType].length;}
     else{this.max = 4;}
 
-    //Print out the name and description of the owned organs
-    for(var x = 0; x < this.max; x++){
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "#cccccc";
-      //Print the name of the organ
-      ctx.fillText(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][1], this.creatureListWidth + 160 + (200 * x), 650);
-      ctx.font = "10px Arial";
-      ctx.fillStyle = "#999999";
-      ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
-      ctx.font = "15px Courier";
-      ctx.fillStyle = "#aaaaaa";
-      //Print the flavor text for the organ
-      drawMultipleLines(player.myOrgans[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "#cccccc";
-      //Draw the "EQUIP" buttons
-      ctx.fillText("EQUIP", 420 + (200 * x), 780);
+    if(this.selectedOrganType == 3){
+      //Print out the name and description of the owned organs
+      for(var x = 0; x < this.max; x++){
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "#cccccc";
+        //Print the name of the organ
+        ctx.fillText(items.itemList[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][1], this.creatureListWidth + 160 + (200 * x), 650);
+        ctx.font = "10px Arial";
+        ctx.fillStyle = "#999999";
+        ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
+        ctx.font = "15px Courier";
+        ctx.fillStyle = "#aaaaaa";
+        //Print the flavor text for the organ
+        console.log(items.itemList[player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex]] [3]);
+        drawMultipleLines(items.itemList[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "#cccccc";
+        //Draw the "EQUIP" buttons
+        ctx.fillText("EQUIP", 420 + (200 * x), 780);
+      }
+    }
+    else{
+      //Print out the name and description of the owned organs
+      for(var x = 0; x < this.max; x++){
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "#cccccc";
+        //Print the name of the organ
+        ctx.fillText(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][1], this.creatureListWidth + 160 + (200 * x), 650);
+        ctx.font = "10px Arial";
+        ctx.fillStyle = "#999999";
+        ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
+        ctx.font = "15px Courier";
+        ctx.fillStyle = "#aaaaaa";
+        //Print the flavor text for the organ
+        console.log(player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex] [3]);
+        drawMultipleLines(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "#cccccc";
+        //Draw the "EQUIP" buttons
+        ctx.fillText("EQUIP", 420 + (200 * x), 780);
+      }
     }
 
     ctx.restore();
@@ -359,12 +398,29 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   //  Draw the selected Creature's stats
   //////////////////////////////////////////////////////////////////////////////
+  drawEquippedItem(){
+
+    ctx.save();
+
+    ctx.fillStyle = "#771111";
+    ctx.fillRect(this.statBlockStart[0], 490, 210, 115);
+
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText(items.itemList[player.myCreatures[this.selectedCreature].myItem][1], 220, 515);
+    //ctx.fillText(items.itemList[player.myCreatures[this.selectedCreature].myItem][1], this.statBlockStart[0] + 10, 510);
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the selected Creature's stats
+  //////////////////////////////////////////////////////////////////////////////
   drawStats(){
 
     ctx.save();
 
     ctx.fillStyle = "#771111";
-    ctx.fillRect(this.statBlockStart[0], this.statBlockStart[1], 210, 390);
+    ctx.fillRect(this.statBlockStart[0], this.statBlockStart[1], 210, 265);
 
     ctx.font = "30px Arial";
     ctx.fillStyle = "#cccccc";
@@ -445,7 +501,7 @@ class CreatureEditorScreen{
       this.updateScreen();
     }
     else if(clickPositionX > 1155 && clickPositionX < 1190 && clickPositionY > 620 && clickPositionY < 790){
-      if(this.organScrollIndex < player.myOrgans[this.selectedOrganType].length - 4){
+      if(this.organScrollIndex < player.inventoryList[this.selectedOrganType].length - 4){
         this.organScrollIndex++;
       }
       this.updateScreen();
@@ -453,23 +509,29 @@ class CreatureEditorScreen{
 
     //If the click was not in the creature list, we check if it's one of the body part buttons
     if(clickPositionX > this.creatureListWidth + 10 && clickPositionX < this.creatureListWidth + 100){
-      if(clickPositionY > 620 && clickPositionY < 670){
+      if(clickPositionY > 620 && clickPositionY < 655){
         this.selectedOrganType = 0;
         this.organScrollIndex = 0;
         this.updateScreen();
         console.log("BONES");
       }
-      else if(clickPositionY > 680 && clickPositionY < 730){
+      else if(clickPositionY > 665 && clickPositionY < 700){
         this.selectedOrganType = 1;
         this.organScrollIndex = 0;
         this.updateScreen();
         console.log("GUTS");
       }
-      else if(clickPositionY > 740 && clickPositionY < 790){
+      else if(clickPositionY > 710 && clickPositionY < 745){
         this.selectedOrganType = 2;
         this.organScrollIndex = 0;
         this.updateScreen();
         console.log("SKIN");
+      }
+      else if(clickPositionY > 755 && clickPositionY < 790){
+        this.selectedOrganType = 3;
+        this.organScrollIndex = 0;
+        this.updateScreen();
+        console.log("ITEMS");
       }
     }
 

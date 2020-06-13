@@ -20,7 +20,14 @@ class Deity{
     this.myGuts = [];
     this.mySouls = [];
     this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
+    this.myEquipableItems = [];
+    this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
   }//end constructor
+
+  gainNewEquipableItem(num){
+    this.myEquipableItems.push(num);
+    this.inventoryList[3] = this.myEquipableItems;
+  }
 
   addSoul(newSoul){
     this.soulsOwned++;
