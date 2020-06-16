@@ -139,6 +139,7 @@ class Creature {
   equip(index, type){
 
     if(type == 3){
+      this.giveItem(index);
       console.log("ITEM");
       //equip an item
     }
@@ -146,6 +147,10 @@ class Creature {
       this.giveOrgan(index, type);
     }
 
+  }
+
+  giveItem(index){
+    this.myItem = index;
   }
 
   giveOrgan(index, organType){
