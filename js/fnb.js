@@ -32,6 +32,7 @@ var skills;
 var combatLogi;
 var items;
 var skins, bones, guts;
+var organs;
 
 function init(){
 
@@ -63,6 +64,7 @@ function init(){
   items = new Item();
   player = new Deity();
   skills = new Skill();
+  organs = [bones, guts, skins];
 
   //for testing purposes, the game starts at the Menu Selection Screen
   gameMode = 2;

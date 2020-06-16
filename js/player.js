@@ -34,4 +34,26 @@ class Deity{
     souls.push(newSoul);
   }//end addSoul
 
+  removeInventoryItem(index, type){
+    switch (type) {
+      case 0:
+        this.myBones.splice(index, 1);
+        this.myOrgans[0] = this.myBones;
+        break;
+      case 1:
+      this.myGuts.splice(index, 1);
+      this.myOrgans[1] = this.myGuts;
+        break;
+      case 2:
+      this.mySkin.splice(index, 1);
+      this.myOrgans[2] = this.mySkin;
+        break;
+      case 3:
+
+        break;
+    }
+    //this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
+    this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
+  }
+
 }//end class Deity

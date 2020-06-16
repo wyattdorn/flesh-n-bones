@@ -106,15 +106,15 @@ class CreatureEditorScreen{
       ctx.fillText('Level: ' + player.myCreatures[this.creatureScrollIndex + i].level, 10, 95+(90*i));
 
       //If the Creature has skin, draw an "S" to indicate it
-      if(player.myCreatures[this.creatureScrollIndex + i].myBones[0] != 0){
+      if(player.myCreatures[this.creatureScrollIndex + i].myBones != 0){
         ctx.fillText("B", 180, 60+(90*i));
       }
       //If the Creature has guts, draw a "G" to indicate it
-      if(player.myCreatures[this.creatureScrollIndex + i].myGuts[0] != 0){
+      if(player.myCreatures[this.creatureScrollIndex + i].myGuts != 0){
         ctx.fillText("G", 178, 80+(90*i));
       }
       //If the Creature has bones, draw a "B" to indicate it
-      if(player.myCreatures[this.creatureScrollIndex + i].mySkin[0] != 0){
+      if(player.myCreatures[this.creatureScrollIndex + i].mySkin != 0){
         ctx.fillText("S", 180, 100+(90*i));
       }
 
@@ -153,7 +153,7 @@ class CreatureEditorScreen{
     this.drawBackButton();
     this.drawEquippedItem();
 
-    console.log(items.itemList[player.inventoryList[3][0]][1]);
+    //console.log(items.itemList[player.inventoryList[3][0]][1]);
 
   }//end updateScreen()
 
@@ -191,6 +191,7 @@ class CreatureEditorScreen{
     //If there's 4 or more of the organ type, print 4 at a time
     if(player.inventoryList[this.selectedOrganType].length < 4){this.max = player.inventoryList[this.selectedOrganType].length;}
     else{this.max = 4;}
+
 
     if(this.selectedOrganType == 3){
       //Print out the name and description of the owned organs
@@ -338,10 +339,11 @@ class CreatureEditorScreen{
       //Print the name & description of the Creature's equipped Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      ctx.fillText(player.myCreatures[this.selectedCreature].getOrgan(x)[1], 435, 40 + (200 * x));
+      ctx.fillText(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][1], 435, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      drawMultipleLines(player.myCreatures[this.selectedCreature].myOrgans[x][3], 20, 20, 435, 65 + (200 * x));
+      //console.log("TESTING: " + organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3]);
+      drawMultipleLines(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3], 20, 20, 435, 65 + (200 * x));
     }
     ctx.restore();
 
@@ -381,15 +383,19 @@ class CreatureEditorScreen{
     ctx.lineTo(660, 415);
     ctx.fill();
 
+    console.log("OOPS:" + player.myCreatures[0].skillList[0]);
+
     for(var x = 0; x < 3; x++){
 
       //Print the name & description of the skills associated with this Creature's Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][2], 670, 40 + (200 * x));
+      //console.log("TEST@@@@@ " + x + "--" + skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2]);// skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2]);
+      ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2], 670, 40 + (200 * x));
+      console.log("after");
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].getOrgan(x)[2]][7], 20, 20, 670, 65 + (200 * x));
+      drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][7], 20, 20, 670, 65 + (200 * x));
 
     }
     ctx.restore();
@@ -570,16 +576,19 @@ class CreatureEditorScreen{
   equipOrgan(index){
     //If the Creature does not already have an organ of this type, they are given
     //the organ, ant it it removed from the Player's list of organs
-    if(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType][0] == 0){
-      player.myCreatures[this.selectedCreature].giveOrgan(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
-      player.myOrgans[this.selectedOrganType].splice(index, 1);
+    if(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType] == 0){
+      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index][0], this.selectedOrganType);
+      player.removeInventoryItem(index, this.selectedOrganType);
     }
     //If the Creature already has an organ of this type, we remove the organ they
     //had originally and place it at the back of the Player's list
     else{
+      console.log("LENGTH 1: " + player.inventoryList[this.selectedOrganType].length);
+      console.log("FUEGO! " + player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);// player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType].length);
       player.myOrgans[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);
-      player.myCreatures[this.selectedCreature].giveOrgan(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
-      player.myOrgans[this.selectedOrganType].splice(index, 1);
+      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index][0], this.selectedOrganType);
+      player.removeInventoryItem(index, this.selectedOrganType);
+      console.log("LENGTH 2: " + player.inventoryList[this.selectedOrganType].length);
     }
     this.updateScreen();
   }//end equipOrgan()

@@ -7,14 +7,14 @@ class Skin {
   }
 
   init(){
-    this.skinList = new Array(1);
-    this.skinList[0] = [];
+    this.list = new Array(1);
+    this.list[0] = [];
 
     //                  index, name, skill num, info
-    this.skinList[0] = [0, "No Skin", 7, "Creature has no skin."];
-    this.skinList[1] = [1, "Goblin Skin", 4, "Goblin skin grants the Scythe skill."];
-    this.skinList[2] = [2, "Orc Skin", 5, "Orc skin grants the Orc Smash skill."];
-    this.skinList[3] = [3, "Mage Skin", 6, "Mage skin grants the Spirit Dagger skill."];
+    this.list[0] = [0, "No Skin", 0, "Creature has no skin."];
+    this.list[1] = [1, "Goblin Skin", 5, "Goblin skin grants the Scythe skill."];
+    this.list[2] = [2, "Orc Skin", 6, "Orc skin grants the Orc Smash skill."];
+    this.list[3] = [3, "Mage Skin", 7, "Mage skin grants the Spirit Dagger skill."];
   }
 }
 
@@ -25,14 +25,14 @@ class Bones {
   }
 
   init(){
-    this.boneList = new Array(1);
-    this.boneList[0] = [];
+    this.list = new Array(1);
+    this.list[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.boneList[0] = [0, "No Bones", 7, "Creature has no bones."];
-    this.boneList[1] = [1, "Old Bones", 0, "Any old pile of bones can attack."];
-    this.boneList[2] = [2, "Brittle Bones", 2, "Brittle bones grants the Heal skill."];
-    this.boneList[3] = [3, "Big Bones", 1, "Big bones grant the Defend skill."];
+    this.list[0] = [0, "No Bones", 0, "Creature has no bones."];
+    this.list[1] = [1, "Old Bones", 1, "Any old pile of bones can attack."];
+    this.list[2] = [2, "Brittle Bones", 3, "Brittle bones grants the Heal skill."];
+    this.list[3] = [3, "Big Bones", 2, "Big bones grant the Defend skill."];
   }
 
 }
@@ -44,13 +44,13 @@ class Guts {
   }
 
   init(){
-    this.gutsList = new Array(1);
-    this.gutsList[0] = [];
+    this.list = new Array(1);
+    this.list[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.gutsList[0] = [0, "No Guts", 7, "Creature has no guts."];
-    this.gutsList[1] = [1, "Explosive Guts", 3, "Explosive guts grants the Explode skill."];
-    this.gutsList[2] = [2, "Dubious Guts", 7, "No one knows what these guts do..."];
+    this.list[0] = [0, "No Guts", 0, "Creature has no guts."];
+    this.list[1] = [1, "Explosive Guts", 4, "Explosive guts grants the Explode skill."];
+    this.list[2] = [2, "Dubious Guts", 0, "No one knows what these guts do..."];
   }
 
 }
@@ -107,13 +107,13 @@ class Creature {
     this.maxHP = 1;
     this.spirit = 1; //spirit is mana
     this.movesLeft = this.moveSpeed;
-    this.skillList = [];
+    this.skillList = [0,0,0];
     this.memorizedSkills = [];//This is a list of skills the Creature has used enough to memorize
     //   memorizedSkills[0] = skill index, [1] = times the skill has been used, [2] = if the skill has been memorized (bool)
     this.myItem = 0;//items.itemList[0];
-    this.mySkin = skins.skinList[0];
-    this.myBones = bones.boneList[0];
-    this.myGuts = guts.gutsList[0];
+    this.mySkin = 0;// skins.list[0];
+    this.myBones = 0;// bones.list[0];
+    this.myGuts = 0;// guts.list[0];
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
@@ -136,25 +136,39 @@ class Creature {
     this.memorizedSkills.push([skillNum, 1]);
   }
 
-  giveOrgan(organ, organType){
-    console.log(organ[1]);
+  equip(index, type){
+
+    if(type == 3){
+      console.log("ITEM");
+      //equip an item
+    }
+    else if(type == 0 || type == 1 || type == 2){
+      this.giveOrgan(index, type);
+    }
+
+  }
+
+  giveOrgan(index, organType){
+    //console.log("GIVE ORGAN");
     switch (organType) {
       case 0: //bone
-          this.myBones = organ;
-          console.log(this.myBones[1]);
+          this.myBones = index;
+          //console.log(this.myBones + " ---bone--- " + organType);
+          this.skillList[0] = bones.list[this.myBones][2];
+          //console.log("Bone: " + bones.list[organ][1]);
         break;
       case 1: //guts
-          this.myGuts = organ;
+          this.myGuts = index;
+          this.skillList[1] = guts.list[this.myGuts][2];
+          //console.log(index + " ---guts--- " + organType);
         break;
       case 2: //skin
-          this.mySkin = organ;
+          this.mySkin = index;
+          this.skillList[2] = skins.list[this.mySkin][2];
+          //console.log(index + " ---skin--- " + organType);
         break;
     }
-    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
-    //Update this creature's skill list based on their new organ(s)
-    for(var x = 0; x < 3; x++){
-      this.skillList[x] = skills.skillList[this.myOrgans[x][2]];
-    }
+    this.myOrgans[organType] = index;// [this.myBones, this.myGuts, this.mySkin];
   }
 
   getOrgan(index){

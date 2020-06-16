@@ -155,7 +155,7 @@ class CombatScreen{
     newImg.src = '' + items.itemList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4];
 
     //Print Skill text to the skill buttons
-    for(var i = 0; i < player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
+    for(var i = 0; i < 4; i++){//player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
       ctx.fillStyle = "#cccccc";
       ctx.font = "25px Arial";
       var x = 275;
@@ -169,8 +169,10 @@ class CombatScreen{
       ctx.fillText(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i][6], x - 5 , canvas.height - controlBarHeight + y + 3);
     }
 
+    //Drawing the descriptor text for the four skills
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!" + player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0][7] );
     drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
     drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
     drawMultipleLines(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
