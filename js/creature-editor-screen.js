@@ -220,15 +220,19 @@ class CreatureEditorScreen{
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Print the name of the organ
-        ctx.fillText(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][1], this.creatureListWidth + 160 + (200 * x), 650);
+        //console.log(player.inventoryList[x + this.organScrollIndex][x]);
+        //console.log(organs[this.selectedOrganType].list[player.inventoryList[x + this.organScrollIndex][1]][1]);
+        ctx.fillText(organs[this.selectedOrganType].list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][1], this.creatureListWidth + 160 + (200 * x), 650);
         ctx.font = "10px Arial";
         ctx.fillStyle = "#999999";
         ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
         ctx.font = "15px Courier";
         ctx.fillStyle = "#aaaaaa";
         //Print the flavor text for the organ
-        console.log(player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex] [3]);
-        drawMultipleLines(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        //console.log(player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex] [3]);
+        //organs[this.selectedOrganType].list[player.inventoryList[x + this.organScrollIndex]][2]
+        drawMultipleLines(organs[this.selectedOrganType].list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        //drawMultipleLines(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Draw the "EQUIP" buttons
@@ -575,20 +579,24 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   equipOrgan(index){
     //If the Creature does not already have an organ of this type, they are given
-    //the organ, ant it it removed from the Player's list of organs
+    //the organ, and it it removed from the Player's list of organs
     if(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType] == 0){
-      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index][0], this.selectedOrganType);
+      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
       player.removeInventoryItem(index, this.selectedOrganType);
     }
     //If the Creature already has an organ of this type, we remove the organ they
     //had originally and place it at the back of the Player's list
     else{
-      console.log("LENGTH 1: " + player.inventoryList[this.selectedOrganType].length);
-      console.log("FUEGO! " + player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);// player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType].length);
+      for(var x = 0; x < player.myOrgans[this.selectedOrganType].length; x++){
+        console.log("List item: " + player.myOrgans[this.selectedOrganType][x]);
+      }
+      //console.log("LENGTH 1: " + player.inventoryList[this.selectedOrganType].length);
+      //console.log("FUEGO! " + player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);// player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType].length);
       player.myOrgans[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);
-      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index][0], this.selectedOrganType);
+      //console.log("LENGTH 2: " + player.inventoryList[this.selectedOrganType].length);
+      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
       player.removeInventoryItem(index, this.selectedOrganType);
-      console.log("LENGTH 2: " + player.inventoryList[this.selectedOrganType].length);
+      //console.log("LENGTH 3: " + player.inventoryList[this.selectedOrganType].length);
     }
     this.updateScreen();
   }//end equipOrgan()

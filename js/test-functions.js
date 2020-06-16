@@ -17,21 +17,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
   var tempSoul = new Soul("Grenda", "crude");
-  player.myBones.push(bones.list[1]);
-  player.myBones.push(bones.list[3]);
-  player.myBones.push(bones.list[1]);
-  player.myBones.push(bones.list[2]);
-  player.myBones.push(bones.list[2]);
+  player.myBones.push(1);
+  player.myBones.push(3);
+  player.myBones.push(1);
+  player.myBones.push(2);
+  player.myBones.push(2);
 
-  player.mySkins.push(skins.list[1]);
-  player.mySkins.push(skins.list[2]);
-  player.mySkins.push(skins.list[1]);
-  player.mySkins.push(skins.list[3]);
-  player.mySkins.push(skins.list[1]);
+  player.mySkins.push(1);
+  player.mySkins.push(2);
+  player.mySkins.push(1);
+  player.mySkins.push(3);
+  player.mySkins.push(1);
 
-  player.myGuts.push(guts.list[1]);
-  player.myGuts.push(guts.list[2]);
-  player.myGuts.push(guts.list[1]);
+  player.myGuts.push(1);
+  player.myGuts.push(2);
+  player.myGuts.push(1);
 
 
 }

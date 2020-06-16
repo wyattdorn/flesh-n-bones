@@ -286,11 +286,12 @@ class CombatLogic{
       //target random allied creature, if that creature is already dead, pick a new one
       do{
         temp = combatLogi.newAI.random();
-        console.log(temp);
+        console.log("temp: " + temp);
       }while(player.myCreatures[player.myCombatCreatures[temp]].isDead()==true);
       //Only allow enemy unit to attack it it is not dead
       if(Creature.isDead()==false){
-        skills.skillList[0][1](Creature, player.myCreatures[player.myCombatCreatures[temp]]);
+        console.log("AN ATTACK HAS BEEN MADE!");
+        skills.skillList[1][1](Creature, player.myCreatures[player.myCombatCreatures[temp]]);
       }
 
     });
@@ -337,14 +338,14 @@ class CombatLogic{
     }
 
     //First, we check that the unit has enough Spirit to use the selected ability
-    if(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].currentSpirit >= player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][6]){
-
-      switch(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][3]){
+    if(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].currentSpirit >= skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][6]){
+      console.log("SO FAR, SO GOOD");
+      switch(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][3]){
         //Skill requires a target and is then stored
         case 4: case 3:
         //We store the unit number and skill number for the skill waiting for a target to be selected
-        combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][0]];
-        console.log(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].skillList[skillNum][2] + " stored for " + player.myCreatures[player.myCombatCreatures[this.selectedAlly]].name);
+        combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]];
+        console.log(skills.skillList[player.myCreatures[player.myCombatCreatures[this.selectedAlly]].skillList[skillNum]][2] + " stored for " + player.myCreatures[player.myCombatCreatures[this.selectedAlly]].name);
         //Spirit is not spent until the skill is actually used.
         break;
 
@@ -355,9 +356,9 @@ class CombatLogic{
         //Skill does not require a target and is executed immediately
         case 1: case 2: case 5: case 6: case 7:
           //Now we execute the skill, and decrement the unit's Spirit accordingly
-          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][1](player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
-          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].learnSkill(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][0]);
-          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].removeSpirit(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum][6]);
+          skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][1](player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
+          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].learnSkill(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]);
+          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].removeSpirit(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][6]);
           //We note that the unit has acted this round
           player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].hasAction = false;
           //Update the Unit Bar to reflect the Spirit spent

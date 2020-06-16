@@ -107,7 +107,7 @@ class Creature {
     this.maxHP = 1;
     this.spirit = 1; //spirit is mana
     this.movesLeft = this.moveSpeed;
-    this.skillList = [0,0,0];
+    this.skillList = [0,0,0,0];
     this.memorizedSkills = [];//This is a list of skills the Creature has used enough to memorize
     //   memorizedSkills[0] = skill index, [1] = times the skill has been used, [2] = if the skill has been memorized (bool)
     this.myItem = 0;//items.itemList[0];
@@ -154,6 +154,7 @@ class Creature {
       case 0: //bone
           this.myBones = index;
           //console.log(this.myBones + " ---bone--- " + organType);
+          //console.log(bones.list[this.myBones][2]);//bones.list[this.myBones]);
           this.skillList[0] = bones.list[this.myBones][2];
           //console.log("Bone: " + bones.list[organ][1]);
         break;

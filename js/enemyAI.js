@@ -19,7 +19,8 @@ class enemyAI{
   }
 
   random(){
-    return Math.floor(Math.random() * player.myCreatures.length);
+    console.log("---------------------" + player.myCombatCreatures.length);
+    return Math.floor(Math.random() * player.myCombatCreatures.length);
     //Attacks a random opposing Creature
   }
 
