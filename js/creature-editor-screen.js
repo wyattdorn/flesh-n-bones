@@ -548,19 +548,19 @@ class CreatureEditorScreen{
     //Checking if the click was on one of the "Equip" organ buttons
     if(clickPositionY > 764 && clickPositionY < 785){
       if(clickPositionX > 420 && clickPositionX < 485){
-        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex][1]);
+        //console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex][1]);
         this.equipOrgan(this.organScrollIndex);
       }
       else if(clickPositionX > 620 && clickPositionX < 685){
-        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 1][1]);
+        //console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 1][1]);
         this.equipOrgan(this.organScrollIndex + 1);
       }
       else if(clickPositionX > 820 && clickPositionX < 885){
-        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 2][1]);
+        //console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 2][1]);
         this.equipOrgan(this.organScrollIndex + 2);
       }
       else if(clickPositionX > 1020 && clickPositionX < 1085){
-        console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 3][1]);
+        //console.log(player.myOrgans[this.selectedOrganType][this.organScrollIndex + 3][1]);
         this.equipOrgan(this.organScrollIndex + 3);
       }
 
@@ -578,23 +578,35 @@ class CreatureEditorScreen{
   //  Equips a given organ to the currently selected Creature
   //////////////////////////////////////////////////////////////////////////////
   equipOrgan(index){
+
+    if(this.selectedOrganType==3){
+      console.log("ITEMSSSSSSSSSSSSS");
+      //return;
+    }
+
+    if(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType]==0){
+      console.log("NO IOTEM!");
+    }
+    else{
+      console.log("HAS ITREM");
+    }
+
+    console.log("KLJHGLJKHGKJLHGLKU");
     //If the Creature does not already have an organ of this type, they are given
     //the organ, and it it removed from the Player's list of organs
-    if(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType] == 0){
-      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
+    if(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType] == 0){
+      player.myCreatures[this.selectedCreature].equip(player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
       player.removeInventoryItem(index, this.selectedOrganType);
     }
     //If the Creature already has an organ of this type, we remove the organ they
     //had originally and place it at the back of the Player's list
     else{
-      for(var x = 0; x < player.myOrgans[this.selectedOrganType].length; x++){
-        console.log("List item: " + player.myOrgans[this.selectedOrganType][x]);
-      }
+      
       //console.log("LENGTH 1: " + player.inventoryList[this.selectedOrganType].length);
       //console.log("FUEGO! " + player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);// player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType].length);
-      player.myOrgans[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);
+      player.inventoryList[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType]);
       //console.log("LENGTH 2: " + player.inventoryList[this.selectedOrganType].length);
-      player.myCreatures[this.selectedCreature].equip(player.myOrgans[this.selectedOrganType][index], this.selectedOrganType);
+      player.myCreatures[this.selectedCreature].equip(player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
       player.removeInventoryItem(index, this.selectedOrganType);
       //console.log("LENGTH 3: " + player.inventoryList[this.selectedOrganType].length);
     }

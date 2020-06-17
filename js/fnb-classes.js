@@ -115,6 +115,7 @@ class Creature {
     this.myBones = 0;// bones.list[0];
     this.myGuts = 0;// guts.list[0];
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
+    this.myInventory = [this.myBones, this.myGuts, this.mySkin, this.myItem];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }
 
@@ -136,32 +137,39 @@ class Creature {
     this.memorizedSkills.push([skillNum, 1]);
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Function is called when an Item or Organ is equipped to a Creature
+  ////////////////////////////////////////////////////////////////////////////////
   equip(index, type){
 
+    //Equip an Item
     if(type == 3){
       this.giveItem(index);
-      console.log("ITEM");
-      //equip an item
     }
+    //Equip an organ
     else if(type == 0 || type == 1 || type == 2){
       this.giveOrgan(index, type);
     }
+    this.myInventory[type] = index;
+  }//end equip()
 
-  }
-
+  ////////////////////////////////////////////////////////////////////////////////
+  // Equips a given Item to this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   giveItem(index){
     this.myItem = index;
-  }
+  }//end giveItem()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Equips a given Organ to this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   giveOrgan(index, organType){
     //console.log("GIVE ORGAN");
     switch (organType) {
       case 0: //bone
           this.myBones = index;
-          //console.log(this.myBones + " ---bone--- " + organType);
-          //console.log(bones.list[this.myBones][2]);//bones.list[this.myBones]);
           this.skillList[0] = bones.list[this.myBones][2];
-          //console.log("Bone: " + bones.list[organ][1]);
         break;
       case 1: //guts
           this.myGuts = index;
@@ -175,12 +183,15 @@ class Creature {
         break;
     }
     this.myOrgans[organType] = index;// [this.myBones, this.myGuts, this.mySkin];
-  }
+  }//end giveOrgan()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // OLD FUNCTION, TO BE PHASED OUT AND DELETED IN DUE TIME
+  ////////////////////////////////////////////////////////////////////////////////
   getOrgan(index){
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     return this.myOrgans[index];
-  }
+  }//end getOrgan()
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    Returns a boolean, if the Creature is capable of acting at this time
@@ -191,54 +202,64 @@ class Creature {
     }
     console.log("Unit cannot act.");
     return false;
-  }
+  }//end canAct()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Increases this Creature's level by 1
+  ////////////////////////////////////////////////////////////////////////////////
   levelUp(){
     this.level++;
-  }
+  }//end levelUp()
 
-  setLocation(x,y){
-    this.location[0]=x;
-    this.location[1]=y;
-  }
-
-  printLocation(){
-    console.log('(' + this.location[0] + ', ' + this.location[1] + ')');
-  }
-
-  //Returns a boolean, if the given creature's HP is less than half
+  ////////////////////////////////////////////////////////////////////////////////
+  // Returns a boolean, if the given creature's HP is less than half
+  ////////////////////////////////////////////////////////////////////////////////
   isBloodied(){
     if(this.currentHP/this.maxHP <= 0.5 && !this.isDead()){return true;}
     else{return false;}
   }//end isBloodied()
 
-  //Returns a boolean, if the given creature's HP is 0
+  ////////////////////////////////////////////////////////////////////////////////
+  // Returns a boolean, if the given creature's HP is 0
+  ////////////////////////////////////////////////////////////////////////////////
   isDead(){
     if(this.currentHP<=0){return true;}
     else{return false;}
   }//end isDead()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Removes a given number of HP from this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   removeHealth(num){
     this.currentHP = this.currentHP - num;
     if(this.currentHP < 0){this.currentHP = 0;}
-  }
+  }//end removeHealth()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Adds a given number of HP from this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   giveHealth(num){
     console.log("Healing for: " + num);
     this.currentHP = this.currentHP + num;
     if(this.currentHP > this.maxHP){this.currentHP = this.maxHP;}
-  }
+  }//end giveHealth()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Removes a given number of Spirit from this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   removeSpirit(num){
     console.log("Spending " + num + " spirit!");
     this.currentSpirit = this.currentSpirit - num;
-  }
+  }//end removeSpirit()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // Adds a given number of Spirit from this Creature
+  ////////////////////////////////////////////////////////////////////////////////
   giveSpirit(num){
     console.log("Spending " + num + " spirit!");
     this.currentSpirit = this.currentSpirit + num;
     if(this.currentSpirit > this.maxSpirit){this.currentSpirit = this.maxSpirit;}
-  }
+  }//end giveSpirit()
 
 }
 
