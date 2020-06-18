@@ -85,7 +85,7 @@ class CombatLogic{
     console.log();
     var counter = 0;
     player.myCreatures.forEach((Creature) => {if(Creature.isDead()) counter++});
-    console.log(counter + " dead out of " + player.myCreatures.length);
+    console.log(counter + " dead out of " + player.myCombatCreatures.length);
     if(counter == player.myCreatures.length){
       return true;
     }
@@ -424,7 +424,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   useItem(){
     //First, we check to see if the unit has an Item equipped
-    if(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem[0]!=0){
+    if(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem!=0){
       //Display message announcing that the unit has used their item
       this.displayMessage = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].name + " uses " + items.itemList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1] + "!";
       myCombatScreen.printMessageBar(this.displayMessage);

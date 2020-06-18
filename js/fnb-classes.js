@@ -162,6 +162,60 @@ class Creature {
   }//end giveItem()
 
   ////////////////////////////////////////////////////////////////////////////////
+  // Unequips an Item or Organ from this Creature, and returns it to the Player's inventory
+  ////////////////////////////////////////////////////////////////////////////////
+  unequip(type){
+
+    //First we must check to see if there is something to unequip
+    if(this.myInventory[type] != 0){
+      //Unequip an Item
+      if(type == 3){
+        this.removeItem();
+      }
+      //Unequip an organ
+      else if(type == 0 || type == 1 || type == 2){
+        this.removeOrgan(type);
+      }
+      this.myInventory[type] = 0;
+    }
+  }//end unequip()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Unequips the Item this Creature is holding, and returns it to the Player's inventory
+  ////////////////////////////////////////////////////////////////////////////////
+  removeItem(){
+    //Place the Item back in the Player's inventory
+    player.inventoryList[3].push(this.myItem);
+    //Removes the item from the Creature's inventory
+    this.myItem = 0;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Unequips an organ from this Creature, and returns it to the Player's inventory
+  ////////////////////////////////////////////////////////////////////////////////
+  removeOrgan(organType){
+    //console.log("GIVE ORGAN");
+    player.inventoryList[organType].push(this.myOrgans[organType]);
+    switch (organType) {
+      case 0: //bone
+          this.myBones = 0;
+          this.skillList[0] =0;
+        break;
+      case 1: //guts
+          this.myGuts = 0;
+          this.skillList[1] = 0;
+          //console.log(index + " ---guts--- " + organType);
+        break;
+      case 2: //skin
+          this.mySkin = 0;
+          this.skillList[2] = 0;
+          //console.log(index + " ---skin--- " + organType);
+        break;
+    }
+    this.myOrgans[organType] = 0;// [this.myBones, this.myGuts, this.mySkin];
+  }//end removeOrgan()
+
+  ////////////////////////////////////////////////////////////////////////////////
   // Equips a given Organ to this Creature
   ////////////////////////////////////////////////////////////////////////////////
   giveOrgan(index, organType){

@@ -206,7 +206,6 @@ class CreatureEditorScreen{
         ctx.font = "15px Courier";
         ctx.fillStyle = "#aaaaaa";
         //Print the flavor text for the organ
-        console.log(items.itemList[player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex]] [3]);
         drawMultipleLines(items.itemList[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
@@ -346,8 +345,12 @@ class CreatureEditorScreen{
       ctx.fillText(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][1], 435, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      //console.log("TESTING: " + organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3]);
       drawMultipleLines(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3], 20, 20, 435, 65 + (200 * x));
+
+      ctx.font = "15px Arial";
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText("UNEQUIP", 500, 200 * (x + 1));
+
     }
     ctx.restore();
 
@@ -409,8 +412,15 @@ class CreatureEditorScreen{
   //  Draw the selected Creature's stats
   //////////////////////////////////////////////////////////////////////////////
   drawEquippedItem(){
-
     ctx.save();
+
+    var newImg = new Image();
+
+    newImg.addEventListener('load',function(){
+      ctx.drawImage(newImg, 380, 495, 35, 25);
+    }, false);
+
+    newImg.src = '' + items.itemList[player.myCreatures[this.selectedCreature].myItem][4];
 
     ctx.fillStyle = "#771111";
     ctx.fillRect(this.statBlockStart[0], 490, 210, 115);
@@ -418,9 +428,16 @@ class CreatureEditorScreen{
     ctx.font = "25px Arial";
     ctx.fillStyle = "#cccccc";
     ctx.fillText(items.itemList[player.myCreatures[this.selectedCreature].myItem][1], 220, 515);
-    //ctx.fillText(items.itemList[player.myCreatures[this.selectedCreature].myItem][1], this.statBlockStart[0] + 10, 510);
+    ctx.font = "15px Courier";
+    ctx.fillStyle = "#aaaaaa";
+    drawMultipleLines(items.itemList[player.myCreatures[this.selectedCreature].myItem][3], 21, 20, 220, 540);
 
-  }
+    ctx.font = "15px Arial";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText("UNEQUIP", 280, 600);
+
+    ctx.restore();
+  }//end drawEquippedItem()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draw the selected Creature's stats
@@ -500,6 +517,31 @@ class CreatureEditorScreen{
         this.selectedCreature = Math.floor((clickPositionY-30)/95) + this.creatureScrollIndex;
         this.updateScreen();
         console.log(this.selectedCreature);
+      }
+    }
+
+    //Check to see if the player is unequipping the selected Creature's item
+    if(clickPositionX > 280 && clickPositionX < 350 && clickPositionY > 585 && clickPositionY < 603){
+      console.log("UNEQUIP");
+      player.myCreatures[this.selectedCreature].unequip(3);
+      this.updateScreen();
+    }
+    //Check to see if the player is unequipping the Creature's organs
+    else if(clickPositionX > 500 && clickPositionX < 570){
+      if(clickPositionY > 185 && clickPositionY < 200){
+        player.myCreatures[this.selectedCreature].unequip(0);
+        console.log("UNEQUIP 1");
+        this.updateScreen();
+      }
+      else if(clickPositionY > 385 && clickPositionY < 400){
+        player.myCreatures[this.selectedCreature].unequip(1);
+        console.log("UNEQUIP 2");
+        this.updateScreen();
+      }
+      else if(clickPositionY > 585 && clickPositionY < 600){
+        player.myCreatures[this.selectedCreature].unequip(2);
+        console.log("UNEQUIP 3");
+        this.updateScreen();
       }
     }
 
@@ -601,7 +643,7 @@ class CreatureEditorScreen{
     //If the Creature already has an organ of this type, we remove the organ they
     //had originally and place it at the back of the Player's list
     else{
-      
+
       //console.log("LENGTH 1: " + player.inventoryList[this.selectedOrganType].length);
       //console.log("FUEGO! " + player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType]);// player.myCreatures[this.selectedCreature].myOrgans[this.selectedOrganType].length);
       player.inventoryList[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType]);
