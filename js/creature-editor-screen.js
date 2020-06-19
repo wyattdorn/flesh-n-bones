@@ -249,7 +249,22 @@ class CreatureEditorScreen{
   drawMemorizedSkills(){
     ctx.save();
     ctx.fillStyle = "#771111";
+
     ctx.fillRect(870, 100, 320, 305);
+    ctx.beginPath();
+    ctx.moveTo(870, 405);
+    ctx.lineTo(1030, 425);
+    ctx.lineTo(1190, 405);
+    ctx.fill();
+
+    ctx.fillRect(870, 435, 320, 170);
+    ctx.beginPath();
+    ctx.moveTo(870, 435);
+    ctx.lineTo(870, 415);
+    ctx.lineTo(1030, 435);
+    ctx.lineTo(1190, 415);
+    ctx.lineTo(1190, 435);
+    ctx.fill();
 
     if(player.myCreatures[this.selectedCreature].memorizedSkills.length == 0){
       ctx.font = "20px Arial";
@@ -266,6 +281,13 @@ class CreatureEditorScreen{
         this.drawMemorizationBar(x);
       }
     }
+
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][2], 880, 470);
+    ctx.font = "15px Courier";
+    ctx.fillStyle = "#aaaaaa";
+    drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][7], 20, 20, 880, 500);
 
     ctx.restore();
   }
