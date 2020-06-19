@@ -141,10 +141,15 @@ class Creature {
   // Sets the Creature's fourth skill to a skill they've already learned
   ////////////////////////////////////////////////////////////////////////////////
   equipLearnedSkill(index){
-    if(){
-      
+    console.log("Equipping " + skills.skillList[index][2] + " to " + this.name);
+    //Make sure the skill has been fully learned by the Creature before we equip it
+    for(var x = 0; x < this.memorizedSkills.length; x++){
+      if(this.memorizedSkills[x][0] == index){
+        if(this.memorizedSkills[x][1] >= skills.skillList[this.memorizedSkills[x][0]][8]){
+          this.skillList[3] = index;
+        }
+      }
     }
-    this.skillList[3] = index;
   }//end equipLearnedSkill
 
 

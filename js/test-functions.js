@@ -119,6 +119,15 @@ function createDummyCreatures(){
   player.myCreatures[0].equip(0, 2); //no skin
   player.myCreatures[0].equip(1, 3);// items.itemList[1];
 
+  player.myCreatures[0].memorizedSkills[0] = [1,1];
+  player.myCreatures[0].memorizedSkills[1] = [4,2];
+  player.myCreatures[0].memorizedSkills[2] = [3,8];
+  player.myCreatures[0].memorizedSkills[3] = [2,2];
+  player.myCreatures[0].memorizedSkills[4] = [5,8];
+  player.myCreatures[0].memorizedSkills[5] = [7,10];
+  //player.myCreatures[0].memorizedSkills[6] = [6,8];
+
+
   player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
   player.myCreatures[1].generateDummyStats(2, 13, 3);
   player.myCreatures[1].currentSpirit = 10;

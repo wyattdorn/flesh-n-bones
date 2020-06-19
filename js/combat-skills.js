@@ -74,7 +74,7 @@ class Skill{
   //  Spirit Dagger skill - Damages a single enemy unit based on attacker's wits.
   //////////////////////////////////////////////////////////////////////////////
   skillSpiritDagger(creature, target){
-    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with " + skills.skillList[6][2] + ".");
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with " + skills.skillList[7][2] + ".");
     myCombatScreen.printMessageBar(combatLogi.displayMessage);
     console.log(creature.name + " deals " + Math.floor(creature.wits * 2.0) + " damage to " + target.name + " with Spirit Dagger.");
     skills.damageUnit(Math.floor(creature.wits * 2.0), target);

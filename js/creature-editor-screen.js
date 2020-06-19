@@ -14,6 +14,7 @@ class CreatureEditorScreen{
     this.creatureListWidth = 200;
     this.creatureScrollIndex = 0;
     this.organScrollIndex = 0;
+    this.skillScrollIndex = 0;
     this.selectedCreature = 0;
     this.selectedOrganType = 0;//at launch, Bones are selected by default
     this.statBlockStart = [210, 215];
@@ -270,15 +271,17 @@ class CreatureEditorScreen{
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
       //Draw the "EQUIP" buttons
-      ctx.fillText("No skills memorized", 880, 125);
+      ctx.fillText("No skills memorized", 880, 140);
     }
     else{
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      for(var x = 0; x < player.myCreatures[this.selectedCreature].memorizedSkills.length; x++){
-        ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[x][0]][2], 880, 125 + (x * 50));
+      if(player.myCreatures[this.selectedCreature].memorizedSkills.length < 6){this.max = player.myCreatures[this.selectedCreature].memorizedSkills.length;}
+      else{this.max = 6;}
+      for(var x = 0; x < this.max; x++){
+        ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[x + this.skillScrollIndex][0]][2], 880, 140 + (x * 50));
         //ctx.fillText(player.myCreatures[this.selectedCreature].memorizedSkills[x][1], 1080, 125 + (x * 50));
-        this.drawMemorizationBar(x);
+        this.drawMemorizationBar(x + this.skillScrollIndex);
       }
     }
 
@@ -287,7 +290,20 @@ class CreatureEditorScreen{
     ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][2], 880, 470);
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][7], 20, 20, 880, 500);
+    drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][7], 32, 20, 880, 500);
+
+    //draw scroll arrows
+    ctx.beginPath();
+    ctx.moveTo(1030, 105);
+    ctx.lineTo(1010, 115);
+    ctx.lineTo(1050, 115);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(1030, 415);
+    ctx.lineTo(1010, 405);
+    ctx.lineTo(1050, 405);
+    ctx.fill();
 
     ctx.restore();
   }
@@ -301,10 +317,10 @@ class CreatureEditorScreen{
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
-    ctx.fillText(percentMemorized, 1080, 125 + (index * 50));
+    ctx.fillText(percentMemorized, 1080, 140 + (index * 50));
 
 
-    ctx.fillRect(1080, 113 + (index * 50), 102, 12);
+    ctx.fillRect(1080, 128 + (index * 50), 102, 12);
     //The HP bar will be colored according to how full the unit's health is
     if(percentMemorized >= 1){
       ctx.fillStyle = "blue";
@@ -319,7 +335,7 @@ class CreatureEditorScreen{
       ctx.fillStyle = "red";
     }
     //Fill bar with respective amount of HP
-    ctx.fillRect(1081, 114 + (index * 50), percentMemorized*100, 10);
+    ctx.fillRect(1081, 129 + (index * 50), percentMemorized*100, 10);
 
     ctx.restore();
   }//end drawMemorizationBar()
@@ -537,9 +553,21 @@ class CreatureEditorScreen{
       //If the click was not on one of the scroll buttons, it must have been on one of our Creatures
       else{
         this.selectedCreature = Math.floor((clickPositionY-30)/95) + this.creatureScrollIndex;
+        this.skillScrollIndex = 0;
         this.updateScreen();
         console.log(this.selectedCreature);
       }
+    }
+
+    //Check to see if the click was in the Memorized Skills box
+    if(clickPositionX > 870 && clickPositionX < 1190 && clickPositionY > 100 && clickPositionY < 405){
+      if((clickPositionY - 100)%50 > 24 && (clickPositionY - 100)%50 < 42){
+        var heightIndex = Math.floor((clickPositionY - 100)/50);
+        console.log( (clickPositionY - 100)%50 + " MEMORIZED SKILLS " + heightIndex);
+        player.myCreatures[this.selectedCreature].equipLearnedSkill(player.myCreatures[this.selectedCreature].memorizedSkills[heightIndex + this.skillScrollIndex][0]);
+        this.updateScreen();
+      }
+
     }
 
     //Check to see if the player is unequipping the selected Creature's item
