@@ -99,10 +99,10 @@ class CreatureEditorScreen{
       ctx.save();
 
       for(var x = 0; x < player.myCombatCreatures.length; x++){
-        console.log(player.myCombatCreatures[x]);
+        //console.log(player.myCombatCreatures[x]);
         if(i + this.creatureScrollIndex == player.myCombatCreatures[x]){
           ctx.fillStyle = "#550505";
-          ctx.fillRect(10, 50+(90*i), this.creatureListWidth-20, 45);
+          ctx.fillRect(10, 40+(90*i), this.creatureListWidth-15, 57);
         }
       }
 
@@ -254,6 +254,9 @@ class CreatureEditorScreen{
     ctx.restore();
   }//end drawOrganList()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the button to add/remove a Creature from the combat party
+  //////////////////////////////////////////////////////////////////////////////
   drawAddRemovePartyButton(){
     ctx.save();
 
@@ -263,7 +266,7 @@ class CreatureEditorScreen{
     this.text = "Add to party"
 
     for(var x = 0; x < player.myCombatCreatures.length; x++){
-      console.log(player.myCombatCreatures[x]);
+      //console.log(player.myCombatCreatures[x]);
       if(this.selectedCreature == player.myCombatCreatures[x]){
         this.text = "Remove from party";
       }
@@ -275,6 +278,28 @@ class CreatureEditorScreen{
 
     ctx.restore();
   }//end drawAddRemovePartyButton()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Add or remove a Creature from the combat party
+  //////////////////////////////////////////////////////////////////////////////
+  addRemoveParty(){
+
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      if(this.selectedCreature == player.myCombatCreatures[x]){
+        player.myCombatCreatures.splice(x, 1);
+        this.updateScreen();
+        return;
+      }
+    }
+
+    if(player.myCombatCreatures.length < maxPartySize){
+      player.myCombatCreatures.push(this.selectedCreature);
+    }
+    else{
+      console.log("PARTY SIZE HAS BEEN REACHED");
+    }
+    this.updateScreen();
+  }
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -590,6 +615,11 @@ class CreatureEditorScreen{
         this.updateScreen();
         console.log(this.selectedCreature);
       }
+    }
+
+    //check to see if the add/remove from party button was pressed
+    if(clickPositionX > 210 && clickPositionX < 420 && clickPositionY > 170 && clickPositionY < 205){
+      this.addRemoveParty();
     }
 
     //Check to see if the click was in the Memorized Skills box

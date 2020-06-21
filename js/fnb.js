@@ -28,6 +28,8 @@ var myCombatScreen, creatureEditorScreen, menuSelectionScreen;
 var player;
 var creature, enemyCreatures; //arrays of enemy and allied creatures
 
+var maxPartySize;
+
 var skills;
 var combatLogi;
 var items;
@@ -35,6 +37,8 @@ var skins, bones, guts;
 var organs, masterInventoryList;
 
 function init(){
+
+  maxPartySize = 5;
 
   myCreatures = [];
   enemyCreatures = [];
