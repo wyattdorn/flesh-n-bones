@@ -32,7 +32,7 @@ var skills;
 var combatLogi;
 var items;
 var skins, bones, guts;
-var organs;
+var organs, masterInventoryList;
 
 function init(){
 
@@ -65,6 +65,7 @@ function init(){
   player = new Deity();
   skills = new Skill();
   organs = [bones, guts, skins];
+  //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //for testing purposes, the game starts at the Menu Selection Screen
   gameMode = 2;
@@ -78,6 +79,8 @@ function init(){
   player.soulsOwned = 6;
   createDummyCreatures();
   generateEquipableItems();
+  generateCombatSquad();
+  masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
@@ -115,7 +118,7 @@ function setGameMode(mode){
 ///////////////////////////////////////////////////////////////////////////////
 function initiateCombat(){
 
-  generateCombatSquad();
+
 
   combatLogi = new CombatLogic();
   myCombatScreen.init(true);

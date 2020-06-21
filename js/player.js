@@ -49,7 +49,8 @@ class Deity{
       this.myOrgans[2] = this.mySkins;
         break;
       case 3:
-
+      this.myEquipableItems.splice(index, 1);
+      //this.myOrgans[2] = this.mySkins;
         break;
     }
     //this.myOrgans = [this.myBones, this.myGuts, this.mySkins];

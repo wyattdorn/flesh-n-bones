@@ -142,9 +142,9 @@ class CombatScreen{
     //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
     ctx.font = "20px Arial";
-    ctx.fillText(items.itemList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1], 30, canvas.height - controlBarHeight + 160);
+    ctx.fillText(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1], 30, canvas.height - controlBarHeight + 160);
     ctx.font = "15px Courier";
-    drawMultipleLines(items.itemList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - controlBarHeight + 180);
+    drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - controlBarHeight + 180);
 
     var newImg = new Image();
 
@@ -152,7 +152,7 @@ class CombatScreen{
       ctx.drawImage(newImg, 175, canvas.height - controlBarHeight + 140, 35, 25);
     }, false);
 
-    newImg.src = '' + items.itemList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4];
+    newImg.src = '' + items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4];
 
     //Print Skill text to the skill buttons
     for(var i = 0; i < 4; i++){//player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){

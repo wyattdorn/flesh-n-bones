@@ -173,8 +173,25 @@ class Creature {
   // Equips a given Item to this Creature
   ////////////////////////////////////////////////////////////////////////////////
   giveItem(index){
-    this.myItem = index;
+    if(this.myItem == 0){
+      this.myItem = index;
+    }
+    else{
+      this.removeItem();
+      this.myItem = index;
+    }
   }//end giveItem()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Equips a given Item to this Creature, "index" is the item's index in teh player's inventory
+  ////////////////////////////////////////////////////////////////////////////////
+  equipFromInventory(index, type){
+
+    this.masterIndex = masterInventoryList[type].list[player.inventoryList[type][index]][0];
+    this.equip(this.masterIndex, type);
+    player.removeInventoryItem(index, type);
+
+  }//end equipFromInventory()
 
   ////////////////////////////////////////////////////////////////////////////////
   // Unequips an Item or Organ from this Creature, and returns it to the Player's inventory
@@ -235,6 +252,9 @@ class Creature {
   ////////////////////////////////////////////////////////////////////////////////
   giveOrgan(index, organType){
     //console.log("GIVE ORGAN");
+    if(this.myOrgans[organType] != 0){
+      player.inventoryList[organType].push(this.myOrgans[organType]);
+    }
     switch (organType) {
       case 0: //bone
           this.myBones = index;
