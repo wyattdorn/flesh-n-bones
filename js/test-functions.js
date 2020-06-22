@@ -33,8 +33,7 @@ function generateDummyBodies(){
   player.myGuts.push(2);
   player.myGuts.push(1);
 
-
-}
+}//end generateDummyBodies()
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,8 +49,7 @@ function generateEquipableItems(){
   player.gainNewEquipableItem(3);
   player.gainNewEquipableItem(2);
 
-  //console.log(player.myEquipableItems[0]);
-}
+}//end generateEquipableItems()
 
 ///////////////////////////////////////////////////////////////////////////////
 //   Create list of Creatures that Player will send into combat
@@ -62,20 +60,8 @@ function generateCombatSquad(){
   player.myCombatCreatures[3] = 2;
   player.myCombatCreatures[0] = 1;
   player.myCombatCreatures[2] = 0;
-  for(var x = 4; x >= 0; x--){
-    //player.myCombatCreatures[x] = x;
-    //console.log(player.myCreatures[player.myCombatCreatures[x]].name);
 
-
-
-  }
-
-  for(var x = 0; x < 6; x++){
-    //player.myCombatCreatures[x] = x;
-    //console.log(player.myCreatures[player.myCombatCreatures[x]].name);
-  }
-
-}
+}//end generateCombatSquad()
 
 
 ///////////////////////////////////////////////////////////////////////////////\

@@ -44,8 +44,6 @@ function init(){
   enemyCreatures = [];
   creatureImages = [];
 
-
-
   canvas = document.getElementById('canvas');
   canvas.style.left = "0px";
   canvas.style.top = "0px";

@@ -102,7 +102,15 @@ class CreatureEditorScreen{
         //console.log(player.myCombatCreatures[x]);
         if(i + this.creatureScrollIndex == player.myCombatCreatures[x]){
           ctx.fillStyle = "#550505";
-          ctx.fillRect(10, 40+(90*i), this.creatureListWidth-15, 57);
+          //ctx.fillRect(10, 40+(90*i), this.creatureListWidth-15, 57);
+          //apple
+          ctx.beginPath();
+          ctx.moveTo(10, 69+(90*i));
+          ctx.lineTo((this.creatureListWidth-5)/2, 40+(90*i));
+          ctx.lineTo(this.creatureListWidth-15, 69+(90*i));
+          ctx.lineTo((this.creatureListWidth-5)/2, 97+(90*i));
+          ctx.fill();
+
         }
       }
 
@@ -284,21 +292,28 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   addRemoveParty(){
 
-    for(var x = 0; x < player.myCombatCreatures.length; x++){
-      if(this.selectedCreature == player.myCombatCreatures[x]){
-        player.myCombatCreatures.splice(x, 1);
-        this.updateScreen();
-        return;
+    //The combat party must always have at least one member
+    if(player.myCombatCreatures.length > 1){
+      //Check to see if the party alraedy contains the selected Creature
+      for(var x = 0; x < player.myCombatCreatures.length; x++){
+        if(this.selectedCreature == player.myCombatCreatures[x]){
+          //If the Creature is already in the party, we remove them and exit the function
+          player.myCombatCreatures.splice(x, 1);
+          this.updateScreen();
+          return;
+        }
       }
     }
 
+    //If the Creature was not already in the party, we check that we have not reached the maximum size for the party
     if(player.myCombatCreatures.length < maxPartySize){
+      //Add the Creature to the party
       player.myCombatCreatures.push(this.selectedCreature);
+      this.updateScreen();
     }
     else{
       console.log("PARTY SIZE HAS BEEN REACHED");
     }
-    this.updateScreen();
   }
 
 
@@ -413,26 +428,16 @@ class CreatureEditorScreen{
   drawCreatureOrgans(){
     ctx.save();
     ctx.fillStyle = "#771111";
-    ctx.fillRect(430, 15, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(630, 15);
-    ctx.lineTo(630, 205);
-    ctx.lineTo(650, 110);
-    ctx.fill();
 
-    ctx.fillRect(430, 215, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(630, 215);
-    ctx.lineTo(630, 405);
-    ctx.lineTo(650, 310);
-    ctx.fill();
-
-    ctx.fillRect(430, 415, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(630, 415);
-    ctx.lineTo(630, 605);
-    ctx.lineTo(650, 510);
-    ctx.fill();
+    //Draw the red rectangle containers for the three organs
+    for(var x = 0; x < 3; x++){
+      ctx.fillRect(430, 15 + (200 * x), 200, 190);
+      ctx.beginPath();
+      ctx.moveTo(630, 15 + (200 * x));
+      ctx.lineTo(630, 205 + (200 * x));
+      ctx.lineTo(650, 110 + (200 * x));
+      ctx.fill();
+    }
 
     for(var x = 0; x < 3; x++){
       //Print the name & description of the Creature's equipped Organs
@@ -458,38 +463,21 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawCreatureSkills(){
     ctx.save();
+
+    //Draw the red rectangle containers for the three skills
     ctx.fillStyle = "#771111";
-    ctx.fillRect(660, 15, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(640, 15);
-    ctx.lineTo(660, 110);
-    ctx.lineTo(640, 205);
-    ctx.lineTo(660, 205);
-    ctx.lineTo(660, 15);
-    ctx.fill();
-
-    ctx.fillRect(660, 215, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(640, 215);
-    ctx.lineTo(660, 310);
-    ctx.lineTo(640, 405);
-    ctx.lineTo(660, 405);
-    ctx.lineTo(660, 215);
-    ctx.fill();
-
-    ctx.fillRect(660, 415, 200, 190);
-    ctx.beginPath();
-    ctx.moveTo(640, 415);
-    ctx.lineTo(660, 510);
-    ctx.lineTo(640, 605);
-    ctx.lineTo(660, 605);
-    ctx.lineTo(660, 415);
-    ctx.fill();
-
-    console.log("OOPS:" + player.myCreatures[0].skillList[0]);
+    for(var x = 0; x < 3; x++){
+      ctx.fillRect(660, 15 + (200 * x), 200, 190);
+      ctx.beginPath();
+      ctx.moveTo(640, 15 + (200 * x));
+      ctx.lineTo(660, 110 + (200 * x));
+      ctx.lineTo(640, 205 + (200 * x));
+      ctx.lineTo(660, 205 + (200 * x));
+      ctx.lineTo(660, 15 + (200 * x));
+      ctx.fill();
+    }
 
     for(var x = 0; x < 3; x++){
-
       //Print the name & description of the skills associated with this Creature's Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
@@ -502,7 +490,7 @@ class CreatureEditorScreen{
 
     }
     ctx.restore();
-  }
+  }//end drawCreatureSkills()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draw the selected Creature's stats
@@ -510,17 +498,18 @@ class CreatureEditorScreen{
   drawEquippedItem(){
     ctx.save();
 
+    //Draw item icon
     var newImg = new Image();
-
     newImg.addEventListener('load',function(){
       ctx.drawImage(newImg, 380, 495, 35, 25);
     }, false);
-
     newImg.src = '' + items.list[player.myCreatures[this.selectedCreature].myItem][4];
 
+    //Draw red rectangle container
     ctx.fillStyle = "#771111";
     ctx.fillRect(this.statBlockStart[0], 490, 210, 115);
 
+    //Draw name and description of item
     ctx.font = "25px Arial";
     ctx.fillStyle = "#cccccc";
     ctx.fillText(items.list[player.myCreatures[this.selectedCreature].myItem][1], 220, 515);
@@ -528,6 +517,7 @@ class CreatureEditorScreen{
     ctx.fillStyle = "#aaaaaa";
     drawMultipleLines(items.list[player.myCreatures[this.selectedCreature].myItem][3], 21, 20, 220, 540);
 
+    //Draw "UNEQUIP" buttons
     ctx.font = "15px Arial";
     ctx.fillStyle = "#cccccc";
     ctx.fillText("UNEQUIP", 280, 600);
@@ -734,31 +724,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   equipOrgan(index){
 
-    //Take the index of the item in the palyer's inventory, and convert it to the appropriate index in the master list
-    //this.masterIndex =masterInventoryList[this.selectedOrganType].list[player.inventoryList[this.selectedOrganType][index]][0];
-    //console.log(this.masterIndex);
-
-    player.myCreatures[this.selectedCreature].equipFromInventory(index, this.selectedOrganType);//player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
-    //player.myCreatures[this.selectedCreature].equip(player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
-
-    /*
-
-    //If the Creature does not already have an organ of this type, they are given
-    //the organ, and it it removed from the Player's list of organs
-    if(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType] == 0){
-      player.myCreatures[this.selectedCreature].equip(player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
-      player.removeInventoryItem(index, this.selectedOrganType);
-    }
-    //If the Creature already has an organ of this type, we remove the organ they
-    //had originally and place it at the back of the Player's list
-    else{
-      player.inventoryList[this.selectedOrganType].push(player.myCreatures[this.selectedCreature].myInventory[this.selectedOrganType]);
-      //console.log("LENGTH 2: " + player.inventoryList[this.selectedOrganType].length);
-      player.myCreatures[this.selectedCreature].equip(player.inventoryList[this.selectedOrganType][index], this.selectedOrganType);
-      player.removeInventoryItem(index, this.selectedOrganType);
-    }
-
-    */
+    player.myCreatures[this.selectedCreature].equipFromInventory(index, this.selectedOrganType);
 
     this.organScrollIndex = 0;
 
