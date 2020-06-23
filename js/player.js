@@ -10,8 +10,8 @@ class Deity{
   constructor() {
     this.soulsOwned = 0;
     this.souls = [];
-    this.malachite = 0; //The money used in this world
-    this.impetus = 0; //Basically exp for the PC
+    this.malachite = 497; //The money used in this world
+    this.impetus = 12; //Basically exp for the PC
     this.myCreatures = [];
     this.myCombatCreatures = []; //List of Creatures that will enter combat
     this.isPlayerTurn = true;

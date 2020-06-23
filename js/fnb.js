@@ -23,7 +23,8 @@ var canvas, ctx;
 // 3=Creature Editor
 var gameMode;
 
-var myCombatScreen, creatureEditorScreen, menuSelectionScreen;
+var myCombatScreen, creatureEditorScreen, menuSelectionScreen, playerScreen;
+var worldMap, mapLocations;
 
 var player;
 var creature, enemyCreatures; //arrays of enemy and allied creatures
@@ -52,6 +53,12 @@ function init(){
   canvas.width = canvasWidth;
   canvas.onclick = logMouseClick;
 
+  /*
+  canvas.onmousemove = function(e) {
+    console.log("MOVE");
+  }
+  */
+
   if (canvas.getContext) {
     ctx = canvas.getContext('2d');
   }
@@ -60,6 +67,9 @@ function init(){
   }
   myCombatScreen = new CombatScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
+  playerScreen = new PlayerScreen(ctx, canvas);
+  worldMap = new WorldMap(ctx, canvas);
+  mapLocations = new MapLocations();
   skins = new Skin();
   bones = new Bones();
   guts = new Guts();
@@ -70,7 +80,7 @@ function init(){
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //for testing purposes, the game starts at the Menu Selection Screen
-  gameMode = 2;
+  gameMode = 5;
   setGameMode(gameMode);
 
 
@@ -98,6 +108,8 @@ function setGameMode(mode){
   // 1=combat
   // 2=menus
   // 3=Creature Editor
+  // 4=Player screen
+  // 5=World Map
 
   gameMode = mode;
   switch (gameMode) {
@@ -109,6 +121,12 @@ function setGameMode(mode){
       break;
     case 3:
       launchCreatureEditor();
+      break;
+    case 4:
+      playerScreen.init();
+      break;
+    case 5:
+      worldMap.init();
       break;
     default:
 
@@ -172,6 +190,12 @@ function logMouseClick(e){
     break;
   case 3:
     creatureEditorScreen.creatuerEditorClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case 4:
+    playerScreen.playerScreenClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case 5:
+    worldMap.worldMapClickHandler(clickPosition.x,clickPosition.y);
     break;
   default:
   }

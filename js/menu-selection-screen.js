@@ -31,7 +31,7 @@ class MenuSelectionScreen{
     ctx.fillStyle = "black";
     ctx.fillText("Creature Editor", this.canvas.width/4, ctx.canvas.height/2-15);
 
-    ctx.fillText("Combat", 3*this.canvas.width/4, ctx.canvas.height/2-15);
+    ctx.fillText("World Map", 3*this.canvas.width/4, ctx.canvas.height/2-15);
 
   }
 
@@ -42,7 +42,7 @@ class MenuSelectionScreen{
     }
     else if(clickPositionX > this.canvas.width/2+5 && clickPositionX < this.canvas.width-5){
       console.log("RIGHT");
-      setGameMode(1);
+      setGameMode(5);
     }
   }
 
