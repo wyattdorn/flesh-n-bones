@@ -41,8 +41,14 @@ class PlayerScreen{
     ctx.font = "25px Arial";
     ctx.fillStyle = "#286355"
     ctx.fillText("Malachite: " + player.malachite, this.statBlockStart[0] + 10, this.statBlockStart[1] + 10);
-    ctx.fillText("Impetus: " + player.impetus, this.statBlockStart[0] + 10, this.statBlockStart[1] + 40);
-    ctx.fillText("Souls: " + player.soulsOwned, this.statBlockStart[0] + 10, this.statBlockStart[1] + 70)
+    ctx.fillText("Impetus: " + player.impetus, this.statBlockStart[0] + 10, this.statBlockStart[1] + 70);
+    ctx.fillText("Souls: " + player.soulsOwned, this.statBlockStart[0] + 10, this.statBlockStart[1] + 130);
+
+    ctx.font = "15px Arial";
+    ctx.fillStyle = "#589385"
+    ctx.fillText("The closest thing this world has to money.", this.statBlockStart[0] + 10, this.statBlockStart[1] + 30);
+    ctx.fillText("Your divine influence on the world.", this.statBlockStart[0] + 10, this.statBlockStart[1] + 90);
+    ctx.fillText("A Creature cannot be made without a Soul.", this.statBlockStart[0] + 10, this.statBlockStart[1] + 150);
 
   }//end drawKeyStats()
 

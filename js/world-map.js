@@ -109,7 +109,12 @@ class WorldMap{
     ctx.fillText(mapLocations.list[this.highlightedLocation][1], 10, 730);
     ctx.font = "15px Arial";
     ctx.fillText(mapLocations.list[this.highlightedLocation][5], 10, 750);
-
+    if(mapLocations.list[this.highlightedLocation][4]){
+      ctx.fillText("This location if friendly.", 10, 770);
+    }
+    else{
+      ctx.fillText("This location if hostile, there may be monsters.", 10, 770);
+    }
 
     ctx.restore();
   }//end drawLocationDescription()
@@ -139,7 +144,6 @@ class WorldMap{
       }
       ctx.fillRect(mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
 
-
     }
 
 
@@ -163,11 +167,13 @@ class WorldMap{
 
         switch (x) {
           case 0:
+            //Enter player stat screen
             setGameMode(4);
             canvas.onmousemove = null;
             break;
           case 1: case 2: case 3: case 4:
-            setGameMode(1);
+            //Enter combat
+            setGameMode(1, x);
             canvas.onmousemove = null;
           default:
 

@@ -160,16 +160,45 @@ function createDummyCreatures(){
   player.myCreatures[5].equip(1, 1);
   player.myCreatures[5].equip(1, 2);
 
-  enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures[0].maxHP=100;
-  enemyCreatures[0].currentHP = 94;
-  enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/skeleman-1.png'));
-  enemyCreatures[0].skillList[0] = skills.skillList[0];
-  enemyCreatures[1].skillList[0] = skills.skillList[0];
-  //enemyCreatures.push(new EnemyCreature("chonk 3", 'media/images/character-sprites/skeleman-1.png'));
-  //enemyCreatures.push(new EnemyCreature("chonk 4", 'media/images/character-sprites/skeleman-1.png'));
-  //enemyCreatures.push(new EnemyCreature("chonk 5", 'media/images/character-sprites/skeleman-1.png'));
-  //enemyCreatures[4].maxHP=10;
-  //enemyCreatures[4].currentHP = 4;
 
 }//end createDummyCreatures()
+
+
+function generateDummyEnemies(index){
+
+  enemyCreatures = [];
+
+  if(index == 1){
+    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/goblin-1.png'));
+    enemyCreatures[0].maxHP=100;
+    enemyCreatures[0].currentHP = 94;
+    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/goblin-1.png'));
+    enemyCreatures[0].skillList[0] = skills.skillList[0];
+    enemyCreatures[1].skillList[0] = skills.skillList[0];
+  }
+  else if(index == 2){
+    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
+    enemyCreatures[0].maxHP=100;
+    enemyCreatures[0].currentHP = 94;
+    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/skeleman-1.png'));
+    enemyCreatures[0].skillList[0] = skills.skillList[0];
+    enemyCreatures[1].skillList[0] = skills.skillList[0];
+  }
+  else if(index == 3){
+    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/orc-1.png'));
+    enemyCreatures[0].maxHP=100;
+    enemyCreatures[0].currentHP = 94;
+    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/orc-1.png'));
+    enemyCreatures[0].skillList[0] = skills.skillList[0];
+    enemyCreatures[1].skillList[0] = skills.skillList[0];
+  }
+  else if(index == 4){
+    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/fireelemental-1.png'));
+    enemyCreatures[0].maxHP=100;
+    enemyCreatures[0].currentHP = 94;
+    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/fireelemental-1.png'));
+    enemyCreatures[0].skillList[0] = skills.skillList[0];
+    enemyCreatures[1].skillList[0] = skills.skillList[0];
+  }
+
+}//this generateDummyEnemies()

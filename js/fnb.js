@@ -103,7 +103,7 @@ function init(){
 ///////////////////////////////////////////////////////////////////////////////
 //   Sets game mode
 ///////////////////////////////////////////////////////////////////////////////
-function setGameMode(mode){
+function setGameMode(mode, index){
 
   // 1=combat
   // 2=menus
@@ -114,7 +114,7 @@ function setGameMode(mode){
   gameMode = mode;
   switch (gameMode) {
     case 1:
-      initiateCombat();
+      initiateCombat(index);
       break;
     case 2:
       menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
@@ -136,9 +136,9 @@ function setGameMode(mode){
 ///////////////////////////////////////////////////////////////////////////////
 //   Begin combat and Launch the Combat Screen
 ///////////////////////////////////////////////////////////////////////////////
-function initiateCombat(){
+function initiateCombat(index){
 
-
+  generateDummyEnemies(index);
 
   combatLogi = new CombatLogic();
   myCombatScreen.init(true);
