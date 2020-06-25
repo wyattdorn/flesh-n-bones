@@ -37,6 +37,8 @@ var items;
 var skins, bones, guts;
 var organs, masterInventoryList;
 
+var imageLoader;
+
 function init(){
 
   maxPartySize = 5;
@@ -70,6 +72,7 @@ function init(){
   playerScreen = new PlayerScreen(ctx, canvas);
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
+  imageLoader = new ImageLoader(ctx, canvas);
   skins = new Skin();
   bones = new Bones();
   guts = new Guts();
@@ -80,8 +83,10 @@ function init(){
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //for testing purposes, the game starts at the Menu Selection Screen
+
+
   gameMode = 5;
-  setGameMode(gameMode);
+  imageLoader.loader.addCompletionListener(function() {setGameMode(gameMode)});
 
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +146,7 @@ function initiateCombat(index){
   generateDummyEnemies(index);
 
   combatLogi = new CombatLogic();
-  myCombatScreen.init(true);
+  myCombatScreen.init(true, ctx, canvas, index);
   combatLogi.beginCombat();
 
 }//end initiateCombat()

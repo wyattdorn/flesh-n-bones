@@ -13,6 +13,7 @@ class Deity{
     this.malachite = 497; //The money used in this world
     this.impetus = 12; //Basically exp for the PC
     this.myCreatures = [];
+    this.myConstructs = []; //constructs are souls placed in objects that perform non-cobat tasks
     this.myCombatCreatures = []; //List of Creatures that will enter combat
     this.isPlayerTurn = true;
     this.mySkins = [];
@@ -24,16 +25,26 @@ class Deity{
     this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
   }//end constructor
 
+  /////////////////////////////////////////////////////////////////////////////
+  // Adds a new equippable item to the inventory of the player
+  /////////////////////////////////////////////////////////////////////////////
   gainNewEquipableItem(num){
     this.myEquipableItems.push(num);
     this.inventoryList[3] = this.myEquipableItems;
-  }
+  }//end gainNewEquipableItem()
 
+  /////////////////////////////////////////////////////////////////////////////
+  // Adds a Soul to the player's total, also provides Impetus to the player
+  /////////////////////////////////////////////////////////////////////////////
   addSoul(newSoul){
     this.soulsOwned++;
     souls.push(newSoul);
+    this.impetus += 2;
   }//end addSoul
 
+  /////////////////////////////////////////////////////////////////////////////
+  // Removes an Item from the player's inventory
+  /////////////////////////////////////////////////////////////////////////////
   removeInventoryItem(index, type){
     switch (type) {
       case 0:
@@ -55,6 +66,6 @@ class Deity{
     }
     //this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
     this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
-  }
+  }//end removeInventoryItem()
 
 }//end class Deity

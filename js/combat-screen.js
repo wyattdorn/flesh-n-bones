@@ -18,13 +18,17 @@ class CombatScreen{
 
   }//end constructor()
 
-  init(isPlayerTurn, context, canvas){
+  init(isPlayerTurn, context, canvas, locationIndex){
 
     this.currentTime = new Date;//.getTime();
     this.randSeed = this.currentTime.getTime();
     Math.seedrandom(this.randSeed);
 
-    ctx.fillStyle = "#171b04";//"#303030";
+    this.locationIndex = locationIndex;
+
+    this.colorScheme = mapLocations.list[locationIndex][5];
+
+    ctx.fillStyle = this.colorScheme[0];//"#303030";
     ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
 
     this.drawRandomSquares();
@@ -95,7 +99,7 @@ class CombatScreen{
     if(combatField){
       //this.drawUnitInfoBar();
       // WORK IN PROGRESS
-      ctx.fillStyle = "#171b04";//"#303030";
+      ctx.fillStyle = mapLocations.list[this.locationIndex][5][0];//"#303030";
       ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
       this.drawRandomSquares();
       this.drawFriendlyUnits();
@@ -199,19 +203,19 @@ class CombatScreen{
     //First itteration (first color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#303030";
+      ctx.fillStyle = this.colorScheme[1];
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
     //Second itteration (second color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#009000";
+      ctx.fillStyle = this.colorScheme[2];
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
     //Third itteration (third color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
-      ctx.fillStyle = "#003000";
+      ctx.fillStyle = this.colorScheme[3];
       ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
     }
   } //end drawRandomSquares()
@@ -268,7 +272,7 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawControlBar(){
     //red bar
-    ctx.fillStyle = "#441111";
+    ctx.fillStyle = this.colorScheme[0];
     ctx.fillRect(0, canvas.height - controlBarHeight, canvas.width, controlBarHeight);
 
     this.drawButtons();

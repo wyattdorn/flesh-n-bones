@@ -7,21 +7,29 @@ class WorldMap{
       this.ctx = context;
       this.canvas = canvas;
 
+      //this.loader = new PxLoader(),
+      //this.bgImg = this.loader.addImage('media/images/backgrounds/bg.png');
+      //this.loader.start();
+
   }//end constructor()
 
   init(){
 
-    this.highlightedLocation = 0;
+      this.highlightedLocation = 0;
 
-    this.locationCoordinates = [];
-    for(var x = 0; x < mapLocations.list.length; x++){
-      this.locationCoordinates[x] = [mapLocations.list[x][2], mapLocations.list[x][3]];
-    }
+      this.locationCoordinates = [];
+      for(var x = 0; x < mapLocations.list.length; x++){
+        this.locationCoordinates[x] = [mapLocations.list[x][2], mapLocations.list[x][3]];
+      }
 
-    canvas.onmousemove = this.checkForHighlights;
+      canvas.onmousemove = this.checkForHighlights;
 
-    this.clearScreen();
-    this.updateScreen();
+      //this.loader.addCompletionListener(function() {
+        this.clearScreen();
+        this.updateScreen();
+        //this.drawBackground();
+      //});
+
 
   }//end init()
 
@@ -70,6 +78,9 @@ class WorldMap{
     this.drawLocations();
     this.drawLocationDescription();
     this.drawMenuButton();
+
+    //this.drawBackground();
+
   }//end updateScreen()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -85,9 +96,6 @@ class WorldMap{
       ctx.font = "25px Arial";
       ctx.fillStyle = "#cccccc";
       ctx.fillText("MENU", 1115, 760);
-      ctx.font = "15px Arial";
-      ctx.fillText(mapLocations.list[this.highlightedLocation][5], 10, 750);
-
 
     ctx.restore();
   }//end drawLocationDescription()
@@ -108,7 +116,7 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillText(mapLocations.list[this.highlightedLocation][1], 10, 730);
     ctx.font = "15px Arial";
-    ctx.fillText(mapLocations.list[this.highlightedLocation][5], 10, 750);
+    ctx.fillText(mapLocations.list[this.highlightedLocation][6], 10, 750);
     if(mapLocations.list[this.highlightedLocation][4]){
       ctx.fillText("This location if friendly.", 10, 770);
     }
@@ -120,6 +128,10 @@ class WorldMap{
   }//end drawLocationDescription()
 
   drawBackground(){
+
+    ctx.drawImage(imageLoader.worldMapBackgroudImg, 0, 0);
+        //ctx.drawImage(worldMap.bgImg, 0, 0);
+
 
   }//end drawBackgrounds()
 
