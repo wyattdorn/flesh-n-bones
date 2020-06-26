@@ -148,13 +148,13 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawUnit(source, x, y){
 
-    var newImg = new Image();
+    //var newImg = new Image();
 
-    newImg.addEventListener('load',function(){
-      ctx.drawImage(newImg, x, y, 150, 150);
-    }, false);
+    //newImg.addEventListener('load',function(){
+      ctx.drawImage(source, x, y, 150, 150);
+    //}, false);
 
-    newImg.src = '' + source;
+    //newImg.src = '' + source;
 
   }//end drawUnit()
 

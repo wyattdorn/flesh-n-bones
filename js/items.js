@@ -11,10 +11,10 @@ class Item{
     this.list[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.list[0] = [0, "No Item", this.noItem, "Creature has no item equipped.", 'media/images/cube.png'];
-    this.list[1] = [1, "Red Sludge", this.redSludge, "Restore 8 HP to this Creature.", 'media/images/items/red-sludge.png'];
-    this.list[2] = [2, "Blue Sludge", this.blueSludge, "Restore 5 Spirit to this Creature.", 'media/images/items/blue-sludge.png'];
-    this.list[3] = [3, "Purp. Sludge", this.purpleSludge, "Restore 5 HP and 3 Spirit to this Creature.", 'media/images/items/purple-sludge.png'];
+    this.list[0] = [0, "No Item", this.noItem, "Creature has no item equipped.", imageLoader.noItemImg];
+    this.list[1] = [1, "Red Sludge", this.redSludge, "Restore 8 HP to this Creature.", imageLoader.redSludgeImg];
+    this.list[2] = [2, "Blue Sludge", this.blueSludge, "Restore 5 Spirit to this Creature.", imageLoader.blueSludgeImg];
+    this.list[3] = [3, "Purp. Sludge", this.purpleSludge, "Restore 5 HP and 3 Spirit to this Creature.", imageLoader.purpleSludgeImg];
 
   }
 

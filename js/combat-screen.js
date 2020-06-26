@@ -150,13 +150,7 @@ class CombatScreen{
     ctx.font = "15px Courier";
     drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - controlBarHeight + 180);
 
-    var newImg = new Image();
-
-    newImg.addEventListener('load',function(){
-      ctx.drawImage(newImg, 175, canvas.height - controlBarHeight + 140, 35, 25);
-    }, false);
-
-    newImg.src = '' + items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4];
+    ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4], 175, canvas.height - controlBarHeight + 140, 35, 25);
 
     //Print Skill text to the skill buttons
     for(var i = 0; i < 4; i++){//player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
@@ -358,7 +352,7 @@ class CombatScreen{
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
       if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
-        this.drawUnit('media/images/character-sprites/pile-of-bones.png', baseX, 50+(150*(x%3)));
+        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)));
       }
       else{
         this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)));
@@ -384,7 +378,7 @@ class CombatScreen{
       if(x==3){baseX -= 150};
 
       if(enemyCreatures[x].isDead()){
-        this.drawUnit('media/images/character-sprites/pile-of-bones.png', baseX, 50+(150*(x%3)));
+        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)));
       }
       else{
         this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
@@ -421,13 +415,13 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawUnit(source, x, y){
 
-    var newImg = new Image();
+    //var newImg = new Image();
 
-    newImg.addEventListener('load',function(){
-      ctx.drawImage(newImg, x, y, 150, 150);
-    }, false);
+    //newImg.addEventListener('load',function(){
+      ctx.drawImage(source, x, y, 150, 150);
+    //}, false);
 
-    newImg.src = '' + source;
+    //newImg.src = '' + source;
 
   }//end drawUnit()
 
@@ -436,15 +430,9 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawFlourish(){
 
-    var newImg = new Image();
-
-    newImg.addEventListener('load',function(){
-      for(var x = 0; x < 5; x++){
-        ctx.drawImage(newImg, 10, 65+(90*x), 230, 45);
-      }
-    }, false);
-
-    newImg.src = 'media/images/gui/style/flourish-1.png';
+    for(var x = 0; x < 5; x++){
+      ctx.drawImage(imageLoader.combatScreenFlourishImg, 10, 65+(90*x), 230, 45);
+    }
 
   }//end drawFlourish()
 
@@ -452,21 +440,12 @@ class CombatScreen{
   //  Draws line of skulls above the Control Bar
   //////////////////////////////////////////////////////////////////////////////
   drawSkulls(){
-
-    //IN THE FUTURE, THIS SHOULD DRAW DIFFERENT COLORED SKULLS BASED ON THE TERRAIN TYPE
-
-    var newImg = new Image();
-
     ctx.fillStyle = "#191919";
     ctx.fillRect(0, 526, canvasWidth, 30);
 
-    newImg.addEventListener('load',function(){
-      for(var x = 0; x < 13; x++){
-        ctx.drawImage(newImg, 20*x-13, 526, 24, 30);
-      }
-    }, false);
-
-    newImg.src = 'media/images/gui/style/skull1-green.png';
+    for(var x = 0; x < 13; x++){
+      ctx.drawImage(imageLoader.combatScreenSkullsImg, 20*x-13, 526, 24, 30);
+    }
 
     this.printMessageBar();
 

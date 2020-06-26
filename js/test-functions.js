@@ -73,16 +73,16 @@ function createMoreDummyCreatures(){
   var soul = new Soul("stone");
   var s = new Skin('fire');
   var b = new Body(s, new Bones('ice'), new Guts('air'));
-  player.myCreatures.push(new PlayerCharacter("Zappo", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Chip", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Flak", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Rhombuz", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Mallow", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Wumba", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Yach", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Fungus", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Lobe", b, soul, 'media/images/character-sprites/goblin-1.png'));
-  player.myCreatures.push(new PlayerCharacter("Grand Master", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Zappo", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Chip", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Flak", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Rhombuz", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Mallow", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Wumba", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Yach", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Fungus", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Lobe", b, soul, imageLoader.goblinImg));
+  player.myCreatures.push(new PlayerCharacter("Grand Master", b, soul, imageLoader.goblinImg));
 
 }//end createMoreDummyCreatures()
 
@@ -97,7 +97,7 @@ function createDummyCreatures(){
   var b = new Body(s, new Bones('ice'), new Guts('air'));
 
   //Friendly Creatures
-  player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
   player.myCreatures[0].generateDummyStats(10, 5, 3);
   player.myCreatures[0].currentHP = 3;
   player.myCreatures[0].levelUp();
@@ -116,7 +116,7 @@ function createDummyCreatures(){
   //player.myCreatures[0].memorizedSkills[6] = [6,8];
 
 
-  player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, 'media/images/character-sprites/goblin-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, imageLoader.goblinImg));
   player.myCreatures[1].generateDummyStats(2, 13, 3);
   player.myCreatures[1].currentSpirit = 10;
   player.myCreatures[1].equip(1, 0);
@@ -124,7 +124,7 @@ function createDummyCreatures(){
   player.myCreatures[1].equip(1, 2);
   player.myCreatures[1].equip(2, 3);// items.itemList[1];
 
-  player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[2].generateDummyStats(5, 10, 4);
   player.myCreatures[2].currentHP = 1;
   player.myCreatures[2].currentSpirit = 1;
@@ -134,7 +134,7 @@ function createDummyCreatures(){
   player.myCreatures[2].equip(1, 2);
   player.myCreatures[2].equip(3, 3);// items.itemList[1];
 
-  player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, 'media/images/character-sprites/fireelemental-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[3].generateDummyStats(7, 8, 6);
   player.myCreatures[3].currentHP = 6;
   player.myCreatures[3].currentSpirit = 5;
@@ -144,7 +144,7 @@ function createDummyCreatures(){
   player.myCreatures[3].equip(1, 2);
   player.myCreatures[3].equip(1, 3);// items.itemList[1];
 
-  player.myCreatures.push(new PlayerCharacter("Orky", b, soul, 'media/images/character-sprites/orc-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Orky", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[4].generateDummyStats(7, 8, 6);
   player.myCreatures[4].currentHP = 1;
   player.myCreatures[4].currentSpirit = 5;
@@ -152,7 +152,7 @@ function createDummyCreatures(){
   player.myCreatures[4].equip(1, 1);
   player.myCreatures[4].equip(1, 2);
 
-  player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, 'media/images/character-sprites/orc-1.png'));
+  player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, imageLoader.orcImg));
   player.myCreatures[5].generateDummyStats(7, 8, 6);
   player.myCreatures[5].currentHP = 6;
   player.myCreatures[5].currentSpirit = 5;
@@ -169,34 +169,34 @@ function generateDummyEnemies(index){
   enemyCreatures = [];
 
   if(index == 1){
-    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/goblin-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.goblinImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/goblin-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.goblinImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 2){
-    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/skeleman-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.skeletonImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/skeleman-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.skeletonImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 3){
-    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/orc-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.orcImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/orc-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.orcImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 4){
-    enemyCreatures.push(new EnemyCreature("Skel 1", 'media/images/character-sprites/fireelemental-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.fireElementalImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", 'media/images/character-sprites/fireelemental-1.png'));
+    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.fireElementalImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
