@@ -55,7 +55,7 @@ class WorldMap{
       }
 
       for(var x = 0; x < worldMap.locationCoordinates.length; x++){
-        if(mousePosition.x > worldMap.locationCoordinates[x][0] && mousePosition.x < worldMap.locationCoordinates[x][0] + 100 && mousePosition.y > worldMap.locationCoordinates[x][1] && mousePosition.y < worldMap.locationCoordinates[x][1] + 100){
+        if(mousePosition.x > worldMap.locationCoordinates[x][0] && mousePosition.x < worldMap.locationCoordinates[x][0] + mapLocations.locationSize && mousePosition.y > worldMap.locationCoordinates[x][1] && mousePosition.y < worldMap.locationCoordinates[x][1] + mapLocations.locationSize){
           worldMap.highlightedLocation = x;
         }
       }
@@ -75,13 +75,54 @@ class WorldMap{
   updateScreen(){
     this.clearScreen();
     this.drawBackground();
+    this.drawSphereOfInfluence();
     this.drawLocations();
     this.drawLocationDescription();
     this.drawMenuButton();
 
+
     //this.drawBackground();
 
   }//end updateScreen()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Returns a boolean if the selected location is within the player's Sphere of Influence
+  //////////////////////////////////////////////////////////////////////////////
+  checkIfInInfluence(location){
+
+    this.distance = Math.sqrt(Math.pow((mapLocations.list[0][2] - mapLocations.list[location][2]), 2) + Math.pow((mapLocations.list[0][3] - mapLocations.list[location][3]), 2));
+
+    if(this.distance - (mapLocations.locationSize/2) <= (20 * player.impetus)){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }//end checkIfInInfluence()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Drawss Sphere of Influence, based on the player's current Impetous
+  //////////////////////////////////////////////////////////////////////////////
+  drawSphereOfInfluence(){
+    ctx.save();
+
+      ctx.fillStyle = "#1212aa";
+      ctx.globalAlpha = 0.1;
+
+      ctx.beginPath();
+      ctx.arc(mapLocations.list[0][2]+mapLocations.locationSize/2, mapLocations.list[0][3]+mapLocations.locationSize/2, 20*player.impetus, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.lineWidth = 3;
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+
+    ctx.restore();
+  }//end drawSphereOfInfluence()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draws button that opens the menu
@@ -116,7 +157,7 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillText(mapLocations.list[this.highlightedLocation][1], 10, 730);
     ctx.font = "15px Arial";
-    ctx.fillText(mapLocations.list[this.highlightedLocation][6], 10, 750);
+    ctx.fillText(mapLocations.list[this.highlightedLocation][7], 10, 750);
     if(mapLocations.list[this.highlightedLocation][4]){
       ctx.fillText("This location if friendly.", 10, 770);
     }
@@ -151,13 +192,24 @@ class WorldMap{
       if(mapLocations.list[x][4]){
         ctx.fillStyle = "#144003";
       }
+      if(!this.checkIfInInfluence(x)){
+        ctx.fillStyle = "#450505";
+      }
       if(x == this.highlightedLocation){
         ctx.fillStyle = "#aabbcc";
       }
-      ctx.fillRect(mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
+
+      ctx.globalAlpha = 0.75;
+
+      ctx.beginPath();
+      ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+
+      ctx.drawImage(mapLocations.list[x][6], mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
 
     }
-
 
   }//end drawLocations()
 
@@ -174,22 +226,22 @@ class WorldMap{
     }
 
     for(var x = 0; x < this.locationCoordinates.length; x++){
-      if(clickPositionX > this.locationCoordinates[x][0] && clickPositionX < this.locationCoordinates[x][0] + 100 && clickPositionY > this.locationCoordinates[x][1] && clickPositionY < this.locationCoordinates[x][1] + 100){
+      if(clickPositionX > this.locationCoordinates[x][0] && clickPositionX < this.locationCoordinates[x][0] + mapLocations.locationSize && clickPositionY > this.locationCoordinates[x][1] && clickPositionY < this.locationCoordinates[x][1] + mapLocations.locationSize){
         console.log(mapLocations.list[x][1] + " was clicked on!");
-
-        switch (x) {
-          case 0:
-            //Enter player stat screen
-            setGameMode(4);
-            canvas.onmousemove = null;
-            break;
-          case 1: case 2: case 3: case 4:
-            //Enter combat
-            setGameMode(1, x);
-            canvas.onmousemove = null;
-          default:
-
+        if(this.checkIfInInfluence(x)){
+          switch (x) {
+            case 0:
+              //Enter player stat screen
+              setGameMode(4);
+              canvas.onmousemove = null;
+              break;
+            case 1: case 2: case 3: case 4: case 5:
+              //Enter combat
+              setGameMode(1, x);
+              canvas.onmousemove = null;
+            default:
         }
+      }
       }
 
     }

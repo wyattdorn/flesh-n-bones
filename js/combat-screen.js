@@ -352,10 +352,10 @@ class CombatScreen{
        //If we have more than 3 allies, the next row is 150 pixels to the right
       if(x==3){baseX += 150};
       if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
-        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)));
+        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)), true);
       }
       else{
-        this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)));
+        this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)), true);
         //this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
       }
     }
@@ -368,6 +368,12 @@ class CombatScreen{
   // Draws all enemy units to the screen by calling drawUnit().
   //////////////////////////////////////////////////////////////////////////////
   drawEnemyUnits(){
+    ctx.save();
+
+
+
+    console.log("DRAW ENEMUY");
+    //this.drawUnit(imageLoader.pileOfBonesImg, 0,0, false);
 
     //Atarting x position is unitBarWidth plus 50
     var baseX = unitBarWidth + 750;
@@ -378,15 +384,17 @@ class CombatScreen{
       if(x==3){baseX -= 150};
 
       if(enemyCreatures[x].isDead()){
-        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)));
+        this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)), false);
       }
       else{
-        this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
+        this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)), false);
       }
       //this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
     }
 
     this.testDrawEnemyHealth();
+
+    ctx.restore();
 
   }//end drawEnemyUnits()
 
@@ -413,16 +421,21 @@ class CombatScreen{
   //////////////////////////////////////////////////////////////////////////////
   //  Draws a single unit sprite given the sprite file's location and x/y coodinates
   //////////////////////////////////////////////////////////////////////////////
-  drawUnit(source, x, y){
+  drawUnit(source, x, y, isAlly){
+    ctx.save();
 
-    //var newImg = new Image();
-
-    //newImg.addEventListener('load',function(){
+    if(isAlly){
       ctx.drawImage(source, x, y, 150, 150);
-    //}, false);
+    }
+    else{
+      // translate context to center of canvas
+        ctx.translate(canvas.width+x-35, 0);
 
-    //newImg.src = '' + source;
-
+        // flip context horizontally
+        ctx.scale(-1, 1);
+        ctx.drawImage(source, x, y, 150, 150);
+    }
+    ctx.restore();
   }//end drawUnit()
 
   //////////////////////////////////////////////////////////////////////////////

@@ -70,9 +70,10 @@ function init(){
   myCombatScreen = new CombatScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   playerScreen = new PlayerScreen(ctx, canvas);
+  imageLoader = new ImageLoader(ctx, canvas);
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
-  imageLoader = new ImageLoader(ctx, canvas);
+
   skins = new Skin();
   bones = new Bones();
   guts = new Guts();
