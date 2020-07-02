@@ -34,7 +34,7 @@ var maxPartySize;
 var skills;
 var combatLogi;
 var items;
-var skins, bones, guts;
+var skins, bones, guts, souls;
 var organs, masterInventoryList;
 
 var imageLoader;
@@ -74,6 +74,7 @@ function init(){
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
 
+  souls = new Souls();
   skins = new Skin();
   bones = new Bones();
   guts = new Guts();
@@ -83,12 +84,11 @@ function init(){
   organs = [bones, guts, skins];
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
-  //for testing purposes, the game starts at the World Map Screen
-
   ctx.font = "25px Arial";
   ctx.fillStyle = "#cccccc";
   ctx.fillText("LOADING...", 600, 300);
 
+  //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
   imageLoader.loader.addCompletionListener(function() {setGameMode(gameMode)});
 
@@ -97,7 +97,7 @@ function init(){
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
 
-  player.soulsOwned = 6;
+  givePlayerSouls();
   player.updateImpetus();
   createDummyCreatures();
   generateEquipableItems();

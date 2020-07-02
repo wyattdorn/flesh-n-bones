@@ -15,7 +15,8 @@ class ImageLoader{
         this.goblinImg = this.loader.addImage('media/images/character-sprites/goblin-1.png'),
         this.fireElementalImg = this.loader.addImage('media/images/character-sprites/fireelemental-1.png'),
         this.pileOfBonesImg = this.loader.addImage('media/images/character-sprites/pile-of-bones.png'),
-        
+        this.soulImg = this.loader.addImage('media/images/character-sprites/new-sprites/soul.png');
+
       //////////////////////////// GUI IMAGES /////////////////////////////////////////
         this.worldMapBackgroudImg = this.loader.addImage('media/images/backgrounds/bg-1.png');
         this.combatScreenSkullsImg = this.loader.addImage('media/images/gui/style/skull1-green.png');

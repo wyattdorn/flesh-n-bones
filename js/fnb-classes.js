@@ -358,11 +358,11 @@ class Creature {
 ////////////////////////////////////////////////////////////////////////////////
 class PlayerCharacter extends Creature{
 
-  constructor(myname, body, soul, path) {
+  constructor(myname, path) {
     super();
     this.name = myname;
-    this.body = body;
-    this.soul = soul;
+    //this.body = body;
+    //this.soul = soul;
     this.imgSrc = path;
     this.exp = 0;         //Starting experience for all PlayerCharacters is 0
     this.level = 1;       //Starting level for all PlayerCharacters is 1

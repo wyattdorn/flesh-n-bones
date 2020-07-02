@@ -38,7 +38,9 @@ class Deity{
   /////////////////////////////////////////////////////////////////////////////
   addSoul(newSoul){
     this.soulsOwned++;
-    souls.push(newSoul);
+    this.souls.push(newSoul);
+    this.myCreatures.push(new PlayerCharacter(souls.list[newSoul][1], imageLoader.soulImg));
+    //player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
     //this.impetus += 2;
   }//end addSoul()
 
