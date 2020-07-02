@@ -83,8 +83,11 @@ function init(){
   organs = [bones, guts, skins];
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
-  //for testing purposes, the game starts at the Menu Selection Screen
+  //for testing purposes, the game starts at the World Map Screen
 
+  ctx.font = "25px Arial";
+  ctx.fillStyle = "#cccccc";
+  ctx.fillText("LOADING...", 600, 300);
 
   gameMode = 5;
   imageLoader.loader.addCompletionListener(function() {setGameMode(gameMode)});
@@ -95,6 +98,7 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
 
   player.soulsOwned = 6;
+  player.updateImpetus();
   createDummyCreatures();
   generateEquipableItems();
   generateCombatSquad();
@@ -159,7 +163,7 @@ function launchCreatureEditor(){
 
   //test code
   generateDummyBodies();
-  createMoreDummyCreatures();
+  //createMoreDummyCreatures();
   //end test code
 
   creatureEditorScreen.init();

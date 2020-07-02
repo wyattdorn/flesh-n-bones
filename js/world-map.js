@@ -165,6 +165,13 @@ class WorldMap{
       ctx.fillText("This location if hostile, there may be monsters.", 10, 770);
     }
 
+    if(this.checkIfInInfluence(this.highlightedLocation)){
+      ctx.fillText("This location is within your Sphere of Influence.", 10, 790);
+    }
+    else{
+      ctx.fillText("This location is outside your Sphere of Influence.", 10, 790);
+    }
+
     ctx.restore();
   }//end drawLocationDescription()
 
@@ -185,6 +192,7 @@ class WorldMap{
   //  Draws map locations to screen
   //////////////////////////////////////////////////////////////////////////////
   drawLocations(){
+    ctx.save();
 
     for(var x = 0; x < mapLocations.list.length; x++){
 
@@ -200,17 +208,15 @@ class WorldMap{
       }
 
       ctx.globalAlpha = 0.75;
-
       ctx.beginPath();
       ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
       ctx.fill();
-
       ctx.globalAlpha = 1;
-
       ctx.drawImage(mapLocations.list[x][6], mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
 
     }
 
+    ctx.restore();
   }//end drawLocations()
 
   //////////////////////////////////////////////////////////////////////////////

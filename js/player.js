@@ -11,7 +11,7 @@ class Deity{
     this.soulsOwned = 0;
     this.souls = [];
     this.malachite = 497; //The money used in this world
-    this.impetus = 12; //Basically exp for the PC
+    this.impetus = 0; //Basically exp for the PC
     this.myCreatures = [];
     this.myConstructs = []; //constructs are souls placed in objects that perform non-cobat tasks
     this.myCombatCreatures = []; //List of Creatures that will enter combat
@@ -39,8 +39,15 @@ class Deity{
   addSoul(newSoul){
     this.soulsOwned++;
     souls.push(newSoul);
-    this.impetus += 2;
-  }//end addSoul
+    //this.impetus += 2;
+  }//end addSoul()
+
+  /////////////////////////////////////////////////////////////////////////////
+  // Updates the player's Impretus based on how many souls they own
+  /////////////////////////////////////////////////////////////////////////////
+  updateImpetus(){
+    this.impetus = (this.soulsOwned * 2);
+  }//end updateImpetus()
 
   /////////////////////////////////////////////////////////////////////////////
   // Removes an Item from the player's inventory

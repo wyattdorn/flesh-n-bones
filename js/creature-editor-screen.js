@@ -95,15 +95,16 @@ class CreatureEditorScreen{
     ctx.fillStyle = "#771111";
     ctx.fillRect(0, 0, this.creatureListWidth, ctx.canvas.height);
 
-    for(var i = 0; i < 8; i++){
-      ctx.save();
+    //Check if the player owns less than 8 Creatures
+    if(player.myCreatures.length < 8){this.max = player.myCreatures.length;}
+    else{this.max = 8;}
 
+    for(var i = 0; i < this.max; i++){
+      ctx.save();
+      //If a Creature is in our Combat Party, a burgundy diamond is drawn behing their info
       for(var x = 0; x < player.myCombatCreatures.length; x++){
-        //console.log(player.myCombatCreatures[x]);
         if(i + this.creatureScrollIndex == player.myCombatCreatures[x]){
           ctx.fillStyle = "#550505";
-          //ctx.fillRect(10, 40+(90*i), this.creatureListWidth-15, 57);
-          //apple
           ctx.beginPath();
           ctx.moveTo(10, 69+(90*i));
           ctx.lineTo((this.creatureListWidth-5)/2, 40+(90*i));
@@ -481,9 +482,7 @@ class CreatureEditorScreen{
       //Print the name & description of the skills associated with this Creature's Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      //console.log("TEST@@@@@ " + x + "--" + skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2]);// skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2]);
       ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2], 670, 40 + (200 * x));
-      console.log("after");
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
       drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][7], 20, 20, 670, 65 + (200 * x));
@@ -497,13 +496,6 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawEquippedItem(){
     ctx.save();
-
-    //Draw item icon
-    var newImg = new Image();
-    newImg.addEventListener('load',function(){
-      ctx.drawImage(newImg, 380, 495, 35, 25);
-    }, false);
-    newImg.src = '' + items.list[player.myCreatures[this.selectedCreature].myItem][4];
 
     //Draw red rectangle container
     ctx.fillStyle = "#771111";
@@ -521,6 +513,9 @@ class CreatureEditorScreen{
     ctx.font = "15px Arial";
     ctx.fillStyle = "#cccccc";
     ctx.fillText("UNEQUIP", 280, 600);
+
+    //Draw item icon
+    ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][4], 380, 495, 35, 25);
 
     ctx.restore();
   }//end drawEquippedItem()
