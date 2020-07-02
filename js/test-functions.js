@@ -108,16 +108,12 @@ function createMoreDummyCreatures(){
 ///////////////////////////////////////////////////////////////////////////////\
 function createDummyCreatures(){
 
-  var soul = new Soul("stone");
-  var s = new Skin('fire');
-  var b = new Body(s, new Bones('ice'), new Guts('air'));
-
   /*
   //Friendly Creatures
   player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
   player.myCreatures[0].generateDummyStats(10, 5, 3);
   */
-  player.myCreatures[0].currentHP = 3;
+  //player.myCreatures[0].currentHP = 3;
   player.myCreatures[0].levelUp();
   player.myCreatures[0].levelUp();
   player.myCreatures[0].equip(1, 0); //old bones
@@ -138,7 +134,7 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Goblina", b, soul, imageLoader.goblinImg));
   player.myCreatures[1].generateDummyStats(2, 13, 3);
   */
-  player.myCreatures[1].currentSpirit = 10;
+  //player.myCreatures[1].currentSpirit = 10;
   player.myCreatures[1].equip(1, 0);
   player.myCreatures[1].equip(2, 1);
   player.myCreatures[1].equip(1, 2);
@@ -147,8 +143,8 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Flambo", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[2].generateDummyStats(5, 10, 4);
   */
-  player.myCreatures[2].currentHP = 1;
-  player.myCreatures[2].currentSpirit = 1;
+  //player.myCreatures[2].currentHP = 1;
+  //player.myCreatures[2].currentSpirit = 1;
   player.myCreatures[2].levelUp();
   player.myCreatures[2].equip(3, 0);
   player.myCreatures[2].equip(2, 1);
@@ -158,8 +154,8 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Chonk", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[3].generateDummyStats(7, 8, 6);
   */
-  player.myCreatures[3].currentHP = 6;
-  player.myCreatures[3].currentSpirit = 5;
+  //player.myCreatures[3].currentHP = 6;
+  //player.myCreatures[3].currentSpirit = 5;
   player.myCreatures[3].levelUp();
   player.myCreatures[3].equip(3, 0);
   player.myCreatures[3].equip(1, 1);
@@ -169,8 +165,8 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Orky", b, soul, imageLoader.fireElementalImg));
   player.myCreatures[4].generateDummyStats(7, 8, 6);
   */
-  player.myCreatures[4].currentHP = 1;
-  player.myCreatures[4].currentSpirit = 5;
+  //player.myCreatures[4].currentHP = 1;
+  //player.myCreatures[4].currentSpirit = 5;
   player.myCreatures[4].equip(2, 0);
   player.myCreatures[4].equip(1, 1);
   player.myCreatures[4].equip(1, 2);
@@ -178,8 +174,8 @@ function createDummyCreatures(){
   player.myCreatures.push(new PlayerCharacter("Orkoooo", b, soul, imageLoader.orcImg));
   player.myCreatures[5].generateDummyStats(7, 8, 6);
   */
-  player.myCreatures[5].currentHP = 6;
-  player.myCreatures[5].currentSpirit = 5;
+  //player.myCreatures[5].currentHP = 6;
+  //player.myCreatures[5].currentSpirit = 5;
   player.myCreatures[5].equip(2, 0);
   player.myCreatures[5].equip(1, 1);
   player.myCreatures[5].equip(1, 2);

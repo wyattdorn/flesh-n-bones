@@ -29,10 +29,10 @@ class Bones {
     this.list[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.list[0] = [0, "No Bones", 0, "Creature has no bones."];
-    this.list[1] = [1, "Old Bones", 1, "Any old pile of bones can attack."];
-    this.list[2] = [2, "Brittle Bones", 3, "Brittle bones grants the Heal skill."];
-    this.list[3] = [3, "Big Bones", 2, "Big bones grant the Defend skill."];
+    this.list[0] = [0, "No Bones", 0, "Creature has no bones.", imageLoader.soulImg];
+    this.list[1] = [1, "Old Bones", 1, "Any old pile of bones can attack.", imageLoader.skeletonImg];
+    this.list[2] = [2, "Brittle Bones", 3, "Brittle bones grants the Heal skill.", imageLoader.brittleBoneImg];
+    this.list[3] = [3, "Big Bones", 2, "Big bones grant the Defend skill.", imageLoader.bigBoneImg];
   }
 
 }
@@ -48,9 +48,9 @@ class Guts {
     this.list[0] = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.list[0] = [0, "No Guts", 0, "Creature has no guts."];
-    this.list[1] = [1, "Explosive Guts", 4, "Explosive guts grants the Explode skill."];
-    this.list[2] = [2, "Dubious Guts", 0, "No one knows what these guts do..."];
+    this.list[0] = [0, "No Guts", 0, "Creature has no guts.", null];
+    this.list[1] = [1, "Explosive Guts", 4, "Explosive guts grants the Explode skill.", "red"];
+    this.list[2] = [2, "Dubious Guts", 0, "No one knows what these guts do...", "green"];
   }
 
 }
@@ -205,8 +205,12 @@ class Creature {
         this.removeItem();
       }
       //Unequip an organ
-      else if(type == 0 || type == 1 || type == 2){
+      else if(type == 1 || type == 2){
         this.removeOrgan(type);
+      }
+      else if(type == 0){
+        this.removeOrgan(type);
+        this.imgSrc = imageLoader.soulImg;
       }
       this.myInventory[type] = 0;
     }
@@ -259,6 +263,7 @@ class Creature {
       case 0: //bone
           this.myBones = index;
           this.skillList[0] = bones.list[this.myBones][2];
+          this.imgSrc = bones.list[this.myBones][4];
         break;
       case 1: //guts
           this.myGuts = index;
@@ -358,29 +363,27 @@ class Creature {
 ////////////////////////////////////////////////////////////////////////////////
 class PlayerCharacter extends Creature{
 
-  constructor(myname, path) {
+  constructor(myname, stats, path) {
     super();
     this.name = myname;
     //this.body = body;
     //this.soul = soul;
     this.imgSrc = path;
     this.exp = 0;         //Starting experience for all PlayerCharacters is 0
-    this.level = 1;       //Starting level for all PlayerCharacters is 1
-    this.location = [0,0];
-    this.dexterity = 10;
-    this.agility = 10;
-    this.might = 10;
-    this.fortitude = 10;
-    this.intelegence = 10;
-    this.wits = 10;
+    this.level = stats[0];       //Starting level for all PlayerCharacters is 1
+    this.dexterity = stats[3];
+    this.agility = stats[4];
+    this.might = stats[5];
+    this.fortitude = stats[6];
+    this.intelegence = stats[7];
+    this.wits = stats[8];
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
     this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.currentHP = 1;
-    this.maxHP = 1;
-    this.currentSpirit = 1; //spirit is mana
-    this.maxSpirit = 1;
-    this.attackPower = 1;
+    this.maxHP = stats[1];
+    this.currentHP = this.maxHP;
+    this.maxSpirit = stats[2];
+    this.currentSpirit = this.maxSpirit; //spirit is mana
   }
 
   //For use in testing only.

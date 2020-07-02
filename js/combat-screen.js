@@ -355,7 +355,11 @@ class CombatScreen{
         this.drawUnit(imageLoader.pileOfBonesImg, baseX, 50+(150*(x%3)), true);
       }
       else{
+        ctx.save();
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = guts.list[player.myCreatures[player.myCombatCreatures[x]].myOrgans[1]][4];
         this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)), true);
+        ctx.restore();
         //this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
       }
     }

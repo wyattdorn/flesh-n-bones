@@ -148,14 +148,17 @@ class CreatureEditorScreen{
   //  -NEED TO MOVE TO HELPER FUNCTION FILE-
   //////////////////////////////////////////////////////////////////////////////
   drawUnit(source, x, y){
-
+    ctx.save();
     //var newImg = new Image();
 
     //newImg.addEventListener('load',function(){
+    ctx.shadowBlur = 30;
+    ctx.shadowColor = guts.list[player.myCreatures[this.selectedCreature].myOrgans[1]][4];
       ctx.drawImage(source, x, y, 150, 150);
     //}, false);
 
     //newImg.src = '' + source;
+    ctx.restore();
 
   }//end drawUnit()
 
@@ -515,6 +518,7 @@ class CreatureEditorScreen{
     ctx.fillText("UNEQUIP", 280, 600);
 
     //Draw item icon
+
     ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][4], 380, 495, 35, 25);
 
     ctx.restore();

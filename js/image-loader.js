@@ -16,6 +16,8 @@ class ImageLoader{
         this.fireElementalImg = this.loader.addImage('media/images/character-sprites/fireelemental-1.png'),
         this.pileOfBonesImg = this.loader.addImage('media/images/character-sprites/pile-of-bones.png'),
         this.soulImg = this.loader.addImage('media/images/character-sprites/new-sprites/soul.png');
+        this.bigBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/green-ogre.png');
+        this.brittleBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/dark-mage.png');
 
       //////////////////////////// GUI IMAGES /////////////////////////////////////////
         this.worldMapBackgroudImg = this.loader.addImage('media/images/backgrounds/bg-1.png');
