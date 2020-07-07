@@ -84,7 +84,7 @@ class CombatLogic{
   areWeDeadYet(){
     console.log();
     var counter = 0;
-    player.myCreatures.forEach((Creature) => {if(Creature.isDead()) counter++});
+    player.myCreatures.forEach((Creature) => {if(Creature.isDead()){ Creature.die(); counter++;}});
     console.log(counter + " dead out of " + player.myCombatCreatures.length);
     if(counter == player.myCreatures.length){
       return true;
@@ -111,7 +111,6 @@ class CombatLogic{
     }
 
   }//end areTheyDeadYet()
-
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -174,7 +173,7 @@ class CombatLogic{
       skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].hasAction = false;
-      if(this.checkCreatureStatuses){
+      if(this.checkCreatureStatuses()){
         myCombatScreen.updateScreen(1,0,1);
       }
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].removeSpirit(skills.skillList[this.waitingFunction[1]][6]);
@@ -275,27 +274,28 @@ class CombatLogic{
     this.displayMessage = "The enemy moves in to position.";
     myCombatScreen.printMessageBar(this.displayMessage);
 
-    enemyCreatures.forEach((Creature) =>  {
+    for(var x = 0; x < enemyCreatures.length; x++){
+
       //Ensure there are living allies to hit
-      if(this.areWeDeadYet()){
-        this.endEnemyTurn();
+      if(this.checkforCombatEnd()){
+        //this.endEnemyTurn();
         return;
       }
-      //temporary variable to store random value
-      var temp;
-      //target random allied creature, if that creature is already dead, pick a new one
-      do{
-        temp = combatLogi.newAI.random();
-        console.log("temp: " + temp);
-      }while(player.myCreatures[player.myCombatCreatures[temp]].isDead()==true);
+
       //Only allow enemy unit to attack it it is not dead
-      if(Creature.isDead()==false){
+      if(enemyCreatures[x].isDead()==false){
+        //temporary variable to store random value
+        var temp;
+        //target random allied creature, if that creature is already dead, pick a new one
+        do{
+          temp = combatLogi.newAI.antimage();
+          console.log("temp: " + temp);
+        }while(player.myCreatures[player.myCombatCreatures[temp]].isDead()==true);
+
         console.log("AN ATTACK HAS BEEN MADE!");
-        skills.skillList[1][1](Creature, player.myCreatures[player.myCombatCreatures[temp]]);
+        skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[temp]]);
       }
-
-    });
-
+    }
     this.endEnemyTurn();
   }//end beginEnemyTurn()
 
@@ -364,7 +364,7 @@ class CombatLogic{
           //Update the Unit Bar to reflect the Spirit spent
           myCombatScreen.updateScreen(1,0,0);
           //If any unit died or is now bloodied, we redraw the Combat Field too
-          if(this.checkCreatureStatuses){
+          if(this.checkCreatureStatuses()){
             myCombatScreen.updateScreen(0,0,1);
           }
         //Clear the waiting function

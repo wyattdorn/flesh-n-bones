@@ -11,7 +11,11 @@ class MapLocations{
     //For the sake of ease, all locations on the map will be 75px by 75px
     this.locationSize = 75;
 
+    //List of location and their pertinent information
     this.list = [];
+
+    //List of the encounters found at each location
+    this.encounterList = [];
 
     //              0  1                      2    3    4          5                                         6                7
     //                  Name                  x    y   friendly    Color Pallet                              Icon Name        Description
@@ -26,7 +30,25 @@ class MapLocations{
     this.list[8] = [8, "Harpy's Eyrie",       820, 550, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.eyrieIcon,     "Even at the best of times, harpies are not pleasant."];
     this.list[9] = [9, "Screaming Portal",    1000, 50, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.portalIcon,    "Tortured screaming eminates from this portal witout end."];
 
+    //temperment  bones Guts  skin  stats
+
+    this.encounterList[0] = [0];
+    this.encounterList[1] = [1, [[0, 1, 0, 1, 2, 2, 2, 2, 2, 2], [0, 1, 0, 1, 2, 2, 2, 2, 2, 2]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
 
   }//end init()
+
+
+
+  generateEncounter(location, encounterNum){
+
+    //Loop through each enemy creature in the encounter table
+    for(var x = 0; x < this.encounterList[location][encounterNum].length; x++){
+      enemyCreatures.push(new enemyCreature());
+    }
+
+  }//end generateEncounter()
 
 }

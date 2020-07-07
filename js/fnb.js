@@ -99,7 +99,7 @@ function init(){
 
   givePlayerSouls();
   player.updateImpetus();
-  createDummyCreatures();
+  //createDummyCreatures();
   generateEquipableItems();
   generateCombatSquad();
   masterInventoryList = [organs[0], organs[1], organs[2], items];

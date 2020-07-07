@@ -376,7 +376,7 @@ class CombatScreen{
 
 
 
-    console.log("DRAW ENEMUY");
+    console.log("DRAW ENEMY");
     //this.drawUnit(imageLoader.pileOfBonesImg, 0,0, false);
 
     //Atarting x position is unitBarWidth plus 50

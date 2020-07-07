@@ -23,6 +23,8 @@ class Deity{
     this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
     this.myEquipableItems = [];
     this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
+    //List of how many encounters have been cleared for each map location
+    this.locationsCleared = [];
   }//end constructor
 
   /////////////////////////////////////////////////////////////////////////////

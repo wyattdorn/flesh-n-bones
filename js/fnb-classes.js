@@ -1,23 +1,5 @@
 //Written by Wyatt Dorn
 
-class Skin {
-  constructor(element) {
-    this.element = element;
-    this.init();
-  }
-
-  init(){
-    this.list = new Array(1);
-    this.list[0] = [];
-
-    //                  index, name, skill num, info
-    this.list[0] = [0, "No Skin", 0, "Creature has no skin."];
-    this.list[1] = [1, "Goblin Skin", 5, "Goblin skin grants the Scythe skill."];
-    this.list[2] = [2, "Orc Skin", 6, "Orc skin grants the Orc Smash skill."];
-    this.list[3] = [3, "Mage Skin", 7, "Mage skin grants the Spirit Dagger skill."];
-  }
-}
-
 class Bones {
   constructor(element) {
     this.element = element;
@@ -53,6 +35,25 @@ class Guts {
     this.list[2] = [2, "Dubious Guts", 0, "No one knows what these guts do...", "green"];
   }
 
+}
+
+
+class Skin {
+  constructor(element) {
+    this.element = element;
+    this.init();
+  }
+
+  init(){
+    this.list = new Array(1);
+    this.list[0] = [];
+
+    //                  index, name, skill num, info
+    this.list[0] = [0, "No Skin", 0, "Creature has no skin."];
+    this.list[1] = [1, "Goblin Skin", 5, "Goblin skin grants the Scythe skill."];
+    this.list[2] = [2, "Orc Skin", 6, "Orc skin grants the Orc Smash skill."];
+    this.list[3] = [3, "Mage Skin", 7, "Mage skin grants the Spirit Dagger skill."];
+  }
 }
 
 class Soul{
@@ -117,6 +118,11 @@ class Creature {
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     this.myInventory = [this.myBones, this.myGuts, this.mySkin, this.myItem];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
+  }
+
+  die(){
+    this.currentHP = 0;
+    this.currentSpirit = 0;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -402,8 +408,28 @@ class PlayerCharacter extends Creature{
 // by the player.
 ////////////////////////////////////////////////////////////////////////////////
 class EnemyCreature extends Creature{
-  expGranted = 0;         //The amount of experience given for killing this creature
-  malachiteGranted = 0;   //The amount of money given for killing this creature
+  constructor(myname, stats, path) {
+    super();
+    this.name = myname;
+    //this.body = body;
+    //this.soul = soul;
+    this.imgSrc = path;
+    this.exp = 0;         //Starting experience for all PlayerCharacters is 0
+    this.level = stats[0];       //Starting level for all PlayerCharacters is 1
+    this.dexterity = stats[3];
+    this.agility = stats[4];
+    this.might = stats[5];
+    this.fortitude = stats[6];
+    this.intelegence = stats[7];
+    this.wits = stats[8];
+    this.speed = Math.floor((this.dexterity + this.agility)/2);
+    this.strength = Math.floor((this.might + this.fortitude)/2);
+    this.mind = Math.floor((this.intelegence + this.wits)/2);
+    this.maxHP = stats[1];
+    this.currentHP = this.maxHP;
+    this.maxSpirit = stats[2];
+    this.currentSpirit = this.maxSpirit; //spirit is mana
+  }
 }
 
 
