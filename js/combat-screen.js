@@ -170,7 +170,6 @@ class CombatScreen{
     //Drawing the descriptor text for the four skills
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!" + player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0][7] );
     drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0]][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
     drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1]][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
     drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2]][7], 42, 20, 265, canvas.height - controlBarHeight + 190);

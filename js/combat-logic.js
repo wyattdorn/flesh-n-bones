@@ -85,7 +85,7 @@ class CombatLogic{
     console.log();
     var counter = 0;
     player.myCreatures.forEach((Creature) => {if(Creature.isDead()){ Creature.die(); counter++;}});
-    console.log(counter + " dead out of " + player.myCombatCreatures.length);
+    //console.log(counter + " dead out of " + player.myCombatCreatures.length);
     if(counter == player.myCreatures.length){
       return true;
     }
@@ -102,7 +102,7 @@ class CombatLogic{
     console.log();
     var counter = 0;
     enemyCreatures.forEach((Creature) => {if(Creature.isDead()) counter++});
-    console.log(counter + " dead out of " + enemyCreatures.length);
+    //console.log(counter + " dead out of " + enemyCreatures.length);
     if(counter == enemyCreatures.length){
       return true;
     }
@@ -271,6 +271,54 @@ class CombatLogic{
   //  Base function that handles all events taking place during the enemy's turn
   //////////////////////////////////////////////////////////////////////////////
   beginEnemyTurn(){
+
+    //Itterate through each enemy Creature
+    for(var x = 0; x < enemyCreatures.length; x++){
+      //Create array of valid player-controlled targets
+      this.validTargets = [];
+      console.log(this.validTargets.length);
+      //Ensure the current enemy isn't dead
+      if(enemyCreatures[x].isDead() == false){
+        //Itterate through all player-controlled units to see which are alive
+        for(var y = 0; y < player.myCombatCreatures.length; y++){
+          if(player.myCreatures[player.myCombatCreatures[y]].isDead() == false){
+            console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is alive!");
+            //Add all living player-controlled units to a list of valid targets
+            this.validTargets.push(player.myCombatCreatures[y]);
+          }
+          else{
+            console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is dead!");
+          }
+        }
+        //Have AI pick a target from the list of valid targets
+        this.target = combatLogi.newAI.dumb(this.validTargets);
+        console.log(this.validTargets);
+        console.log(this.target);
+        skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[this.target]]);
+      }
+      for(var i = 0; i < player.myCombatCreatures.length; i++){
+        if(player.myCreatures[player.myCombatCreatures[i]].isDead()){
+          player.myCreatures[player.myCombatCreatures[i]].die();
+        }
+      }
+      this.checkforCombatEnd();
+      console.log(this.validTargets.length);
+    }
+    this.endEnemyTurn();
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
     this.displayMessage = "The enemy moves in to position.";
     myCombatScreen.printMessageBar(this.displayMessage);
 
@@ -296,14 +344,14 @@ class CombatLogic{
         skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[temp]]);
       }
     }
-    this.endEnemyTurn();
+    */
+
   }//end beginEnemyTurn()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Ends the enemy turn
   //////////////////////////////////////////////////////////////////////////////
   endEnemyTurn(){
-    console.log("lll");
     player.myCreatures.forEach(Creature => Creature.hasAction = true);
     myCombatScreen.updateScreen(1,1,1);
     this.checkforCombatEnd();
