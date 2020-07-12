@@ -21,6 +21,9 @@ class CombatLogic{
 
   init(){
 
+    //boolean to state whether combat is currently active, or has ended.
+    this.activeCombat = true;
+
     //When combat starts, by default, your first allied creature is selected
     this.selectedAlly = 0;
     this.selectedEnemy = 0;
@@ -62,14 +65,14 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   checkforCombatEnd(){
     if(this.areWeDeadYet()){
-      this.displayMessage = "All allied units are dead, combat is ended.";
+      this.displayMessage = "All allied units are dead, combat is ended. (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ALLIES DEAD");
       return true;
     }
 
     if(this.areTheyDeadYet()){
-      this.displayMessage = "All enemies units are dead. You win!";
+      this.displayMessage = "All enemies units are dead. You win! (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ENEMIES DEAD");
       return true;
@@ -84,9 +87,15 @@ class CombatLogic{
   areWeDeadYet(){
     console.log();
     var counter = 0;
-    player.myCreatures.forEach((Creature) => {if(Creature.isDead()){ Creature.die(); counter++;}});
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
+        player.myCreatures[player.myCombatCreatures[x]].die();
+        counter++;
+      }
+    }
+    //player.myCombatCreatures.forEach(element => {if(Creature.isDead()){ Creature.die(); counter++;}});
     //console.log(counter + " dead out of " + player.myCombatCreatures.length);
-    if(counter == player.myCreatures.length){
+    if(counter == player.myCombatCreatures.length){
       return true;
     }
     else{
@@ -173,9 +182,11 @@ class CombatLogic{
       skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].hasAction = false;
+      this.update();
+      /*
       if(this.checkCreatureStatuses()){
         myCombatScreen.updateScreen(1,0,1);
-      }
+      }*/
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].removeSpirit(skills.skillList[this.waitingFunction[1]][6]);
 
     }
@@ -204,8 +215,8 @@ class CombatLogic{
         this.selectedAlly = unitNum;
         console.log("Selected unit number: " + unitNum + ", Name: " + player.myCreatures[player.myCombatCreatures[unitNum]].name);
       }
-      //console.log(player.myCreatures[this.selectedAlly].myBones[1]);
-      myCombatScreen.updateScreen(1,1,0);
+      this.update();
+      //myCombatScreen.updateScreen(1,1,0);
     }
   }// end selectFriendlyUnit()
 
@@ -218,7 +229,8 @@ class CombatLogic{
     if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 4){
       this.executeSkill(enemyCreatures[unitNum]);
       this.clearWaitingFunction();
-      myCombatScreen.updateScreen(1,1,0);
+      this.update();
+      //myCombatScreen.updateScreen(1,1,0);
     }
     //If there is no waiting offesnive skill, we do nothing
 
@@ -268,51 +280,64 @@ class CombatLogic{
   }//end endTurn()
 
   //////////////////////////////////////////////////////////////////////////////
+  //  Update function runs after every action is taken
+  //////////////////////////////////////////////////////////////////////////////
+  update(){
+
+    if(this.checkforCombatEnd()){
+      this.endCombat();
+    }
+
+    myCombatScreen.updateScreen(1,1,1);
+
+  }//end update()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Function is called when combat has ended for any reason
+  //////////////////////////////////////////////////////////////////////////////
+  endCombat(){
+
+    this.activeCombat = false;
+
+    myCombatScreen.updateScreen(1,1,1);
+
+  }//end endCombat()
+
+  //////////////////////////////////////////////////////////////////////////////
   //  Base function that handles all events taking place during the enemy's turn
   //////////////////////////////////////////////////////////////////////////////
   beginEnemyTurn(){
 
     //Itterate through each enemy Creature
     for(var x = 0; x < enemyCreatures.length; x++){
-      //Create array of valid player-controlled targets
-      this.validTargets = [];
-      console.log(this.validTargets.length);
-      //Ensure the current enemy isn't dead
-      if(enemyCreatures[x].isDead() == false){
-        //Itterate through all player-controlled units to see which are alive
-        for(var y = 0; y < player.myCombatCreatures.length; y++){
-          if(player.myCreatures[player.myCombatCreatures[y]].isDead() == false){
-            console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is alive!");
-            //Add all living player-controlled units to a list of valid targets
-            this.validTargets.push(player.myCombatCreatures[y]);
+      if(this.activeCombat){
+        //Create array of valid player-controlled targets
+        this.validTargets = [];
+        console.log(this.validTargets.length);
+        //Ensure the current enemy isn't dead
+        if(enemyCreatures[x].isDead() == false){
+          //Itterate through all player-controlled units to see which are alive
+          for(var y = 0; y < player.myCombatCreatures.length; y++){
+            if(player.myCreatures[player.myCombatCreatures[y]].isDead() == false){
+              console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is alive!");
+              //Add all living player-controlled units to a list of valid targets
+              this.validTargets.push(player.myCombatCreatures[y]);
+            }
+            else{
+              console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is dead!");
+            }
           }
-          else{
-            console.log(player.myCreatures[player.myCombatCreatures[y]].name + " is dead!");
-          }
+          //Have AI pick a target from the list of valid targets
+          this.target = combatLogi.newAI.dumb(this.validTargets);
+          console.log(this.validTargets);
+          console.log(this.target);
+          skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[this.target]]);
         }
-        //Have AI pick a target from the list of valid targets
-        this.target = combatLogi.newAI.dumb(this.validTargets);
-        console.log(this.validTargets);
-        console.log(this.target);
-        skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[this.target]]);
+        this.update();
+        console.log(this.validTargets.length);
       }
-      for(var i = 0; i < player.myCombatCreatures.length; i++){
-        if(player.myCreatures[player.myCombatCreatures[i]].isDead()){
-          player.myCreatures[player.myCombatCreatures[i]].die();
-        }
-      }
-      this.checkforCombatEnd();
-      console.log(this.validTargets.length);
     }
     this.endEnemyTurn();
-
-
-
-
-
-
-
-
 
 
 /*
@@ -353,7 +378,8 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   endEnemyTurn(){
     player.myCreatures.forEach(Creature => Creature.hasAction = true);
-    myCombatScreen.updateScreen(1,1,1);
+    this.update();
+    //myCombatScreen.updateScreen(1,1,1);
     this.checkforCombatEnd();
   }//end beginEnemyTurn()
 
@@ -410,11 +436,13 @@ class CombatLogic{
           //We note that the unit has acted this round
           player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].hasAction = false;
           //Update the Unit Bar to reflect the Spirit spent
-          myCombatScreen.updateScreen(1,0,0);
+          this.update();
+          //myCombatScreen.updateScreen(1,0,0);
           //If any unit died or is now bloodied, we redraw the Combat Field too
+          /*
           if(this.checkCreatureStatuses()){
             myCombatScreen.updateScreen(0,0,1);
-          }
+          }*/
         //Clear the waiting function
         this.clearWaitingFunction();
         break;
@@ -481,13 +509,14 @@ class CombatLogic{
       console.log("Using equipped item!");
       //Remove the item from the unit, and update the screen
       player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem = 0;
-      myCombatScreen.updateScreen(1,1,1);
+      //myCombatScreen.updateScreen(1,1,1);
     }
     else{
       //If the unit does not have an equipped item, we display a message, and nothing else
       this.displayMessage = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].name + " does not have an item equipped!";
       myCombatScreen.printMessageBar(this.displayMessage);
     }
+    combatLogi.update();
   }//end useItem()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -497,140 +526,146 @@ class CombatLogic{
 
     this.clickedcreatureType = null;
 
+    if(this.activeCombat == false){
+      console.log("COMBAT HAS COME TO AN END!!!!!!!!!!!!!!!");
+      setGameMode(5);
+    }
     //First, check if the click was in the Control Bar at the bottom of the screen
-    if(clickPositionY >= (canvas.height - controlBarHeight)){
-      this.clickedField = [1, 0, 0];
-      /*      Control Bar Column Description
-      The Control Bar is broken into 9 columns, the first being the blank space
-      before the first buttons, the next column has a pair of buttons, with that
-      pattern repeating until the final column. Actions are only taken if the
-      click is in column with buttons.
-      */
-      if(clickPositionX < 20){//First blank column
-        this.clickedField[1] = 0;
-      }
-      else if(clickPositionX < 220){//Menu/item buttons
-        this.clickedField[1] = 1;
-      }
-      else if(clickPositionX < 245){//Second blank column
-        this.clickedField[1] = 0;
-      }
-      else if(clickPositionX < 645){//First column of skill buttons
-        this.clickedField[1] = 3;
-      }
-      else if(clickPositionX < 655){//Middle blank column
-        this.clickedField[1] = 0;
-      }
-      else if(clickPositionX < 1055){//Second column of skill buttons
-        this.clickedField[1] = 5;
-      }
-      else if(clickPositionX < 1080){//Fourth blank colmun
-        this.clickedField[1] = 0;
-      }
-      else if(clickPositionX < 1180){//End/run buttons
-        this.clickedField[1] = 7;
-      }
-      else{//The last blank column on the right
-        this.clickedField[1] = 0;
-      }
-
-      /*      Control Bar Row Description
-      The Control Bar is broken into 5 rows, the first being the blank space
-      before the first buttons, the next row has buttons, with that pattern
-      repeating until the final row. Actions are only taken if the click is in
-      row with buttons.
-      */
-      if(clickPositionY < canvas.height - controlBarHeight + 20){//First blank row
-        this.clickedField[2] = 0;
-      }
-      else if(clickPositionY < canvas.height - controlBarHeight + 120){//First button row
-        this.clickedField[2] = 1;
-      }
-      else if(clickPositionY < canvas.height - controlBarHeight + 130){//Second blank row
-        this.clickedField[2] = 0;
-      }
-      else if(clickPositionY < canvas.height - controlBarHeight + 230){//Second button row
-        this.clickedField[2] = 3;
-      }
-      else{//The last blank row, on the bottom
-        this.clickedField[2] = 0;
-      }
-
-      //if the click corresponds to a valid button location, call upon the corresponding function
-      if(this.clickedField[1] != 0 && this.clickedField[2] != 0){
-        this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
-      }
-
-    }
-    //Next check if the click was in the Unit bar on the left of the screen
-    else if(clickPositionX < unitBarWidth){
-      this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
-
-      if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
-        //If we clicked on an ally, and the waiting function targets an ally
-        console.log("Checking waiting function. " + Math.floor(clickPositionY/90));
-        this.selectFriendlyUnit(Math.floor(clickPositionY/90));
-      }
-      else{
-        this.selectFriendlyUnit(Math.floor(clickPositionY/90));
-      }
-
-    }
-    //If the click was not in either of the bars, it must be in the Combat Field
     else{
-      /*      Combat Screen Column Description
-      The Combat Field is broken into 7 columns, the first being the blank space
-      before the friendly units arrive, the next two columns are where the
-      friendly units sit, the fourth is the DMZ between friendlies and enemies,
-      the fifth and sixth are where enemy units sit, and the last in the blank
-      spaced on the right of the screen. We only act if the click in in the 2nd,
-      3rd, 5th, or 6th columns, all other inputs are useless.
-      */
-      this.clickedField = [3, 0, 0];
-      if(clickPositionX >= unitBarWidth + 50 && clickPositionX < unitBarWidth + 200){//Column 1
-        this.clickedField[1] = 1;
+      if(clickPositionY >= (canvas.height - controlBarHeight)){
+        this.clickedField = [1, 0, 0];
+        /*      Control Bar Column Description
+        The Control Bar is broken into 9 columns, the first being the blank space
+        before the first buttons, the next column has a pair of buttons, with that
+        pattern repeating until the final column. Actions are only taken if the
+        click is in column with buttons.
+        */
+        if(clickPositionX < 20){//First blank column
+          this.clickedField[1] = 0;
+        }
+        else if(clickPositionX < 220){//Menu/item buttons
+          this.clickedField[1] = 1;
+        }
+        else if(clickPositionX < 245){//Second blank column
+          this.clickedField[1] = 0;
+        }
+        else if(clickPositionX < 645){//First column of skill buttons
+          this.clickedField[1] = 3;
+        }
+        else if(clickPositionX < 655){//Middle blank column
+          this.clickedField[1] = 0;
+        }
+        else if(clickPositionX < 1055){//Second column of skill buttons
+          this.clickedField[1] = 5;
+        }
+        else if(clickPositionX < 1080){//Fourth blank colmun
+          this.clickedField[1] = 0;
+        }
+        else if(clickPositionX < 1180){//End/run buttons
+          this.clickedField[1] = 7;
+        }
+        else{//The last blank column on the right
+          this.clickedField[1] = 0;
+        }
+
+        /*      Control Bar Row Description
+        The Control Bar is broken into 5 rows, the first being the blank space
+        before the first buttons, the next row has buttons, with that pattern
+        repeating until the final row. Actions are only taken if the click is in
+        row with buttons.
+        */
+        if(clickPositionY < canvas.height - controlBarHeight + 20){//First blank row
+          this.clickedField[2] = 0;
+        }
+        else if(clickPositionY < canvas.height - controlBarHeight + 120){//First button row
+          this.clickedField[2] = 1;
+        }
+        else if(clickPositionY < canvas.height - controlBarHeight + 130){//Second blank row
+          this.clickedField[2] = 0;
+        }
+        else if(clickPositionY < canvas.height - controlBarHeight + 230){//Second button row
+          this.clickedField[2] = 3;
+        }
+        else{//The last blank row, on the bottom
+          this.clickedField[2] = 0;
+        }
+
+        //if the click corresponds to a valid button location, call upon the corresponding function
+        if(this.clickedField[1] != 0 && this.clickedField[2] != 0){
+          this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
+        }
+
       }
-      else if(clickPositionX >= unitBarWidth + 200 && clickPositionX < unitBarWidth + 350){//Column 2
-        this.clickedField[1] = 2;
+      //Next check if the click was in the Unit bar on the left of the screen
+      else if(clickPositionX < unitBarWidth){
+        this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
+
+        if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+          //If we clicked on an ally, and the waiting function targets an ally
+          console.log("Checking waiting function. " + Math.floor(clickPositionY/90));
+          this.selectFriendlyUnit(Math.floor(clickPositionY/90));
+        }
+        else{
+          this.selectFriendlyUnit(Math.floor(clickPositionY/90));
+        }
+
       }
-      else if(clickPositionX >= unitBarWidth + 600 && clickPositionX < unitBarWidth + 750){//Column 4
-        this.clickedField[1] = 4;
-      }
-      else if(clickPositionX >= unitBarWidth + 750 && clickPositionX < unitBarWidth + 900){//Column 5
-        this.clickedField[1] = 5;
-      }
+      //If the click was not in either of the bars, it must be in the Combat Field
       else{
-        //click is in a blank column
-        this.clickedField[1] = 0;
+        /*      Combat Screen Column Description
+        The Combat Field is broken into 7 columns, the first being the blank space
+        before the friendly units arrive, the next two columns are where the
+        friendly units sit, the fourth is the DMZ between friendlies and enemies,
+        the fifth and sixth are where enemy units sit, and the last in the blank
+        spaced on the right of the screen. We only act if the click in in the 2nd,
+        3rd, 5th, or 6th columns, all other inputs are useless.
+        */
+        this.clickedField = [3, 0, 0];
+        if(clickPositionX >= unitBarWidth + 50 && clickPositionX < unitBarWidth + 200){//Column 1
+          this.clickedField[1] = 1;
+        }
+        else if(clickPositionX >= unitBarWidth + 200 && clickPositionX < unitBarWidth + 350){//Column 2
+          this.clickedField[1] = 2;
+        }
+        else if(clickPositionX >= unitBarWidth + 600 && clickPositionX < unitBarWidth + 750){//Column 4
+          this.clickedField[1] = 4;
+        }
+        else if(clickPositionX >= unitBarWidth + 750 && clickPositionX < unitBarWidth + 900){//Column 5
+          this.clickedField[1] = 5;
+        }
+        else{
+          //click is in a blank column
+          this.clickedField[1] = 0;
+        }
+
+        /*      Combat Screen Row Description
+        The Combat Field is broken into 5 rows, the first being the blank space at
+        the top of the screen, the next three rows are where the friendly and
+        enemy units sit, the fifth row is the blank space at the bottom of the
+        screen. We only act if the click in in the 3rd, 4th, or 5th rows, all
+        other inputs are useless.
+        */
+        if(clickPositionY  >= 50 && clickPositionY < 200){//row 2
+          //click is in row 2
+          this.clickedField[2] = 2;
+        }
+        else if(clickPositionY >= 200 && clickPositionY < 350){//row 3
+          //click is in row 3
+          this.clickedField[2] = 3;
+        }
+        else if(clickPositionY >= 350 && clickPositionY < 500){//row 4
+          //click is in row 4
+          this.clickedField[2] = 4;
+        }
+        else{
+          //click is in a blank row
+          this.clickedField[2] = 0;
+        }
+        this.combatFieldClickHandler();
       }
 
-      /*      Combat Screen Row Description
-      The Combat Field is broken into 5 rows, the first being the blank space at
-      the top of the screen, the next three rows are where the friendly and
-      enemy units sit, the fifth row is the blank space at the bottom of the
-      screen. We only act if the click in in the 3rd, 4th, or 5th rows, all
-      other inputs are useless.
-      */
-      if(clickPositionY  >= 50 && clickPositionY < 200){//row 2
-        //click is in row 2
-        this.clickedField[2] = 2;
-      }
-      else if(clickPositionY >= 200 && clickPositionY < 350){//row 3
-        //click is in row 3
-        this.clickedField[2] = 3;
-      }
-      else if(clickPositionY >= 350 && clickPositionY < 500){//row 4
-        //click is in row 4
-        this.clickedField[2] = 4;
-      }
-      else{
-        //click is in a blank row
-        this.clickedField[2] = 0;
-      }
-      this.combatFieldClickHandler();
+      this.update();
     }
-
-    this.checkforCombatEnd();
 
   }// end combatClickHandler()
 
@@ -662,7 +697,8 @@ class CombatLogic{
     skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.selectedAlly]], enemyCreatures[this.selectedEnemy]);
     //skills.skillAttack(player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     this.clearWaitingFunction();
-    myCombatScreen.updateScreen(1,0,1);
+    this.update();
+    //myCombatScreen.updateScreen(1,0,1);
   }//end checkWaitingFunction()
 
 
