@@ -410,6 +410,7 @@ class PlayerCharacter extends Creature{
 class EnemyCreature extends Creature{
   constructor(myname, stats, path) {
     super();
+    this.temperment = stats[0];
     this.name = myname;
     //this.body = body;
     //this.soul = soul;

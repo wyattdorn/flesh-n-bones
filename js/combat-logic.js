@@ -154,6 +154,7 @@ class CombatLogic{
     return needRedraw;
   }//end checkCreatureStatuses()
 
+  /*
   //////////////////////////////////////////////////////////////////////////////
   //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
   //////////////////////////////////////////////////////////////////////////////
@@ -173,6 +174,7 @@ class CombatLogic{
       }
     }
   }//end checkForWounds()
+  */
 
   //////////////////////////////////////////////////////////////////////////////
   // Pass in creature Object and execute the waiting skill upon the given target
@@ -182,7 +184,7 @@ class CombatLogic{
       skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].hasAction = false;
-      this.update();
+      //this.update();
       /*
       if(this.checkCreatureStatuses()){
         myCombatScreen.updateScreen(1,0,1);
@@ -215,7 +217,7 @@ class CombatLogic{
         this.selectedAlly = unitNum;
         console.log("Selected unit number: " + unitNum + ", Name: " + player.myCreatures[player.myCombatCreatures[unitNum]].name);
       }
-      this.update();
+      //this.update();
       //myCombatScreen.updateScreen(1,1,0);
     }
   }// end selectFriendlyUnit()
@@ -229,7 +231,7 @@ class CombatLogic{
     if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 4){
       this.executeSkill(enemyCreatures[unitNum]);
       this.clearWaitingFunction();
-      this.update();
+      //this.update();
       //myCombatScreen.updateScreen(1,1,0);
     }
     //If there is no waiting offesnive skill, we do nothing
@@ -328,12 +330,12 @@ class CombatLogic{
             }
           }
           //Have AI pick a target from the list of valid targets
-          this.target = combatLogi.newAI.dumb(this.validTargets);
+          this.target = combatLogi.newAI.list[enemyCreatures[x].temperment][1](this.validTargets);
           console.log(this.validTargets);
           console.log(this.target);
           skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[this.target]]);
         }
-        this.update();
+        //this.update();
         console.log(this.validTargets.length);
       }
     }
@@ -378,7 +380,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   endEnemyTurn(){
     player.myCreatures.forEach(Creature => Creature.hasAction = true);
-    this.update();
+    //this.update();
     //myCombatScreen.updateScreen(1,1,1);
     this.checkforCombatEnd();
   }//end beginEnemyTurn()
@@ -413,7 +415,6 @@ class CombatLogic{
 
     //First, we check that the unit has enough Spirit to use the selected ability
     if(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].currentSpirit >= skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][6]){
-      console.log("SO FAR, SO GOOD");
       switch(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][3]){
         //Skill requires a target and is then stored
         case 4: case 3:
@@ -436,7 +437,7 @@ class CombatLogic{
           //We note that the unit has acted this round
           player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].hasAction = false;
           //Update the Unit Bar to reflect the Spirit spent
-          this.update();
+          //this.update();
           //myCombatScreen.updateScreen(1,0,0);
           //If any unit died or is now bloodied, we redraw the Combat Field too
           /*
@@ -526,6 +527,7 @@ class CombatLogic{
 
     this.clickedcreatureType = null;
 
+    //First, check if combat is still active, if not the click will return to world map
     if(this.activeCombat == false){
       console.log("COMBAT HAS COME TO AN END!!!!!!!!!!!!!!!");
       setGameMode(5);
@@ -697,7 +699,7 @@ class CombatLogic{
     skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.selectedAlly]], enemyCreatures[this.selectedEnemy]);
     //skills.skillAttack(player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     this.clearWaitingFunction();
-    this.update();
+    //this.update();
     //myCombatScreen.updateScreen(1,0,1);
   }//end checkWaitingFunction()
 

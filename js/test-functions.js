@@ -189,7 +189,7 @@ function generateDummyEnemies(index){
   enemyCreatures = [];
 
   if(index == 1){
-    enemyCreatures.push(new EnemyCreature("Goblin 1", [1,1,1,1,1,1], imageLoader.goblinImg));
+    enemyCreatures.push(new EnemyCreature("Goblin 1", [0,1,1,1,1,1], imageLoader.goblinImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
     enemyCreatures.push(new EnemyCreature("Goblin 2", [1,1,1,1,1,1], imageLoader.goblinImg));
@@ -197,26 +197,26 @@ function generateDummyEnemies(index){
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 2){
-    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.skeletonImg));
+    enemyCreatures.push(new EnemyCreature("Skel 1", [1,1,1,1,1,1], imageLoader.skeletonImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.skeletonImg));
+    enemyCreatures.push(new EnemyCreature("Skel 2", [1,1,1,1,1,1], imageLoader.skeletonImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 3){
-    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.orcImg));
+    enemyCreatures.push(new EnemyCreature("Orc 1", [1,1,1,1,1,1], imageLoader.orcImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.orcImg));
+    enemyCreatures.push(new EnemyCreature("Orc 2", [1,1,1,1,1,1], imageLoader.orcImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }
   else if(index == 4){
-    enemyCreatures.push(new EnemyCreature("Skel 1", imageLoader.fireElementalImg));
+    enemyCreatures.push(new EnemyCreature("Elemental 1", [1,1,1,1,1,1], imageLoader.fireElementalImg));
     enemyCreatures[0].maxHP=100;
     enemyCreatures[0].currentHP = 94;
-    enemyCreatures.push(new EnemyCreature("Skel 2", imageLoader.fireElementalImg));
+    enemyCreatures.push(new EnemyCreature("Elemental 2", [1,1,1,1,1,1], imageLoader.fireElementalImg));
     enemyCreatures[0].skillList[0] = skills.skillList[0];
     enemyCreatures[1].skillList[0] = skills.skillList[0];
   }

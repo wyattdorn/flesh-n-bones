@@ -3,12 +3,22 @@
 class enemyAI{
 
   constructor(){
-    //empty for now
+    this.init();
   }
 
-  vengeful(targetArray){
-    //Attacks the creature that last damaged this unit
-  }
+  init(){
+    this.list = [];
+
+
+    //                   0  1                         2           3       4             5         6           7                           8
+    //                      function()               Name        Target  Ability       Multiplier Cost       Description
+    this.list[0] = [0, this.dumb];//,             "No Skill",     0,  "",           0,        0,      "- - - - - - - -"];
+    this.list[1] = [1, this.random];//
+    this.list[2] = [2, this.antimage];//
+
+
+
+  }//end init()
 
   //////////////////////////////////////////////////////////////////////////////
   // Enemies with a DUMB temperment will:
@@ -24,6 +34,18 @@ class enemyAI{
     return this.target;
   }//end dumb()
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Enemies with a RANDOM temperment will:
+  // Always attack a randomly determined player-controlled unit
+  //////////////////////////////////////////////////////////////////////////////
+  random(targetArray){
+    console.log("---------------------" + player.myCombatCreatures.length);
+    return Math.floor(Math.random() * player.myCombatCreatures.length);
+    //Attacks a random opposing Creature
+  }//end random()
+
+
   //////////////////////////////////////////////////////////////////////////////
   // Enemies with aa ANTIMAGE temperment will:
   // Always attack the opposing Creature with the HIGHEST current Spirit
@@ -38,14 +60,10 @@ class enemyAI{
     return this.target;
   }//end antimage()
 
-  //////////////////////////////////////////////////////////////////////////////
-  // Enemies with a RANDOM temperment will:
-  // Always attack a randomly determined player-controlled unit
-  //////////////////////////////////////////////////////////////////////////////
-  random(targetArray){
-    console.log("---------------------" + player.myCombatCreatures.length);
-    return Math.floor(Math.random() * player.myCombatCreatures.length);
-    //Attacks a random opposing Creature
-  }//end random()
+
+  vengeful(targetArray){
+    //Attacks the creature that last damaged this unit
+  }
+
 
 }
