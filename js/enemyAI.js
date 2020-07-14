@@ -40,8 +40,10 @@ class enemyAI{
   // Always attack a randomly determined player-controlled unit
   //////////////////////////////////////////////////////////////////////////////
   random(targetArray){
-    console.log("---------------------" + player.myCombatCreatures.length);
-    return Math.floor(Math.random() * player.myCombatCreatures.length);
+    this.currentTime = new Date;
+    Math.seedrandom(this.currentTime.getTime());
+    console.log("---------------------" + targetArray.length);
+    return Math.floor(Math.random() * targetArray.length);
     //Attacks a random opposing Creature
   }//end random()
 
@@ -52,8 +54,8 @@ class enemyAI{
   //////////////////////////////////////////////////////////////////////////////
   antimage(targetArray){
     this.target = 0;
-    for(var x = 1; x < player.myCombatCreatures.length; x++){
-      if(player.myCreatures[player.myCombatCreatures[x]].currentSpirit > player.myCreatures[player.myCombatCreatures[this.target]].currentSpirit){
+    for(var x = 1; x < targetArray.length; x++){
+      if(player.myCreatures[targetArray[x]].currentSpirit > player.myCreatures[targetArray[this.target]].currentSpirit){
         this.target = x;
       }
     }

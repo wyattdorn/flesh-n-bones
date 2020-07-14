@@ -137,6 +137,7 @@ function setGameMode(mode, index){
       break;
     case 5:
       worldMap.init();
+      worldMap.updateScreen();
       break;
     default:
 

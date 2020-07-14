@@ -50,9 +50,8 @@ class CombatScreen{
   //  Prints a message to the onscreen Message Bar
   //////////////////////////////////////////////////////////////////////////////
   printMessageBar(myString){
-    console.log("Printing: " + myString);
+    //console.log("Printing: " + myString);
     ctx.save();
-    console.log("Drawing check!");
     ctx.fillStyle = "black";
     ctx.fillRect(unitBarWidth, 526, canvasWidth, 30);
 
@@ -337,11 +336,8 @@ class CombatScreen{
   // Draws all friendly units to the screen by calling drawUnit().
   //////////////////////////////////////////////////////////////////////////////
   drawFriendlyUnits(){
-
-    //Atarting x position is unitBarWidth plus 50
+    //Starting x position is unitBarWidth plus 50
     var baseX = unitBarWidth + 50;
-
-    console.log("Buddies: " + player.myCombatCreatures.length);
 
     if(player.myCombatCreatures.length<6){ this.max = player.myCombatCreatures.length;}
     else{this.max = 6;}

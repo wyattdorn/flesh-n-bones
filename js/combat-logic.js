@@ -85,7 +85,10 @@ class CombatLogic{
   //  Placeholder function to check if all allies are dead.
   //////////////////////////////////////////////////////////////////////////////
   areWeDeadYet(){
-    console.log();
+
+    console.log("Number of allies: " + player.myCombatCreatures.length);
+    //console.log("Number of allies: " + player.myCombatCreatures.length);
+
     var counter = 0;
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
@@ -96,9 +99,11 @@ class CombatLogic{
     //player.myCombatCreatures.forEach(element => {if(Creature.isDead()){ Creature.die(); counter++;}});
     //console.log(counter + " dead out of " + player.myCombatCreatures.length);
     if(counter == player.myCombatCreatures.length){
+      console.log("ALL ALLIES ARE DAED");
       return true;
     }
     else{
+      console.log("Still going!");
       return false;
     }
 
@@ -313,9 +318,11 @@ class CombatLogic{
     //Itterate through each enemy Creature
     for(var x = 0; x < enemyCreatures.length; x++){
       if(this.activeCombat){
+        if(this.areWeDeadYet()){
+          return;
+        }
         //Create array of valid player-controlled targets
         this.validTargets = [];
-        console.log(this.validTargets.length);
         //Ensure the current enemy isn't dead
         if(enemyCreatures[x].isDead() == false){
           //Itterate through all player-controlled units to see which are alive
@@ -331,11 +338,14 @@ class CombatLogic{
           }
           //Have AI pick a target from the list of valid targets
           this.target = combatLogi.newAI.list[enemyCreatures[x].temperment][1](this.validTargets);
-          console.log(this.validTargets);
-          console.log(this.target);
-          skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[this.target]]);
+          
+          console.log("1________________________________" + this.target);
+          console.log("2________________________________" + this.validTargets[this.target]);
+          console.log("3________________________________" + player.myCombatCreatures[this.validTargets[this.target]]);
+          console.log("4________________________________" + player.myCreatures[this.validTargets[this.target]].name);
+
+          skills.skillList[1][1](enemyCreatures[x], player.myCreatures[this.validTargets[this.target]]);
         }
-        //this.update();
         console.log(this.validTargets.length);
       }
     }
@@ -592,8 +602,15 @@ class CombatLogic{
           this.clickedField[2] = 0;
         }
 
+        //If the click location is the "RUN AWAY" button, we return in order to
+        //avoid the combat screen being written over the world map
+        if(this.clickedField[1] == 7 && this.clickedField[2] == 3){
+          this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
+          return;
+        }
         //if the click corresponds to a valid button location, call upon the corresponding function
-        if(this.clickedField[1] != 0 && this.clickedField[2] != 0){
+        else if(this.clickedField[1] != 0 && this.clickedField[2] != 0){
+          console.log()
           this.controlBarFunctions[10 * this.clickedField[1] + this.clickedField[2]]();
         }
 
