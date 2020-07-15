@@ -4,19 +4,16 @@ class enemyAI{
 
   constructor(){
     this.init();
-  }
+  }//end constructor()
 
   init(){
     this.list = [];
-
 
     //                   0  1                         2           3       4             5         6           7                           8
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
     this.list[0] = [0, this.dumb];//,             "No Skill",     0,  "",           0,        0,      "- - - - - - - -"];
     this.list[1] = [1, this.random];//
     this.list[2] = [2, this.antimage];//
-
-
 
   }//end init()
 

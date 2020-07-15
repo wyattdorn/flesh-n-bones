@@ -310,7 +310,7 @@ class CreatureEditorScreen{
     }
 
     //If the Creature was not already in the party, we check that we have not reached the maximum size for the party
-    if(player.myCombatCreatures.length < maxPartySize){
+    if(player.myCombatCreatures.length < player.maxPartySize){
       //Add the Creature to the party
       player.myCombatCreatures.push(this.selectedCreature);
       this.updateScreen();

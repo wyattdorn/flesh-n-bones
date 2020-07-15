@@ -10,6 +10,7 @@ class Deity{
   constructor() {
     this.soulsOwned = 0;
     this.souls = [];
+    this.maxPartySize = 5;
     this.malachite = 497; //The money used in this world
     this.impetus = 0; //Basically exp for the PC
     this.myCreatures = [];

@@ -7,16 +7,13 @@ class WorldMap{
       this.ctx = context;
       this.canvas = canvas;
 
-      //this.loader = new PxLoader(),
-      //this.bgImg = this.loader.addImage('media/images/backgrounds/bg.png');
-      //this.loader.start();
-
   }//end constructor()
 
   init(){
-
+      //By default, we set the Forgotten Temple to the highlighted location
       this.highlightedLocation = 0;
 
+      //Populate the list of location coodinates using the data from mapo-locations.js
       this.locationCoordinates = [];
       for(var x = 0; x < mapLocations.list.length; x++){
         this.locationCoordinates[x] = [mapLocations.list[x][2], mapLocations.list[x][3]];
@@ -24,12 +21,7 @@ class WorldMap{
 
       canvas.onmousemove = this.checkForHighlights;
 
-      //this.loader.addCompletionListener(function() {
-        this.clearScreen();
-        this.updateScreen();
-        //this.drawBackground();
-      //});
-
+      this.updateScreen();
 
   }//end init()
 
@@ -79,10 +71,6 @@ class WorldMap{
     this.drawLocations();
     this.drawLocationDescription();
     this.drawMenuButton();
-
-
-    //this.drawBackground();
-
   }//end updateScreen()
 
 
@@ -91,8 +79,10 @@ class WorldMap{
   //////////////////////////////////////////////////////////////////////////////
   checkIfInInfluence(location){
 
+    //Calculate the distance between the Temple and the given location
     this.distance = Math.sqrt(Math.pow((mapLocations.list[0][2] - mapLocations.list[location][2]), 2) + Math.pow((mapLocations.list[0][3] - mapLocations.list[location][3]), 2));
 
+    //Return true if the location is within the player's current sphere of influence
     if(this.distance - (mapLocations.locationSize/2) <= (20 * player.impetus)){
       return true;
     }
@@ -133,10 +123,9 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillRect(1100, 700, 5, 100);
 
-
-      ctx.font = "25px Arial";
-      ctx.fillStyle = "#cccccc";
-      ctx.fillText("MENU", 1115, 760);
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#cccccc";
+    ctx.fillText("MENU", 1115, 760);
 
     ctx.restore();
   }//end drawLocationDescription()
@@ -175,18 +164,13 @@ class WorldMap{
     ctx.restore();
   }//end drawLocationDescription()
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws map background image to screen
+  //////////////////////////////////////////////////////////////////////////////
   drawBackground(){
-
     ctx.drawImage(imageLoader.worldMapBackgroudImg, 0, 0);
-        //ctx.drawImage(worldMap.bgImg, 0, 0);
-
-
   }//end drawBackgrounds()
-
-  drawPaths(){
-
-  }//end drawPaths()
-
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draws map locations to screen
@@ -194,26 +178,33 @@ class WorldMap{
   drawLocations(){
     ctx.save();
 
+    //Itterate through the list of locations in map-locations.js
     for(var x = 0; x < mapLocations.list.length; x++){
 
+      //Set default ccolor of blue for locations within the sphere of influence
       ctx.fillStyle = "#111199";
+
+      //If the location is friendly, it will be colored green
       if(mapLocations.list[x][4]){
         ctx.fillStyle = "#144003";
       }
+      //If the location is outside the sphere of influence, color it red
       if(!this.checkIfInInfluence(x)){
         ctx.fillStyle = "#450505";
       }
+      //The currently highlighted location will be colored white
       if(x == this.highlightedLocation){
         ctx.fillStyle = "#aabbcc";
       }
 
+      //Draw colored circle behind the location icon
       ctx.globalAlpha = 0.75;
       ctx.beginPath();
       ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
       ctx.fill();
+      //Draws the location icon to screen
       ctx.globalAlpha = 1;
       ctx.drawImage(mapLocations.list[x][6], mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
-
     }
 
     ctx.restore();
@@ -224,34 +215,33 @@ class WorldMap{
   //////////////////////////////////////////////////////////////////////////////
   worldMapClickHandler(clickPositionX,clickPositionY){
 
-
+    //Check if the "MENU" button was pressed
     if(clickPositionX > 1105 && clickPositionY > 705){
       console.log("Entering menu!");
       setGameMode(2);
       canvas.onmousemove = null;
     }
 
+    //Itterate through the coordinates of all the map locations
     for(var x = 0; x < this.locationCoordinates.length; x++){
+      //Check if the click was on a map location
       if(clickPositionX > this.locationCoordinates[x][0] && clickPositionX < this.locationCoordinates[x][0] + mapLocations.locationSize && clickPositionY > this.locationCoordinates[x][1] && clickPositionY < this.locationCoordinates[x][1] + mapLocations.locationSize){
         console.log(mapLocations.list[x][1] + " was clicked on!");
+        //If the click was on a location make sure that location is within the sphere of influencce
         if(this.checkIfInInfluence(x)){
-          switch (x) {
-            case 0:
-              //Enter player stat screen
-              setGameMode(4);
-              canvas.onmousemove = null;
-              break;
-            case 1: case 2: case 3: case 4: case 5:
-              //Enter combat
-              setGameMode(1, x);
-              canvas.onmousemove = null;
-            default:
+          //First, we stop the onmousemove function that is specific to the world map
+          canvas.onmousemove = null;
+          //If the location was the FOrgotten Temple, we enter the player stat screes
+          if(x == 0){
+            setGameMode(4);
+          }
+          //Otherwise, we launch combat based on the location that was clicked on
+          else{
+            setGameMode(1, x);
+          }
         }
       }
-      }
-
     }
-
-  }
+  }//end worldMapClickHandler()
 
 }

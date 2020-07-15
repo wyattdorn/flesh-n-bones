@@ -1,5 +1,2 @@
 -Clicking midway down the face of the skulls beneath the Unit Bar returns an error from the selectFriendlyUnit() function in combat-logic.
--Wounds on allies are now drawn multiple times.
 -Attacking a dead enemy still uses an action
--Need to create a separate list of allies in combat to fix a number of bugs
--"You win" text remains on screen after exiting combat.

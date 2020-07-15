@@ -4,18 +4,17 @@ class Bones {
   constructor(element) {
     this.element = element;
     this.init();
-  }
+  }//end constructor()
 
   init(){
-    this.list = new Array(1);
-    this.list[0] = [];
+    this.list = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
     this.list[0] = [0, "No Bones", 0, "Creature has no bones.", imageLoader.soulImg];
     this.list[1] = [1, "Old Bones", 1, "Any old pile of bones can attack.", imageLoader.skeletonImg];
     this.list[2] = [2, "Brittle Bones", 3, "Brittle bones grants the Heal skill.", imageLoader.brittleBoneImg];
     this.list[3] = [3, "Big Bones", 2, "Big bones grant the Defend skill.", imageLoader.bigBoneImg];
-  }
+  }//end init()
 
 }
 
@@ -23,17 +22,16 @@ class Guts {
   constructor(element) {
     this.element = element;
     this.init();
-  }
+  }//end constructor()
 
   init(){
-    this.list = new Array(1);
-    this.list[0] = [];
+    this.list = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
     this.list[0] = [0, "No Guts", 0, "Creature has no guts.", null];
     this.list[1] = [1, "Explosive Guts", 4, "Explosive guts grants the Explode skill.", "red"];
     this.list[2] = [2, "Dubious Guts", 0, "No one knows what these guts do...", "green"];
-  }
+  }//end init()
 
 }
 
@@ -42,20 +40,23 @@ class Skin {
   constructor(element) {
     this.element = element;
     this.init();
-  }
+  }//end constructor()
 
   init(){
-    this.list = new Array(1);
-    this.list[0] = [];
+    this.list = [];
 
     //                  index, name, skill num, info
     this.list[0] = [0, "No Skin", 0, "Creature has no skin."];
     this.list[1] = [1, "Goblin Skin", 5, "Goblin skin grants the Scythe skill."];
     this.list[2] = [2, "Orc Skin", 6, "Orc skin grants the Orc Smash skill."];
     this.list[3] = [3, "Mage Skin", 7, "Mage skin grants the Spirit Dagger skill."];
-  }
+  }//end init()
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Deprecated class
+////////////////////////////////////////////////////////////////////////////////
 class Soul{
   constructor(name, temperment){
     this.temperment = temperment;
@@ -64,7 +65,7 @@ class Soul{
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Body of a creature, consisting of Soul, Skin, Bones, and Guts
+// Deprecated class
 ////////////////////////////////////////////////////////////////////////////////
 class Body {
   constructor(skin, bones, guts) {
@@ -118,12 +119,15 @@ class Creature {
     this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
     this.myInventory = [this.myBones, this.myGuts, this.mySkin, this.myItem];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
-  }
+  }//end constructor()
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // When a Creature dies, it's hp and spirit are set to 0
+  ////////////////////////////////////////////////////////////////////////////////
   die(){
     this.currentHP = 0;
     this.currentSpirit = 0;
-  }
+  }//end die()
 
   ////////////////////////////////////////////////////////////////////////////////
   // Each time a Creature uses a skill, they make progress towards learning it,
@@ -192,11 +196,9 @@ class Creature {
   // Equips a given Item to this Creature, "index" is the item's index in teh player's inventory
   ////////////////////////////////////////////////////////////////////////////////
   equipFromInventory(index, type){
-
     this.masterIndex = masterInventoryList[type].list[player.inventoryList[type][index]][0];
     this.equip(this.masterIndex, type);
     player.removeInventoryItem(index, type);
-
   }//end equipFromInventory()
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -230,7 +232,7 @@ class Creature {
     player.inventoryList[3].push(this.myItem);
     //Removes the item from the Creature's inventory
     this.myItem = 0;
-  }
+  }//end removeItem()
 
   ////////////////////////////////////////////////////////////////////////////////
   // Unequips an organ from this Creature, and returns it to the Player's inventory
@@ -399,9 +401,9 @@ class PlayerCharacter extends Creature{
       this.maxSpirit = mana;
       this.currentSpirit = mana;
       this.attackPower = attackPower;
-  }
+  }//end generateDummyStats()
 
-}
+}//end class PlayerCharacter
 
 ////////////////////////////////////////////////////////////////////////////////
 // EnemyCreature class is a Creature type that describes all units controlled
@@ -430,39 +432,5 @@ class EnemyCreature extends Creature{
     this.currentHP = this.maxHP;
     this.maxSpirit = stats[2];
     this.currentSpirit = this.maxSpirit; //spirit is mana
-  }
-}
-
-
-
-function Node(value) {
-
-    this.value = value;
-    this.children = [];
-    this.parent = null;
-
-    this.setParentNode = function(node) {
-        this.parent = node;
-    }
-
-    this.getParentNode = function() {
-        return this.parent;
-    }
-
-    this.addChild = function(node) {
-        node.setParentNode(this);
-        this.children[this.children.length] = node;
-    }
-
-    this.getChildren = function() {
-        return this.children;
-    }
-
-    this.removeChildren = function() {
-        this.children = [];
-    }
-
-    this.getValue = function(){
-      return this.value;
-    }
-}
+  }//end constructor()
+}//end class EnemyCreature

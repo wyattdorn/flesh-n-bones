@@ -1,35 +1,19 @@
 //Written by Wyatt Dorn
-//Goblin sprite found at: https://gameartpartners.com/downloads/goblin-medieval-character-art/
-//Orc sprite found at: http://www.gamebuildingtools.com/product/lumbering-orc-club/
-//Fire Elementaql sprite found at: http://wiki.rivalkingdomsgame.com/summons:greater-fire-elemental
-//Skull sprite found at: https://www.pixilart.com/art/skull-pixelart-fecd760036053e9
-
-//Setting the dimentions of te gui assets in the Combat Screen
-const guiBarHeight = 300;
-const unitBarWidth = 250;
-const controlBarHeight = 250;
 
 //The width and height of the canvas used in the game
 const canvasWidth = 1200;
 const canvasHeight = 800;
 
-var combatTimer; //Integer tracker for combat rounds
-
 //Variables for the canvas and canvas context used in game
 var canvas, ctx;
 
-// 1=combat
-// 2=menus
-// 3=Creature Editor
 var gameMode;
 
 var myCombatScreen, creatureEditorScreen, menuSelectionScreen, playerScreen;
 var worldMap, mapLocations;
 
 var player;
-var creature, enemyCreatures; //arrays of enemy and allied creatures
-
-var maxPartySize;
+var enemyCreatures; //arrays of enemy and allied creatures
 
 var skills;
 var combatLogi;
@@ -40,8 +24,6 @@ var organs, masterInventoryList;
 var imageLoader;
 
 function init(){
-
-  maxPartySize = 5;
 
   myCreatures = [];
   enemyCreatures = [];
@@ -54,12 +36,6 @@ function init(){
   canvas.height = canvasHeight;
   canvas.width = canvasWidth;
   canvas.onclick = logMouseClick;
-
-  /*
-  canvas.onmousemove = function(e) {
-    console.log("MOVE");
-  }
-  */
 
   if (canvas.getContext) {
     ctx = canvas.getContext('2d');
@@ -90,6 +66,8 @@ function init(){
 
   //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
+
+  //Load all images before launching the starting screen
   imageLoader.loader.addCompletionListener(function() {setGameMode(gameMode)});
 
 
@@ -99,7 +77,6 @@ function init(){
 
   givePlayerSouls();
   player.updateImpetus();
-  //createDummyCreatures();
   generateEquipableItems();
   generateCombatSquad();
   masterInventoryList = [organs[0], organs[1], organs[2], items];
@@ -164,7 +141,6 @@ function launchCreatureEditor(){
 
   //test code
   generateDummyBodies();
-  //createMoreDummyCreatures();
   //end test code
 
   creatureEditorScreen.init();

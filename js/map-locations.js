@@ -4,7 +4,7 @@ class MapLocations{
 
   constructor(){
     this.init();
-  }
+  }//end constructor()
 
   init(){
 
@@ -41,7 +41,9 @@ class MapLocations{
   }//end init()
 
 
-
+  //////////////////////////////////////////////////////////////////////////////
+  //  Generates an encounter for a given location, using this.encounterList, based on the player's progress
+  //////////////////////////////////////////////////////////////////////////////
   generateEncounter(location, encounterNum){
 
     //Loop through each enemy creature in the encounter table

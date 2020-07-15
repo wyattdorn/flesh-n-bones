@@ -4,20 +4,15 @@ class PlayerScreen{
 
 
   constructor(context, canvas){
-
       this.ctx = context;
       this.canvas = canvas;
-
   }//end constructor()
 
   init(){
 
     this.statBlockStart = [30, 30];
 
-    this.clearScreen();
     this.updateScreen();
-
-
 
   }//end init()
 
@@ -73,7 +68,7 @@ class PlayerScreen{
     ctx.fillText("BACK", canvas.width - 60, 25);
 
     ctx.restore();
-  }
+  }//end drawBackButton()
 
   playerScreenClickHandler(clickPositionX,clickPositionY){
 
@@ -84,6 +79,5 @@ class PlayerScreen{
     }
 
   }//end playerScreenClickHandler()
-
 
 }

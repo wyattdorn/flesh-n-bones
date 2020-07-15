@@ -16,7 +16,6 @@
 //   TEST CODE
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
-  var tempSoul = new Soul("Grenda", "crude");
   player.myBones.push(1);
   player.myBones.push(3);
   player.myBones.push(1);

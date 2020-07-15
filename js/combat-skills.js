@@ -5,7 +5,7 @@
 class Skill{
   constructor(){
     this.init();
-  }
+  }//end constructor()
 
   //////////////////////////
   //  Target Types:
@@ -22,11 +22,7 @@ class Skill{
   /////////////////////////
 
   init(){
-    this.skillList = new Array(4);
-    for(var x = 0; x < 4; x++){
-      this.skillList[x] = [];
-      this.skillList[x][0] = x;
-    }
+    this.skillList = [];
 
     //                   0  1                         2           3       4             5         6           7                           8
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
@@ -39,12 +35,14 @@ class Skill{
     this.skillList[6] = [6, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only).", 10];
     this.skillList[7] = [7, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy.", 10];
 
-
   }//end init()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  This skill does nothing, and exists to represent a lack of a skill
+  //////////////////////////////////////////////////////////////////////////////
   noSkill(){
     console.log("No skill.");
-  }
+  }//end noSkill()
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -125,9 +123,7 @@ class Skill{
   //  Function heals a given unit a given number of hit points
   //////////////////////////////////////////////////////////////////////////////
   healUnit(num, unit){
-
     unit.giveHealth(num);
-
   }//end healUnit()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -154,8 +150,5 @@ class Skill{
     enemyCreatures.forEach(Creature => Creature.removeHealth(num));
     myCombatScreen.updateScreen(true, false, true);
   }//end damageAll()
-
-
-
 
 }

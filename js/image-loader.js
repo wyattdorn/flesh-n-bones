@@ -1,4 +1,9 @@
+//Written by Wyatt Dorn
 
+//Goblin sprite found at: https://gameartpartners.com/downloads/goblin-medieval-character-art/
+//Orc sprite found at: http://www.gamebuildingtools.com/product/lumbering-orc-club/
+//Fire Elementaql sprite found at: http://wiki.rivalkingdomsgame.com/summons:greater-fire-elemental
+//Skull sprite found at: https://www.pixilart.com/art/skull-pixelart-fecd760036053e9
 
 class ImageLoader{
 
@@ -64,11 +69,6 @@ class ImageLoader{
 
 
   }//end constructor()
-
-  init(){
-
-
-  }//end init()
 
 
 }

@@ -144,7 +144,7 @@ class CombatLogic{
       if(player.myCreatures[player.myCombatCreatures[x]].isBloodied()){
         needRedraw = true;
         console.log("wounds");
-        myCombatScreen.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
+        myCombatScreen.drawWounds(myCombatScreen.unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
       }
     }
 
@@ -152,34 +152,12 @@ class CombatLogic{
     for(var x = 0; x < enemyCreatures.length; x++){
       if(enemyCreatures[x].isBloodied()){
         needRedraw = true;
-        myCombatScreen.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
+        myCombatScreen.drawWounds(myCombatScreen.unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
       }
     }
 
     return needRedraw;
   }//end checkCreatureStatuses()
-
-  /*
-  //////////////////////////////////////////////////////////////////////////////
-  //  To be called when combat begins to draw "wounds" on all units starting combat wounded.
-  //////////////////////////////////////////////////////////////////////////////
-  checkForWounds(){
-    //Check all allies first
-    for(var x = 0; x < player.myCreatures.length; x++){
-      if(player.myCreatures[x].currentHP <= (player.myCreatures[x].maxHP/2)){
-        console.log("wounds");
-        myCombatScreen.drawWounds(unitBarWidth + 50 + (150*Math.floor(x/3)), 50+(150*(x%3)));
-      }
-    }
-
-    //Check all enemies second
-    for(var x = 0; x < enemyCreatures.length; x++){
-      if(enemyCreatures[x].currentHP <= (enemyCreatures[x].maxHP/2)){
-        myCombatScreen.drawWounds(unitBarWidth + 750 - (150*Math.floor(x/3)), 50+(150*(x%3)));
-      }
-    }
-  }//end checkForWounds()
-  */
 
   //////////////////////////////////////////////////////////////////////////////
   // Pass in creature Object and execute the waiting skill upon the given target
@@ -338,50 +316,12 @@ class CombatLogic{
           }
           //Have AI pick a target from the list of valid targets
           this.target = combatLogi.newAI.list[enemyCreatures[x].temperment][1](this.validTargets);
-          
-          console.log("1________________________________" + this.target);
-          console.log("2________________________________" + this.validTargets[this.target]);
-          console.log("3________________________________" + player.myCombatCreatures[this.validTargets[this.target]]);
-          console.log("4________________________________" + player.myCreatures[this.validTargets[this.target]].name);
-
           skills.skillList[1][1](enemyCreatures[x], player.myCreatures[this.validTargets[this.target]]);
         }
         console.log(this.validTargets.length);
       }
     }
     this.endEnemyTurn();
-
-
-/*
-
-
-
-    this.displayMessage = "The enemy moves in to position.";
-    myCombatScreen.printMessageBar(this.displayMessage);
-
-    for(var x = 0; x < enemyCreatures.length; x++){
-
-      //Ensure there are living allies to hit
-      if(this.checkforCombatEnd()){
-        //this.endEnemyTurn();
-        return;
-      }
-
-      //Only allow enemy unit to attack it it is not dead
-      if(enemyCreatures[x].isDead()==false){
-        //temporary variable to store random value
-        var temp;
-        //target random allied creature, if that creature is already dead, pick a new one
-        do{
-          temp = combatLogi.newAI.antimage();
-          console.log("temp: " + temp);
-        }while(player.myCreatures[player.myCombatCreatures[temp]].isDead()==true);
-
-        console.log("AN ATTACK HAS BEEN MADE!");
-        skills.skillList[1][1](enemyCreatures[x], player.myCreatures[player.myCombatCreatures[temp]]);
-      }
-    }
-    */
 
   }//end beginEnemyTurn()
 
@@ -544,7 +484,7 @@ class CombatLogic{
     }
     //First, check if the click was in the Control Bar at the bottom of the screen
     else{
-      if(clickPositionY >= (canvas.height - controlBarHeight)){
+      if(clickPositionY >= (canvas.height - myCombatScreen.controlBarHeight)){
         this.clickedField = [1, 0, 0];
         /*      Control Bar Column Description
         The Control Bar is broken into 9 columns, the first being the blank space
@@ -586,16 +526,16 @@ class CombatLogic{
         repeating until the final row. Actions are only taken if the click is in
         row with buttons.
         */
-        if(clickPositionY < canvas.height - controlBarHeight + 20){//First blank row
+        if(clickPositionY < canvas.height - myCombatScreen.controlBarHeight + 20){//First blank row
           this.clickedField[2] = 0;
         }
-        else if(clickPositionY < canvas.height - controlBarHeight + 120){//First button row
+        else if(clickPositionY < canvas.height - myCombatScreen.controlBarHeight + 120){//First button row
           this.clickedField[2] = 1;
         }
-        else if(clickPositionY < canvas.height - controlBarHeight + 130){//Second blank row
+        else if(clickPositionY < canvas.height - myCombatScreen.controlBarHeight + 130){//Second blank row
           this.clickedField[2] = 0;
         }
-        else if(clickPositionY < canvas.height - controlBarHeight + 230){//Second button row
+        else if(clickPositionY < canvas.height - myCombatScreen.controlBarHeight + 230){//Second button row
           this.clickedField[2] = 3;
         }
         else{//The last blank row, on the bottom
@@ -616,7 +556,7 @@ class CombatLogic{
 
       }
       //Next check if the click was in the Unit bar on the left of the screen
-      else if(clickPositionX < unitBarWidth){
+      else if(clickPositionX < myCombatScreen.unitBarWidth){
         this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
 
         if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
@@ -640,16 +580,16 @@ class CombatLogic{
         3rd, 5th, or 6th columns, all other inputs are useless.
         */
         this.clickedField = [3, 0, 0];
-        if(clickPositionX >= unitBarWidth + 50 && clickPositionX < unitBarWidth + 200){//Column 1
+        if(clickPositionX >= myCombatScreen.unitBarWidth + 50 && clickPositionX < myCombatScreen.unitBarWidth + 200){//Column 1
           this.clickedField[1] = 1;
         }
-        else if(clickPositionX >= unitBarWidth + 200 && clickPositionX < unitBarWidth + 350){//Column 2
+        else if(clickPositionX >= myCombatScreen.unitBarWidth + 200 && clickPositionX < myCombatScreen.unitBarWidth + 350){//Column 2
           this.clickedField[1] = 2;
         }
-        else if(clickPositionX >= unitBarWidth + 600 && clickPositionX < unitBarWidth + 750){//Column 4
+        else if(clickPositionX >= myCombatScreen.unitBarWidth + 600 && clickPositionX < myCombatScreen.unitBarWidth + 750){//Column 4
           this.clickedField[1] = 4;
         }
-        else if(clickPositionX >= unitBarWidth + 750 && clickPositionX < unitBarWidth + 900){//Column 5
+        else if(clickPositionX >= myCombatScreen.unitBarWidth + 750 && clickPositionX < myCombatScreen.unitBarWidth + 900){//Column 5
           this.clickedField[1] = 5;
         }
         else{

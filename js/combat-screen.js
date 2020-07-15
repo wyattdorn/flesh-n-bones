@@ -20,6 +20,10 @@ class CombatScreen{
 
   init(isPlayerTurn, context, canvas, locationIndex){
 
+    //Setting the dimentions of te gui assets in the Combat Screen
+    this.unitBarWidth = 250;
+    this.controlBarHeight = 250;
+
     this.currentTime = new Date;//.getTime();
     this.randSeed = this.currentTime.getTime();
     Math.seedrandom(this.randSeed);
@@ -29,11 +33,11 @@ class CombatScreen{
     this.colorScheme = mapLocations.list[locationIndex][5];
 
     ctx.fillStyle = this.colorScheme[0];//"#303030";
-    ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
+    ctx.fillRect(this.unitBarWidth, 0, this.canvas.width, ctx.canvas.height - this.controlBarHeight-24);
 
     this.drawRandomSquares();
     ctx.fillStyle = "#60584f";//"#af197b";//"#303030";
-    ctx.fillRect(0, 0, unitBarWidth, ctx.canvas.height - controlBarHeight-24);
+    ctx.fillRect(0, 0, this.unitBarWidth, ctx.canvas.height - this.controlBarHeight-24);
     this.drawUnitInfoBar();
     this.drawControlBar();
 
@@ -53,11 +57,11 @@ class CombatScreen{
     //console.log("Printing: " + myString);
     ctx.save();
     ctx.fillStyle = "black";
-    ctx.fillRect(unitBarWidth, 526, canvasWidth, 30);
+    ctx.fillRect(this.unitBarWidth, 526, canvasWidth, 30);
 
     ctx.font = "20px Courier";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText(myString, unitBarWidth + 5, 546);
+    ctx.fillText(myString, this.unitBarWidth + 5, 546);
     ctx.restore();
   }//end printMessageBar()
 
@@ -84,6 +88,7 @@ class CombatScreen{
   /////////////////////////////////////////////////////////////////////////////\
   //    This function takes three boolean inputs and redraws parts of the screen
   //    based on the inputs recieved.
+  //  --THIS FUNCTION IS CURRENTLY UNNECCESARY, AND WILL BE REPLACED WITH A SIMPLER VERSION AT A LATER DATE
   /////////////////////////////////////////////////////////////////////////////\
   updateScreen(unitBar, controlBar, combatField){
     console.log("Updated screen.");
@@ -96,10 +101,8 @@ class CombatScreen{
       this.drawButtons();
     }
     if(combatField){
-      //this.drawUnitInfoBar();
-      // WORK IN PROGRESS
       ctx.fillStyle = mapLocations.list[this.locationIndex][5][0];//"#303030";
-      ctx.fillRect(unitBarWidth, 0, this.canvas.width, ctx.canvas.height - controlBarHeight-24);
+      ctx.fillRect(this.unitBarWidth, 0, this.canvas.width, ctx.canvas.height - this.controlBarHeight-24);
       this.drawRandomSquares();
       this.drawFriendlyUnits();
       this.drawEnemyUnits();
@@ -107,9 +110,7 @@ class CombatScreen{
     }
     this.testDrawEnemyHealth();
 
-    //this.drawRandomSquares();
-
-  }
+  }//end updateScreen()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draws the buttons in the Control Bar. Called by drawControlBar().
@@ -119,37 +120,28 @@ class CombatScreen{
 
     //Draw the buttons in black
     ctx.fillStyle = "#000000";
-    ctx.fillRect(20, canvas.height - controlBarHeight + 20 , 200, 100);
-
-    ctx.fillRect(20, canvas.height - controlBarHeight + 130 , 200, 100);
-
-    ctx.fillRect(245, canvas.height - controlBarHeight + 20 , 400, 100);
-
-    ctx.fillRect(245, canvas.height - controlBarHeight + 130 , 400, 100);
-
-    ctx.fillRect(655, canvas.height - controlBarHeight + 20 , 400, 100);
-
-    ctx.fillRect(655, canvas.height - controlBarHeight + 130 , 400, 100);
-
-    ctx.fillRect(1080, canvas.height - controlBarHeight + 20 , 100, 100);
-
-    ctx.fillRect(1080, canvas.height - controlBarHeight + 130 , 100, 100);
-
-
+    ctx.fillRect(20, canvas.height - this.controlBarHeight + 20 , 200, 100);
+    ctx.fillRect(20, canvas.height - this.controlBarHeight + 130 , 200, 100);
+    ctx.fillRect(245, canvas.height - this.controlBarHeight + 20 , 400, 100);
+    ctx.fillRect(245, canvas.height - this.controlBarHeight + 130 , 400, 100);
+    ctx.fillRect(655, canvas.height - this.controlBarHeight + 20 , 400, 100);
+    ctx.fillRect(655, canvas.height - this.controlBarHeight + 130 , 400, 100);
+    ctx.fillRect(1080, canvas.height - this.controlBarHeight + 20 , 100, 100);
+    ctx.fillRect(1080, canvas.height - this.controlBarHeight + 130 , 100, 100);
 
     //Draw text for buttons in white
     ctx.fillStyle = "#cccccc";
     ctx.font = "25px Arial";
-    ctx.fillText("Menu", 50, canvas.height - controlBarHeight + 50);
+    ctx.fillText("Menu", 50, canvas.height - this.controlBarHeight + 50);
 
     //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
     ctx.font = "20px Arial";
-    ctx.fillText(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1], 30, canvas.height - controlBarHeight + 160);
+    ctx.fillText(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1], 30, canvas.height - this.controlBarHeight + 160);
     ctx.font = "15px Courier";
-    drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - controlBarHeight + 180);
+    drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - this.controlBarHeight + 180);
 
-    ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4], 175, canvas.height - controlBarHeight + 140, 35, 25);
+    ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4], 175, canvas.height - this.controlBarHeight + 140, 35, 25);
 
     //Print Skill text to the skill buttons
     for(var i = 0; i < 4; i++){//player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
@@ -159,27 +151,27 @@ class CombatScreen{
       if(i%2==1){x = 675;}
       var y = 50;
       if(i>1){y=160;}
-      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][2], x + 30, canvas.height - controlBarHeight + y);
+      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][2], x + 30, canvas.height - this.controlBarHeight + y);
       ctx.fillStyle = "#8099ff";
       ctx.font = "10px Arial";
-      ctx.fillText("Cost: ", x - 12 , canvas.height - controlBarHeight + y - 12);
-      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][6], x - 5 , canvas.height - controlBarHeight + y + 3);
+      ctx.fillText("Cost: ", x - 12 , canvas.height - this.controlBarHeight + y - 12);
+      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][6], x - 5 , canvas.height - this.controlBarHeight + y + 3);
     }
 
     //Drawing the descriptor text for the four skills
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0]][7], 42, 20, 265, canvas.height - controlBarHeight + 80);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1]][7], 42, 20, 665, canvas.height - controlBarHeight + 80);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2]][7], 42, 20, 265, canvas.height - controlBarHeight + 190);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[3]][7], 42, 20, 665, canvas.height - controlBarHeight + 190);
+    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0]][7], 42, 20, 265, canvas.height - this.controlBarHeight + 80);
+    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1]][7], 42, 20, 665, canvas.height - this.controlBarHeight + 80);
+    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2]][7], 42, 20, 265, canvas.height - this.controlBarHeight + 190);
+    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[3]][7], 42, 20, 665, canvas.height - this.controlBarHeight + 190);
 
     //Print text to the "RUN" and "END TURN" buttons
     ctx.fillStyle = "#cccccc";
     ctx.font = "25px Arial";
-    drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - controlBarHeight + 65);
+    drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - this.controlBarHeight + 65);
 
-    ctx.fillText("RUN", 1105, canvas.height - controlBarHeight + 185);
+    ctx.fillText("RUN", 1105, canvas.height - this.controlBarHeight + 185);
 
   }//end drawButtons()
 
@@ -196,19 +188,19 @@ class CombatScreen{
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = this.colorScheme[1];
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
+      ctx.fillRect(this.unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-this.controlBarHeight-size-23, size, size);
     }
     //Second itteration (second color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = this.colorScheme[2];
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
+      ctx.fillRect(this.unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-this.controlBarHeight-size-23, size, size);
     }
     //Third itteration (third color)
     for(var x=0; x<1000; x++){
       var size = Math.floor(Math.random() * 5)+7
       ctx.fillStyle = this.colorScheme[3];
-      ctx.fillRect(unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-controlBarHeight-size-23, size, size);
+      ctx.fillRect(this.unitBarWidth+ctx.canvas.width*(Math.random()), ctx.canvas.height*(Math.random())-this.controlBarHeight-size-23, size, size);
     }
   } //end drawRandomSquares()
 
@@ -248,7 +240,7 @@ class CombatScreen{
 
     //Loop through all the allies we have in combat
     for(var i = 0; i < this.max; i++){
-      ctx.fillRect(0, 10+(i*90), unitBarWidth, 65);
+      ctx.fillRect(0, 10+(i*90), this.unitBarWidth, 65);
       this.drawUnitInfo(i);
       this.drawHPBar(i, 10, 5);
       this.drawSpiritBar(i, 10, 38);
@@ -265,7 +257,7 @@ class CombatScreen{
   drawControlBar(){
     //red bar
     ctx.fillStyle = this.colorScheme[0];
-    ctx.fillRect(0, canvas.height - controlBarHeight, canvas.width, controlBarHeight);
+    ctx.fillRect(0, canvas.height - this.controlBarHeight, canvas.width, this.controlBarHeight);
 
     this.drawButtons();
 
@@ -336,8 +328,8 @@ class CombatScreen{
   // Draws all friendly units to the screen by calling drawUnit().
   //////////////////////////////////////////////////////////////////////////////
   drawFriendlyUnits(){
-    //Starting x position is unitBarWidth plus 50
-    var baseX = unitBarWidth + 50;
+    //Starting x position is this.unitBarWidth plus 50
+    var baseX = this.unitBarWidth + 50;
 
     if(player.myCombatCreatures.length<6){ this.max = player.myCombatCreatures.length;}
     else{this.max = 6;}
@@ -355,12 +347,8 @@ class CombatScreen{
         ctx.shadowColor = guts.list[player.myCreatures[player.myCombatCreatures[x]].myOrgans[1]][4];
         this.drawUnit(player.myCreatures[player.myCombatCreatures[x]].imgSrc, baseX, 50+(150*(x%3)), true);
         ctx.restore();
-        //this.drawUnit(player.myCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
       }
     }
-
-    //this.drawUnit('media/images/character-sprites/pile-of-bones.png', 500, 500);
-
   }//end drawFriendlyUnits()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -369,13 +357,8 @@ class CombatScreen{
   drawEnemyUnits(){
     ctx.save();
 
-
-
-    console.log("DRAW ENEMY");
-    //this.drawUnit(imageLoader.pileOfBonesImg, 0,0, false);
-
-    //Atarting x position is unitBarWidth plus 50
-    var baseX = unitBarWidth + 750;
+    //Starting x position is this.unitBarWidth plus 50
+    var baseX = this.unitBarWidth + 750;
 
     //Loop through all the allies we have in combat
     for(var x = 0; x < enemyCreatures.length; x++){
@@ -388,7 +371,6 @@ class CombatScreen{
       else{
         this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)), false);
       }
-      //this.drawUnit(enemyCreatures[x].imgSrc, baseX, 50+(150*(x%3)));
     }
 
     this.testDrawEnemyHealth();
@@ -403,7 +385,7 @@ class CombatScreen{
   testDrawEnemyHealth(){
     ctx.font = "12px Arial";
 
-    var baseX = unitBarWidth + 750;
+    var baseX = this.unitBarWidth + 750;
 
     //Loop through all the allies we have in combat
     for(var x = 0; x < enemyCreatures.length; x++){
