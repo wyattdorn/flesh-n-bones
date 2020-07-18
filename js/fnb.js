@@ -21,9 +21,14 @@ var items;
 var skins, bones, guts, souls;
 var organs, masterInventoryList;
 
+var testRoom;
+
 var imageLoader;
 
 function init(){
+
+  //Add event listener for key presses
+  window.addEventListener('keydown',this.keyboardEvent,false);
 
   myCreatures = [];
   enemyCreatures = [];
@@ -43,6 +48,7 @@ function init(){
   else{
     return false;
   }
+
   myCombatScreen = new CombatScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   playerScreen = new PlayerScreen(ctx, canvas);
@@ -74,6 +80,8 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
+
+  testRoom = new TestRoom(ctx, canvas);
 
   givePlayerSouls();
   player.updateImpetus();
@@ -116,6 +124,9 @@ function setGameMode(mode, index){
       worldMap.init();
       worldMap.updateScreen();
       break;
+    case -1:
+      testRoom.init();
+    break;
     default:
 
   }
@@ -146,6 +157,18 @@ function launchCreatureEditor(){
   creatureEditorScreen.init();
 
 }//end launchCreatureEditor()
+
+function keyboardEvent(e) {
+    code = e.keyCode;
+    if(code == 192){
+      if(gameMode==5){
+        canvas.onmousemove = null;
+      }
+      console.log("Entering test room.");
+      setGameMode(-1);
+    }
+
+}
 
 ///////////////////////////////////////////////////////////////////////////////\
 //Collects data every time the mouse is clicked somewhere within the canvas
@@ -183,6 +206,9 @@ function logMouseClick(e){
     break;
   case 5:
     worldMap.worldMapClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case -1:
+    testRoom.testRoomClickHandler(clickPosition.x,clickPosition.y);
     break;
   default:
   }
