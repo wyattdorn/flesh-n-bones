@@ -14,6 +14,8 @@ class TestRoom{
     this.buttonLocations[0] = [50, 100]; //Souls
     this.buttonLocations[1] = [50, 150]; //Malachite
 
+
+
     this.updateScreen();
 
   }//end init()
@@ -100,6 +102,11 @@ class TestRoom{
 
   testRoomClickHandler(clickPositionX,clickPositionY){
 
+    if(clickPositionX > 0 && clickPositionX < 100 && clickPositionY > 0 && clickPositionY < 100){
+      mapLocations.generateEncounter(1, 1);
+    }
+
+
     //Checking if the click was on the "BACK" button
     if(clickPositionX > canvas.width - 70 && clickPositionX < canvas.width - 10 && clickPositionY > 10 && clickPositionY < 30){
       console.log("BACK");
@@ -108,7 +115,7 @@ class TestRoom{
 
     if(clickPositionX > this.buttonLocations[0][0] && clickPositionX < this.buttonLocations[0][0] + 30 && clickPositionY > this.buttonLocations[0][1] && clickPositionY < this.buttonLocations[0][1] + 30){
       console.log("REMOVED ONE SOUL!");
-        player.soulsOwned--;
+        player.removeLastSoul();
         this.updateScreen();
     }
 

@@ -43,6 +43,19 @@ class Deity{
     this.soulsOwned++;
     this.souls.push(newSoul);
     this.myCreatures.push(new PlayerCharacter(souls.list[newSoul][1], souls.list[newSoul][2], imageLoader.soulImg));
+    this.updateImpetus();
+    //player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
+    //this.impetus += 2;
+  }//end addSoul()
+
+  /////////////////////////////////////////////////////////////////////////////
+  // Adds a Soul to the player's total, also provides Impetus to the player
+  /////////////////////////////////////////////////////////////////////////////
+  removeLastSoul(){
+    this.soulsOwned--;
+    this.souls.pop();
+    this.myCreatures.pop();
+    this.updateImpetus();
     //player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
     //this.impetus += 2;
   }//end addSoul()
@@ -51,7 +64,7 @@ class Deity{
   // Updates the player's Impretus based on how many souls they own
   /////////////////////////////////////////////////////////////////////////////
   updateImpetus(){
-    this.impetus = (this.soulsOwned * 2);
+    this.impetus = 2 + (this.soulsOwned * 2);
   }//end updateImpetus()
 
   /////////////////////////////////////////////////////////////////////////////

@@ -23,6 +23,7 @@ class ImageLoader{
         this.soulImg = this.loader.addImage('media/images/character-sprites/new-sprites/soul.png');
         this.bigBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/green-ogre.png');
         this.brittleBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/dark-mage.png');
+        this.blueMonsterImg = this.loader.addImage('media/images/character-sprites/new-sprites/blue-monster.png');
 
       //////////////////////////// GUI IMAGES /////////////////////////////////////////
         this.worldMapBackgroudImg = this.loader.addImage('media/images/backgrounds/bg-1.png');

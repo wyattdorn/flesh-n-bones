@@ -410,25 +410,26 @@ class PlayerCharacter extends Creature{
 // by the player.
 ////////////////////////////////////////////////////////////////////////////////
 class EnemyCreature extends Creature{
-  constructor(myname, stats, path) {
+  constructor(stats) {
     super();
-    this.temperment = stats[0];
-    this.name = myname;
+    this.temperment = stats[1];
+    this.name = stats[0];
     //this.body = body;
     //this.soul = soul;
-    this.imgSrc = path;
+    this.imgSrc = stats[11];
+    console.log(stats[11]);
     this.exp = 0;         //Starting experience for all PlayerCharacters is 0
-    this.level = stats[0];       //Starting level for all PlayerCharacters is 1
-    this.dexterity = stats[3];
-    this.agility = stats[4];
-    this.might = stats[5];
-    this.fortitude = stats[6];
-    this.intelegence = stats[7];
-    this.wits = stats[8];
+    this.level = 1;       //Starting level for all PlayerCharacters is 1
+    this.dexterity = stats[5];
+    this.agility = stats[6];
+    this.might = stats[7];
+    this.fortitude = stats[8];
+    this.intelegence = stats[9];
+    this.wits = stats[10];
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
     this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.maxHP = stats[1];
+    this.maxHP = stats[7];
     this.currentHP = this.maxHP;
     this.maxSpirit = stats[2];
     this.currentSpirit = this.maxSpirit; //spirit is mana

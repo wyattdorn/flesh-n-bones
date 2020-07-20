@@ -25,15 +25,19 @@ class MapLocations{
     this.list[3] = [3, "Groknag's Caves",     400, 150, false, ["#452301", "#303030", "#201000", "#003000"], imageLoader.caveIcon,      "The mighty orc chief Groknag has ruled these caves for years."];
     this.list[4] = [4, "Feragolis",           500, 400, false, ["#441111", "#220505", "#442222", "#773300"], imageLoader.feragolisIcon, "Home of the fire golems. None who enter leave unburned."];
     this.list[5] = [5, "Den of Thieves",      900, 400, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.thievesIcon,   "A band of cuthroats and thieves once lived here. They remain even beyond death."];
-    this.list[6] = [6, "Crystal Caverns",     430, 550, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.cavernIcon,    "The crystals found underground here have a strange influence on their surroundings."];
+    this.list[6] = [6, "Crystal Caverns",     430, 550, false, ["#002040", "#999999", "#404070", "#000000"], imageLoader.cavernIcon,    "The crystals found underground here have a strange influence on their surroundings."];
     this.list[7] = [7, "Abandoned Hatchery",  750, 200, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.hatcheryIcon,  "This place was aboned for good reason."];
     this.list[8] = [8, "Harpy's Eyrie",       820, 550, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.eyrieIcon,     "Even at the best of times, harpies are not pleasant."];
-    this.list[9] = [9, "Screaming Portal",    1000, 50, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.portalIcon,    "Tortured screaming eminates from this portal witout end."];
+    this.list[9] = [9, "Screaming Portal",    1000, 50, false, ["#40a9ff", "#999999", "#404070", "#000000"], imageLoader.portalIcon,    "Tortured screaming eminates from this portal witout end."];
 
-    //temperment  bones Guts  skin  stats
+    //name temperment  bones Guts  skin  stats
 
     this.encounterList[0] = [0];
-    this.encounterList[1] = [1, [[0, 1, 0, 1, 2, 2, 2, 2, 2, 2], [0, 1, 0, 1, 2, 2, 2, 2, 2, 2]],
+    this.encounterList[1] = [1, [["Glibglob", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[2] = [2, [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [[/*three goblins*/], [/*some loot*/]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
 
@@ -46,9 +50,13 @@ class MapLocations{
   //////////////////////////////////////////////////////////////////////////////
   generateEncounter(location, encounterNum){
 
+    console.log("Generating encounter #" + encounterNum + " for " + this.list[location][1]);
+
+    enemyCreatures = [];
+
     //Loop through each enemy creature in the encounter table
     for(var x = 0; x < this.encounterList[location][encounterNum].length; x++){
-      enemyCreatures.push(new enemyCreature());
+      enemyCreatures.push(new EnemyCreature(this.encounterList[location][encounterNum][x]));
     }
 
   }//end generateEncounter()
