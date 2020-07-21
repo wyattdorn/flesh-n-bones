@@ -21,6 +21,9 @@ class CombatLogic{
 
   init(){
 
+    //This value will be stored in order to update the Player's progress if combat is won
+    this.combatLocation = 0;
+
     //boolean to state whether combat is currently active, or has ended.
     this.activeCombat = true;
 
@@ -49,6 +52,11 @@ class CombatLogic{
     this.displayMessage = "COMBAT HAS BEGUN!";
 
     this.newAI = new enemyAI();
+    
+    //Ensure that each player-controlled creature starts combat with an action
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      player.myCreatures[player.myCombatCreatures[x]].hasAction = true;
+    }
 
   }//end init()
 
@@ -56,7 +64,10 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   //  Set of functions to be run once combat has begun
   //////////////////////////////////////////////////////////////////////////////
-  beginCombat(){
+  beginCombat(location){
+    //Store the location for use if the player wins this combat
+    this.combatLocation = location;
+
     myCombatScreen.printMessageBar(this.displayMessage);
   }//end beginCombat()
 
@@ -75,6 +86,7 @@ class CombatLogic{
       this.displayMessage = "All enemies units are dead. You win! (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ENEMIES DEAD");
+      player.updateLocationProgress(this.combatLocation);
       return true;
     }
 

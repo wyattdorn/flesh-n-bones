@@ -414,12 +414,9 @@ class EnemyCreature extends Creature{
     super();
     this.temperment = stats[1];
     this.name = stats[0];
-    //this.body = body;
-    //this.soul = soul;
     this.imgSrc = stats[11];
-    console.log(stats[11]);
-    this.exp = 0;         //Starting experience for all PlayerCharacters is 0
-    this.level = 1;       //Starting level for all PlayerCharacters is 1
+    this.exp = 0;
+    this.level = 1;
     this.dexterity = stats[5];
     this.agility = stats[6];
     this.might = stats[7];

@@ -25,8 +25,31 @@ class Deity{
     this.myEquipableItems = [];
     this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
     //List of how many encounters have been cleared for each map location
-    this.locationsCleared = [];
+    this.locationProgress = [];
+
+    this.init();
   }//end constructor
+
+  init(){
+    for(var x = 0; x < mapLocations.list.length; x++){
+      this.locationProgress[x] = 1;
+    }
+  }//end init()
+
+  /////////////////////////////////////////////////////////////////////////////
+  // Updates the player's progress for a given location ofter a combat encounter has been cleared
+  /////////////////////////////////////////////////////////////////////////////
+  updateLocationProgress(location){
+    this.locationProgress[location]++;
+
+    console.log(this.locationProgress[location] +" vs. " + mapLocations.encounterList[location].length);
+
+    if(this.locationProgress[location] >= mapLocations.encounterList[location].length){
+      mapLocations.list[location][4] = true;
+      console.log(mapLocations.list[1] + " is now friendly!");
+    }
+
+  }//end updateLocationProgress()
 
   /////////////////////////////////////////////////////////////////////////////
   // Adds a new equippable item to the inventory of the player

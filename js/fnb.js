@@ -139,11 +139,11 @@ function initiateCombat(index){
 
   //generateDummyEnemies(index);
 
-  mapLocations.generateEncounter(index,1);
+  mapLocations.generateEncounter(index, player.locationProgress[index]);
 
   combatLogi = new CombatLogic();
   myCombatScreen.init(true, ctx, canvas, index);
-  combatLogi.beginCombat();
+  combatLogi.beginCombat(index);
 
 }//end initiateCombat()
 

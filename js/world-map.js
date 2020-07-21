@@ -148,10 +148,16 @@ class WorldMap{
     ctx.font = "15px Arial";
     ctx.fillText(mapLocations.list[this.highlightedLocation][7], 10, 750);
     if(mapLocations.list[this.highlightedLocation][4]){
-      ctx.fillText("This location if friendly.", 10, 770);
+      ctx.fillStyle = "#40a040";
+      ctx.fillText("You're safe here, this location is friendly.", 10, 770);
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText("You're safe here, this location is", 10, 770);
     }
     else{
-      ctx.fillText("This location if hostile, there may be monsters.", 10, 770);
+      ctx.fillStyle = "#a04040";
+      ctx.fillText("There may be monsters, this location is hostile.", 10, 770);
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText("There may be monsters, this location is", 10, 770);
     }
 
     if(this.checkIfInInfluence(this.highlightedLocation)){
@@ -237,7 +243,14 @@ class WorldMap{
           }
           //Otherwise, we launch combat based on the location that was clicked on
           else{
-            setGameMode(1, x);
+            //If the location is already friendly, do not enter combat
+            if(mapLocations.list[x][4]==true){
+              //do nothing for now...
+            }
+            //If the location is still hostile, we enter combat
+            else{
+              setGameMode(1, x);
+            }
           }
         }
       }
