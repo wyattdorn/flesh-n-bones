@@ -34,13 +34,38 @@ class MapLocations{
 
     this.encounterList[0] = [0];
     this.encounterList[1] = [1, [["Glibglob", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
-                                [[/*three goblins*/], [/*some loot*/]],
+                                [["Jopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Kitl", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Gak", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
 
     this.encounterList[2] = [2, [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [[/*three goblins*/], [/*some loot*/]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
 
+    this.encounterList[3] = [3, [["Jopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Kitl", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[4] = [4, [["Aglar", 2, 1, 0, 1, 7, 7, 7, 7, 7, 7, imageLoader.fireElementalImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[5] = [5, [["Pete", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Rolf", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Jorg", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[6] = [6, [["Zipp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg], ["Zopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[7] = [7, [["Aglar", 2, 1, 0, 1, 7, 7, 7, 7, 7, 7, imageLoader.skullKnightImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[8] = [8, [["Aglar", 2, 1, 0, 1, 7, 7, 7, 7, 7, 7, imageLoader.kappaImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
+
+    this.encounterList[9] = [9, [["iiiiiii", 2, 1, 0, 1, 7, 7, 7, 7, 7, 7, imageLoader.anubisImg]],
+                                [[/*three goblins*/], [/*some loot*/]],
+                                [[/*Boss goblin*/], [/*good loot*/]]];
 
   }//end init()
 

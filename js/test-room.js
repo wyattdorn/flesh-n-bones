@@ -113,9 +113,15 @@ class TestRoom{
       setGameMode(5);
     }
 
+    //Add/remove souls
     if(clickPositionX > this.buttonLocations[0][0] && clickPositionX < this.buttonLocations[0][0] + 30 && clickPositionY > this.buttonLocations[0][1] && clickPositionY < this.buttonLocations[0][1] + 30){
       console.log("REMOVED ONE SOUL!");
         player.removeLastSoul();
+        this.updateScreen();
+    }
+    else if(clickPositionX > this.buttonLocations[0][0] + 35 && clickPositionX < this.buttonLocations[0][0] + 65 && clickPositionY > this.buttonLocations[0][1] && clickPositionY < this.buttonLocations[0][1] + 30){
+      console.log("REMOVED ONE SOUL!");
+        player.addSoul();
         this.updateScreen();
     }
 

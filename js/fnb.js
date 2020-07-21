@@ -137,7 +137,9 @@ function setGameMode(mode, index){
 ///////////////////////////////////////////////////////////////////////////////
 function initiateCombat(index){
 
-  generateDummyEnemies(index);
+  //generateDummyEnemies(index);
+
+  mapLocations.generateEncounter(index,1);
 
   combatLogi = new CombatLogic();
   myCombatScreen.init(true, ctx, canvas, index);

@@ -39,13 +39,16 @@ class Deity{
   /////////////////////////////////////////////////////////////////////////////
   // Adds a Soul to the player's total, also provides Impetus to the player
   /////////////////////////////////////////////////////////////////////////////
-  addSoul(newSoul){
+  addSoul(){
+    //Define index as the current number of souls owned
+    this.index = player.souls.length;
+    //Increment the number of souls owned
     this.soulsOwned++;
-    this.souls.push(newSoul);
-    this.myCreatures.push(new PlayerCharacter(souls.list[newSoul][1], souls.list[newSoul][2], imageLoader.soulImg));
+    //Push next soul from the souls list onto the stack of souls owned by player
+    this.souls.push(souls.list[this.index]);
+    this.myCreatures.push(new PlayerCharacter(souls.list[this.index][1], souls.list[this.index][2], imageLoader.soulImg));
+    //Update impetus
     this.updateImpetus();
-    //player.myCreatures.push(new PlayerCharacter("Gobbo", b, soul, imageLoader.goblinImg));
-    //this.impetus += 2;
   }//end addSoul()
 
   /////////////////////////////////////////////////////////////////////////////

@@ -24,6 +24,10 @@ class ImageLoader{
         this.bigBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/green-ogre.png');
         this.brittleBoneImg = this.loader.addImage('media/images/character-sprites/new-sprites/dark-mage.png');
         this.blueMonsterImg = this.loader.addImage('media/images/character-sprites/new-sprites/blue-monster.png');
+        this.thiefImg = this.loader.addImage('media/images/character-sprites/new-sprites/thief.png');
+        this.kappaImg = this.loader.addImage('media/images/character-sprites/new-sprites/kappa.png');
+        this.skullKnightImg = this.loader.addImage('media/images/character-sprites/new-sprites/skull-knight.png');
+        this.anubisImg = this.loader.addImage('media/images/character-sprites/new-sprites/anubis.png');
 
       //////////////////////////// GUI IMAGES /////////////////////////////////////////
         this.worldMapBackgroudImg = this.loader.addImage('media/images/backgrounds/bg-1.png');
