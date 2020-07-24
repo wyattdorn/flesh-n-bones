@@ -52,13 +52,81 @@ class CombatLogic{
     this.displayMessage = "COMBAT HAS BEGUN!";
 
     this.newAI = new enemyAI();
-    
+
     //Ensure that each player-controlled creature starts combat with an action
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       player.myCreatures[player.myCombatCreatures[x]].hasAction = true;
     }
 
   }//end init()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Give items dropped by slain foes to the player
+  //////////////////////////////////////////////////////////////////////////////
+  giveDroppedItems(){
+    //Itterate through each entry, and grant the item(s) to the player
+    for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
+      player.giveItem(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0], mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]);
+    }
+
+    //Update the player's progress for this location
+    player.updateLocationProgress(this.combatLocation);
+
+  }//end giveDroppedItems()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw window letting player know what items were dropped
+  //////////////////////////////////////////////////////////////////////////////
+  drawDroppedItemWindow(){
+
+    ctx.save();
+
+    this.startLocation = [(canvas.width)/4, canvas.height/4-150 ];
+
+    //Draw window
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(this.startLocation[0], this.startLocation[1], canvas.width/2, canvas.height/2);
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(this.startLocation[0]+2, this.startLocation[1]+2, canvas.width/2-4, canvas.height/2-4);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(this.startLocation[0]+4, this.startLocation[1]+4, canvas.width/2-8, canvas.height/2-8);
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(this.startLocation[0]+6, this.startLocation[1]+6, canvas.width/2-12, canvas.height/2-12);
+
+    //Draw text
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "25px Courier";
+    ctx.fillText("ITEMS DROPPED...", this.startLocation[0] + 10, this.startLocation[1] + 30);
+
+    //Draw list of drops
+    for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
+      console.log(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]]);
+      this.output = ""
+      switch(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]){
+        case 0:
+          this.output = bones.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+        break;
+        case 1:
+          this.output = guts.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+        break;
+        case 2:
+          this.output = skins.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+        break;
+        case 2:
+          this.output = items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+        break;
+      }
+      console.log(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1] + " output: " + this.output);
+      ctx.fillText("~ " + this.output, this.startLocation[0] + 10, this.startLocation[1] + 60 + ( x * 30 ));
+      //player.giveItem(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0], mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]);
+    }
+
+      this.giveDroppedItems();
+
+
+    ctx.restore();
+  }//end drawDroppedItemScreen()
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -86,7 +154,8 @@ class CombatLogic{
       this.displayMessage = "All enemies units are dead. You win! (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ENEMIES DEAD");
-      player.updateLocationProgress(this.combatLocation);
+
+
       return true;
     }
 
@@ -283,6 +352,9 @@ class CombatLogic{
 
     if(this.checkforCombatEnd()){
       this.endCombat();
+      myCombatScreen.updateScreen(1,1,1);
+      this.drawDroppedItemWindow();
+      return;
     }
 
     myCombatScreen.updateScreen(1,1,1);

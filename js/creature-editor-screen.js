@@ -211,11 +211,16 @@ class CreatureEditorScreen{
       ctx.fillRect(145 + (200 * (x+1)), 635, 10, 150);
     }
 
-    //If there are less than 4 of a given organ type, only print that many,
-    //If there's 4 or more of the organ type, print 4 at a time
-    if(player.inventoryList[this.selectedOrganType].length < 4){this.max = player.inventoryList[this.selectedOrganType].length;}
-    else{this.max = 4;}
-
+    //First, we make sure that the array exists
+    if(player.inventoryList[this.selectedOrganType]){
+      //If there are less than 4 of a given organ type, only print that many,
+      //If there's 4 or more of the organ type, print 4 at a time
+      if(player.inventoryList[this.selectedOrganType].length < 4){this.max = player.inventoryList[this.selectedOrganType].length;}
+      else{this.max = 4;}
+    }
+    else{
+      this.max = 0;
+    }
 
     if(this.selectedOrganType == 3){
       //Print out the name and description of the owned organs
@@ -576,6 +581,7 @@ class CreatureEditorScreen{
   //  Click Handler function for teh Creature Editor screen
   //////////////////////////////////////////////////////////////////////////////
   creatuerEditorClickHandler(clickPositionX,clickPositionY){
+
     //First we check if the click was in the creature list on the left of the screen
     if(clickPositionX < this.creatureListWidth){
       if(clickPositionY < 30){

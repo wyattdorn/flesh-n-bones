@@ -17,10 +17,13 @@ class MapLocations{
     //List of the encounters found at each location
     this.encounterList = [];
 
+    //List of the loot dropped when slaying monsters
+    this.lootList = [];
+
     //              0  1                      2    3    4          5                                         6                7
     //                  Name                  x    y   friendly    Color Pallet                              Icon Name        Description
     this.list[0] = [0, "Forgotten Temple",    300, 300, true,  ["#131313", "#286355", "#111199", "#003000"], imageLoader.templeIcon,    "Where this story began, though who can say where it will end?"];
-    this.list[1] = [1, "Goblin Woods",        100, 200, false, ["#171b04", "#303030", "#009000", "#003000"], imageLoader.woodsIcon,     "Goblins stalk these woods, and few can match them when fighting amongs the trees."];
+    this.list[1] = [1, "Goblin Woods",        200, 250, false, ["#171b04", "#303030", "#009000", "#003000"], imageLoader.woodsIcon,     "Goblins stalk these woods, and few can match them when fighting amongs the trees."];
     this.list[2] = [2, "Bleak Barrows",       200, 550, false, ["#131313", "#286355", "#111199", "#003000"], imageLoader.barrowsIcon,   "Once the home of a worl-renowned mage college, now only the dead remain."];
     this.list[3] = [3, "Groknag's Caves",     400, 150, false, ["#452301", "#303030", "#201000", "#003000"], imageLoader.caveIcon,      "The mighty orc chief Groknag has ruled these caves for years."];
     this.list[4] = [4, "Feragolis",           500, 400, false, ["#441111", "#220505", "#442222", "#773300"], imageLoader.feragolisIcon, "Home of the fire golems. None who enter leave unburned."];
@@ -35,7 +38,7 @@ class MapLocations{
     this.encounterList[0] = [0];
     this.encounterList[1] = [1, [["Glibglob", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [["Jopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Kitl", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
-                                ];
+                                [["Chungus", 0, 1, 0, 5, 5, 5, 5, 5, 5, 5, imageLoader.goblinImg]]];
 
     this.encounterList[2] = [2, [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
@@ -66,6 +69,18 @@ class MapLocations{
     this.encounterList[9] = [9, [["iiiiiii", 2, 1, 0, 1, 7, 7, 7, 7, 7, 7, imageLoader.anubisImg]],
                                 [[/*three goblins*/], [/*some loot*/]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
+
+
+
+    this.lootList[0] = [0];
+    this.lootList[1] = [1, [[1,2]],            //Goblin Skin
+                            [[2,3]],          //Red sludge
+                            [[1,1], [3,3]]];  //Explosive guts and purp sludge
+                                /*
+    this.lootList[1] = [1,[[1,2],
+                          [[1,3]],
+                          [[1,1],[2,3]]];
+                            */
 
   }//end init()
 

@@ -87,6 +87,7 @@ function init(){
   player.updateImpetus();
   generateEquipableItems();
   generateCombatSquad();
+  generateDummyBodies();
   masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -153,7 +154,7 @@ function initiateCombat(index){
 function launchCreatureEditor(){
 
   //test code
-  generateDummyBodies();
+  //generateDummyBodies();
   //end test code
 
   creatureEditorScreen.init();
@@ -168,6 +169,9 @@ function keyboardEvent(e) {
       }
       console.log("Entering test room.");
       setGameMode(-1);
+    }
+    else if(code == 49){
+      launchCampaign();
     }
 
 }

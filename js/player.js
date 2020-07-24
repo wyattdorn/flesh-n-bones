@@ -46,7 +46,7 @@ class Deity{
 
     if(this.locationProgress[location] >= mapLocations.encounterList[location].length){
       mapLocations.list[location][4] = true;
-      console.log(mapLocations.list[1] + " is now friendly!");
+      console.log(mapLocations.list[location][1] + " is now friendly!");
     }
 
   }//end updateLocationProgress()
@@ -54,10 +54,30 @@ class Deity{
   /////////////////////////////////////////////////////////////////////////////
   // Adds a new equippable item to the inventory of the player
   /////////////////////////////////////////////////////////////////////////////
-  gainNewEquipableItem(num){
-    this.myEquipableItems.push(num);
-    this.inventoryList[3] = this.myEquipableItems;
-  }//end gainNewEquipableItem()
+  giveItem(index, type){
+
+    switch (type) {
+      case 0:
+        this.myBones.push(index);
+        this.myOrgans[0] = this.myBones;
+        break;
+      case 1:
+      this.myGuts.push(index);
+      this.myOrgans[1] = this.myGuts;
+        break;
+      case 2:
+      console.log("adding skin!--------------------------------------------");
+      this.mySkins.push(index);
+      this.myOrgans[2] = this.mySkins;
+        break;
+      case 3:
+      this.myEquipableItems.push(index);
+      //this.myOrgans[2] = this.mySkins;
+        break;
+    }
+    //this.myOrgans = [this.myBones, this.myGuts, this.mySkins];
+    this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
+  }//end giveItem()
 
   /////////////////////////////////////////////////////////////////////////////
   // Adds a Soul to the player's total, also provides Impetus to the player

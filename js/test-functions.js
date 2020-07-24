@@ -9,18 +9,59 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////////////////////////
+//   A prototype of what the campaign will play like
+///////////////////////////////////////////////////////////////////////////////
+function launchCampaign(){
 
+  console.log("LAUNCH CAMPAIGN!");
+
+  clearPlayerInventory();
+
+  //player starts with a single soul
+  player.addSoul();
+
+  //Start with nothing but a single set of old bones
+  player.giveItem(1, 0);//myBones.push(1);
+
+
+}//end launchCampaign()
+
+
+function clearPlayerInventory(){
+  player.myBones = [];
+  player.mySkins = [];
+  player.myGuts = [];
+  player.mySouls = [];
+  player.myCreatures = []
+
+  player.myOrgans = [];
+
+  player.myEquipableItems = [];
+  player.inventoryList = [];
+
+  player.soulsOwned = 0;
+
+  //player.myBones = [];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //   TEST CODE
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
-  player.myBones.push(1);
+  player.giveItem(1, 0);
+  player.giveItem(3, 0);
+  player.giveItem(1, 0);
+  player.giveItem(2, 0);
+  player.giveItem(2, 0);
+
+  /*
   player.myBones.push(3);
   player.myBones.push(1);
   player.myBones.push(2);
   player.myBones.push(2);
+  */
 
   player.mySkins.push(1);
   player.mySkins.push(2);
@@ -40,13 +81,13 @@ function generateDummyBodies(){
 ///////////////////////////////////////////////////////////////////////////////
 function generateEquipableItems(){
 
-  player.gainNewEquipableItem(2);
-  player.gainNewEquipableItem(1);
-  player.gainNewEquipableItem(3);
-  player.gainNewEquipableItem(2);
-  player.gainNewEquipableItem(1);
-  player.gainNewEquipableItem(3);
-  player.gainNewEquipableItem(2);
+  player.giveItem(2, 3);
+  player.giveItem(1, 3);
+  player.giveItem(3, 3);
+  player.giveItem(2, 3);
+  player.giveItem(1, 3);
+  player.giveItem(3, 3);
+  player.giveItem(2, 3);
 
 }//end generateEquipableItems()
 
