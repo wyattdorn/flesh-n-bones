@@ -105,21 +105,20 @@ class CombatLogic{
       this.output = ""
       switch(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]){
         case 0:
-          this.output = bones.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + bones.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 1:
-          this.output = guts.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + guts.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 2:
-          this.output = skins.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + skins.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
-        case 2:
-          this.output = items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+        case 3:
+          this.output = "~ " + items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
       }
       console.log(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1] + " output: " + this.output);
-      ctx.fillText("~ " + this.output, this.startLocation[0] + 10, this.startLocation[1] + 60 + ( x * 30 ));
-      //player.giveItem(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0], mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]);
+      ctx.fillText(this.output, this.startLocation[0] + 10, this.startLocation[1] + 60 + ( x * 30 ));
     }
 
       this.giveDroppedItems();
@@ -140,26 +139,27 @@ class CombatLogic{
   }//end beginCombat()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Check if either team has been killed completely
+  //  Check if either team has been killed completely, second returned value is whether the player won the combat
   //////////////////////////////////////////////////////////////////////////////
   checkforCombatEnd(){
+    //First, check if all allies are dead, if so, the player loses
     if(this.areWeDeadYet()){
       this.displayMessage = "All allied units are dead, combat is ended. (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ALLIES DEAD");
-      return true;
+      return [true, false];
     }
 
+    //Check if all the enemies are dead, if so, the player wins!
     if(this.areTheyDeadYet()){
       this.displayMessage = "All enemies units are dead. You win! (Click anywhere to exit)";
       myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ENEMIES DEAD");
-
-
-      return true;
+      return [true, true];
     }
 
-    return false;
+    //If the win/lose solutions are not met, combat continues
+    return [false, false];
   }//end checkforCombatEnd()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -168,8 +168,8 @@ class CombatLogic{
   areWeDeadYet(){
 
     console.log("Number of allies: " + player.myCombatCreatures.length);
-    //console.log("Number of allies: " + player.myCombatCreatures.length);
 
+    //Count how many creatures are dead, and compare that to the list of creatures in combat
     var counter = 0;
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       if(player.myCreatures[player.myCombatCreatures[x]].isDead()){
@@ -177,8 +177,7 @@ class CombatLogic{
         counter++;
       }
     }
-    //player.myCombatCreatures.forEach(element => {if(Creature.isDead()){ Creature.die(); counter++;}});
-    //console.log(counter + " dead out of " + player.myCombatCreatures.length);
+    
     if(counter == player.myCombatCreatures.length){
       console.log("ALL ALLIES ARE DAED");
       return true;
@@ -350,10 +349,13 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   update(){
 
-    if(this.checkforCombatEnd()){
+    if(this.checkforCombatEnd()[0]){
+      console.log(this.checkforCombatEnd()[1]);
       this.endCombat();
       myCombatScreen.updateScreen(1,1,1);
-      this.drawDroppedItemWindow();
+      if(this.checkforCombatEnd()[1]){
+        this.drawDroppedItemWindow();
+      }
       return;
     }
 
@@ -416,7 +418,7 @@ class CombatLogic{
     player.myCreatures.forEach(Creature => Creature.hasAction = true);
     //this.update();
     //myCombatScreen.updateScreen(1,1,1);
-    this.checkforCombatEnd();
+    this.checkforCombatEnd()[0];
   }//end beginEnemyTurn()
 
   //////////////////////////////////////////////////////////////////////////////

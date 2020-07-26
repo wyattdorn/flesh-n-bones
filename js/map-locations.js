@@ -38,7 +38,7 @@ class MapLocations{
     this.encounterList[0] = [0];
     this.encounterList[1] = [1, [["Glibglob", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [["Jopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Kitl", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
-                                [["Chungus", 0, 1, 0, 5, 5, 5, 5, 5, 5, 5, imageLoader.goblinImg]]];
+                                [["Chungus", 0, 1, 0, 10, 5, 5, 5, 5, 5, 5, imageLoader.goblinImg]]];
 
     this.encounterList[2] = [2, [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
@@ -74,13 +74,12 @@ class MapLocations{
 
     this.lootList[0] = [0];
     this.lootList[1] = [1, [[1,2]],            //Goblin Skin
-                            [[2,3]],          //Red sludge
+                            [[1,3]],          //Red sludge
                             [[1,1], [3,3]]];  //Explosive guts and purp sludge
-                                /*
-    this.lootList[1] = [1,[[1,2],
-                          [[1,3]],
-                          [[1,1],[2,3]]];
-                            */
+
+    this.lootList[2] = [1, [[1,1], [3,3], [1,1], [3,3], [1,1], [3,3]],            //Goblin Skin
+                            [[1,3]],          //Red sludge
+                            [[1,1], [3,3]]];  //Explosive guts and purp sludge
 
   }//end init()
 

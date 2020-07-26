@@ -42,54 +42,44 @@ function clearPlayerInventory(){
 
   player.soulsOwned = 0;
 
-  //player.myBones = [];
-}
+}//end clearPlayerInventory()
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //   TEST CODE
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
+  //BONES
   player.giveItem(1, 0);
   player.giveItem(3, 0);
   player.giveItem(1, 0);
   player.giveItem(2, 0);
   player.giveItem(2, 0);
 
-  /*
-  player.myBones.push(3);
-  player.myBones.push(1);
-  player.myBones.push(2);
-  player.myBones.push(2);
-  */
+  //GUTS
+  player.giveItem(1, 1);
+  player.giveItem(2, 1);
+  player.giveItem(1, 1);
 
-  player.mySkins.push(1);
-  player.mySkins.push(2);
-  player.mySkins.push(1);
-  player.mySkins.push(3);
-  player.mySkins.push(1);
+  //SKINS
+  player.giveItem(1, 2);
+  player.giveItem(2, 2);
+  player.giveItem(1, 2);
+  player.giveItem(3, 2);
+  player.giveItem(1, 2);
 
-  player.myGuts.push(1);
-  player.myGuts.push(2);
-  player.myGuts.push(1);
+  //ITEMS
+  player.giveItem(2, 3);
+  player.giveItem(1, 3);
+  player.giveItem(3, 3);
+  player.giveItem(2, 3);
+  player.giveItem(1, 3);
+  player.giveItem(3, 3);
+  player.giveItem(2, 3);
 
 }//end generateDummyBodies()
 
 
-///////////////////////////////////////////////////////////////////////////////
-//   Create list of player owned eqipable items
-///////////////////////////////////////////////////////////////////////////////
-function generateEquipableItems(){
-
-  player.giveItem(2, 3);
-  player.giveItem(1, 3);
-  player.giveItem(3, 3);
-  player.giveItem(2, 3);
-  player.giveItem(1, 3);
-  player.giveItem(3, 3);
-  player.giveItem(2, 3);
-
-}//end generateEquipableItems()
 
 ///////////////////////////////////////////////////////////////////////////////
 //   Create list of Creatures that Player will send into combat

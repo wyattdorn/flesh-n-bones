@@ -85,7 +85,6 @@ function init(){
 
   givePlayerSouls();
   player.updateImpetus();
-  generateEquipableItems();
   generateCombatSquad();
   generateDummyBodies();
   masterInventoryList = [organs[0], organs[1], organs[2], items];
@@ -153,28 +152,29 @@ function initiateCombat(index){
 ///////////////////////////////////////////////////////////////////////////////
 function launchCreatureEditor(){
 
-  //test code
-  //generateDummyBodies();
-  //end test code
-
   creatureEditorScreen.init();
 
 }//end launchCreatureEditor()
 
+///////////////////////////////////////////////////////////////////////////////\
+//  Collects data every time a key is pressed
+///////////////////////////////////////////////////////////////////////////////\
 function keyboardEvent(e) {
     code = e.keyCode;
+    //If the '~' key is pressed, we enter the test room
     if(code == 192){
+      //If we are in the world map, stop the function that updates the screen every time the mouse is moved
       if(gameMode==5){
         canvas.onmousemove = null;
       }
       console.log("Entering test room.");
       setGameMode(-1);
     }
+    //If the '1' key is pressed, laungh the campaign
     else if(code == 49){
       launchCampaign();
     }
-
-}
+}//end keyboardEvent()
 
 ///////////////////////////////////////////////////////////////////////////////\
 //Collects data every time the mouse is clicked somewhere within the canvas

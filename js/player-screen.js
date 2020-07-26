@@ -34,13 +34,19 @@ class PlayerScreen{
     this.drawBackButton();
   }//end updateScreen()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws the key stastistics for the player "Deity"
+  //////////////////////////////////////////////////////////////////////////////
   drawKeyStats(){
+
+    //Draw stastistics
     ctx.font = "25px Arial";
     ctx.fillStyle = "#286355"
     ctx.fillText("Malachite: " + player.malachite, this.statBlockStart[0] + 10, this.statBlockStart[1] + 10);
     ctx.fillText("Impetus: " + player.impetus, this.statBlockStart[0] + 10, this.statBlockStart[1] + 70);
     ctx.fillText("Souls: " + player.soulsOwned, this.statBlockStart[0] + 10, this.statBlockStart[1] + 130);
 
+    //Draw descriptions
     ctx.font = "15px Arial";
     ctx.fillStyle = "#589385"
     ctx.fillText("The closest thing this world has to money.", this.statBlockStart[0] + 10, this.statBlockStart[1] + 30);
