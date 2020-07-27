@@ -30,15 +30,25 @@ class Campaign{
     console.log("Chapter: 1 --- Section: " + section);
     switch (section) {
       case 1:
-      dialogueWindow.init(  ["Welcome to Flesh and Bones: RPG!",
-                            "First, go to the Creature Editor Screen, and equip some bones to the one poor soul you own.",
-                            "Then return here to combat the goblins of Goblin Woods."],
-                            200, 100, 1250, 280);
+        dialogueWindow.init(  ["Welcome to Flesh and Bones: RPG!",
+                              "First, go to the Creature Editor Screen, and equip some bones to the one poor soul you own.",
+                              "Then return here to combat the goblins of Goblin Woods."],
+                              200, 100, 1250, 280);
         break;
       case 3:
-      dialogueWindow.init(  ["You made it farther than expected!",
-                            "Just a little further to go!"],
-                            200, 100, 1250, 280);
+        dialogueWindow.init(  ["A Goglin Skin has been dropped!",
+                              "Add it to your creature to see what it does."],
+                              200, 100, 1250, 280);
+        break;
+      case 5:
+        dialogueWindow.init(  ["Now to kill the boss goblin!",
+                              "Don't forget to bring along the Red Sludge!"],
+                              200, 100, 1250, 280);
+        break;
+      case 7:
+        dialogueWindow.init(  ["You found another lost soul who wishes to join you."],
+                              200, 100, 1250, 280);
+        player.addSoul();
         break;
       default:
 
