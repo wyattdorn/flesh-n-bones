@@ -26,11 +26,7 @@ function launchCampaign(){
 
   player.campaignProgress = [1,1];
 
-
-  dialogueWindow.init(  ["Welcome to Flesh and Bones: RPG!",
-                        "First, go to the Creature Editor Screen, and equip some bones to the one poor soul you own.",
-                        "Then return here to combat the goblins of Goblin Woods."],
-                        200, 100, 1250, 280);
+  campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
 
 
 }//end launchCampaign()

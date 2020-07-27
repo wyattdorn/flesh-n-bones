@@ -23,6 +23,14 @@ class WorldMap{
 
       this.updateScreen();
 
+      //Have dialogue box appear half a second after the page loads
+      setTimeout(function() {
+          campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
+      }, 500);
+
+
+
+
   }//end init()
 
 

@@ -65,6 +65,10 @@ class DialogueWindow{
   ////////////////////////////////////////////////////////////////////////////////
   exitDialogue(){
 
+    //Update the campaign progress tracker of the player
+    player.updateCampaignProgress();
+
+    //Return to the World Map
     setGameMode(5, 0);
 
   }//end exitDialogue()

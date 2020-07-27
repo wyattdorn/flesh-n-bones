@@ -74,6 +74,7 @@ class CombatLogic{
 
     //Update the player's progress for this location
     player.updateLocationProgress(this.combatLocation);
+    player.updateCampaignProgress();
 
   }//end giveDroppedItems()
 

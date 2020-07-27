@@ -14,6 +14,7 @@ var worldMap, mapLocations;
 var dialogueWindow;
 var activeDialogue;
 var previousGameMode;
+var campaign;
 
 var player;
 var enemyCreatures; //arrays of enemy and allied creatures
@@ -66,6 +67,7 @@ function init(){
   //An integer to represent the previous game state (for use with the "BACK" button)
   previousGameMode = 5;
 
+  campaign = new Campaign();
   souls = new Souls();
   skins = new Skin();
   bones = new Bones();
