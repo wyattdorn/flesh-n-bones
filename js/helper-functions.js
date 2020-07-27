@@ -9,12 +9,19 @@ function drawMultipleLines(myString, maxLength, lineHeight, startX, startY){
 
   for(var x = 0; x < (myString.length/maxLength); x++){
     tempString = "";
-    for(var y = 0; y < maxLength; y++){
+    //If the first character of a new line would be a blank space, we skip it
+    if(myString[maxLength * x] != " "){
+      tempString += ("" + myString[maxLength * x]);
+    }
+    //Itterate through the rest of the line, adding the chaaracters to the output
+    for(var y = 1; y < maxLength; y++){
+      //If we reach trhe end of the string, stop printing
       if(myString.length <= y+(maxLength*x)){
         break;
       }
       tempString += ("" + myString[y + (maxLength * x)]);
     }
+    //Print the line to the screen
     ctx.fillText(tempString, startX, startY + (lineHeight * x));
   }
-}
+}//end drawMultipleLines()

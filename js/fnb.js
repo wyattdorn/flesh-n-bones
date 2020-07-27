@@ -76,6 +76,9 @@ function init(){
   organs = [bones, guts, skins];
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
+  //The campaign has not been started, yet
+  player.campaignProgress = [0,0];
+
   ctx.font = "25px Arial";
   ctx.fillStyle = "#cccccc";
   ctx.fillText("LOADING...", 600, 300);

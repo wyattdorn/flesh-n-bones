@@ -1,0 +1,3 @@
+[0,0]   Nothing
+[1,1]   Campaign begins, print intro text
+[1,2]   First goblins are killed, print "equip new skin" text

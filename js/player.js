@@ -26,6 +26,8 @@ class Deity{
     this.inventoryList = [this.myOrgans[0], this.myOrgans[1], this.myOrgans[2], this.myEquipableItems];
     //List of how many encounters have been cleared for each map location
     this.locationProgress = [];
+    //Campaign progress is stored as [chapter, section]
+    this.campaignProgress = [];
 
     this.init();
   }//end constructor

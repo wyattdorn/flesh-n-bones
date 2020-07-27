@@ -24,6 +24,8 @@ function launchCampaign(){
   //Start with nothing but a single set of old bones
   player.giveItem(1, 0);//myBones.push(1);
 
+  player.campaignProgress = [1,1];
+
 
   dialogueWindow.init(  ["Welcome to Flesh and Bones: RPG!",
                         "First, go to the Creature Editor Screen, and equip some bones to the one poor soul you own.",
