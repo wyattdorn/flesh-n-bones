@@ -53,9 +53,11 @@ class CombatLogic{
 
     this.newAI = new enemyAI();
 
-    //Ensure that each player-controlled creature starts combat with an action
+    //Ensure that each player-controlled creature starts combat with an action, and has full hp and spirit
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       player.myCreatures[player.myCombatCreatures[x]].hasAction = true;
+      player.myCreatures[player.myCombatCreatures[x]].currentHP = player.myCreatures[player.myCombatCreatures[x]].maxHP;
+      player.myCreatures[player.myCombatCreatures[x]].currentSpirit = player.myCreatures[player.myCombatCreatures[x]].maxSpirit;
     }
 
   }//end init()
@@ -177,7 +179,7 @@ class CombatLogic{
         counter++;
       }
     }
-    
+
     if(counter == player.myCombatCreatures.length){
       console.log("ALL ALLIES ARE DAED");
       return true;

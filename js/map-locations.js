@@ -38,7 +38,7 @@ class MapLocations{
     this.encounterList[0] = [0];
     this.encounterList[1] = [1, [["Glibglob", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [["Jopp", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Kitl", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
-                                [["Chungus", 0, 1, 0, 10, 5, 5, 5, 5, 5, 5, imageLoader.goblinImg]]];
+                                [["Chungus", 0, 1, 0, 10, 5, 5, 5, 7, 5, 5, imageLoader.goblinImg]]];
 
     this.encounterList[2] = [2, [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Aglar", 0, 1, 0, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],

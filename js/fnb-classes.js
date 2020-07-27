@@ -388,7 +388,7 @@ class PlayerCharacter extends Creature{
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
     this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.maxHP = stats[1];
+    this.maxHP = stats[6];
     this.currentHP = this.maxHP;
     this.maxSpirit = stats[2];
     this.currentSpirit = this.maxSpirit; //spirit is mana
@@ -426,7 +426,7 @@ class EnemyCreature extends Creature{
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
     this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.maxHP = stats[7];
+    this.maxHP = stats[8];
     this.currentHP = this.maxHP;
     this.maxSpirit = stats[2];
     this.currentSpirit = this.maxSpirit; //spirit is mana

@@ -31,7 +31,7 @@ class Skill{
     this.skillList[2] = [2, this.skillDefend,        "Defend",   3,      "fortitude",  1.2,       0,     "Give an ally a buff to their defense for asingle turn.", 10];
     this.skillList[3] = [3, this.skillHeal,          "Heal",     3,      "wits" ,      1.5,       3,     "Heal a single unit.", 10];
     this.skillList[4] = [4, this.skillExplode,       "Explode",  7,      "level",      1.0,       1,    "Damage all creature on the field, includ- ing allies.", 10];
-    this.skillList[5] = [5, this.skillScythe,        "Scythe",   6,      "might",      1.0,       2,    "Damage all enemy heroes on the field.", 10];
+    this.skillList[5] = [5, this.skillScythe,        "Scythe",   6,      "might",      1.5,       2,    "Damage all enemy heroes on the field.", 10];
     this.skillList[6] = [6, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only).", 10];
     this.skillList[7] = [7, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy.", 10];
 
@@ -110,13 +110,14 @@ class Skill{
   }//end skillExplode()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Scythe skill - Damages all enemy units an amount equal to 2x the unit's might.
+  //  Scythe skill - Damages all enemy units an amount equal to 1.5x the unit's might.
   //////////////////////////////////////////////////////////////////////////////
   skillScythe(creature){
-    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.might) + " damage to all enemies");
+    combatLogi.displayMessage = (creature.name + " deals " + Math.floor(skills.skillList[5][5] * creature.might) + " damage to all enemies");
     myCombatScreen.printMessageBar(combatLogi.displayMessage);
-    console.log(creature.name + " deals " + Math.floor(creature.might) + " damage to all enemies");
-    skills.damageAllEnemies(Math.floor(creature.might));
+    console.log(skills.skillList[5][5]);
+    console.log(creature.name + " deals " + Math.floor(skills.skillList[5][5] * creature.might) + " damage to all enemies");
+    skills.damageAllEnemies(Math.floor(skills.skillList[5][5] * creature.might));
   }//end skillScythe()
 
   //////////////////////////////////////////////////////////////////////////////

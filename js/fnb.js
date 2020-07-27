@@ -11,6 +11,9 @@ var gameMode;
 
 var myCombatScreen, creatureEditorScreen, menuSelectionScreen, playerScreen;
 var worldMap, mapLocations;
+var dialogueWindow;
+var activeDialogue;
+var previousGameMode;
 
 var player;
 var enemyCreatures; //arrays of enemy and allied creatures
@@ -55,6 +58,13 @@ function init(){
   imageLoader = new ImageLoader(ctx, canvas);
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
+  dialogueWindow = new DialogueWindow(ctx, canvas);
+
+  //Boolean for tracking if there is an active dialogue box on screen
+  activeDialogue = false;
+
+  //An integer to represent the previous game state (for use with the "BACK" button)
+  previousGameMode = 5;
 
   souls = new Souls();
   skins = new Skin();
@@ -107,20 +117,21 @@ function setGameMode(mode, index){
   // 5=World Map
 
   gameMode = mode;
+
   switch (gameMode) {
-    case 1:
+    case 1: //Combat Screen
       initiateCombat(index);
       break;
-    case 2:
+    case 2: //Menu Selection Screen
       menuSelectionScreen = new MenuSelectionScreen(ctx, canvas);
       break;
-    case 3:
+    case 3: //Creature Editor Screen
       launchCreatureEditor();
       break;
-    case 4:
+    case 4: //Player Screen
       playerScreen.init();
       break;
-    case 5:
+    case 5: //World Map Screen
       worldMap.init();
       worldMap.updateScreen();
       break;
@@ -174,6 +185,9 @@ function keyboardEvent(e) {
     else if(code == 49){
       launchCampaign();
     }
+    else if(code == 50){
+      setGameMode(6,0);
+    }
 }//end keyboardEvent()
 
 ///////////////////////////////////////////////////////////////////////////////\
@@ -212,6 +226,9 @@ function logMouseClick(e){
     break;
   case 5:
     worldMap.worldMapClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case 6:
+    dialogueWindow.itterateDialogue();
     break;
   case -1:
     testRoom.testRoomClickHandler(clickPosition.x,clickPosition.y);

@@ -31,7 +31,7 @@ class Souls{
     this.list[3] = [3, "Chip",    [2, 7, 7, 9, 9, 9, 9, 9, 9], "Chip is always cheerful, when others are around."];
     this.list[4] = [4, "M",       [2, 12, 11, 10, 11, 7, 6, 5, 4], "K doesn't speak much, but is quick to action when necessary."];
     this.list[5] = [5, "Al",      [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
-    this.list[6] = [6, "A",       [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
+    this.list[6] = [6, "A",       [3, 8, 16, 7, 7, 2, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
     this.list[7] = [7, "B",       [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
     this.list[8] = [8, "C",       [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
     this.list[9] = [9, "D",       [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
