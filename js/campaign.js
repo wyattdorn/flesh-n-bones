@@ -49,6 +49,7 @@ class Campaign{
         dialogueWindow.init(  ["You found another lost soul who wishes to join you."],
                               200, 100, 1250, 280);
         player.addSoul();
+        player.nextChapter();
         break;
       default:
 

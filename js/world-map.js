@@ -32,7 +32,7 @@ class WorldMap{
 
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Checks to see if the mouse is over an item that can be highlighted
+  //  ?
   //////////////////////////////////////////////////////////////////////////////
   checkCampaignProgress(){
 
@@ -160,7 +160,7 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillText(mapLocations.list[this.highlightedLocation][1], 10, 730);
     ctx.font = "15px Arial";
-    ctx.fillText(mapLocations.list[this.highlightedLocation][7], 10, 750);
+    ctx.fillText(mapLocations.list[this.highlightedLocation][8], 10, 750);
     if(mapLocations.list[this.highlightedLocation][4]){
       ctx.fillStyle = "#40a040";
       ctx.fillText("You're safe here, this location is friendly.", 10, 770);
@@ -204,9 +204,13 @@ class WorldMap{
       //Set default ccolor of blue for locations within the sphere of influence
       ctx.fillStyle = "#111199";
 
-      //If the location is friendly, it will be colored green
+      //If the location is friendly, it will be colored green, and we draw the "friendly" icon
       if(mapLocations.list[x][4]){
         ctx.fillStyle = "#144003";
+        this.locationImage = mapLocations.list[x][7];
+      }
+      else{
+        this.locationImage = mapLocations.list[x][6];
       }
       //If the location is outside the sphere of influence, color it red
       if(!this.checkIfInInfluence(x)){
@@ -222,9 +226,11 @@ class WorldMap{
       ctx.beginPath();
       ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
       ctx.fill();
+      
       //Draws the location icon to screen
       ctx.globalAlpha = 1;
-      ctx.drawImage(mapLocations.list[x][6], mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
+      ctx.drawImage(this.locationImage, mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
+
     }
 
     ctx.restore();
@@ -238,7 +244,8 @@ class WorldMap{
     //Check if the "MENU" button was pressed
     if(clickPositionX > 1105 && clickPositionY > 705){
       console.log("Entering menu!");
-      setGameMode(2);
+      //Go directly to Creature Editor Screen
+      setGameMode(3);
       canvas.onmousemove = null;
     }
 

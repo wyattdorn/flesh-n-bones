@@ -52,6 +52,7 @@ class ImageLoader{
         this.hatcheryIcon = this.loader.addImage('media/images/map-locations/egg.png');
         this.eyrieIcon = this.loader.addImage('media/images/map-locations/feathers.png');
         this.portalIcon = this.loader.addImage('media/images/map-locations/portal.png');
+        this.friendlyWoodsIcon = this.loader.addImage('media/images/map-locations/woods.png');
 
       // callback that will be run once images are ready
       this.loader.addCompletionListener(function() {

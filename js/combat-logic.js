@@ -85,6 +85,10 @@ class CombatLogic{
 
     ctx.save();
 
+    //If there are enough drops that we need two columns, this will hold that number
+    this.xOffset = 0;
+    this.yOffset = 0;
+
     this.startLocation = [(canvas.width)/4, canvas.height/4-150 ];
 
     //Draw window
@@ -104,7 +108,7 @@ class CombatLogic{
 
     //Draw list of drops
     for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
-      console.log(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]]);
+      //Check the type of loot, and print the information accordingly
       this.output = ""
       switch(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]){
         case 0:
@@ -120,12 +124,13 @@ class CombatLogic{
           this.output = "~ " + items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
       }
-      console.log(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1] + " output: " + this.output);
-      ctx.fillText(this.output, this.startLocation[0] + 10, this.startLocation[1] + 60 + ( x * 30 ));
+      ctx.fillText(this.output, this.startLocation[0] + 10 + this.xOffset, this.startLocation[1] + 60 + ( x * 30 ) + this.yOffset);
+      //If there are more than 10 items dropped, print the rest in a second column
+      if(x > 10){this.xOffset = 300; this.yOffset = -360;}
     }
 
-      this.giveDroppedItems();
-
+    //Add the loot to the player's inventory
+    this.giveDroppedItems();
 
     ctx.restore();
   }//end drawDroppedItemScreen()
@@ -357,7 +362,10 @@ class CombatLogic{
       this.endCombat();
       myCombatScreen.updateScreen(1,1,1);
       if(this.checkforCombatEnd()[1]){
-        this.drawDroppedItemWindow();
+        setTimeout(function() {
+          combatLogi.drawDroppedItemWindow();
+        }, 100);
+
       }
       return;
     }

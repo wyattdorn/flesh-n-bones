@@ -89,7 +89,12 @@ function init(){
   gameMode = 5;
 
   //Load all images before launching the starting screen
-  imageLoader.loader.addCompletionListener(function() {setGameMode(gameMode)});
+  imageLoader.loader.addCompletionListener(function(){
+    setGameMode(gameMode);
+    dialogueWindow.init(    ["Flesh and Bones: RPG",
+                            "You are currently in test-mode. Press 1 on the keyboard to begin the campaign."],
+                            200, 100, 1250, 280);
+  });
 
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +108,8 @@ function init(){
   generateCombatSquad();
   generateDummyBodies();
   masterInventoryList = [organs[0], organs[1], organs[2], items];
+
+
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //

@@ -719,7 +719,8 @@ class CreatureEditorScreen{
     //Checking if the click was on the "BACK" button
     if(clickPositionX > canvas.width - 70 && clickPositionX < canvas.width - 10 && clickPositionY > 10 && clickPositionY < 30){
       console.log("BACK");
-      setGameMode(2);
+      //Go to the World Map
+      setGameMode(5);
     }
 
   }//end creatuerEditorClickHandler()
