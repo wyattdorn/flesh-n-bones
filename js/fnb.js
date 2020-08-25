@@ -5,16 +5,16 @@ const canvasWidth = 1200;
 const canvasHeight = 800;
 
 //Variables for the canvas and canvas context used in game
-var canvas, ctx;
+let canvas, ctx;
 
-var gameMode;
+let gameMode;
 
-var myCombatScreen, creatureEditorScreen, menuSelectionScreen, playerScreen;
-var worldMap, mapLocations;
-var dialogueWindow;
-var activeDialogue;
-var previousGameMode;
-var campaign;
+let myCombatScreen, creatureEditorScreen, menuSelectionScreen, playerScreen;
+let worldMap, mapLocations;
+let dialogueWindow;
+let activeDialogue;
+let previousGameMode;
+let campaign;
 
 var player;
 var enemyCreatures; //arrays of enemy and allied creatures
@@ -27,7 +27,8 @@ var organs, masterInventoryList;
 
 var testRoom;
 
-var imageLoader;
+var imageLoader, audioLoader;
+let mediaLoader;
 
 function init(){
 
@@ -53,10 +54,13 @@ function init(){
     return false;
   }
 
+  mediaLoader = new PxLoader();
+
   myCombatScreen = new CombatScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   playerScreen = new PlayerScreen(ctx, canvas);
   imageLoader = new ImageLoader(ctx, canvas);
+  audioLoader = new AudioLoader(ctx, canvas);
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
   dialogueWindow = new DialogueWindow(ctx, canvas);
@@ -88,12 +92,16 @@ function init(){
   //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
 
-  //Load all images before launching the starting screen
-  imageLoader.loader.addCompletionListener(function(){
+  mediaLoader.start();
+
+  mediaLoader.addCompletionListener(function(){
+    //Load all images before launching the starting screen
     setGameMode(gameMode);
     dialogueWindow.init(    ["Flesh and Bones: RPG",
-                            "You are currently in test-mode. Press 1 on the keyboard to begin the campaign."],
+                            "You are currently in test-mode. Press the '1' key on the keyboard at any time to begin the campaign."],
+                            [null,audioLoader.welcomeAud],
                             200, 100, 1250, 280);
+
   });
 
 
@@ -195,7 +203,9 @@ function keyboardEvent(e) {
     }
     //If the '1' key is pressed, laungh the campaign
     else if(code == 49){
+      //audioLoader.campaignAud.play();
       launchCampaign();
+
     }
     else if(code == 50){
       setGameMode(6,0);

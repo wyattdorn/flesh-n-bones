@@ -9,7 +9,8 @@ class DialogueWindow{
 
   }//end constructor()
 
-  init(text, xPos, yPos, width, height){
+  init(text, audio, xPos, yPos, width, height){
+    console.log(text[0]);
 
     ctx.save();
 
@@ -22,6 +23,7 @@ class DialogueWindow{
 
     //Define passed-in variable locally for use by other functions
     this.text = text;
+    this.audio = audio;
     this.startLocation = [xPos, yPos];
     this.size = [width, height];
     this.numberOfDialogueBoxes = text.length;
@@ -43,8 +45,22 @@ class DialogueWindow{
 
     this.drawBox();
     this.drawText();
+    this.playAudio();
 
   }//end drawDialogue()
+
+  playAudio(){
+    //If there is audio to be played, play it
+    if(this.audio[this.currentDialogue] != null){
+      //Pause all other audio currently playing
+      soundManager.pauseAll();
+      //Play our dialogue
+      this.audio[this.currentDialogue].play();
+    }
+    else{
+      console.log("No audio file found.");
+    }
+  }
 
   ////////////////////////////////////////////////////////////////////////////////
   // Draw the next piece of dialogue
@@ -100,9 +116,6 @@ class DialogueWindow{
     //ctx.fillText(this.text[this.currentDialogue], this.startLocation[0] + 10, this.startLocation[1] + 30);
 
     drawMultipleLines(this.text[this.currentDialogue], 40, 30, this.startLocation[0] + 10, this.startLocation[1] + 30);
-
-
-
 
     console.log(this.text[this.currentDialogue]);
 

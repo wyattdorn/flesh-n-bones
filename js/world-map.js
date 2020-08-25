@@ -137,9 +137,10 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillRect(1100, 700, 5, 100);
 
-    ctx.font = "25px Arial";
+    ctx.font = "15px Arial";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText("MENU", 1115, 760);
+    ctx.fillText("CREATURE", 1112, 745);
+    ctx.fillText("EDITOR", 1127, 765);
 
     ctx.restore();
   }//end drawLocationDescription()
@@ -226,7 +227,7 @@ class WorldMap{
       ctx.beginPath();
       ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
       ctx.fill();
-      
+
       //Draws the location icon to screen
       ctx.globalAlpha = 1;
       ctx.drawImage(this.locationImage, mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
