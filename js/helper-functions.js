@@ -1,6 +1,10 @@
 //Written by Wyatt Dorn
 
 
+-Body parts are now Head, Body, Guts (changed from Skin, Bones, Guts).
+-Creature's images are now drawn to reflect their equipped body parts.
+-Added drawFriendlyCreature() function to helper-functions.js to handle drawing friendly units across all screens.
+
 //////////////////////////////////////////////////////////////////////////////
 // Draws multiple lines of text from a single string
 //////////////////////////////////////////////////////////////////////////////
@@ -25,3 +29,25 @@ function drawMultipleLines(myString, maxLength, lineHeight, startX, startY){
     ctx.fillText(tempString, startX, startY + (lineHeight * x));
   }
 }//end drawMultipleLines()
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Draws friendly creature to screen
+//////////////////////////////////////////////////////////////////////////////
+function drawFriendlyCreature(creature, x, y){
+
+  ctx.save();
+
+  //Draw body and organ glow
+  ctx.shadowBlur = 30;
+  ctx.shadowColor = guts.list[player.myCreatures[creature].myGuts][4];
+    ctx.drawImage(body.list[player.myCreatures[creature].myBody][4], x, y, 150, 150);
+  //}, false);
+
+  //newImg.src = '' + source;
+  ctx.restore();
+  //draw head
+  ctx.drawImage(head.list[player.myCreatures[creature].myHead][4], x, y, 150, 150);
+
+}//end drawFriendlyCreature()

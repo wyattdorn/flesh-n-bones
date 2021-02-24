@@ -9,6 +9,10 @@ class AudioLoader{
 
   constructor(context, canvas){
 
+      /////////////////////////////////////////////////////////////////////////
+      // List of all dialogue files and their descriptions can be found at:
+      // https://docs.google.com/spreadsheets/d/1oj_SzW0oYoEAQta8wRIuj3PXLRarZnmblpKG6LQ0sCg/edit?usp=sharing
+      /////////////////////////////////////////////////////////////////////////
 
       this.loader = new PxLoader();
 

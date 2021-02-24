@@ -22,7 +22,7 @@ var enemyCreatures; //arrays of enemy and allied creatures
 var skills;
 var combatLogi;
 var items;
-var skins, bones, guts, souls;
+var head, body, guts, souls;
 var organs, masterInventoryList;
 
 var testRoom;
@@ -73,13 +73,13 @@ function init(){
 
   campaign = new Campaign();
   souls = new Souls();
-  skins = new Skin();
-  bones = new Bones();
+  head = new Head();
+  body = new Body();
   guts = new Guts();
   items = new Item();
   player = new Deity();
   skills = new Skill();
-  organs = [bones, guts, skins];
+  organs = [body, guts, head];
   //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //The campaign has not been started, yet

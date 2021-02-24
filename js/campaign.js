@@ -38,7 +38,7 @@ class Campaign{
                               200, 100, 1250, 280);
         break;
       case 3:
-        dialogueWindow.init(  ["A Goglin Skin has been dropped!",
+        dialogueWindow.init(  ["A Goglin Head has been dropped!",
                               "Add it to your creature to see what it does."],
                               [audioLoader.c2_1Aud, audioLoader.c2_2Aud],
                               200, 100, 1250, 280);

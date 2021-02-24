@@ -112,13 +112,13 @@ class CombatLogic{
       this.output = ""
       switch(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]){
         case 0:
-          this.output = "~ " + bones.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + body.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 1:
           this.output = "~ " + guts.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 2:
-          this.output = "~ " + skins.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + head.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 3:
           this.output = "~ " + items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];

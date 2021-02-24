@@ -1,6 +1,6 @@
 //Written by Wyatt Dorn
 
-class Bones {
+class Body {
   constructor(element) {
     this.element = element;
     this.init();
@@ -10,10 +10,10 @@ class Bones {
     this.list = [];
 
     //                      function()               Name        Target  Ability       Multiplier Cost       Description
-    this.list[0] = [0, "No Bones", 0, "Creature has no bones.", imageLoader.soulImg];
-    this.list[1] = [1, "Old Bones", 1, "Any old pile of bones can attack.", imageLoader.skeletonImg];
-    this.list[2] = [2, "Brittle Bones", 3, "Brittle bones grants the Heal skill.", imageLoader.brittleBoneImg];
-    this.list[3] = [3, "Big Bones", 2, "Big bones grant the Defend skill.", imageLoader.bigBoneImg];
+    this.list[0] = [0, "No Body", 0, "Creature has no body.", imageLoader.soulImg];
+    this.list[1] = [1, "Old Body", 1, "Any old pile of bones can attack.", imageLoader.oldBodyImg];
+    this.list[2] = [2, "Brittle Body", 3, "Brittle body grants the Heal skill.", imageLoader.brittleBodyImg];
+    this.list[3] = [3, "Big Body", 2, "Big body grant the Defend skill.", imageLoader.bigBodyImg];
   }//end init()
 
 }
@@ -36,7 +36,7 @@ class Guts {
 }
 
 
-class Skin {
+class Head {
   constructor(element) {
     this.element = element;
     this.init();
@@ -46,10 +46,10 @@ class Skin {
     this.list = [];
 
     //                  index, name, skill num, info
-    this.list[0] = [0, "No Skin", 0, "Creature has no skin."];
-    this.list[1] = [1, "Goblin Skin", 5, "Goblin skin grants the Scythe skill."];
-    this.list[2] = [2, "Orc Skin", 6, "Orc skin grants the Orc Smash skill."];
-    this.list[3] = [3, "Mage Skin", 7, "Mage skin grants the Spirit Dagger skill."];
+    this.list[0] = [0, "No Head", 0, "Creature has no head.", imageLoader.noHeadImg];
+    this.list[1] = [1, "Goblin Head", 5, "Goblin head grants the Scythe skill.", imageLoader.goblinHeadImg];
+    this.list[2] = [2, "Orc Head", 6, "Orc head grants the Orc Smash skill.", imageLoader.orcHeadImg];
+    this.list[3] = [3, "Mage Head", 7, "Mage head grants the Spirit Dagger skill.", imageLoader.mageHeadImg];
   }//end init()
 }
 
@@ -64,28 +64,7 @@ class Soul{
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Deprecated class
-////////////////////////////////////////////////////////////////////////////////
-class Body {
-  constructor(skin, bones, guts) {
-    this.Skin = skin;
-    this.Bones = bones;
-    this.Guts = guts;
-  }
 
-  removeSkin(){
-    this.Skin = null;
-  }
-
-  addSkin(s){
-    this.Skin = s;
-  }
-
-  printElements(){
-    console.log('Skin: ' + this.Skin.element);
-  }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Creature is a generic class for all units (enemy and ally) in game.
@@ -113,11 +92,11 @@ class Creature {
     this.memorizedSkills = [];//This is a list of skills the Creature has used enough to memorize
     //   memorizedSkills[0] = skill index, [1] = times the skill has been used, [2] = if the skill has been memorized (bool)
     this.myItem = 0;//items.itemList[0];
-    this.mySkin = 0;// skins.list[0];
-    this.myBones = 0;// bones.list[0];
+    this.myHead = 0;// heads.list[0];
+    this.myBody = 0;// body.list[0];
     this.myGuts = 0;// guts.list[0];
-    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
-    this.myInventory = [this.myBones, this.myGuts, this.mySkin, this.myItem];
+    this.myOrgans = [this.myBody, this.myGuts, this.myHead];
+    this.myInventory = [this.myBody, this.myGuts, this.myHead, this.myItem];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }//end constructor()
 
@@ -242,7 +221,7 @@ class Creature {
     player.inventoryList[organType].push(this.myOrgans[organType]);
     switch (organType) {
       case 0: //bone
-          this.myBones = 0;
+          this.myBody = 0;
           this.skillList[0] =0;
         break;
       case 1: //guts
@@ -250,13 +229,13 @@ class Creature {
           this.skillList[1] = 0;
           //console.log(index + " ---guts--- " + organType);
         break;
-      case 2: //skin
-          this.mySkin = 0;
+      case 2: //head
+          this.myHead = 0;
           this.skillList[2] = 0;
-          //console.log(index + " ---skin--- " + organType);
+          //console.log(index + " ---head--- " + organType);
         break;
     }
-    this.myOrgans[organType] = 0;// [this.myBones, this.myGuts, this.mySkin];
+    this.myOrgans[organType] = 0;// [this.myBody, this.myGuts, this.myHead];
   }//end removeOrgan()
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -269,29 +248,29 @@ class Creature {
     }
     switch (organType) {
       case 0: //bone
-          this.myBones = index;
-          this.skillList[0] = bones.list[this.myBones][2];
-          this.imgSrc = bones.list[this.myBones][4];
+          this.myBody = index;
+          this.skillList[0] = body.list[this.myBody][2];
+          this.imgSrc = body.list[this.myBody][4];
         break;
       case 1: //guts
           this.myGuts = index;
           this.skillList[1] = guts.list[this.myGuts][2];
           //console.log(index + " ---guts--- " + organType);
         break;
-      case 2: //skin
-          this.mySkin = index;
-          this.skillList[2] = skins.list[this.mySkin][2];
-          //console.log(index + " ---skin--- " + organType);
+      case 2: //head
+          this.myHead = index;
+          this.skillList[2] = head.list[this.myHead][2];
+          //console.log(index + " ---head--- " + organType);
         break;
     }
-    this.myOrgans[organType] = index;// [this.myBones, this.myGuts, this.mySkin];
+    this.myOrgans[organType] = index;// [this.myBody, this.myGuts, this.myHead];
   }//end giveOrgan()
 
   ////////////////////////////////////////////////////////////////////////////////
   // OLD FUNCTION, TO BE PHASED OUT AND DELETED IN DUE TIME
   ////////////////////////////////////////////////////////////////////////////////
   getOrgan(index){
-    this.myOrgans = [this.myBones, this.myGuts, this.mySkin];
+    this.myOrgans = [this.myBody, this.myGuts, this.myHead];
     return this.myOrgans[index];
   }//end getOrgan()
 

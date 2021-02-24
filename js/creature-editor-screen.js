@@ -16,7 +16,7 @@ class CreatureEditorScreen{
     this.organScrollIndex = 0;
     this.skillScrollIndex = 0;
     this.selectedCreature = 0;
-    this.selectedOrganType = 0;//at launch, Bones are selected by default
+    this.selectedOrganType = 0;//at launch, Body are selected by default
     this.statBlockStart = [210, 215];
 
     //this.inventoryList = [player.myOrgans[0], player.myOrgans[1], player.myOrgans[2], player.myEquipableItems];
@@ -74,13 +74,13 @@ class CreatureEditorScreen{
     ctx.font = "25px Arial";
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 0){ctx.fillStyle = "#fcc201";}
-    ctx.fillText('Bones', this.creatureListWidth + 15, 645);
+    ctx.fillText('Body', this.creatureListWidth + 15, 645);
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 1){ctx.fillStyle = "#fcc201";}
     ctx.fillText('Guts', this.creatureListWidth + 15, 690);
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 2){ctx.fillStyle = "#fcc201";}
-    ctx.fillText('Skin', this.creatureListWidth + 15, 735);
+    ctx.fillText('Head', this.creatureListWidth + 15, 735);
     ctx.fillStyle = "#cccccc";
     if(this.selectedOrganType == 3){ctx.fillStyle = "#fcc201";}
     ctx.fillText('Items', this.creatureListWidth + 15, 780);
@@ -125,42 +125,22 @@ class CreatureEditorScreen{
       ctx.fillText(player.myCreatures[this.creatureScrollIndex + i].name, 10, 60+(90*i));
       ctx.fillText('Level: ' + player.myCreatures[this.creatureScrollIndex + i].level, 10, 95+(90*i));
 
-      //If the Creature has skin, draw an "S" to indicate it
-      if(player.myCreatures[this.creatureScrollIndex + i].myBones != 0){
-        ctx.fillText("B", 180, 60+(90*i));
+      //If the Creature has head, draw an "H" to indicate it
+      if(player.myCreatures[this.creatureScrollIndex + i].myBody != 0){
+        ctx.fillText("H", 180, 60+(90*i));
       }
       //If the Creature has guts, draw a "G" to indicate it
       if(player.myCreatures[this.creatureScrollIndex + i].myGuts != 0){
         ctx.fillText("G", 178, 80+(90*i));
       }
-      //If the Creature has bones, draw a "B" to indicate it
-      if(player.myCreatures[this.creatureScrollIndex + i].mySkin != 0){
+      //If the Creature has body, draw a "B" to indicate it
+      if(player.myCreatures[this.creatureScrollIndex + i].myHead != 0){
         ctx.fillText("S", 180, 100+(90*i));
       }
 
       ctx.restore();
     }
   }//end drawCreatureList()
-
-
-  //////////////////////////////////////////////////////////////////////////////
-  //  Draws a single unit sprite given the sprite file's location and x/y coodinates
-  //  -NEED TO MOVE TO HELPER FUNCTION FILE-
-  //////////////////////////////////////////////////////////////////////////////
-  drawUnit(source, x, y){
-    ctx.save();
-    //var newImg = new Image();
-
-    //newImg.addEventListener('load',function(){
-    ctx.shadowBlur = 30;
-    ctx.shadowColor = guts.list[player.myCreatures[this.selectedCreature].myOrgans[1]][4];
-      ctx.drawImage(source, x, y, 150, 150);
-    //}, false);
-
-    //newImg.src = '' + source;
-    ctx.restore();
-
-  }//end drawUnit()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Clears the screen, and redraws all the info
@@ -426,7 +406,8 @@ class CreatureEditorScreen{
   //  Draw the selected Creature's sprite, along with their pertinent information
   //////////////////////////////////////////////////////////////////////////////
   drawSelectedCreature(){
-    this.drawUnit(player.myCreatures[this.selectedCreature].imgSrc, 250, 20);
+    drawFriendlyCreature(this.selectedCreature, 250, 20);
+    //this.drawUnit(player.myCreatures[this.selectedCreature].imgSrc, head.list[player.myCreatures[this.selectedCreature].myHead][4], 250, 20);
     this.drawStats();
     this.drawCreatureOrgans();
   }//end drawSelectedCreature()
