@@ -54,19 +54,20 @@ function clearPlayerInventory(){
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
   //BODY
-  player.giveItem(1, 0);
+  player.giveItem(4, 0);
   player.giveItem(3, 0);
-  player.giveItem(1, 0);
   player.giveItem(2, 0);
+  player.giveItem(1, 0);
   player.giveItem(2, 0);
 
   //GUTS
-  player.giveItem(3, 1);
+  player.giveItem(4, 1);
   player.giveItem(2, 1);
   player.giveItem(1, 1);
-  player.giveItem(1, 1);
+  player.giveItem(3, 1);
 
   //HEAD
+  player.giveItem(4, 2);
   player.giveItem(1, 2);
   player.giveItem(2, 2);
   player.giveItem(1, 2);

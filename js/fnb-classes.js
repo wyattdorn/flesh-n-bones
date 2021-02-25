@@ -89,6 +89,15 @@ class Creature {
   }//end equipLearnedSkill
 
 
+  calculateEquipmentBuffs(){
+    for(let x = 0; x < 3; x++){
+      if(organs[x].list[this.myOrgans[x]][4]) {
+        console.log(organs[x].list[this.myOrgans[x]][4]);
+      }
+    }
+  }
+
+
   ////////////////////////////////////////////////////////////////////////////////
   // Function is called when an Item or Organ is equipped to a Creature
   ////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +112,9 @@ class Creature {
       this.giveOrgan(index, type);
     }
     this.myInventory[type] = index;
+
+    this.calculateEquipmentBuffs();
+
   }//end equip()
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -15,12 +15,14 @@ class ImageLoader{
       mediaLoader = new PxLoader();
 
       this.noHeadImg = mediaLoader.addImage('media/images/heads/no-head.png'),
+      this.anubisHeadImg = mediaLoader.addImage('media/images/heads/anubis-head.png'),
       this.orcHeadImg = mediaLoader.addImage('media/images/heads/orc-head.png'),
       this.goblinHeadImg = mediaLoader.addImage('media/images/heads/goblin-head.png'),
       this.mageHeadImg = mediaLoader.addImage('media/images/heads/dark-mage-head.png');
 
 
       this.oldBodyImg = mediaLoader.addImage('media/images/bodies/old-body.png'),
+      this.woolyBodyImg = mediaLoader.addImage('media/images/bodies/wooly-body.png'),
       this.brittleBodyImg = mediaLoader.addImage('media/images/bodies/brittle-body.png'),
       this.bigBodyImg = mediaLoader.addImage('media/images/bodies/big-body.png');
 
