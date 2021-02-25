@@ -20,9 +20,13 @@ class CombatScreen{
 
   init(isPlayerTurn, context, canvas, locationIndex){
 
+    this.drawExpandedMessageBar = false;
+
     //Setting the dimentions of te gui assets in the Combat Screen
     this.unitBarWidth = 250;
     this.controlBarHeight = 250;
+
+    this.eventLog = [];//[0] = "COMBT BEGINS!";
 
     this.currentTime = new Date;//.getTime();
     this.randSeed = this.currentTime.getTime();
@@ -54,14 +58,43 @@ class CombatScreen{
   //  Prints a message to the onscreen Message Bar
   //////////////////////////////////////////////////////////////////////////////
   printMessageBar(myString){
-    //console.log("Printing: " + myString);
+
+    //If a new string is passed, we add it to the queue
+    if(myString){
+      //Only 13 lines of text will fit on screee, so we cap the array at 13
+      if(this.eventLog.length >= 13){
+        this.eventLog.shift();
+      }
+      //push the new string to the array
+      this.eventLog.push(myString);
+    }
+
     ctx.save();
     ctx.fillStyle = "black";
-    ctx.fillRect(this.unitBarWidth, 526, canvasWidth, 30);
-
     ctx.font = "20px Courier";
-    ctx.fillStyle = "#cccccc";
-    ctx.fillText(myString, this.unitBarWidth + 5, 546);
+
+    if(!this.drawExpandedMessageBar){
+
+      ctx.fillRect(this.unitBarWidth, 526, canvasWidth, 30);
+
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText(this.eventLog[this.eventLog.length-1], this.unitBarWidth + 5, 546);
+
+    }
+    else{
+
+      ctx.fillRect(this.unitBarWidth, 526, canvasWidth, 300);
+
+      ctx.fillStyle = "#cccccc";
+
+      //Draw all lines of text in the array in order from the top down
+      for(let x = this.eventLog.length - 1; x >= 0; x--){
+        ctx.fillText(this.eventLog[x], this.unitBarWidth + 5, 786 - 20 * (x + 13 - this.eventLog.length));
+        console.log(this.eventLog[x]);
+      }
+
+    }
+
     ctx.restore();
   }//end printMessageBar()
 
@@ -98,7 +131,8 @@ class CombatScreen{
     if(controlBar){
       //The buttons are the only part of the Control Bar that need updating once
       //combat starts, so the buttons are the only part that is redrawn.
-      this.drawButtons();
+      this.drawControlBar();
+      this.drawSkulls();
     }
     if(combatField){
       ctx.fillStyle = mapLocations.list[this.locationIndex][5][0];//"#303030";
@@ -132,7 +166,7 @@ class CombatScreen{
     //Draw text for buttons in white
     ctx.fillStyle = "#cccccc";
     ctx.font = "25px Arial";
-    ctx.fillText("Menu", 50, canvas.height - this.controlBarHeight + 50);
+    ctx.fillText("Combat Log", 50, canvas.height - this.controlBarHeight + 75);
 
     //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
@@ -255,11 +289,16 @@ class CombatScreen{
   // Draws the bar containing the control buttons onmm the bottom of the screen
   //////////////////////////////////////////////////////////////////////////////
   drawControlBar(){
-    //red bar
+
+    //console.log(combatLogi.combatLogOpen);// combatLogi.combatLogOpen);
+
+    console.log("------------------------------");
+
     ctx.fillStyle = this.colorScheme[0];
     ctx.fillRect(0, canvas.height - this.controlBarHeight, canvas.width, this.controlBarHeight);
 
     this.drawButtons();
+
 
   }//end drawControlBar
 
@@ -442,7 +481,7 @@ class CombatScreen{
       ctx.drawImage(imageLoader.combatScreenSkullsImg, 20*x-13, 526, 24, 30);
     }
 
-    this.printMessageBar();
+    this.printMessageBar(false);
 
   }//end drawSkulls()
 

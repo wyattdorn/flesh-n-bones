@@ -1,10 +1,6 @@
 //Written by Wyatt Dorn
 
 
--Body parts are now Head, Body, Guts (changed from Skin, Bones, Guts).
--Creature's images are now drawn to reflect their equipped body parts.
--Added drawFriendlyCreature() function to helper-functions.js to handle drawing friendly units across all screens.
-
 //////////////////////////////////////////////////////////////////////////////
 // Draws multiple lines of text from a single string
 //////////////////////////////////////////////////////////////////////////////

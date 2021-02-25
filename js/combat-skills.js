@@ -22,7 +22,7 @@ class Skill{
   /////////////////////////
 
   init(){
-    
+
 
     this.skillList = [];
 
@@ -36,6 +36,7 @@ class Skill{
     this.skillList[5] = [5, this.skillScythe,        "Scythe",   6,      "might",      1.5,       2,    "Damage all enemy creatures on the field.", 10];
     this.skillList[6] = [6, this.skillOrcSmash,      "Orc Smash",4,      "might",      3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only).", 10];
     this.skillList[7] = [7, this.skillSpiritDagger,  "Spirit Dagger", 4, "wits",       2.0,       1,     "Expend spirit to damage a single enemy.", 10];
+    this.skillList[8] = [8, this.skillRegenerate,    "Regenerate", 2, "fortitude",       2.0,       1,     "Heal yourself based on your fortitude..", 10];
 
   }//end init()
 
@@ -45,6 +46,13 @@ class Skill{
   noSkill(){
     console.log("No skill.");
   }//end noSkill()
+
+  skillRegenerate(creature){
+    combatLogi.displayMessage = (creature.name + " heals " + Math.floor(creature.wits * 2.0) + " to itself!");
+    myCombatScreen.printMessageBar(combatLogi.displayMessage);
+    console.log(creature.name + " heals " + Math.floor(creature.wits * 2.0) + " to itself!");
+    skills.healUnit(Math.floor(creature.fortitude * 2.0), creature);
+  }
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -63,9 +71,9 @@ class Skill{
   //  Heal skill - Heals a single ally based on caster's wits
   //////////////////////////////////////////////////////////////////////////////
   skillHeal(creature, target){
-    combatLogi.displayMessage = (creature.name + " heals " + Math.floor(creature.wits * 2.0) + " health to " + target.name + "!");
+    combatLogi.displayMessage = (creature.name + " heals " + Math.floor(creature.wits * 1.5) + " health to " + target.name + "!");
     myCombatScreen.printMessageBar(combatLogi.displayMessage);
-    console.log(creature.name + " heals " + Math.floor(creature.wits * 2.0) + " health to " + target.name);
+    console.log(creature.name + " heals " + Math.floor(creature.wits * 1.5) + " health to " + target.name);
     skills.healUnit(Math.floor(creature.wits * 1.5), target);
   }//end skillHeal()
 

@@ -40,7 +40,7 @@ class CombatLogic{
     this.clickedField = [0,       0,      0];
 
     this.controlBarFunctions = [];
-    this.controlBarFunctions[11] = this.openMenu;
+    this.controlBarFunctions[11] = this.toggleCombatLog;
     this.controlBarFunctions[13] = this.useItem;
     this.controlBarFunctions[31] = this.skill1;
     this.controlBarFunctions[33] = this.skill3;
@@ -346,6 +346,12 @@ class CombatLogic{
   //  Ends the player's turn
   //////////////////////////////////////////////////////////////////////////////
   endTurn(){
+
+    //Disable button if expanded message bar is on screen
+    if(myCombatScreen.drawExpandedMessageBar){
+      return;
+    }
+
     console.log("Turn ended!");
     player.isPlayerTurn = false;
     combatLogi.beginEnemyTurn();
@@ -436,6 +442,10 @@ class CombatLogic{
   //  Player flees combat
   //////////////////////////////////////////////////////////////////////////////
   runAway(){
+    //Disable button if expanded message bar is on screen
+    if(myCombatScreen.drawExpandedMessageBar){
+      return;
+    }
     console.log("Run away!");
     setGameMode(5);
   }//end runAway()
@@ -444,7 +454,13 @@ class CombatLogic{
   //  Function is called when a skill button is pressed
   //////////////////////////////////////////////////////////////////////////////
   skillButtonPress(skillNum){
-    console.log("skillButtonPressed()");
+
+    //If the expanded combat dialogue is visible, the skill buttons are disabled
+    if(myCombatScreen.drawExpandedMessageBar){
+      return;
+    }
+
+    //If another skill is clicked, we clear whatever other skill is waiting
     this.clearWaitingFunction();
 
     //If the unit does not have any actions left this round, then we do not allow them to act
@@ -518,7 +534,7 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   skill2(){
     combatLogi.skillButtonPress(1);
-  }//end openMenu()
+  }//end skill2()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Creature skill in slot 3
@@ -535,13 +551,15 @@ class CombatLogic{
   }//end skill4()
 
   //////////////////////////////////////////////////////////////////////////////
-  //  Function opens menu in combat -TO BE COMPLETED-
+  //  Function opens combat log
   //////////////////////////////////////////////////////////////////////////////
-  openMenu(){
-    this.displayMessage = "Opening options menu.";
-    myCombatScreen.printMessageBar(this.displayMessage);
-    console.log("Menu opened!");
-  }//end openMenu()
+  toggleCombatLog(){
+    console.log("Combat log opened!");
+    //Toggle whether the expanded message bar is visible
+    myCombatScreen.drawExpandedMessageBar = !myCombatScreen.drawExpandedMessageBar;
+    //Prompt the message bar to be drawn or drawn over
+    myCombatScreen.printMessageBar(false);
+  }//end toggleCombatLog()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Function opens item selection screen in combat
@@ -592,7 +610,7 @@ class CombatLogic{
         if(clickPositionX < 20){//First blank column
           this.clickedField[1] = 0;
         }
-        else if(clickPositionX < 220){//Menu/item buttons
+        else if(clickPositionX < 220){//Combat log/item buttons
           this.clickedField[1] = 1;
         }
         else if(clickPositionX < 245){//Second blank column

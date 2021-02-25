@@ -53,7 +53,7 @@ function clearPlayerInventory(){
 //   TEST CODE
 ///////////////////////////////////////////////////////////////////////////////
 function generateDummyBodies(){
-  //BONES
+  //BODY
   player.giveItem(1, 0);
   player.giveItem(3, 0);
   player.giveItem(1, 0);
@@ -61,11 +61,12 @@ function generateDummyBodies(){
   player.giveItem(2, 0);
 
   //GUTS
-  player.giveItem(1, 1);
+  player.giveItem(3, 1);
   player.giveItem(2, 1);
   player.giveItem(1, 1);
+  player.giveItem(1, 1);
 
-  //SKINS
+  //HEAD
   player.giveItem(1, 2);
   player.giveItem(2, 2);
   player.giveItem(1, 2);
