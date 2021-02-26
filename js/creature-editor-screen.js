@@ -21,6 +21,8 @@ class CreatureEditorScreen{
 
     //this.inventoryList = [player.myOrgans[0], player.myOrgans[1], player.myOrgans[2], player.myEquipableItems];
 
+    player.myCreatures[this.selectedCreature].calculateBuffs();
+
     this.updateScreen();
   } //end init()
 
@@ -125,17 +127,17 @@ class CreatureEditorScreen{
       ctx.fillText(player.myCreatures[this.creatureScrollIndex + i].name, 10, 60+(90*i));
       ctx.fillText('Level: ' + player.myCreatures[this.creatureScrollIndex + i].level, 10, 95+(90*i));
 
-      //If the Creature has head, draw an "H" to indicate it
+      //If the Creature has a body, draw an "B" to indicate it
       if(player.myCreatures[this.creatureScrollIndex + i].myBody != 0){
-        ctx.fillText("H", 180, 60+(90*i));
+        ctx.fillText("B", 180, 60+(90*i));
       }
       //If the Creature has guts, draw a "G" to indicate it
       if(player.myCreatures[this.creatureScrollIndex + i].myGuts != 0){
         ctx.fillText("G", 178, 80+(90*i));
       }
-      //If the Creature has body, draw a "B" to indicate it
+      //If the Creature has a head, draw an "H" to indicate it
       if(player.myCreatures[this.creatureScrollIndex + i].myHead != 0){
-        ctx.fillText("S", 180, 100+(90*i));
+        ctx.fillText("H", 180, 100+(90*i));
       }
 
       ctx.restore();
@@ -472,16 +474,35 @@ class CreatureEditorScreen{
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
       ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2], 670, 40 + (200 * x));
+      ctx.fillText("Buff: ", 670, 195 + (200 * x));
+
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
       drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][7], 20, 20, 670, 65 + (200 * x));
+
+      //If the organ provides a buff, display the buff, otherwise print "none"
+      if(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][4] == false){
+        this.buffOutput = "none";
+      }
+      else{
+        this.buffOutput = this.printBuff(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][4]);
+      }
+      ctx.fillText(this.buffOutput, 720, 193 + (200 * x));
 
     }
     ctx.restore();
   }//end drawCreatureSkills()
 
+
   //////////////////////////////////////////////////////////////////////////////
-  //  Draw the selected Creature's stats
+  //  Return the buff a creature is given from an organ
+  //////////////////////////////////////////////////////////////////////////////
+  printBuff(buff){
+    return(statList[buff[0]] + ": +" + buff[1]);
+  }//end printBuff();
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draw the selected Creature's equp item
   //////////////////////////////////////////////////////////////////////////////
   drawEquippedItem(){
     ctx.save();
@@ -505,7 +526,7 @@ class CreatureEditorScreen{
 
     //Draw item icon
 
-    ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][4], 380, 495, 35, 25);
+    ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][5], 380, 495, 35, 25);
 
     ctx.restore();
   }//end drawEquippedItem()
@@ -525,14 +546,14 @@ class CreatureEditorScreen{
     ctx.fillText(player.myCreatures[this.selectedCreature].name, this.statBlockStart[0] + 10, this.statBlockStart[1] + 30);
     ctx.font = "20px Courier";
     ctx.fillText("Level:        " + player.myCreatures[this.selectedCreature].level,        this.statBlockStart[0]+10, this.statBlockStart[1] + 55);
-    ctx.fillText("HP:           " + player.myCreatures[this.selectedCreature].maxHP,        this.statBlockStart[0]+10, this.statBlockStart[1] + 80);
-    ctx.fillText("Spirit:       " + player.myCreatures[this.selectedCreature].maxSpirit,    this.statBlockStart[0]+10, this.statBlockStart[1] + 105);
-    ctx.fillText("Dexterity:    " + player.myCreatures[this.selectedCreature].dexterity,    this.statBlockStart[0]+10, this.statBlockStart[1] + 130);
-    ctx.fillText("Agility:      " + player.myCreatures[this.selectedCreature].agility,      this.statBlockStart[0]+10, this.statBlockStart[1] + 155);
-    ctx.fillText("Might:        " + player.myCreatures[this.selectedCreature].might,        this.statBlockStart[0]+10, this.statBlockStart[1] + 180);
-    ctx.fillText("Fortitude:    " + player.myCreatures[this.selectedCreature].fortitude,    this.statBlockStart[0]+10, this.statBlockStart[1] + 205);
-    ctx.fillText("Intelligence: " + player.myCreatures[this.selectedCreature].intelligence, this.statBlockStart[0]+10, this.statBlockStart[1] + 230);
-    ctx.fillText("Wits:         " + player.myCreatures[this.selectedCreature].wits,         this.statBlockStart[0]+10, this.statBlockStart[1] + 255);
+    ctx.fillText("HP:           " + (player.myCreatures[this.selectedCreature].maxHP + player.myCreatures[this.selectedCreature].myBuffs[0]),        this.statBlockStart[0]+10, this.statBlockStart[1] + 80);
+    ctx.fillText("Spirit:       " + (player.myCreatures[this.selectedCreature].maxSpirit + player.myCreatures[this.selectedCreature].myBuffs[1]),    this.statBlockStart[0]+10, this.statBlockStart[1] + 105);
+    ctx.fillText("Dexterity:    " + (player.myCreatures[this.selectedCreature].dexterity + player.myCreatures[this.selectedCreature].myBuffs[2]),    this.statBlockStart[0]+10, this.statBlockStart[1] + 130);
+    ctx.fillText("Agility:      " + (player.myCreatures[this.selectedCreature].agility + player.myCreatures[this.selectedCreature].myBuffs[3]),      this.statBlockStart[0]+10, this.statBlockStart[1] + 155);
+    ctx.fillText("Might:        " + (player.myCreatures[this.selectedCreature].might + player.myCreatures[this.selectedCreature].myBuffs[4]),        this.statBlockStart[0]+10, this.statBlockStart[1] + 180);
+    ctx.fillText("Fortitude:    " + (player.myCreatures[this.selectedCreature].fortitude + player.myCreatures[this.selectedCreature].myBuffs[5]),    this.statBlockStart[0]+10, this.statBlockStart[1] + 205);
+    ctx.fillText("Intelligence: " + (player.myCreatures[this.selectedCreature].intelligence + player.myCreatures[this.selectedCreature].myBuffs[6]), this.statBlockStart[0]+10, this.statBlockStart[1] + 230);
+    ctx.fillText("Wits:         " + (player.myCreatures[this.selectedCreature].wits + player.myCreatures[this.selectedCreature].myBuffs[7]),         this.statBlockStart[0]+10, this.statBlockStart[1] + 255);
 
     ctx.restore();
   }//end drawStats();

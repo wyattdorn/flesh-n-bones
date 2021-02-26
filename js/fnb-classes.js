@@ -31,6 +31,7 @@ class Creature {
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
     this.mind = Math.floor((this.intelligence + this.wits)/2);
+    this.myBuffs = [];
     this.currentHP = 1;
     this.maxHP = 1;
     this.spirit = 1; //spirit is mana
@@ -46,6 +47,58 @@ class Creature {
     this.myInventory = [this.myBody, this.myGuts, this.myHead, this.myItem];
     this.hasAction = true; //A boolean to store whether or not a unit has acted this round
   }//end constructor()
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Calculate all buffs granted by equippables
+  ////////////////////////////////////////////////////////////////////////////////
+  calculateBuffs(){
+    //Clear any exisiting buffs
+    for(let x = 0; x < 8; x++){
+      this.myBuffs[x] = 0;
+    }
+
+    //Search through all equippeditems to see if a buff exists
+    for(let x = 0; x < 4; x++){
+      if(masterInventoryList[x].list[this.myInventory[x]][4]){
+        this.myBuffs[masterInventoryList[x].list[this.myInventory[x]][4][0]] += masterInventoryList[x].list[this.myInventory[x]][4][1];
+      }
+    }
+    console.log(this.myBuffs);
+  }//end calculateBuffs()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // At the start of combat, apply all equipment buffs to the creature
+  ////////////////////////////////////////////////////////////////////////////////
+  applyAllBuffs(){
+
+    this.maxHP += this.myBuffs[0];
+    this.maxSpirit += this.myBuffs[1];
+    this.dexterity += this.myBuffs[2];
+    this.agility += this.myBuffs[3];
+    this.might += this.myBuffs[4];
+    this.fortitude += this.myBuffs[5];
+    this.intelligence += this.myBuffs[6];
+    this.wits += this.myBuffs[7];
+
+  }//end applyAllBuffs()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // At the end of combat, remove all equipment buffs to the creature
+  ////////////////////////////////////////////////////////////////////////////////
+  removeAllBuffs(){
+
+    this.maxHP -= this.myBuffs[0];
+    this.maxSpirit -= this.myBuffs[1];
+    this.dexterity -= this.myBuffs[2];
+    this.agility -= this.myBuffs[3];
+    this.might -= this.myBuffs[4];
+    this.fortitude -= this.myBuffs[5];
+    this.intelligence -= this.myBuffs[6];
+    this.wits -= this.myBuffs[7];
+
+  }//end removeAllBuffs()
+
 
   ////////////////////////////////////////////////////////////////////////////////
   // When a Creature dies, it's hp and spirit are set to 0
@@ -89,15 +142,6 @@ class Creature {
   }//end equipLearnedSkill
 
 
-  calculateEquipmentBuffs(){
-    for(let x = 0; x < 3; x++){
-      if(organs[x].list[this.myOrgans[x]][4]) {
-        console.log(organs[x].list[this.myOrgans[x]][4]);
-      }
-    }
-  }
-
-
   ////////////////////////////////////////////////////////////////////////////////
   // Function is called when an Item or Organ is equipped to a Creature
   ////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +157,8 @@ class Creature {
     }
     this.myInventory[type] = index;
 
-    this.calculateEquipmentBuffs();
+    //this.calculateEquipmentBuffs();
+    this.calculateBuffs();
 
   }//end equip()
 
@@ -160,6 +205,8 @@ class Creature {
       }
       this.myInventory[type] = 0;
     }
+
+    this.calculateBuffs();
   }//end unequip()
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -80,7 +80,8 @@ function init(){
   player = new Deity();
   skills = new Skill();
   organs = [body, guts, head];
-  //masterInventoryList = [organs[0], organs[1], organs[2], items];
+  statList = ["HP", "Spirit", "Dexterity", "Agility", "Might", "Fortitude", "Intel", "Wisdom"];
+  masterInventoryList = [organs[0], organs[1], organs[2], items];
 
   //The campaign has not been started, yet
   player.campaignProgress = [0,0];
@@ -115,7 +116,7 @@ function init(){
   player.updateImpetus();
   generateCombatSquad();
   generateDummyBodies();
-  masterInventoryList = [organs[0], organs[1], organs[2], items];
+  //masterInventoryList = [organs[0], organs[1], organs[2], items];
 
 
 

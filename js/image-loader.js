@@ -15,12 +15,17 @@ class ImageLoader{
       mediaLoader = new PxLoader();
 
       this.noHeadImg = mediaLoader.addImage('media/images/heads/no-head.png'),
+      this.skeletonPirateHeadImg = mediaLoader.addImage('media/images/heads/skeleton-pirate-head.png'),
+      this.cyclopsHeadImg = mediaLoader.addImage('media/images/heads/cyclops-head.png'),
+      this.goblinHeadImg = mediaLoader.addImage('media/images/heads/goblin-head.png'),
+      this.gruffHeadImg = mediaLoader.addImage('media/images/heads/gruff-head.png'),
       this.anubisHeadImg = mediaLoader.addImage('media/images/heads/anubis-head.png'),
       this.orcHeadImg = mediaLoader.addImage('media/images/heads/orc-head.png'),
       this.goblinHeadImg = mediaLoader.addImage('media/images/heads/goblin-head.png'),
       this.mageHeadImg = mediaLoader.addImage('media/images/heads/dark-mage-head.png');
 
-
+      this.wrappedBodyImg = mediaLoader.addImage('media/images/bodies/wrapped-body.png'),
+      this.mysteriousBodyImg = mediaLoader.addImage('media/images/bodies/mysterious-body.png'),
       this.oldBodyImg = mediaLoader.addImage('media/images/bodies/old-body.png'),
       this.woolyBodyImg = mediaLoader.addImage('media/images/bodies/wooly-body.png'),
       this.brittleBodyImg = mediaLoader.addImage('media/images/bodies/brittle-body.png'),

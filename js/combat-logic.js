@@ -56,6 +56,7 @@ class CombatLogic{
     //Ensure that each player-controlled creature starts combat with an action, and has full hp and spirit
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       player.myCreatures[player.myCombatCreatures[x]].hasAction = true;
+      player.myCreatures[player.myCombatCreatures[x]].applyAllBuffs();
       player.myCreatures[player.myCombatCreatures[x]].currentHP = player.myCreatures[player.myCombatCreatures[x]].maxHP;
       player.myCreatures[player.myCombatCreatures[x]].currentSpirit = player.myCreatures[player.myCombatCreatures[x]].maxSpirit;
     }
@@ -365,7 +366,7 @@ class CombatLogic{
 
     if(this.checkforCombatEnd()[0]){
       console.log(this.checkforCombatEnd()[1]);
-      this.endCombat();
+
       myCombatScreen.updateScreen(1,1,1);
       if(this.checkforCombatEnd()[1]){
         setTimeout(function() {
@@ -373,6 +374,9 @@ class CombatLogic{
         }, 100);
 
       }
+
+      this.endCombat();
+
       return;
     }
 
@@ -384,6 +388,11 @@ class CombatLogic{
   //  Function is called when combat has ended for any reason
   //////////////////////////////////////////////////////////////////////////////
   endCombat(){
+
+    //Remove equipment buffs from all friendly creatures
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
+    }
 
     this.activeCombat = false;
 
@@ -447,6 +456,12 @@ class CombatLogic{
       return;
     }
     console.log("Run away!");
+
+    //Remove equipment buffs from all friendly creatures
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
+    }
+
     setGameMode(5);
   }//end runAway()
 

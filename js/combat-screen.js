@@ -175,7 +175,7 @@ class CombatScreen{
     ctx.font = "15px Courier";
     drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - this.controlBarHeight + 180);
 
-    ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][4], 175, canvas.height - this.controlBarHeight + 140, 35, 25);
+    ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][5], 175, canvas.height - this.controlBarHeight + 140, 35, 25);
 
     //Print Skill text to the skill buttons
     for(var i = 0; i < 4; i++){//player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList.length; i++){
