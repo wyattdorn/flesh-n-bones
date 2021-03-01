@@ -7,26 +7,30 @@ class WorldMap{
       this.ctx = context;
       this.canvas = canvas;
 
+      //Boolean to enable/disable world map travel
+      this.travelEnabled = false;
+
   }//end constructor()
 
   init(){
-      //By default, we set the Forgotten Temple to the highlighted location
-      this.highlightedLocation = 0;
 
-      //Populate the list of location coodinates using the data from mapo-locations.js
-      this.locationCoordinates = [];
-      for(var x = 0; x < mapLocations.list.length; x++){
-        this.locationCoordinates[x] = [mapLocations.list[x][2], mapLocations.list[x][3]];
-      }
+    //By default, we set the Forgotten Temple to the highlighted location
+    this.highlightedLocation = 0;
 
-      canvas.onmousemove = this.checkForHighlights;
+    //Populate the list of location coodinates using the data from mapo-locations.js
+    this.locationCoordinates = [];
+    for(var x = 0; x < mapLocations.list.length; x++){
+      this.locationCoordinates[x] = [mapLocations.list[x][2], mapLocations.list[x][3]];
+    }
 
-      this.updateScreen();
+    canvas.onmousemove = this.checkForHighlights;
 
-      //Have dialogue box appear 1/10th a second after the page loads
-      setTimeout(function() {
-          campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
-      }, 100);
+    this.updateScreen();
+
+    //Have dialogue box appear 1/10th a second after the page loads
+    setTimeout(function() {
+        campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
+    }, 100);
 
   }//end init()
 
@@ -190,7 +194,7 @@ class WorldMap{
   //  Draws map background image to screen
   //////////////////////////////////////////////////////////////////////////////
   drawBackground(){
-    ctx.drawImage(imageLoader.worldMapBackgroudImg, 0, 0);
+    ctx.drawImage(imageLoader.worldMapBackgroudImg, 0, 0, 1200, 700);
   }//end drawBackgrounds()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -248,6 +252,11 @@ class WorldMap{
       //Go directly to Creature Editor Screen
       setGameMode(3);
       canvas.onmousemove = null;
+    }
+
+    //If map travel is disabled, exit here
+    if(!this.travelEnabled){
+      return;
     }
 
     //Itterate through the coordinates of all the map locations

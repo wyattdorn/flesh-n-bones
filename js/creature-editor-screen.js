@@ -10,6 +10,9 @@ class CreatureEditorScreen{
   }//end constructor()
 
   init(){
+
+    worldMap.travelEnabled = true;
+
     //set width for left column on screen
     this.creatureListWidth = 200;
     this.creatureScrollIndex = 0;
@@ -438,7 +441,7 @@ class CreatureEditorScreen{
       ctx.fillText(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][1], 435, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      drawMultipleLines(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3], 20, 20, 435, 65 + (200 * x));
+      drawMultipleLines(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3], 21, 20, 435, 65 + (200 * x));
 
       ctx.font = "15px Arial";
       ctx.fillStyle = "#cccccc";

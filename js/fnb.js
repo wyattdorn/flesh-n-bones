@@ -56,6 +56,7 @@ function init(){
 
   mediaLoader = new PxLoader();
 
+  combatLogi = new CombatLogic();
   myCombatScreen = new CombatScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   playerScreen = new PlayerScreen(ctx, canvas);
@@ -116,9 +117,6 @@ function init(){
   player.updateImpetus();
   generateCombatSquad();
   generateDummyBodies();
-  //masterInventoryList = [organs[0], organs[1], organs[2], items];
-
-
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
@@ -169,11 +167,11 @@ function setGameMode(mode, index){
 ///////////////////////////////////////////////////////////////////////////////
 function initiateCombat(index){
 
-  //generateDummyEnemies(index);
-
+  //Load in the information for the combat encounter based on the locataion and
+  //the pplayer's progress thjus far
   mapLocations.generateEncounter(index, player.locationProgress[index]);
 
-  combatLogi = new CombatLogic();
+  combatLogi.init();
   myCombatScreen.init(true, ctx, canvas, index);
   combatLogi.beginCombat(index);
 

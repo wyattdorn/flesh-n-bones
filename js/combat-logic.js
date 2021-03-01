@@ -4,7 +4,7 @@ class CombatLogic{
 
 
   constructor(){
-    this.init();
+    //this.init();
   }//end constructor()
 
   //////////////////////////
@@ -389,14 +389,14 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   endCombat(){
 
+    this.activeCombat = false;
+
+    myCombatScreen.updateScreen(1,1,1);
+
     //Remove equipment buffs from all friendly creatures
     for(var x = 0; x < player.myCombatCreatures.length; x++){
       player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
     }
-
-    this.activeCombat = false;
-
-    myCombatScreen.updateScreen(1,1,1);
 
   }//end endCombat()
 

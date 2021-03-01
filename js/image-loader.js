@@ -48,7 +48,7 @@ class ImageLoader{
         this.anubisImg = mediaLoader.addImage('media/images/character-sprites/new-sprites/anubis.png');
 
       //////////////////////////// GUI IMAGES /////////////////////////////////////////
-        this.worldMapBackgroudImg = mediaLoader.addImage('media/images/backgrounds/bg-1.png');
+        this.worldMapBackgroudImg = mediaLoader.addImage('media/images/backgrounds/bg-4.png'); //bg-4.png created via: https://www.redblobgames.com/maps/mapgen4/
         this.combatScreenSkullsImg = mediaLoader.addImage('media/images/gui/style/skull1-green.png');
         this.combatScreenFlourishImg = mediaLoader.addImage('media/images/gui/style/flourish-1.png');
 
