@@ -10,9 +10,15 @@ class WorldMap{
       //Boolean to enable/disable world map travel
       this.travelEnabled = false;
 
+      //WHere on the map the camera is currently looking
+      //By default, we start at the top left of the map (0,0)
+      this.scrollIndex = [0,0];
+
   }//end constructor()
 
   init(){
+
+    this.scrollButtonLocation = [975, 710];
 
     //By default, we set the Forgotten Temple to the highlighted location
     this.highlightedLocation = 0;
@@ -65,7 +71,10 @@ class WorldMap{
       }
 
       for(var x = 0; x < worldMap.locationCoordinates.length; x++){
-        if(mousePosition.x > worldMap.locationCoordinates[x][0] && mousePosition.x < worldMap.locationCoordinates[x][0] + mapLocations.locationSize && mousePosition.y > worldMap.locationCoordinates[x][1] && mousePosition.y < worldMap.locationCoordinates[x][1] + mapLocations.locationSize){
+        if(mousePosition.x > worldMap.locationCoordinates[x][0] + worldMap.scrollIndex[0] &&
+           mousePosition.x < worldMap.locationCoordinates[x][0] + mapLocations.locationSize + worldMap.scrollIndex[0] &&
+           mousePosition.y > worldMap.locationCoordinates[x][1] + worldMap.scrollIndex[1] &&
+           mousePosition.y < worldMap.locationCoordinates[x][1] + mapLocations.locationSize + worldMap.scrollIndex[1]){
           worldMap.highlightedLocation = x;
         }
       }
@@ -121,7 +130,7 @@ class WorldMap{
       ctx.globalAlpha = 0.1;
 
       ctx.beginPath();
-      ctx.arc(mapLocations.list[0][2]+mapLocations.locationSize/2, mapLocations.list[0][3]+mapLocations.locationSize/2, 20*player.impetus, 0, 2 * Math.PI);
+      ctx.arc(mapLocations.list[0][2]+mapLocations.locationSize/2 +   this. scrollIndex[0], mapLocations.list[0][3]+mapLocations.locationSize/2 +   this. scrollIndex[1], 20*player.impetus, 0, 2 * Math.PI);
       ctx.fill();
 
       ctx.lineWidth = 3;
@@ -145,6 +154,9 @@ class WorldMap{
     ctx.fillStyle = "#cccccc";
     ctx.fillText("CREATURE", 1112, 745);
     ctx.fillText("EDITOR", 1127, 765);
+
+
+    this.drawScrollButtons();
 
     ctx.restore();
   }//end drawLocationDescription()
@@ -189,12 +201,109 @@ class WorldMap{
     ctx.restore();
   }//end drawLocationDescription()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Change where the camera is looking at the map
+  //////////////////////////////////////////////////////////////////////////////
+  scrollMap(direction){
+
+    switch (direction) {
+      case 'north':
+          this. scrollIndex[1] += 100;
+        break;
+      case 'south':
+          this. scrollIndex[1] -= 100;
+        break;
+      case 'east':
+          this. scrollIndex[0] += 100;
+        break;
+      case 'west':
+          this. scrollIndex[0] -= 100;
+        break;
+      default:
+
+    }
+
+    if(this.scrollIndex[1] > 0){
+      this.scrollIndex[1] = 0;
+    }
+    else if(this.scrollIndex[1] < -900){
+      this.scrollIndex[1] = -900;
+    }
+    if(this.scrollIndex[0] > 0){
+      this.scrollIndex[0] = 0;
+    }
+    else if(this.scrollIndex[0] < -400){
+      this.scrollIndex[0] = -400;
+    }
+
+    this.updateScreen();
+
+  }//end scrollMap()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Draws buttons for navigating around the map
+  //////////////////////////////////////////////////////////////////////////////
+  drawScrollButtons(){
+
+
+    ctx.save();
+    ctx.fillStyle = "white";
+    //up arrow
+    ctx.beginPath();
+    ctx.moveTo(this.scrollButtonLocation[0] + 60, this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 85, 35 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 35, 35 + this.scrollButtonLocation[1]);
+    ctx.fill();
+    //down arrow
+    ctx.beginPath();
+    ctx.moveTo(this.scrollButtonLocation[0] + 60, 85 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 85, 50 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 35, 50 + this.scrollButtonLocation[1]);
+    ctx.fill();
+    //right arrow
+    ctx.beginPath();
+    ctx.moveTo(this.scrollButtonLocation[0] + 90, 70 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 90, 15 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 120, 42.5 + this.scrollButtonLocation[1]);
+    ctx.fill();
+    //left arrow
+    ctx.beginPath();
+    ctx.moveTo(this.scrollButtonLocation[0] + 30, 70 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0] + 30, 15 + this.scrollButtonLocation[1]);
+    ctx.lineTo(this.scrollButtonLocation[0], 42.5 + this.scrollButtonLocation[1]);
+    ctx.fill();
+
+
+    ctx.fillStyle = "black";
+
+
+    ctx.restore();
+
+
+  }//end drawScrollButtons()
+
 
   //////////////////////////////////////////////////////////////////////////////
   //  Draws map background image to screen
   //////////////////////////////////////////////////////////////////////////////
   drawBackground(){
-    ctx.drawImage(imageLoader.worldMapBackgroudImg, 0, 0, 1200, 700);
+
+    ctx.drawImage(imageLoader.worldMapBackgroudDarkImg,   this. scrollIndex[0],   this. scrollIndex[1]);//, 1200, 700);
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(mapLocations.list[0][2]+mapLocations.locationSize/2 + this.scrollIndex[0], mapLocations.list[0][3]+mapLocations.locationSize/2  +   this.scrollIndex[1], 20*player.impetus, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.clip();
+
+    ctx.drawImage(imageLoader.worldMapBackgroudImg,   this. scrollIndex[0],   this. scrollIndex[1]);//, 1200, 700);
+
+    ctx.restore();
+
+
+
+
   }//end drawBackgrounds()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -229,12 +338,12 @@ class WorldMap{
       //Draw colored circle behind the location icon
       ctx.globalAlpha = 0.75;
       ctx.beginPath();
-      ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2, mapLocations.list[x][3]+mapLocations.locationSize/2, mapLocations.locationSize/2, 0, 2 * Math.PI);
+      ctx.arc(mapLocations.list[x][2]+mapLocations.locationSize/2 +   this. scrollIndex[0], mapLocations.list[x][3]+mapLocations.locationSize/2  +   this. scrollIndex[1], mapLocations.locationSize/2, 0, 2 * Math.PI);
       ctx.fill();
 
       //Draws the location icon to screen
       ctx.globalAlpha = 1;
-      ctx.drawImage(this.locationImage, mapLocations.list[x][2], mapLocations.list[x][3], mapLocations.locationSize, mapLocations.locationSize);
+      ctx.drawImage(this.locationImage, mapLocations.list[x][2] +   this. scrollIndex[0], mapLocations.list[x][3] +   this. scrollIndex[1], mapLocations.locationSize, mapLocations.locationSize);
 
     }
 
@@ -246,12 +355,35 @@ class WorldMap{
   //////////////////////////////////////////////////////////////////////////////
   worldMapClickHandler(clickPositionX,clickPositionY){
 
-    //Check if the "MENU" button was pressed
-    if(clickPositionX > 1105 && clickPositionY > 705){
-      console.log("Entering menu!");
-      //Go directly to Creature Editor Screen
-      setGameMode(3);
-      canvas.onmousemove = null;
+    //Check if the click landed in the menu bar
+    if(clickPositionY > 705){
+      //Check if the "MENU" button was pressed
+      if(clickPositionX > 1105){
+        console.log("Entering menu!");
+        //Go directly to Creature Editor Screen
+        setGameMode(3);
+        canvas.onmousemove = null;
+      }
+      //Check if click is on the arrow buttons
+      else if(clickPositionX > this.scrollButtonLocation[0]){
+        //Right arrow
+        if(clickPositionX > this.scrollButtonLocation[0] + 90){
+          this.scrollMap('west');
+        }
+        //Up/down arrows
+        else if(clickPositionX > this.scrollButtonLocation[0] + 35){
+          if(clickPositionY > this.scrollButtonLocation[1] + 52.5){
+            this.scrollMap('south');
+          }
+          else{
+            this.scrollMap('north');
+          }
+        }
+        //Left arrow
+        else if(clickPositionX > this.scrollButtonLocation[0]){
+          this.scrollMap('east');
+        }
+      }
     }
 
     //If map travel is disabled, exit here
@@ -262,7 +394,10 @@ class WorldMap{
     //Itterate through the coordinates of all the map locations
     for(var x = 0; x < this.locationCoordinates.length; x++){
       //Check if the click was on a map location
-      if(clickPositionX > this.locationCoordinates[x][0] && clickPositionX < this.locationCoordinates[x][0] + mapLocations.locationSize && clickPositionY > this.locationCoordinates[x][1] && clickPositionY < this.locationCoordinates[x][1] + mapLocations.locationSize){
+      if(clickPositionX > this.locationCoordinates[x][0] + this.scrollIndex[0] &&
+         clickPositionX < this.locationCoordinates[x][0] + mapLocations.locationSize + this.scrollIndex[0] &&
+         clickPositionY > this.locationCoordinates[x][1] + this.scrollIndex[1] &&
+         clickPositionY < this.locationCoordinates[x][1] + mapLocations.locationSize + this.scrollIndex[1]){
         console.log(mapLocations.list[x][1] + " was clicked on!");
         //If the click was on a location make sure that location is within the sphere of influencce
         if(this.checkIfInInfluence(x)){

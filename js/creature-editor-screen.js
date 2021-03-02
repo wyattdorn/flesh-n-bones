@@ -36,6 +36,9 @@ class CreatureEditorScreen{
     //black out the screen, covering whatever was drawn previously
     ctx.fillStyle = "#272727";
     ctx.fillRect(0, 0, this.canvas.width, ctx.canvas.height);
+
+    ctx.drawImage(imageLoader.creatureEditorBackgroundImg, 0, 0);//, 1200, 700);
+
   }//end clearScreen()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -65,7 +68,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawButtons(){
     ctx.save();
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
 
     for(var x = 0; x < 4; x++){
       ctx.fillRect(this.creatureListWidth + 10, 620 + (45 * x), 90, 35);
@@ -97,7 +100,10 @@ class CreatureEditorScreen{
   //  Draws scrolling list, of all player-owned Creatures, on the left of the screen
   //////////////////////////////////////////////////////////////////////////////
   drawCreatureList(){
-    ctx.fillStyle = "#771111";
+
+
+    //ctx.globalAlpha = 0.85;
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     ctx.fillRect(0, 0, this.creatureListWidth, ctx.canvas.height);
 
     //Check if the player owns less than 8 Creatures
@@ -172,7 +178,7 @@ class CreatureEditorScreen{
   drawOrganList(){
     ctx.save();
     //Rectangle to  hold list
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     ctx.fillRect(310, 620, 880, 170);
 
     ctx.fillStyle = "#cccccc";
@@ -316,7 +322,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawMemorizedSkills(){
     ctx.save();
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
 
     ctx.fillRect(870, 100, 320, 305);
     ctx.beginPath();
@@ -422,7 +428,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawCreatureOrgans(){
     ctx.save();
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
 
     //Draw the red rectangle containers for the three organs
     for(var x = 0; x < 3; x++){
@@ -460,7 +466,7 @@ class CreatureEditorScreen{
     ctx.save();
 
     //Draw the red rectangle containers for the three skills
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     for(var x = 0; x < 3; x++){
       ctx.fillRect(660, 15 + (200 * x), 200, 190);
       ctx.beginPath();
@@ -511,7 +517,7 @@ class CreatureEditorScreen{
     ctx.save();
 
     //Draw red rectangle container
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     ctx.fillRect(this.statBlockStart[0], 490, 210, 115);
 
     //Draw name and description of item
@@ -541,7 +547,7 @@ class CreatureEditorScreen{
 
     ctx.save();
 
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     ctx.fillRect(this.statBlockStart[0], this.statBlockStart[1], 210, 265);
 
     ctx.font = "30px Arial";
@@ -567,7 +573,7 @@ class CreatureEditorScreen{
   drawBackButton(){
     ctx.save();
 
-    ctx.fillStyle = "#771111";
+    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
     ctx.fillRect(canvas.width - 60, 10, 50, 20);
     ctx.beginPath();
     ctx.moveTo(canvas.width - 60, 10);

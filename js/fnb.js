@@ -192,6 +192,28 @@ function launchCreatureEditor(){
 function keyboardEvent(e) {
     code = e.keyCode;
     //If the '~' key is pressed, we enter the test room
+
+    switch (code) {
+      case 40:
+          worldMap.scrollMap('south');
+          console.log('south~!');
+        break;
+      case 39:
+          worldMap.scrollMap('west');
+          console.log('west~!');
+        break;
+      case 38:
+          worldMap.scrollMap('north');
+          console.log('north~!');
+        break;
+      case 37:
+          worldMap.scrollMap('east');
+          console.log('east~!');
+        break;
+      default:
+
+    }
+
     if(code == 192){
       //If we are in the world map, stop the function that updates the screen every time the mouse is moved
       if(gameMode==5){
