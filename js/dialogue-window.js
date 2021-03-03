@@ -10,7 +10,7 @@ class DialogueWindow{
   }//end constructor()
 
   init(text, audio, xPos, yPos, width, height){
-    console.log(text[0]);
+    //console.log(text[0]);
 
     ctx.save();
 

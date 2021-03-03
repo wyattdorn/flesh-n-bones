@@ -5,25 +5,34 @@
 // Draws multiple lines of text from a single string
 //////////////////////////////////////////////////////////////////////////////
 function drawMultipleLines(myString, maxLength, lineHeight, startX, startY){
-  var tempString = "";
+  //Counter for determining what line of text we're printing
+  var line = 0;
 
-  for(var x = 0; x < (myString.length/maxLength); x++){
-    tempString = "";
-    //If the first character of a new line would be a blank space, we skip it
-    if(myString[maxLength * x] != " "){
-      tempString += ("" + myString[maxLength * x]);
+  do{
+    //Remove any whitespaces at the start of the line
+    while(myString[0] == " "){
+      myString = myString.substring(1);
     }
-    //Itterate through the rest of the line, adding the chaaracters to the output
-    for(var y = 1; y < maxLength; y++){
-      //If we reach trhe end of the string, stop printing
-      if(myString.length <= y+(maxLength*x)){
-        break;
+
+    //Keep words from being split between lines
+    while(myString.length > maxLength && myString[maxLength-1] != " "){
+      for(let x = maxLength-2; x >= 0; x--){
+        if(myString[x] == " "){
+          //Add a whitespace after the last full word
+          myString = myString.slice(0, x) + " " + myString.slice(x);
+          break;
+        }
       }
-      tempString += ("" + myString[y + (maxLength * x)]);
     }
-    //Print the line to the screen
-    ctx.fillText(tempString, startX, startY + (lineHeight * x));
-  }
+
+    //Print out the line of text
+    ctx.fillText(myString.slice(0, maxLength), startX, startY + (lineHeight * line));
+    //Remove from the string the line that was just printed
+    myString = myString.slice(maxLength);
+    //Itterate to the next line on the screen
+    line++;
+  }while(myString.length > 0);
+
 }//end drawMultipleLines()
 
 

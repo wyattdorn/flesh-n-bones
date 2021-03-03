@@ -154,7 +154,6 @@ class CombatLogic{
     //First, check if all allies are dead, if so, the player loses
     if(this.areWeDeadYet()){
       this.displayMessage = "All allied units are dead, combat is ended. (Click anywhere to exit)";
-      myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ALLIES DEAD");
       return [true, false];
     }
@@ -162,7 +161,6 @@ class CombatLogic{
     //Check if all the enemies are dead, if so, the player wins!
     if(this.areTheyDeadYet()){
       this.displayMessage = "All enemies units are dead. You win! (Click anywhere to exit)";
-      myCombatScreen.printMessageBar(this.displayMessage);
       console.log("ALL ENEMIES DEAD");
       return [true, true];
     }
@@ -366,6 +364,10 @@ class CombatLogic{
 
     if(this.checkforCombatEnd()[0]){
       console.log(this.checkforCombatEnd()[1]);
+
+      myCombatScreen.printMessageBar(this.displayMessage);
+
+      this.toggleCombatLog();
 
       myCombatScreen.updateScreen(1,1,1);
       if(this.checkforCombatEnd()[1]){

@@ -11,6 +11,9 @@ class CreatureEditorScreen{
 
   init(){
 
+    this.buttonStyle = "rgba(119, 17, 17, 0.80)";
+
+    //For tutorial purposes
     worldMap.travelEnabled = true;
 
     //set width for left column on screen
@@ -68,7 +71,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawButtons(){
     ctx.save();
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
 
     for(var x = 0; x < 4; x++){
       ctx.fillRect(this.creatureListWidth + 10, 620 + (45 * x), 90, 35);
@@ -102,8 +105,8 @@ class CreatureEditorScreen{
   drawCreatureList(){
 
 
-    //ctx.globalAlpha = 0.85;
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    //ctx.globalAlpha = 0.80;
+    ctx.fillStyle = this.buttonStyle;
     ctx.fillRect(0, 0, this.creatureListWidth, ctx.canvas.height);
 
     //Check if the player owns less than 8 Creatures
@@ -178,7 +181,7 @@ class CreatureEditorScreen{
   drawOrganList(){
     ctx.save();
     //Rectangle to  hold list
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
     ctx.fillRect(310, 620, 880, 170);
 
     ctx.fillStyle = "#cccccc";
@@ -271,17 +274,26 @@ class CreatureEditorScreen{
     ctx.fillStyle = "771111";
     ctx.fillRect(210, 170, 210, 35);
 
-    this.text = "Add to party"
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#cccccc";
 
+    //If the creature has a body, allow it to be added
+    if(player.myCreatures[this.selectedCreature].myBody!=0){
+      this.text = "Add to party"
+    }
+    //If the creature does not have a body, notify the Player
+    else{
+      ctx.font = "17px Arial";
+      this.text = "Cannot add without body.";
+    }
+
+    //Check if the creature is in the Player's party
     for(var x = 0; x < player.myCombatCreatures.length; x++){
-      //console.log(player.myCombatCreatures[x]);
       if(this.selectedCreature == player.myCombatCreatures[x]){
         this.text = "Remove from party";
       }
     }
 
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "#cccccc";
     ctx.fillText(this.text, 220, 195);
 
     ctx.restore();
@@ -306,7 +318,8 @@ class CreatureEditorScreen{
     }
 
     //If the Creature was not already in the party, we check that we have not reached the maximum size for the party
-    if(player.myCombatCreatures.length < player.maxPartySize){
+    //We also ensure that the creature has a body in order to be added to the party
+    if(player.myCombatCreatures.length < player.maxPartySize && player.myCreatures[this.selectedCreature].myBody!=0){
       //Add the Creature to the party
       player.myCombatCreatures.push(this.selectedCreature);
       this.updateScreen();
@@ -322,7 +335,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawMemorizedSkills(){
     ctx.save();
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
 
     ctx.fillRect(870, 100, 320, 305);
     ctx.beginPath();
@@ -428,7 +441,10 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawCreatureOrgans(){
     ctx.save();
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
+
+    //Store whether or not this creature is in the player's party
+    this.isInParty = false;
 
     //Draw the red rectangle containers for the three organs
     for(var x = 0; x < 3; x++){
@@ -438,6 +454,12 @@ class CreatureEditorScreen{
       ctx.lineTo(630, 205 + (200 * x));
       ctx.lineTo(650, 110 + (200 * x));
       ctx.fill();
+    }
+
+    for(let x = 0; x < player.myCombatCreatures.length; x++){
+      if(player.myCombatCreatures[x] == this.selectedCreature){
+        this.isInParty = true;
+      }
     }
 
     for(var x = 0; x < 3; x++){
@@ -451,6 +473,7 @@ class CreatureEditorScreen{
 
       ctx.font = "15px Arial";
       ctx.fillStyle = "#cccccc";
+      if(x == 0 && this.isInParty){ctx.fillStyle = "#555555";}
       ctx.fillText("UNEQUIP", 500, 200 * (x + 1));
 
     }
@@ -466,7 +489,7 @@ class CreatureEditorScreen{
     ctx.save();
 
     //Draw the red rectangle containers for the three skills
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
     for(var x = 0; x < 3; x++){
       ctx.fillRect(660, 15 + (200 * x), 200, 190);
       ctx.beginPath();
@@ -517,7 +540,7 @@ class CreatureEditorScreen{
     ctx.save();
 
     //Draw red rectangle container
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
     ctx.fillRect(this.statBlockStart[0], 490, 210, 115);
 
     //Draw name and description of item
@@ -547,7 +570,7 @@ class CreatureEditorScreen{
 
     ctx.save();
 
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
     ctx.fillRect(this.statBlockStart[0], this.statBlockStart[1], 210, 265);
 
     ctx.font = "30px Arial";
@@ -573,7 +596,7 @@ class CreatureEditorScreen{
   drawBackButton(){
     ctx.save();
 
-    ctx.fillStyle = "rgba(119, 17, 17, 0.85)";
+    ctx.fillStyle = this.buttonStyle;
     ctx.fillRect(canvas.width - 60, 10, 50, 20);
     ctx.beginPath();
     ctx.moveTo(canvas.width - 60, 10);
@@ -648,9 +671,19 @@ class CreatureEditorScreen{
     //Check to see if the player is unequipping the Creature's organs
     else if(clickPositionX > 500 && clickPositionX < 570){
       if(clickPositionY > 185 && clickPositionY < 200){
-        player.myCreatures[this.selectedCreature].unequip(0);
-        console.log("UNEQUIP 1");
-        this.updateScreen();
+        //Store whether or not this creature is in the player's party
+        this.isInParty = false;
+        for(let x = 0; x < player.myCombatCreatures.length; x++){
+          if(player.myCombatCreatures[x] == this.selectedCreature){
+            this.isInParty = true;
+          }
+        }
+        //Body can only be unequipped if the creature is not in the party
+        if(!this.isInParty){
+          player.myCreatures[this.selectedCreature].unequip(0);
+          console.log("UNEQUIP 1");
+          this.updateScreen();
+        }
       }
       else if(clickPositionY > 385 && clickPositionY < 400){
         player.myCreatures[this.selectedCreature].unequip(1);

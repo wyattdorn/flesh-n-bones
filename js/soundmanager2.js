@@ -1300,11 +1300,14 @@ function SoundManager(smURL, smID) {
     if (hasConsole && sm2.useConsole) {
       if (sTypeOrObject && typeof sTypeOrObject === 'object') {
         // object passed; dump to console.
-        console.log(sText, sTypeOrObject);
+        //Commented out by Wyatt
+        //console.log(sText, sTypeOrObject);
       } else if (debugLevels[sTypeOrObject] !== _undefined) {
-        console[debugLevels[sTypeOrObject]](sText);
+        //Commented out by Wyatt
+        //console[debugLevels[sTypeOrObject]](sText);
       } else {
-        console.log(sText);
+        //Commented out by Wyatt
+        //console.log(sText);
       }
       if (sm2.consoleOnly) return true;
     }

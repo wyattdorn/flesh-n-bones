@@ -64,7 +64,7 @@ class Creature {
         this.myBuffs[masterInventoryList[x].list[this.myInventory[x]][4][0]] += masterInventoryList[x].list[this.myInventory[x]][4][1];
       }
     }
-    console.log(this.myBuffs);
+    //console.log(this.myBuffs);
   }//end calculateBuffs()
 
   ////////////////////////////////////////////////////////////////////////////////
