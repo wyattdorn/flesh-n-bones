@@ -35,7 +35,8 @@ class WorldMap{
 
     //Have dialogue box appear 1/10th a second after the page loads
     setTimeout(function() {
-        campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
+      console.log("what am I looking at? " + player.campaignProgress[0]);
+      campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
     }, 100);
 
   }//end init()
@@ -178,6 +179,7 @@ class WorldMap{
     ctx.fillText(mapLocations.list[this.highlightedLocation][1], 10, 730);
     ctx.font = "15px Arial";
     ctx.fillText(mapLocations.list[this.highlightedLocation][8], 10, 750);
+    //Notify the Player whether the location is friendly or hostile
     if(mapLocations.list[this.highlightedLocation][4]){
       ctx.fillStyle = "#40a040";
       ctx.fillText("You're safe here, this location is friendly.", 10, 770);
@@ -190,7 +192,7 @@ class WorldMap{
       ctx.fillStyle = "#cccccc";
       ctx.fillText("There may be monsters, this location is", 10, 770);
     }
-
+    //Notify the Player whether the location is or isn't in their sphere of influence
     if(this.checkIfInInfluence(this.highlightedLocation)){
       ctx.fillText("This location is within your Sphere of Influence.", 10, 790);
     }
@@ -206,6 +208,7 @@ class WorldMap{
   //////////////////////////////////////////////////////////////////////////////
   scrollMap(direction){
 
+    //Move the scrollIndex in the indicated direction
     switch (direction) {
       case 'north':
           this. scrollIndex[1] += 100;
@@ -219,10 +222,11 @@ class WorldMap{
       case 'west':
           this. scrollIndex[0] -= 100;
         break;
-      default:
-
+    default:
+      console.log("Invalid directional input!");
     }
 
+    //If scrolling would lead us off the map, stick to the edge and do not go over
     if(this.scrollIndex[1] > 0){
       this.scrollIndex[1] = 0;
     }
@@ -276,9 +280,15 @@ class WorldMap{
 
     ctx.fillStyle = "black";
 
+    //Print N/S/E/W on arrows to indicate direction
+    ctx.font = "bold 15px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText("N", this.scrollButtonLocation[0] + 55, 28 + this.scrollButtonLocation[1]);
+    ctx.fillText("S", this.scrollButtonLocation[0] + 55, 68 + this.scrollButtonLocation[1]);
+    ctx.fillText("W", this.scrollButtonLocation[0] + 12, 49 + this.scrollButtonLocation[1]);
+    ctx.fillText("E", this.scrollButtonLocation[0] + 97, 49 + this.scrollButtonLocation[1]);
 
     ctx.restore();
-
 
   }//end drawScrollButtons()
 

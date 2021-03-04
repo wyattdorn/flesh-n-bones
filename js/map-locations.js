@@ -73,11 +73,11 @@ class MapLocations{
 
 
     this.lootList[0] = [0];
-    this.lootList[1] = [1, [[1,2]],            //Goblin Skin
+    this.lootList[1] = [1, [[1,2]],            //Goblin Head
                             [[1,3]],          //Red sludge
                             [[1,1], [3,3]]];  //Explosive guts and purp sludge
 
-    this.lootList[2] = [1, [[1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3], [1,1], [3,3]],            //Goblin Skin
+    this.lootList[2] = [1, [[1,0], [2,1]],   //old body and dubious guts
                             [[1,3]],          //Red sludge
                             [[1,1], [3,3]]];  //Explosive guts and purp sludge
 

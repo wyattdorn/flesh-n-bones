@@ -473,7 +473,12 @@ class CreatureEditorScreen{
 
       ctx.font = "15px Arial";
       ctx.fillStyle = "#cccccc";
-      if(x == 0 && this.isInParty){ctx.fillStyle = "#555555";}
+      //If the creature is in the party, grey out the UNEQUIP option for the Body
+      //If the creature does not have an organ of this type, grey out the "UNEQUIP" button
+      if((x == 0 && this.isInParty) ||
+          player.myCreatures[this.selectedCreature].myOrgans[x] == 0){
+        ctx.fillStyle = "#555555";
+      }
       ctx.fillText("UNEQUIP", 500, 200 * (x + 1));
 
     }

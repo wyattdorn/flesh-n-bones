@@ -53,6 +53,7 @@ class ImageLoader{
         this.creatureEditorBackgroundImg = mediaLoader.addImage('media/images/backgrounds/creature-editor-bg.png');
         this.combatScreenSkullsImg = mediaLoader.addImage('media/images/gui/style/skull1-green.png');
         this.combatScreenFlourishImg = mediaLoader.addImage('media/images/gui/style/flourish-1.png');
+        this.compassRoseImg = mediaLoader.addImage('media/images/gui/compass-rose.png');
 
       ///////////////////////// ITEM ICONS ///////////////////////////////////////////
         this.blueSludgeImg = mediaLoader.addImage('media/images/items/blue-sludge.png');

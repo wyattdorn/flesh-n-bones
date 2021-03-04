@@ -1,5 +1,16 @@
 //Written by Wyatt Dorn
 
+
+  // 0 - HP
+  // 1 - Spirit
+  // 2 - Dexterity
+  // 3 - Agility
+  // 4 - Might
+  // 5 - Fortitude
+  // 6 - Intel
+  // 7 - Wisdom
+
+
 class Body {
   constructor(element) {
     this.element = element;
@@ -41,16 +52,6 @@ class Guts {
   }//end init()
 
 }
-
-
-  // 0 - HP
-  // 1 - Spirit
-  // 2 - Dexterity
-  // 3 - Agility
-  // 4 - Might
-  // 5 - Fortitude
-  // 6 - Intel
-  // 7 - Wisdom
 
 class Head {
   constructor(element) {

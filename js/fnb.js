@@ -25,12 +25,17 @@ var items;
 var head, body, guts, souls;
 var organs, masterInventoryList;
 
+let gameVolume;
+
 var testRoom;
 
 var imageLoader, audioLoader;
 let mediaLoader;
 
 function init(){
+
+  gameVolume = 100;
+
 
   //Add event listener for key presses
   window.addEventListener('keydown',this.keyboardEvent,false);
@@ -56,8 +61,10 @@ function init(){
 
   mediaLoader = new PxLoader();
 
+  shopInventory = new ShopInventory();
   combatLogi = new CombatLogic();
   myCombatScreen = new CombatScreen(ctx, canvas);
+  myShopScreen = new ShopScreen(ctx, canvas);
   creatureEditorScreen = new CreatureEditorScreen(ctx, canvas);
   playerScreen = new PlayerScreen(ctx, canvas);
   imageLoader = new ImageLoader(ctx, canvas);
@@ -65,6 +72,7 @@ function init(){
   worldMap = new WorldMap(ctx, canvas);
   mapLocations = new MapLocations();
   dialogueWindow = new DialogueWindow(ctx, canvas);
+
 
   //Boolean for tracking if there is an active dialogue box on screen
   activeDialogue = false;
@@ -154,6 +162,9 @@ function setGameMode(mode, index){
       worldMap.init();
       worldMap.updateScreen();
       break;
+    case 7: //World Map Screen
+      myShopScreen.init();
+      break;
     case -1:
       testRoom.init();
     break;
@@ -231,6 +242,9 @@ function keyboardEvent(e) {
     else if(code == 50){
       setGameMode(6,0);
     }
+    else if(code == 51){
+      setGameMode(7);
+    }
 }//end keyboardEvent()
 
 ///////////////////////////////////////////////////////////////////////////////\
@@ -272,6 +286,9 @@ function logMouseClick(e){
     break;
   case 6:
     dialogueWindow.itterateDialogue();
+    break;
+  case 7:
+    myShopScreen.shopScreenMapClickHandler(clickPosition.x,clickPosition.y);
     break;
   case -1:
     testRoom.testRoomClickHandler(clickPosition.x,clickPosition.y);

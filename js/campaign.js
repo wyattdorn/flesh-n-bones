@@ -19,6 +19,9 @@ class Campaign{
     this.list[1] =  this.chapter1;
     this.list[2] =  this.chapter2;
 
+    //Odd sections are campaign events (printing dialogue to the screen, etc)
+    //Even sections are poins where the player must acomplish tasks to progress to teh next section
+
 
   }//end init()
 
@@ -72,13 +75,14 @@ class Campaign{
     switch (section) {
       case 1:
 
-        dialogueWindow.init(  ["Chapter 2: Ecplore the world",
+        dialogueWindow.init(  ["Chapter 2: Explore the world",
                               "With the skills you're learned, go forth and expand your influence!"
                               ],
                               [],
                               200, 100, 1250, 280);
-        player.addSoul();
-        player.nextChapter();
+        if(player.soulsOwned == 1){
+          player.addSoul();
+        }
         break;
       default:
 

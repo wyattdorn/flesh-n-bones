@@ -13,7 +13,8 @@ class TestRoom{
     this.buttonLocations = [];
     this.buttonLocations[0] = [50, 100]; //Souls
     this.buttonLocations[1] = [50, 150]; //Malachite
-
+    this.buttonLocations[2] = [50, 200]; //Chapter
+    this.buttonLocations[3] = [50, 250]; //Section
 
 
     this.updateScreen();
@@ -38,6 +39,8 @@ class TestRoom{
     this.drawSouls();
     this.drawMalachite();
     this.drawBackButton();
+    this.drawCampaignChapter();
+    this.drawCampaignSection();
   }//end updateScreen()
 
   drawWelcome(){
@@ -46,6 +49,38 @@ class TestRoom{
     ctx.fillText("WELCOME TO THE TEST ROOM!", 50,50);
 
   }//end drawKeyStats()
+
+  drawCampaignChapter(){
+    this.baseLocation = this.buttonLocations[2];
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#32cd32"
+    ctx.fillText("Chapter: " + player.campaignProgress[0], this.baseLocation[0]+70, this.baseLocation[1]+25);
+
+    ctx.fillRect(this.baseLocation[0], this.baseLocation[1], 30, 30);
+    ctx.fillRect(this.baseLocation[0] + 35, this.baseLocation[1], 30, 30);
+
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#000000"
+    ctx.fillText("-", this.baseLocation[0]+11, this.baseLocation[1]+25);
+    ctx.fillText("+", this.baseLocation[0]+43, this.baseLocation[1]+25);
+
+  }//end drawCampaignChapter()
+
+  drawCampaignSection(){
+    this.baseLocation = this.buttonLocations[3];
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#32cd32"
+    ctx.fillText("Section: " + player.campaignProgress[1], this.baseLocation[0]+70, this.baseLocation[1]+25);
+
+    ctx.fillRect(this.baseLocation[0], this.baseLocation[1], 30, 30);
+    ctx.fillRect(this.baseLocation[0] + 35, this.baseLocation[1], 30, 30);
+
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#000000"
+    ctx.fillText("-", this.baseLocation[0]+11, this.baseLocation[1]+25);
+    ctx.fillText("+", this.baseLocation[0]+43, this.baseLocation[1]+25);
+
+  }//end drawCampaignSection()
 
   drawSouls(){
     this.baseLocation = this.buttonLocations[0];
@@ -106,24 +141,43 @@ class TestRoom{
       mapLocations.generateEncounter(1, 1);
     }
 
-
     //Checking if the click was on the "BACK" button
     if(clickPositionX > canvas.width - 70 && clickPositionX < canvas.width - 10 && clickPositionY > 10 && clickPositionY < 30){
       console.log("BACK");
       setGameMode(5);
     }
 
-    //Add/remove souls
+    //Remove souls
     if(clickPositionX > this.buttonLocations[0][0] && clickPositionX < this.buttonLocations[0][0] + 30 && clickPositionY > this.buttonLocations[0][1] && clickPositionY < this.buttonLocations[0][1] + 30){
       console.log("REMOVED ONE SOUL!");
         player.removeLastSoul();
         this.updateScreen();
     }
+    //Add souls
     else if(clickPositionX > this.buttonLocations[0][0] + 35 && clickPositionX < this.buttonLocations[0][0] + 65 && clickPositionY > this.buttonLocations[0][1] && clickPositionY < this.buttonLocations[0][1] + 30){
-      console.log("REMOVED ONE SOUL!");
+      console.log("ADDED ONE SOUL!");
         player.addSoul();
         this.updateScreen();
     }
+    //Remove malachite
+    else if(clickPositionX > this.buttonLocations[1][0] && clickPositionX < this.buttonLocations[1][0] + 30 && clickPositionY > this.buttonLocations[1][1] && clickPositionY < this.buttonLocations[1][1] + 30){
+      console.log("REMOVED ONE MALACHITE!");
+        player.malachite--;
+        this.updateScreen();
+    }
+    //Add malachite
+    else if(clickPositionX > this.buttonLocations[1][0] + 35 && clickPositionX < this.buttonLocations[1][0] + 65 && clickPositionY > this.buttonLocations[1][1] && clickPositionY < this.buttonLocations[1][1] + 30){
+      console.log("ADDED ONE MALACHITE!");
+        player.malachite++;
+        this.updateScreen();
+    }
+    //Next chapter
+    else if(clickPositionX > this.buttonLocations[2][0] + 35 && clickPositionX < this.buttonLocations[2][0] + 65 && clickPositionY > this.buttonLocations[2][1] && clickPositionY < this.buttonLocations[2][1] + 30){
+      console.log("NEXT CHAPTER!");
+        player.nextChapter();
+        this.updateScreen();
+    }
+
 
 
 

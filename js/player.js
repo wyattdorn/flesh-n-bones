@@ -51,8 +51,9 @@ class Deity{
   // Updates the player's progress for a given location ofter a combat encounter has been cleared
   /////////////////////////////////////////////////////////////////////////////
   nextChapter(){
-    console.log("UPDATING CAMPAIGN PROGRESS!");
+    console.log("NEXT CAMPAIGN CHAPTER!");
     this.campaignProgress[0]++;
+    this.campaignProgress[1] = 1;
 
   }//end nextChapter()
 
