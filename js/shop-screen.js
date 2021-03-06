@@ -36,6 +36,7 @@ class ShopScreen{
     this.menuList[1] = ["Player Inventory", 780, 10, 300, canvas.height - 65];
     this.menuList[2] = ["Shop Inventory", 110, 10, 300, canvas.height - 65];
     this.menuList[3] = ["Player Malachite", 780, canvas.height - 45, 300, 35];
+    this.menuList[4] = ["Item Preview", 480, canvas.height - 340, 300, 35];
 
 
     this.buttonList = [];
@@ -44,7 +45,7 @@ class ShopScreen{
     this.buttonList[2] = ["Guts button", 510, canvas.height - 45, 80, 35, function a(){myShopScreen.itemsToShow = 1;}];
     this.buttonList[3] = ["Head button", 600, canvas.height - 45, 80, 35, function a(){myShopScreen.itemsToShow = 2;}];
     this.buttonList[4] = ["Item button", 690, canvas.height - 45, 80, 35, function a(){myShopScreen.itemsToShow = 3;}];
-    this.buttonList[5] = ["Confirm button", 480, canvas.height - 245, 230, 100, this.confirmTransaction];
+    this.buttonList[5] = ["Confirm button", 480, canvas.height - 430, 230, 100, this.confirmTransaction];
 
     this.updateScreen();
   } //end init()
@@ -61,6 +62,7 @@ class ShopScreen{
     this.drawShopInventory();
     this.drawShowItemToggleButtons();
     this.drawConfirmButton();
+    this.drawSelectedItem();
 
     ctx.font = "95px Courier";
     ctx.fillStyle = "#cccccc";
@@ -74,7 +76,47 @@ class ShopScreen{
 
   }//end updateScreen()
 
+  //////////////////////////////////////////////////////////////////////////////
+  //  Click to confirm whether or not you want to confirm a sale/purchase
+  //////////////////////////////////////////////////////////////////////////////
+  drawSelectedItem(){
 
+    //If there is no selected item, exit
+    if(!myShopScreen.selectedItem){return};
+
+    ctx.save();
+
+    if(myShopScreen.selectedItem[0]=="player"){
+
+      console.log(myShopScreen.selectedItem[1]);
+
+      switch (myShopScreen.selectedItem[1]) {
+        case 0:
+          ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1], this.menuList[4][2], 150, 150);
+          break;
+        case 1:
+        //Draw body and organ glow
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+        ctx.drawImage(imageLoader.organHeartImg, this.menuList[4][1], this.menuList[4][2], 150, 150);
+
+          break;
+       case 2:
+        ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1]+20, this.menuList[4][2]+20, 150, 150);
+        break;
+        case 3:
+          ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1]+20, this.menuList[4][2]+20, 150, 100);
+          break;
+        default:
+
+      }
+    }
+
+
+
+    ctx.restore();
+
+  }//end drawSelectedItem()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Click to confirm whether or not you want to confirm a sale/purchase
@@ -325,7 +367,7 @@ class ShopScreen{
         ctx.beginPath();
         ctx.moveTo(this.buttonList[5][1] + this.buttonList[5][3], this.buttonList[5][2]);
         ctx.lineTo(this.buttonList[5][1] + this.buttonList[5][3], this.buttonList[5][2] + this.buttonList[5][4]);
-        ctx.lineTo(this.buttonList[5][1] + this.buttonList[5][3] + 60, this.buttonList[5][2] + (this.buttonList[5][4]/this.discount));
+        ctx.lineTo(this.buttonList[5][1] + this.buttonList[5][3] + 60, this.buttonList[5][2] + (this.buttonList[5][4]/2));
         ctx.fill();
         //Print text
         ctx.font = "19px Courier";

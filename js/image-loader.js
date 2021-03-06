@@ -54,6 +54,7 @@ class ImageLoader{
         this.combatScreenSkullsImg = mediaLoader.addImage('media/images/gui/style/skull1-green.png');
         this.combatScreenFlourishImg = mediaLoader.addImage('media/images/gui/style/flourish-1.png');
         this.compassRoseImg = mediaLoader.addImage('media/images/gui/compass-rose.png');
+        this.organHeartImg = mediaLoader.addImage('media/images/gui/organ-heart.png');
 
       ///////////////////////// ITEM ICONS ///////////////////////////////////////////
         this.blueSludgeImg = mediaLoader.addImage('media/images/items/blue-sludge.png');

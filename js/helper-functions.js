@@ -66,7 +66,7 @@ function drawFriendlyCreature(creature, x, y){
   //Draw body and organ glow
   ctx.shadowBlur = 30;
   ctx.shadowColor = guts.list[player.myCreatures[creature].myGuts][5];
-    ctx.drawImage(body.list[player.myCreatures[creature].myBody][5], x, y, 150, 150);
+  ctx.drawImage(body.list[player.myCreatures[creature].myBody][5], x, y, 150, 150);
   //}, false);
 
   //newImg.src = '' + source;
