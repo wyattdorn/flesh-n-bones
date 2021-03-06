@@ -24,6 +24,7 @@ var combatLogi;
 var items;
 var head, body, guts, souls;
 var organs, masterInventoryList;
+var masterInventoryListNames;
 
 let gameVolume;
 
@@ -91,6 +92,7 @@ function init(){
   organs = [body, guts, head];
   statList = ["HP", "Spirit", "Dexterity", "Agility", "Might", "Fortitude", "Intel", "Wisdom"];
   masterInventoryList = [organs[0], organs[1], organs[2], items];
+  masterInventoryListNames = ["Body", "Guts", "Head", "Item"];
 
   //The campaign has not been started, yet
   player.campaignProgress = [0,0];

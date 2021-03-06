@@ -10,11 +10,27 @@ class ShopInventory{
 
     this.shopList = [];
 
-    this.shopList[0] = [520];
+    //Afinity is the relationship the Player has with the shop, determines discount
+    //1 afinity = 5%
 
-    this.shopList[0].push([2,3]);
-    this.shopList[0].push([1,3]);
-    this.shopList[0].push([3,3]);
+
+    //                  B  G  H  I  M  Afinity
+    this.shopList[0]= [[], [], [], [], 520, 15];
+
+    this.shopList[0][0].push(3);
+    this.shopList[0][1].push(3);
+    this.shopList[0][2].push(3);
+    this.shopList[0][3].push(3);
+
+    this.shopList[0][0].push(2);
+    this.shopList[0][1].push(2);
+    this.shopList[0][2].push(2);
+    this.shopList[0][3].push(2);
+
+    this.shopList[0][0].push(1);
+    this.shopList[0][1].push(1);
+    this.shopList[0][2].push(1);
+    this.shopList[0][3].push(1);
 
 
   } //end init()

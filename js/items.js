@@ -11,10 +11,10 @@ class Item{
     this.list[0] = [];
 
     //             index name function() description buff image
-    this.list[0] = [0, "No Item", this.noItem, "Creature has no item equipped.", false, imageLoader.noItemImg];
-    this.list[1] = [1, "Red Sludge", this.redSludge, "Restore 8 HP to this Creature.", false, imageLoader.redSludgeImg];
-    this.list[2] = [2, "Blue Sludge", this.blueSludge, "Restore 5 Spirit to this Creature.", false, imageLoader.blueSludgeImg];
-    this.list[3] = [3, "Purp. Sludge", this.purpleSludge, "Restore 5 HP and 3 Spirit to this Creature.", false, imageLoader.purpleSludgeImg];
+    this.list[0] = [0, "No Item", this.noItem, "Creature has no item equipped.", false, imageLoader.noItemImg, 0];
+    this.list[1] = [1, "Red Sludge", this.redSludge, "Restore 8 HP to this Creature.", false, imageLoader.redSludgeImg, 10];
+    this.list[2] = [2, "Blue Sludge", this.blueSludge, "Restore 5 Spirit to this Creature.", false, imageLoader.blueSludgeImg, 12];
+    this.list[3] = [3, "Purp. Sludge", this.purpleSludge, "Restore 5 HP and 3 Spirit to this Creature.", false, imageLoader.purpleSludgeImg, 20];
   }//end init()
 
   //////////////////////////////////////////////////////////////////////////////
