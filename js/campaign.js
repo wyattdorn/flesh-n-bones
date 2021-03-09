@@ -84,6 +84,21 @@ class Campaign{
           player.addSoul();
         }
         break;
+      case 3:
+        dialogueWindow.init(  ["Continue to use the body parts you have to create an army to do your bidding!"
+                              ],
+                              [],
+                              200, 100, 1250, 280);
+        break;
+      case 5:
+        //Continue to use the body parts you have to create an army to do your bidding
+        dialogueWindow.init(  ["Now that the Barrows are clear of foes, a withered old creature has taken up shop!",
+                               "You may now buy and sell items when you visit this location."
+                              ],
+                              [],
+                              200, 100, 1250, 280);
+        player.addSoul();
+        break;
       default:
 
     }

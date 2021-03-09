@@ -9,6 +9,9 @@ class ShopScreen{
 
   init(){
 
+    //Ensure that the world map screen doesn't pop back up
+    canvas.onmousemove = null;
+
     //If an item is selected, store the item num
     this.selectedItem = false;
 
@@ -46,6 +49,7 @@ class ShopScreen{
     this.buttonList[3] = ["Head button", 600, canvas.height - 45, 80, 35, function a(){myShopScreen.itemsToShow = 2;}];
     this.buttonList[4] = ["Item button", 690, canvas.height - 45, 80, 35, function a(){myShopScreen.itemsToShow = 3;}];
     this.buttonList[5] = ["Confirm button", 480, canvas.height - 430, 230, 100, this.confirmTransaction];
+    this.buttonList[6] = ["Exit button", 550, 20, 130, 40, function a(){setGameMode(5)}];
 
     this.updateScreen();
   } //end init()
@@ -63,6 +67,7 @@ class ShopScreen{
     this.drawShowItemToggleButtons();
     this.drawConfirmButton();
     this.drawSelectedItem();
+    this.drawExitButton();
 
     ctx.font = "95px Courier";
     ctx.fillStyle = "#cccccc";
@@ -75,6 +80,25 @@ class ShopScreen{
     ctx.restore();
 
   }//end updateScreen()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //
+  //////////////////////////////////////////////////////////////////////////////
+  drawExitButton(){
+    ctx.save();
+
+      ctx.fillStyle = this.buttonStyle;
+      ctx.fillRect(this.buttonList[6][1], this.buttonList[6][2], this.buttonList[6][3], this.buttonList[6][4]);
+      ctx.font = "19px Courier";
+      ctx.fillStyle = "#cccccc";
+      ctx.fillText("Exit Shop", this.buttonList[6][1] + 15, this.buttonList[6][2] + 23);
+
+
+
+
+    ctx.restore();
+  }//end drawExitButton()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Click to confirm whether or not you want to confirm a sale/purchase
@@ -393,6 +417,8 @@ class ShopScreen{
       if(isWithinBounds(clickPositionX, clickPositionY, this.buttonList[x][1], this.buttonList[x][2], this.buttonList[x][3], this.buttonList[x][4])){
         console.log(this.buttonList[x][0]);
         this.buttonList[x][5]();
+        //If the button clicked takes us to any other screen, we leave this function immediately
+        if(gameMode != 7){return;}
       }
     }
 

@@ -164,7 +164,7 @@ function setGameMode(mode, index){
       worldMap.init();
       worldMap.updateScreen();
       break;
-    case 7: //World Map Screen
+    case 7: //Shop Screen
       myShopScreen.init();
       break;
     case -1:

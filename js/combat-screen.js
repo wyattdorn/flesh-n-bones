@@ -246,7 +246,7 @@ class CombatScreen{
     //Set the seed every time the function is called
     Math.seedrandom(this.randSeed + startX + startY);
 
-    //100ms delay set to give sprites time to be drawn under wounds
+    //100ms delay set to give sprites time to be drawn under wounds (this may not be necessary any more)
     setTimeout(function(){
 
       //Loop 30 times to create 30 "blood streaks"
@@ -259,7 +259,7 @@ class CombatScreen{
         ctx.fillStyle = "#771111cc";//"#303030";
         ctx.fillRect(startX + xRand, startY + yRand, 4, 13);
       }
-    }, 100);
+    }, 0);
   }//end drawWounds()
 
   //////////////////////////////////////////////////////////////////////////////

@@ -421,6 +421,9 @@ class WorldMap{
           else{
             //If the location is already friendly, do not enter combat
             if(mapLocations.list[x][4]==true){
+              if(x == 2){
+                setGameMode(7);
+              }
               //do nothing for now...
             }
             //If the location is still hostile, we enter combat

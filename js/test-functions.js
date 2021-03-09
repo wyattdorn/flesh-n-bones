@@ -24,6 +24,8 @@ function launchCampaign(){
   //Start with nothing but a single set of old bones
   player.giveItem(1, 0);//myBones.push(1);
 
+  player.malachite = 50;
+
   player.campaignProgress = [1,1];
 
   campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
