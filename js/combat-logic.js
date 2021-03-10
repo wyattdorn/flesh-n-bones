@@ -107,6 +107,14 @@ class CombatLogic{
     ctx.font = "25px Courier";
     ctx.fillText("ITEMS DROPPED...", this.startLocation[0] + 10, this.startLocation[1] + 30);
 
+    //If there are no items dropped, say so
+    if(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]] == undefined ||
+       mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length == 0){
+      ctx.fillText("None.", this.startLocation[0] + 10 + this.xOffset, this.startLocation[1] + 60);
+      ctx.restore();
+      return;
+    }
+
     //Draw list of drops
     for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
       //Check the type of loot, and print the information accordingly
@@ -129,6 +137,8 @@ class CombatLogic{
       //If there are more than 10 items dropped, print the rest in a second column
       if(x > 10){this.xOffset = 300; this.yOffset = -360;}
     }
+
+
 
     //Add the loot to the player's inventory
     this.giveDroppedItems();

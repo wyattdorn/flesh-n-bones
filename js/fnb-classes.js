@@ -26,9 +26,9 @@ class Creature {
     this.fortitude = 10;
     this.intelligence = 10;
     this.wits = 10;
-    this.speed = Math.floor((this.dexterity + this.agility)/2);
-    this.strength = Math.floor((this.might + this.fortitude)/2);
-    this.mind = Math.floor((this.intelligence + this.wits)/2);
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
     this.myBuffs = [];
     this.currentHP = 1;
     this.maxHP = 1;
@@ -79,6 +79,10 @@ class Creature {
     this.intelligence += this.myBuffs[6];
     this.wits += this.myBuffs[7];
 
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
+
   }//end applyAllBuffs()
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -94,6 +98,10 @@ class Creature {
     this.fortitude -= this.myBuffs[5];
     this.intelligence -= this.myBuffs[6];
     this.wits -= this.myBuffs[7];
+
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
 
   }//end removeAllBuffs()
 
@@ -360,18 +368,20 @@ class PlayerCharacter extends Creature{
     this.imgSrc = path;
     this.exp = 0;         //Starting experience for all PlayerCharacters is 0
     this.level = stats[0];       //Starting level for all PlayerCharacters is 1
+    this.maxHP = stats[1];
+    this.maxSpirit = stats[2];
     this.dexterity = stats[3];
     this.agility = stats[4];
     this.might = stats[5];
     this.fortitude = stats[6];
-    this.intelegence = stats[7];
+    this.intelligence = stats[7];
     this.wits = stats[8];
-    this.speed = Math.floor((this.dexterity + this.agility)/2);
-    this.strength = Math.floor((this.might + this.fortitude)/2);
-    this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.maxHP = stats[6];
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
+
     this.currentHP = this.maxHP;
-    this.maxSpirit = stats[2];
+
     this.currentSpirit = this.maxSpirit; //spirit is mana
   }
 
@@ -393,8 +403,10 @@ class PlayerCharacter extends Creature{
 class EnemyCreature extends Creature{
   constructor(stats) {
     super();
-    this.temperment = stats[1];
     this.name = stats[0];
+    this.temperment = stats[1];
+    this.maxSpirit = stats[2];
+    this.maxHP = stats[3];
     this.imgSrc = stats[11];
     this.exp = 0;
     this.level = 1;
@@ -402,14 +414,14 @@ class EnemyCreature extends Creature{
     this.agility = stats[6];
     this.might = stats[7];
     this.fortitude = stats[8];
-    this.intelegence = stats[9];
+    this.intelligence = stats[9];
     this.wits = stats[10];
     this.speed = Math.floor((this.dexterity + this.agility)/2);
     this.strength = Math.floor((this.might + this.fortitude)/2);
-    this.mind = Math.floor((this.intelegence + this.wits)/2);
-    this.maxHP = stats[8];
+    this.mind = Math.floor((this.intelligence + this.wits)/2);
+
     this.currentHP = this.maxHP;
-    this.maxSpirit = stats[2];
+
     this.currentSpirit = this.maxSpirit; //spirit is mana
   }//end constructor()
 }//end class EnemyCreature

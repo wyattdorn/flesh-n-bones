@@ -14,6 +14,7 @@ class ImageLoader{
 
       mediaLoader = new PxLoader();
 
+      this.armoredHeadImg = mediaLoader.addImage('media/images/heads/armored-head.png'),
       this.noHeadImg = mediaLoader.addImage('media/images/heads/no-head.png'),
       this.skeletonPirateHeadImg = mediaLoader.addImage('media/images/heads/skeleton-pirate-head.png'),
       this.cyclopsHeadImg = mediaLoader.addImage('media/images/heads/cyclops-head.png'),
@@ -64,6 +65,7 @@ class ImageLoader{
 
 
       ////////////////////////// MAP LOCATIONS //////////////////////////////////////
+        this.shop2Icon = mediaLoader.addImage('media/images/map-locations/shop-icon-2.png'); //shop-icon-2.png taken from: https://themightyquest.fandom.com/wiki/Bling
         this.templeIcon = mediaLoader.addImage('media/images/map-locations/eye.png');
         this.caveIcon = mediaLoader.addImage('media/images/map-locations/fist.png');
         this.barrowsIcon = mediaLoader.addImage('media/images/map-locations/skull.png');

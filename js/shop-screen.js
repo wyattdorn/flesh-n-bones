@@ -18,6 +18,9 @@ class ShopScreen{
     //Determine which shop we are visiting
     this.shopLocation = 0;
 
+    //Determine whether the buyer has enouch malachite to make the purchase
+    this.hasSufficientFunds = false;
+
     //Determine the rate at which items can be sold back to the shop
     this.discount = (20 / shopInventory.shopList[this.shopLocation][5]);
 
@@ -39,7 +42,7 @@ class ShopScreen{
     this.menuList[1] = ["Player Inventory", 780, 10, 300, canvas.height - 65];
     this.menuList[2] = ["Shop Inventory", 110, 10, 300, canvas.height - 65];
     this.menuList[3] = ["Player Malachite", 780, canvas.height - 45, 300, 35];
-    this.menuList[4] = ["Item Preview", 480, canvas.height - 340, 300, 35];
+    this.menuList[4] = ["Item Preview", 520, canvas.height - 325, 150, 150];
 
 
     this.buttonList = [];
@@ -60,7 +63,7 @@ class ShopScreen{
   updateScreen(){
 
     this.clearScreen();
-    this.drawBuySellButton();
+    //this.drawBuySellButton();
     this.drawShopMalachite();
     this.drawPlayerInventory();
     this.drawShopInventory();
@@ -83,7 +86,7 @@ class ShopScreen{
 
 
   //////////////////////////////////////////////////////////////////////////////
-  //
+  // Draws EXIT button to screen
   //////////////////////////////////////////////////////////////////////////////
   drawExitButton(){
     ctx.save();
@@ -94,9 +97,6 @@ class ShopScreen{
       ctx.fillStyle = "#cccccc";
       ctx.fillText("Exit Shop", this.buttonList[6][1] + 15, this.buttonList[6][2] + 23);
 
-
-
-
     ctx.restore();
   }//end drawExitButton()
 
@@ -104,36 +104,50 @@ class ShopScreen{
   //  Click to confirm whether or not you want to confirm a sale/purchase
   //////////////////////////////////////////////////////////////////////////////
   drawSelectedItem(){
-
     //If there is no selected item, exit
     if(!myShopScreen.selectedItem){return};
 
+    this.imageToDraw = "";
+
     ctx.save();
 
+    //Draw square around the item up for purchasse/sale
+    ctx.fillStyle = "rgba(150, 150, 150, 0.80)";
+    ctx.fillRect(this.menuList[4][1], this.menuList[4][2], this.menuList[4][3], this.menuList[4][4]);
+
+    //If the Player is selling an item...
     if(myShopScreen.selectedItem[0]=="player"){
+      //Set the image (or organ color) to be drawn
+      this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+    }
+    //If the Player is buying from the shop
+    else{
+      //Set the image (or organ color) to be drawn
+      this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+    }
 
-      console.log(myShopScreen.selectedItem[1]);
+    console.log(myShopScreen.selectedItem[1]);
 
-      switch (myShopScreen.selectedItem[1]) {
-        case 0:
-          ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1], this.menuList[4][2], 150, 150);
-          break;
-        case 1:
-        //Draw body and organ glow
-        ctx.shadowBlur = 30;
-        ctx.shadowColor = masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
-        ctx.drawImage(imageLoader.organHeartImg, this.menuList[4][1], this.menuList[4][2], 150, 150);
-
-          break;
-       case 2:
-        ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1]+20, this.menuList[4][2]+20, 150, 150);
+    //Draw the image
+    switch (myShopScreen.selectedItem[1]) {
+      case 0:
+        ctx.drawImage(this.imageToDraw, this.menuList[4][1]+5, this.menuList[4][2]-25, 150, 150);
         break;
-        case 3:
-          ctx.drawImage(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5], this.menuList[4][1]+20, this.menuList[4][2]+20, 150, 100);
-          break;
-        default:
+      case 1:
+      //Draw body and organ glow
+      ctx.shadowBlur = 30;
+      ctx.shadowColor = this.imageToDraw;
+      ctx.drawImage(imageLoader.organHeartImg, this.menuList[4][1], this.menuList[4][2], 150, 150);
 
-      }
+        break;
+     case 2:
+      ctx.drawImage(this.imageToDraw, this.menuList[4][1], this.menuList[4][2]+20, 150, 150);
+      break;
+    case 3:
+      ctx.drawImage(this.imageToDraw, this.menuList[4][1]+35, this.menuList[4][2]+55, 75, 50);
+      break;
+      default:
+
     }
 
 
@@ -148,7 +162,8 @@ class ShopScreen{
   confirmTransaction(){
 
     //If there is no selected item, exit
-    if(!myShopScreen.selectedItem){return};
+    if(!myShopScreen.selectedItem){console.log("ope");return;}
+    if(!myShopScreen.hasSufficientFunds){return;}
 
     //If the Player is selling
     if(myShopScreen.selectedItem[0]=="player"){
@@ -371,22 +386,40 @@ class ShopScreen{
       ctx.fillStyle = this.buttonStyle;
       ctx.fillRect(this.buttonList[5][1], this.buttonList[5][2], this.buttonList[5][3], this.buttonList[5][4]);
 
+      //If the Player is trying to sell an item
       if(this.selectedItem[0]=="player"){
+
+        this.itemCost = Math.floor(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][6]/this.discount);
+
         //Draw arrow to indicate direction of transaction
         ctx.beginPath();
         ctx.moveTo(this.buttonList[5][1], this.buttonList[5][2]);
         ctx.lineTo(this.buttonList[5][1], this.buttonList[5][2] + this.buttonList[5][4]);
         ctx.lineTo(this.buttonList[5][1] - 60, this.buttonList[5][2] + (this.buttonList[5][4]/2));
         ctx.fill();
-        //Print text
+
         ctx.font = "19px Courier";
         ctx.fillStyle = "#cccccc";
-        ctx.fillText("Sell:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
-        ctx.fillText("for m" + Math.floor(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][6]/this.discount) + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
-        ctx.font = "bold 19px Courier";
-        ctx.fillText(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+
+        //Check whetehr or not the shop has enough Malachite to buy the item
+        if(this.itemCost > shopInventory.shopList[this.shopLocation][4]){
+          this.hasSufficientFunds = false;
+          //console.log(this.itemCost + " : " + shopInventory.shopList[this.shopLocation][4]);
+          ctx.fillText("Insufficient funds!", this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+        }
+        else{
+          this.hasSufficientFunds = true;
+          ctx.fillText("Sell:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
+          ctx.fillText("for m" + this.itemCost + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
+          ctx.font = "bold 19px Courier";
+          ctx.fillText(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+        }
       }
+      //If the Player is trying to buy an item
       else{
+
+        this.itemCost = masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6];
+
         //Draw arrow to indicate direction of transaction
         ctx.beginPath();
         ctx.moveTo(this.buttonList[5][1] + this.buttonList[5][3], this.buttonList[5][2]);
@@ -396,10 +429,19 @@ class ShopScreen{
         //Print text
         ctx.font = "19px Courier";
         ctx.fillStyle = "#cccccc";
-        ctx.fillText("Buy:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
-        ctx.fillText("for m" + masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6] + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
-        ctx.font = "bold 19px Courier";
-        ctx.fillText(masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+
+        //Check whetehr or not the Player has enough Malachite to buy the item
+        if(this.itemCost > player.malachite){
+          this.hasSufficientFunds = false;
+          ctx.fillText("Insufficient funds!", this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+        }
+        else{
+          this.hasSufficientFunds = true;
+          ctx.fillText("Buy:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
+          ctx.fillText("for m" + masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6] + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
+          ctx.font = "bold 19px Courier";
+          ctx.fillText(masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+        }
       }
     }
 
