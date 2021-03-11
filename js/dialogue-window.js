@@ -9,13 +9,17 @@ class DialogueWindow{
 
   }//end constructor()
 
-  init(text, audio, xPos, yPos, width, height){
+  init(text, audio, xPos, yPos, width, height, progressCampaign){
     //console.log(text[0]);
 
     ctx.save();
 
+    //Store whether ort not the campaing should progress after the dialoge is written
+    this.progressCampaign = progressCampaign;
+
     setGameMode(6, 0);
 
+    //Ensure we can return to the previous game mode when the dialoge is done
     previousGameMode = gameMode;
 
     //Keep the screen from updating every time the mouse moves
@@ -81,8 +85,11 @@ class DialogueWindow{
   ////////////////////////////////////////////////////////////////////////////////
   exitDialogue(){
 
-    //Update the campaign progress tracker of the player
-    player.updateCampaignProgress();
+    //Only update campain progress if directed to
+    if(this.progressCampaign == true){
+      //Update the campaign progress tracker of the player
+      player.updateCampaignProgress();
+    }
 
     //Return to the World Map
     setGameMode(5, 0);

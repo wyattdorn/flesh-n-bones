@@ -70,7 +70,14 @@ class CombatLogic{
   giveDroppedItems(){
     //Itterate through each entry, and grant the item(s) to the player
     for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
-      player.giveItem(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0], mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]);
+      //Check if it's malachite or an item
+      if(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1] == 4){
+        player.malachite += mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0];
+      }
+      //If it's an item, give the Player the proper item
+      else{
+        player.giveItem(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0], mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]);
+      }
     }
 
     //Update the player's progress for this location
@@ -111,6 +118,9 @@ class CombatLogic{
     if(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]] == undefined ||
        mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length == 0){
       ctx.fillText("None.", this.startLocation[0] + 10 + this.xOffset, this.startLocation[1] + 60);
+      //Update the player's progress for this location
+      player.updateLocationProgress(this.combatLocation);
+      player.updateCampaignProgress();
       ctx.restore();
       return;
     }
@@ -132,6 +142,8 @@ class CombatLogic{
         case 3:
           this.output = "~ " + items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
+        case 4:
+          this.output = "~ " + mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0] + " malachite";
       }
       ctx.fillText(this.output, this.startLocation[0] + 10 + this.xOffset, this.startLocation[1] + 60 + ( x * 30 ) + this.yOffset);
       //If there are more than 10 items dropped, print the rest in a second column
@@ -372,11 +384,10 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   update(){
 
+    //Checks flag for end of combat
     if(this.checkforCombatEnd()[0]){
-      console.log(this.checkforCombatEnd()[1]);
-
+      //If combat has ended, notify the Player and display the combat log
       myCombatScreen.printMessageBar(this.displayMessage);
-
       this.toggleCombatLog();
 
       myCombatScreen.updateScreen(1,1,1);
@@ -386,9 +397,7 @@ class CombatLogic{
         }, 100);
 
       }
-
       this.endCombat();
-
       return;
     }
 
@@ -467,7 +476,12 @@ class CombatLogic{
     if(myCombatScreen.drawExpandedMessageBar){
       return;
     }
+
+    this.malachiteLost = Math.ceil(player.malachite/10);
+
     console.log("Run away!");
+
+    player.malachite -= this.malachiteLost;
 
     //Remove equipment buffs from all friendly creatures
     for(var x = 0; x < player.myCombatCreatures.length; x++){
@@ -475,6 +489,12 @@ class CombatLogic{
     }
 
     setGameMode(5);
+
+    dialogueWindow.init(  ["You escaped that encounter, but lost " + this.malachiteLost + " malachite in the process."
+                          ],
+                          [],
+                          200, 100, 1250, 280, false);
+
   }//end runAway()
 
   //////////////////////////////////////////////////////////////////////////////

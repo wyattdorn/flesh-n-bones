@@ -380,6 +380,9 @@ class PlayerCharacter extends Creature{
     this.strength = Math.floor((this.might * this.fortitude)/2);
     this.mind = Math.floor((this.intelligence * this.wits)/2);
 
+    //Calculate the (nonexistant) buffs to avoid stats appearing as NaN in the Creature Editor
+    this.calculateBuffs();
+
     this.currentHP = this.maxHP;
 
     this.currentSpirit = this.maxSpirit; //spirit is mana

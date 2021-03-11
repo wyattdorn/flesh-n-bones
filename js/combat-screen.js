@@ -90,7 +90,6 @@ class CombatScreen{
       //Draw all lines of text in the array in order from the top down
       for(let x = this.eventLog.length - 1; x >= 0; x--){
         ctx.fillText(this.eventLog[x], this.unitBarWidth + 5, 786 - 20 * (x + 13 - this.eventLog.length));
-        console.log(this.eventLog[x]);
       }
 
     }

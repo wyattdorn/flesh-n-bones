@@ -33,8 +33,8 @@ class Souls{
     this.list[5] = [5, "Al",      [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
 
     this.list[6] = [6, "Aglak",    [1,10,5,3,3,3,2,2,4,0],""];//3, 16, 16, 7, 7, 2, 19, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
-    this.list[7] = [7, "Bifgur",   [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
-    this.list[8] = [8, "Chizlo",   [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
+    this.list[7] = [7, "Bifgur",   [1,10,5,3,3,3,2,2,4,0], "Al calims to have once slain a dragon, many believe the story."];
+    this.list[8] = [8, "Chizlo",   [1,10,5,3,3,3,2,2,4,0], "Al calims to have once slain a dragon, many believe the story."];
     this.list[9] = [9, "D",        [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
     this.list[10] = [10, "E",      [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];
     this.list[11] = [11, "F",      [3, 9, 16, 7, 7, 9, 9, 8, 13], "Al calims to have once slain a dragon, many believe the story."];

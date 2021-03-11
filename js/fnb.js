@@ -28,6 +28,8 @@ var masterInventoryListNames;
 
 let gameVolume;
 
+let campaignMode;
+
 var testRoom;
 
 var imageLoader, audioLoader;
@@ -101,6 +103,9 @@ function init(){
   ctx.fillStyle = "#cccccc";
   ctx.fillText("LOADING...", 600, 300);
 
+  //Define whetehr or not the game begins in the campaign
+  campaignMode = true;
+
   //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
 
@@ -109,10 +114,25 @@ function init(){
   mediaLoader.addCompletionListener(function(){
     //Load all images before launching the starting screen
     setGameMode(gameMode);
-    dialogueWindow.init(    ["Flesh and Bones: RPG",
-                            "You are currently in test-mode. Press the '1' key on the keyboard at any time to begin the campaign."],
-                            [null,audioLoader.welcomeAud],
-                            200, 100, 1250, 280);
+
+
+    givePlayerSouls();
+    player.updateImpetus();
+    generateCombatSquad();
+    generateDummyBodies();
+
+    //If the game is beginning in Campaign mode
+    if(campaignMode){
+      launchCampaign();
+    }
+    //If the game is not beginning in Campaign mode (test mode)
+    else{
+      testRoom = new TestRoom(ctx, canvas);
+      dialogueWindow.init(    ["Flesh and Bones: RPG",
+                              "You are currently in test-mode. Press the '1' key on the keyboard at any time to begin the campaign."],
+                              [null,audioLoader.welcomeAud],
+                              200, 100, 1250, 280, false);
+    }
 
   });
 
@@ -121,12 +141,9 @@ function init(){
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
 
-  testRoom = new TestRoom(ctx, canvas);
 
-  givePlayerSouls();
-  player.updateImpetus();
-  generateCombatSquad();
-  generateDummyBodies();
+
+
 
   //////////////////////////////////////////////////////////////////////////////////////
   //    END TEST CODE                                                                 //
@@ -226,8 +243,10 @@ function keyboardEvent(e) {
       default:
 
     }
-
+    //Enter test room when the ` key is pressed
     if(code == 192){
+      //Do not allow the Player to enter the test room in campaign mode
+      if(campaignMode){return;}
       //If we are in the world map, stop the function that updates the screen every time the mouse is moved
       if(gameMode==5){
         canvas.onmousemove = null;
@@ -237,14 +256,19 @@ function keyboardEvent(e) {
     }
     //If the '1' key is pressed, laungh the campaign
     else if(code == 49){
-      //audioLoader.campaignAud.play();
+      //Do not allow this option in campaign mode
+      if(campaignMode){return;}
       launchCampaign();
 
     }
+    //If the 2 key is pressed, nothing happens
     else if(code == 50){
-      setGameMode(6,0);
+      //removed for now
     }
+    //If the 3 key is pressed, enter the shop screeen
     else if(code == 51){
+      //Do not allow this option in campaign mode
+      if(campaignMode){return;}
       setGameMode(7);
     }
 }//end keyboardEvent()
