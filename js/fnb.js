@@ -73,6 +73,7 @@ function init(){
   imageLoader = new ImageLoader(ctx, canvas);
   audioLoader = new AudioLoader(ctx, canvas);
   worldMap = new WorldMap(ctx, canvas);
+  crystalCavernsMap = new CrystalCavernsMap(ctx, canvas);
   mapLocations = new MapLocations();
   dialogueWindow = new DialogueWindow(ctx, canvas);
 
@@ -104,7 +105,7 @@ function init(){
   ctx.fillText("LOADING...", 600, 300);
 
   //Define whetehr or not the game begins in the campaign
-  campaignMode = true;
+  campaignMode = false;
 
   //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
@@ -161,6 +162,8 @@ function setGameMode(mode, index){
   // 3=Creature Editor
   // 4=Player screen
   // 5=World Map
+  // 8=In the Crystal Caverns
+  // 7=Shop Screen
 
   gameMode = mode;
 
@@ -183,6 +186,10 @@ function setGameMode(mode, index){
       break;
     case 7: //Shop Screen
       myShopScreen.init();
+      break;
+    case 8: //Crystal Caverns Screen
+      crystalCavernsMap.init();
+      //worldMap.updateScreen();
       break;
     case -1:
       testRoom.init();
@@ -264,6 +271,7 @@ function keyboardEvent(e) {
     //If the 2 key is pressed, nothing happens
     else if(code == 50){
       //removed for now
+      setGameMode(8);
     }
     //If the 3 key is pressed, enter the shop screeen
     else if(code == 51){
@@ -315,6 +323,9 @@ function logMouseClick(e){
     break;
   case 7:
     myShopScreen.shopScreenMapClickHandler(clickPosition.x,clickPosition.y);
+    break;
+  case 8:
+    crystalCavernsMap.crystalCavernsClickHandler(clickPosition.x,clickPosition.y);
     break;
   case -1:
     testRoom.testRoomClickHandler(clickPosition.x,clickPosition.y);
