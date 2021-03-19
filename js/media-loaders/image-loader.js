@@ -14,6 +14,15 @@ class ImageLoader{
 
       mediaLoader = new PxLoader();
 
+      this.directionArrowsImg = mediaLoader.addImage('media/images/cave-tiles/direction-arrows-hollow.png'),
+      this.caveExitButtonActive = mediaLoader.addImage('media/images/cave-tiles/cave-exit-button-active.png'),
+      this.caveExitButtonInactive = mediaLoader.addImage('media/images/cave-tiles/cave-exit-button-inactive.png'),
+      this.caveExitTile = mediaLoader.addImage('media/images/cave-tiles/cave-exit.png'),
+      this.caveFloorTile = mediaLoader.addImage('media/images/cave-tiles/cave-floor.png'),
+      this.darkCaveTile = mediaLoader.addImage('media/images/cave-tiles/cave-blocks-dark.png'),
+      this.lightCaveTile = mediaLoader.addImage('media/images/cave-tiles/cave-blocks-light.png');
+
+      /////////////////////////////HEAD SPRITES/////////////////////////////////
       this.armoredHeadImg = mediaLoader.addImage('media/images/heads/armored-head.png'),
       this.noHeadImg = mediaLoader.addImage('media/images/heads/no-head.png'),
       this.skeletonPirateHeadImg = mediaLoader.addImage('media/images/heads/skeleton-pirate-head.png'),

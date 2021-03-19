@@ -36,27 +36,33 @@ class MapLocations{
     //name temperment  bones Guts  skin  stats
 
     this.encounterList[0] = [0];
+
+    //Goblin Woods
     this.encounterList[1] = [1, [["Glibglob", 0, 1, 4, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Frank", 0, 1, 4, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [["Jopp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg], ["Kitl", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.goblinImg]],
                                 [["Chungus", 0, 1, 15, 10, 5, 3, 6, 1, 5, 5, imageLoader.goblinImg]]];
 
+    //Bleak Barrows
     this.encounterList[2] = [2, [["Aglar", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 [["Aglar", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Girlov", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg], ["Aglar", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.skeletonImg]],
                                 ];
 
+    //Groknag's Cave
     this.encounterList[3] = [3, [["Jopp", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Kitl", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg], ["Gak", 0, 1, 5, 1, 2, 2, 2, 2, 2, 2, imageLoader.orcImg]],
                                 ];
 
+    //Feragolis
     this.encounterList[4] = [4, [["Aglar", 2, 1, 7, 1, 7, 7, 7, 7, 7, 7, imageLoader.fireElementalImg]],
                                 [[/*three goblins*/], [/*some loot*/]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
 
+    //Den of Thieves
     this.encounterList[5] = [5, [["Pete", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Rolf", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Jorg", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg]],
                                 [[/*Boss goblin*/], [/*good loot*/]]];
 
+    //Crystal Caverns
     this.encounterList[6] = [6, [["Zipp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg], ["Zopp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg]],
-                                [[/*three goblins*/], [/*some loot*/]],
-                                [[/*Boss goblin*/], [/*good loot*/]]];
+                                [["Zapp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.skullKnightImg]] ];
 
     this.encounterList[7] = [7, [["Aglar", 2, 1, 7, 1, 7, 7, 7, 7, 7, 7, imageLoader.skullKnightImg]],
                                 [[/*three goblins*/], [/*some loot*/]],

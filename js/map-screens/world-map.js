@@ -424,6 +424,9 @@ class WorldMap{
               if(x == 2){
                 setGameMode(7);
               }
+              else if(x == 6){
+                setGameMode(8);
+              }
               //do nothing for now...
             }
             //If the location is still hostile, we enter combat
