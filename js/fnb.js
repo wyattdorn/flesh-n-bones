@@ -19,9 +19,12 @@ let campaign;
 var player;
 var enemyCreatures; //arrays of enemy and allied creatures
 
+let heads;
+let items;
+let itemFunctions;
+
 var skills;
 var combatLogi;
-var items;
 var head, body, guts, souls;
 var organs, masterInventoryList;
 var masterInventoryListNames;
@@ -36,6 +39,8 @@ var imageLoader, audioLoader;
 let mediaLoader;
 
 function init(){
+
+
 
   gameVolume = 100;
 
@@ -84,18 +89,24 @@ function init(){
   //An integer to represent the previous game state (for use with the "BACK" button)
   previousGameMode = 5;
 
+
+  heads = [];
+  items = [];
+  itemFunctions = [];
+
+  generateItems();
+
   campaign = new Campaign();
   souls = new Souls();
   head = new Head();
   body = new Body();
   guts = new Guts();
-  items = new Item();
   player = new Deity();
   skills = new Skill();
   organs = [body, guts, head];
   statList = ["HP", "Spirit", "Dexterity", "Agility", "Might", "Fortitude", "Intel", "Wisdom"];
   masterInventoryList = [organs[0], organs[1], organs[2], items];
-  masterInventoryListNames = ["Body", "Guts", "Head", "Item"];
+  masterInventoryListNames = ["Body", "Guts", "Head", "Items"];
 
   //The campaign has not been started, yet
   player.campaignProgress = [0,0];
@@ -141,7 +152,6 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
-
 
 
 

@@ -57,7 +57,7 @@ class Creature {
     }
 
     //Search through all equippeditems to see if a buff exists
-    for(let x = 0; x < 4; x++){
+    for(let x = 0; x < 3; x++){
       if(masterInventoryList[x].list[this.myInventory[x]][4]){
         this.myBuffs[masterInventoryList[x].list[this.myInventory[x]][4][0]] += masterInventoryList[x].list[this.myInventory[x]][4][1];
       }
@@ -182,10 +182,17 @@ class Creature {
   }//end giveItem()
 
   ////////////////////////////////////////////////////////////////////////////////
-  // Equips a given Item to this Creature, "index" is the item's index in teh player's inventory
+  // Equips a given Item to this Creature, "index" is the item's index in the Player's inventory
   ////////////////////////////////////////////////////////////////////////////////
   equipFromInventory(index, type){
-    this.masterIndex = masterInventoryList[type].list[player.inventoryList[type][index]][0];
+    //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+    if(type == 3){
+      console.log("Looking at items");
+      this.masterIndex = masterInventoryList[type][player.inventoryList[type][index]].idNum;
+    }
+    else {
+      this.masterIndex = masterInventoryList[type].list[player.inventoryList[type][index]][0];
+    }
     this.equip(this.masterIndex, type);
     player.removeInventoryItem(index, type);
   }//end equipFromInventory()

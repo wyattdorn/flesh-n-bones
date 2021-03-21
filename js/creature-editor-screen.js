@@ -222,14 +222,16 @@ class CreatureEditorScreen{
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Print the name of the organ
-        ctx.fillText(items.list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][1], this.creatureListWidth + 160 + (200 * x), 650);
+        ctx.fillText(items[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]].name, this.creatureListWidth + 160 + (200 * x), 650);
+        //ctx.fillText(items.list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][1], this.creatureListWidth + 160 + (200 * x), 650);
         ctx.font = "10px Arial";
         ctx.fillStyle = "#999999";
         ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
         ctx.font = "15px Courier";
         ctx.fillStyle = "#aaaaaa";
         //Print the flavor text for the organ
-        drawMultipleLines(items.list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        drawMultipleLines(items[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]].description, 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        //drawMultipleLines(items.list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Draw the "EQUIP" buttons
@@ -551,10 +553,12 @@ class CreatureEditorScreen{
     //Draw name and description of item
     ctx.font = "25px Arial";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText(items.list[player.myCreatures[this.selectedCreature].myItem][1], 220, 515);
+    ctx.fillText(items[player.myCreatures[this.selectedCreature].myItem].name, 220, 515);
+    //ctx.fillText(items.list[player.myCreatures[this.selectedCreature].myItem][1], 220, 515);
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(items.list[player.myCreatures[this.selectedCreature].myItem][3], 21, 20, 220, 540);
+    drawMultipleLines(items[player.myCreatures[this.selectedCreature].myItem].description, 21, 20, 220, 540);
+    //drawMultipleLines(items.list[player.myCreatures[this.selectedCreature].myItem][3], 21, 20, 220, 540);
 
     //Draw "UNEQUIP" buttons
     ctx.font = "15px Arial";
@@ -562,8 +566,8 @@ class CreatureEditorScreen{
     ctx.fillText("UNEQUIP", 280, 600);
 
     //Draw item icon
-
-    ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][5], 380, 495, 35, 25);
+    ctx.drawImage(items[player.myCreatures[this.selectedCreature].myItem].image, 380, 495, 35, 25);
+    //ctx.drawImage(items.list[player.myCreatures[this.selectedCreature].myItem][5], 380, 495, 35, 25);
 
     ctx.restore();
   }//end drawEquippedItem()
@@ -740,7 +744,7 @@ class CreatureEditorScreen{
         this.selectedOrganType = 3;
         this.organScrollIndex = 0;
         this.updateScreen();
-        console.log("ITEMS");
+        console.log("ITEM");
       }
     }
 

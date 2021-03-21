@@ -1,2 +1,2 @@
 -Clicking midway down the face of the skulls beneath the Unit Bar returns an error from the selectFriendlyUnit() function in combat-logic.
--Attacking a dead enemy still uses an action
+-tf01 = Temporary fix needed when transitioning items/artifacts/organs to the new data structure schema

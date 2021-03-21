@@ -118,12 +118,24 @@ class ShopScreen{
     //If the Player is selling an item...
     if(myShopScreen.selectedItem[0]=="player"){
       //Set the image (or organ color) to be drawn
-      this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(this.itemsToShow == 3){
+        this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]][player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]].image;
+      }
+      else{
+        this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+      }
     }
     //If the Player is buying from the shop
     else{
       //Set the image (or organ color) to be drawn
-      this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(this.itemsToShow == 3){
+        this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]][shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]].image;
+      }
+      else{
+        this.imageToDraw = masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][5];
+      }
     }
 
     console.log(myShopScreen.selectedItem[1]);
@@ -150,8 +162,6 @@ class ShopScreen{
 
     }
 
-
-
     ctx.restore();
 
   }//end drawSelectedItem()
@@ -167,12 +177,24 @@ class ShopScreen{
 
     //If the Player is selling
     if(myShopScreen.selectedItem[0]=="player"){
-      this.cost = Math.floor(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][6]/myShopScreen.discount);
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(myShopScreen.itemsToShow == 3){
+        this.cost = Math.floor(masterInventoryList[myShopScreen.selectedItem[1]][player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]].cost/myShopScreen.discount);
+      }
+      else{
+        this.cost = Math.floor(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][6]/myShopScreen.discount);
+      }
       player.malachite += this.cost;
       shopInventory.shopList[myShopScreen.shopLocation][4] -= this.cost;
 
       //Give item to shop
-      shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow].push(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][0]);
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(myShopScreen.itemsToShow == 3){
+        shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow].push(masterInventoryList[myShopScreen.selectedItem[1]][player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]].idNum);
+      }
+      else{
+        shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow].push(masterInventoryList[myShopScreen.selectedItem[1]].list[player.inventoryList[myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][0]);
+      }
       //Remove item from Player
       player.removeInventoryItem(myShopScreen.selectedItem[2], myShopScreen.itemsToShow);
 
@@ -180,13 +202,25 @@ class ShopScreen{
     //If the Player is buying
     else{
       //Determine cost of item
-      this.cost = masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][6];
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(myShopScreen.itemsToShow == 3){
+        this.cost = masterInventoryList[myShopScreen.selectedItem[1]][shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]].cost;
+      }
+      else{
+        this.cost = masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.selectedItem[1]][myShopScreen.selectedItem[2]]][6];
+      }
       //Remove money from Player and give it to shop
       player.malachite -= this.cost;
       shopInventory.shopList[myShopScreen.shopLocation][4] += this.cost;
 
       //Give item to Player
-      player.giveItem(masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow][myShopScreen.selectedItem[2]]][0], myShopScreen.itemsToShow);
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(myShopScreen.itemsToShow == 3){
+        player.giveItem(masterInventoryList[myShopScreen.selectedItem[1]][shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow][myShopScreen.selectedItem[2]]].idNum, myShopScreen.itemsToShow);
+      }
+      else{
+        player.giveItem(masterInventoryList[myShopScreen.selectedItem[1]].list[shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow][myShopScreen.selectedItem[2]]][0], myShopScreen.itemsToShow);
+      }
       //Remove item from shop inventory
       shopInventory.shopList[myShopScreen.shopLocation][myShopScreen.itemsToShow].splice(myShopScreen.selectedItem[2], 1);
 
@@ -242,10 +276,20 @@ class ShopScreen{
     ctx.font = "19px Courier";
     ctx.fillStyle = "#ccc";
     for(let y = 0; y < player.inventoryList[this.itemsToShow].length; y++){
-      ctx.fillStyle = "#cccccc";
-      ctx.fillText(masterInventoryList[this.itemsToShow].list[player.inventoryList[this.itemsToShow][y]][1], this.menuList[1][1] + 15, this.menuList[1][2]+(23 * (y+1)));
-      ctx.fillStyle = "#589385"
-      ctx.fillText("m" + Math.floor(masterInventoryList[this.itemsToShow].list[player.inventoryList[this.itemsToShow][y]][6] / this.discount), this.menuList[1][1] + 255, this.menuList[1][2]+(23 * (y+1)));
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(this.itemsToShow == 3){
+        ctx.fillStyle = "#cccccc";
+        ctx.fillText(masterInventoryList[this.itemsToShow][player.inventoryList[this.itemsToShow][y]].name, this.menuList[1][1] + 15, this.menuList[1][2]+(23 * (y+1)));
+        ctx.fillStyle = "#589385"
+        ctx.fillText("m" + Math.floor(masterInventoryList[this.itemsToShow][player.inventoryList[this.itemsToShow][y]].cost / this.discount), this.menuList[1][1] + 255, this.menuList[1][2]+(23 * (y+1)));
+      }
+      else{
+        ctx.fillStyle = "#cccccc";
+        ctx.fillText(masterInventoryList[this.itemsToShow].list[player.inventoryList[this.itemsToShow][y]][1], this.menuList[1][1] + 15, this.menuList[1][2]+(23 * (y+1)));
+        ctx.fillStyle = "#589385"
+        ctx.fillText("m" + Math.floor(masterInventoryList[this.itemsToShow].list[player.inventoryList[this.itemsToShow][y]][6] / this.discount), this.menuList[1][1] + 255, this.menuList[1][2]+(23 * (y+1)));
+      }
+
     }
 
     ctx.restore();
@@ -264,10 +308,19 @@ class ShopScreen{
     ctx.font = "19px Courier";
     ctx.fillStyle = "#ccc";
     for(let y = 0; y < shopInventory.shopList[this.shopLocation][this.itemsToShow].length; y++){
-      ctx.fillStyle = "#cccccc";
-      ctx.fillText(masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][y]][1], this.menuList[2][1] + 15, this.menuList[2][2]+(23 * (y+1)));
-      ctx.fillStyle = "#589385"
-      ctx.fillText("m"+masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][y]][6], this.menuList[2][1] + 255, this.menuList[2][2]+(23 * (y+1)));
+      //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+      if(this.itemsToShow == 3){
+        ctx.fillStyle = "#cccccc";
+        ctx.fillText(masterInventoryList[this.itemsToShow][shopInventory.shopList[this.shopLocation][this.itemsToShow][y]].name, this.menuList[2][1] + 15, this.menuList[2][2]+(23 * (y+1)));
+        ctx.fillStyle = "#589385"
+        ctx.fillText("m"+masterInventoryList[this.itemsToShow][shopInventory.shopList[this.shopLocation][this.itemsToShow][y]].cost, this.menuList[2][1] + 255, this.menuList[2][2]+(23 * (y+1)));
+      }
+      else{
+        ctx.fillStyle = "#cccccc";
+        ctx.fillText(masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][y]][1], this.menuList[2][1] + 15, this.menuList[2][2]+(23 * (y+1)));
+        ctx.fillStyle = "#589385"
+        ctx.fillText("m"+masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][y]][6], this.menuList[2][1] + 255, this.menuList[2][2]+(23 * (y+1)));
+      }
     }
 
 
@@ -350,23 +403,26 @@ class ShopScreen{
 
 
   //////////////////////////////////////////////////////////////////////////////
-  //
+  //  Select an item from the shop's inventory to buy
   //////////////////////////////////////////////////////////////////////////////
   selectShopItem(itemNum){
     if(itemNum <= shopInventory.shopList[this.shopLocation][this.itemsToShow].length - 1){
       console.log(itemNum + " good!");
-      console.log("Selected: " + masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][itemNum]][1]);
+      //console.log("Selected: " + masterInventoryList[this.itemsToShow].list[shopInventory.shopList[this.shopLocation][this.itemsToShow][itemNum]][1]);
       //this.isItemSelected = true;
       this.selectedItem = ["shop", this.itemsToShow, itemNum];
       this.updateScreen();
     }
   }//end selectShopItem()
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Select an item from the Player's inventory to sell
+  //////////////////////////////////////////////////////////////////////////////
   selectPlayerItem(itemNum){
     if(itemNum <= player.inventoryList[this.itemsToShow].length - 1){
       console.log(itemNum + " good!");
-      console.log(player.inventoryList[myShopScreen.itemsToShow][itemNum]);
-      console.log("Selected: " + masterInventoryList[myShopScreen.itemsToShow].list[player.inventoryList[myShopScreen.itemsToShow][itemNum]][1]);
+      //console.log(player.inventoryList[myShopScreen.itemsToShow][itemNum]);
+      //console.log("Selected: " + masterInventoryList[myShopScreen.itemsToShow].list[player.inventoryList[myShopScreen.itemsToShow][itemNum]][1]);
       //this.isItemSelected = true;
       this.selectedItem = ["player", this.itemsToShow, itemNum];
       this.updateScreen();
@@ -389,7 +445,13 @@ class ShopScreen{
       //If the Player is trying to sell an item
       if(this.selectedItem[0]=="player"){
 
-        this.itemCost = Math.floor(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][6]/this.discount);
+        //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+        if(this.itemsToShow == 3){
+          this.itemCost = Math.floor(masterInventoryList[this.selectedItem[1]][player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]].cost/this.discount);
+        }
+        else{
+          this.itemCost = Math.floor(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][6]/this.discount);
+        }
 
         //Draw arrow to indicate direction of transaction
         ctx.beginPath();
@@ -412,13 +474,25 @@ class ShopScreen{
           ctx.fillText("Sell:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
           ctx.fillText("for m" + this.itemCost + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
           ctx.font = "bold 19px Courier";
-          ctx.fillText(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+          if(this.itemsToShow == 3){
+            ctx.fillText(masterInventoryList[this.selectedItem[1]][player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]].name, this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          }
+          else{
+            ctx.fillText(masterInventoryList[this.selectedItem[1]].list[player.inventoryList[this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          }
         }
       }
       //If the Player is trying to buy an item
       else{
 
-        this.itemCost = masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6];
+        //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+        if(this.itemsToShow == 3){
+          this.itemCost = masterInventoryList[this.selectedItem[1]][shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]].cost;
+        }
+        else{
+          this.itemCost = masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6];
+        }
 
         //Draw arrow to indicate direction of transaction
         ctx.beginPath();
@@ -438,9 +512,17 @@ class ShopScreen{
         else{
           this.hasSufficientFunds = true;
           ctx.fillText("Buy:", this.buttonList[5][1]+15, this.buttonList[5][2]+30);
-          ctx.fillText("for m" + masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6] + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
-          ctx.font = "bold 19px Courier";
-          ctx.fillText(masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
+          if(this.itemsToShow == 3){
+            ctx.fillText("for m" + masterInventoryList[this.selectedItem[1]][shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]].cost + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
+            ctx.font = "bold 19px Courier";
+            ctx.fillText(masterInventoryList[this.selectedItem[1]][shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]].name, this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          }
+          else{
+            ctx.fillText("for m" + masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][6] + "?", this.buttonList[5][1]+15, this.buttonList[5][2]+80);
+            ctx.font = "bold 19px Courier";
+            ctx.fillText(masterInventoryList[this.selectedItem[1]].list[shopInventory.shopList[this.shopLocation][this.selectedItem[1]][this.selectedItem[2]]][1], this.buttonList[5][1]+15, this.buttonList[5][2]+55);
+          }
         }
       }
     }

@@ -15,6 +15,11 @@ class CrystalCavernsMap{
 
   init(){
 
+    this.treasuresCollected = 0;
+
+    //How likely veins of malachite are to spawn
+    this.luck = 13;
+
     this.timeInCave = 0;
 
     this.blockSize = 80;
@@ -35,22 +40,20 @@ class CrystalCavernsMap{
 
     this.randomMap[0][0] = 1;
 
-    console.log(this.randomMap);
-
     this.generateRandomMap();
-
     this.removeIsolatedCaves();
-
+    this.spawnTreasure();
     this.updateScreen();
 
 
   }//end init()
 
   //////////////////////////////////////////////////////////////////////////////
-  //
+  //  Redarwes map every time a graphical event occurs
   //////////////////////////////////////////////////////////////////////////////
   updateScreen(){
 
+    this.collectTreasure();
     this.clearScreen();
     this.drawRandomMap();
 
@@ -58,10 +61,51 @@ class CrystalCavernsMap{
 
 
   //////////////////////////////////////////////////////////////////////////////
-  //
+  //  Pick malachite up from the ground, and give it to the Player
+  //////////////////////////////////////////////////////////////////////////////
+  collectTreasure(){
+
+    if(this.randomMap[this.currentLocation[0]][this.currentLocation[1]] == 2){
+      console.log("TREASURE COLLECTED!");
+      this.randomMap[this.currentLocation[0]][this.currentLocation[1]] = 1;
+      this.treasuresCollected++;
+    }
+
+  }//end collectTreasure()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Places a random number of treasure around the cave
+  //////////////////////////////////////////////////////////////////////////////
+  spawnTreasure(){
+
+    this.numberOfTreasures = 0;
+
+    //Itterate through all cave floor tiles
+    for(let x = 0; x < this.mapSize[0]; x++){
+      for(let y = 0; y < this.mapSize[1]; y++){
+        //Generate a number 0-99, if that number is less than the luck value
+        //provided, a vein of malachite spawns there
+        if(this.randomMap[x][y] == 1 && Math.floor(Math.random() * 100) < this.luck){
+          this.randomMap[x][y]=2;
+          this.numberOfTreasures++;
+        }
+      }
+    }
+
+    //If no treasures spawned, go again
+    if(this.numberOfTreasures == 0){
+      console.log("OOPS!");
+      this.spawnTreasure();
+    }
+
+  }//end spawnTreasure()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Generates a random cave upon entry
   //////////////////////////////////////////////////////////////////////////////
   generateRandomMap(){
-    console.log(this.mapSize[0] + " = " + this.mapSize[1] + " = ")
 
     //0 to 99
     //Math.floor(Math.random() * 100);
@@ -94,11 +138,8 @@ class CrystalCavernsMap{
   //////////////////////////////////////////////////////////////////////////////
   removeIsolatedCaves(){
 
+    //An array of indices representing movement by 1 in each cardinal direction
     this.neighbors = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-
-    this.continueLoop = true;
-
-    this.counter = 0;
 
     //create a temporary grid for storing values
     this.tempGrid = [];
@@ -112,37 +153,23 @@ class CrystalCavernsMap{
     //Indicate that the initila position of the player is reachable
     this.tempGrid[this.initialLocation[0]][this.initialLocation[1]] = 1;
 
-
-
-    //loop until the entire main chamber
-    //while(this.continueLoop == true){
+    //To ensure the cave does not get too complex, no point may be more than 20 steps away from the entrance
     for(let c = 0; c < 20; c++){
-      //by default we assume the loop will not continue
-      this.continueLoop = false;
 
       for(let x = 0; x < this.mapSize[0]; x++){
         for(let y = 0; y < this.mapSize[1]; y++){
-          //if(this.tempGrid[x][y] == 1){console.log("apple");}
           for(let z = 0; z < 4; z++){
+            //If the step would take us out of the bounds of the map, do nothing
             if(x + this.neighbors[z][0] < 0 || y + this.neighbors[z][1] < 0 || x + this.neighbors[z][0] >= this.mapSize[0] || y + this.neighbors[z][1] >= this.mapSize[1]){
               //do nothing
             }
             else if(this.tempGrid[x][y] == 1 && this.randomMap[x + this.neighbors[z][0]][y + this.neighbors[z][1]] == 1 && this.tempGrid[x + this.neighbors[z][0]][y + this.neighbors[z][1]] !=1){
               this.tempGrid[x + this.neighbors[z][0]][y + this.neighbors[z][1]] = 1;
-              console.log(x + " - " + y + " - " + this.continueLoop + " - " + this.counter);
-              this.continueLoop = true;
             }
           }
-
         }
       }
-
-      this.counter++;
-
-
-    }//while(this.continueLoop == true);
-
-    console.log(this.tempGrid);
+    }
 
     this.randomMap = this.tempGrid;
 
@@ -174,15 +201,17 @@ class CrystalCavernsMap{
     ctx.fillStyle = "#aba";
     for(let x = 0; x < this.mapSize[0]; x++){
       for(let y = 0; y < this.mapSize[1]; y++){
+        //Empty floor
         if(this.randomMap[x][y] == 1){
-          ctx.fillStyle = "#aba";
-          //ctx.fillRect(x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
           ctx.drawImage(imageLoader.caveFloorTile, x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
+        }
+        //Treasure found
+        else if(this.randomMap[x][y] == 2){
+          ctx.drawImage(imageLoader.caveFloorTile, x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
+          ctx.drawImage(imageLoader.malachiteVeinImg, x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
         }
         //Walls of cave
         else if(this.randomMap[x][y] == -1){
-          ctx.fillStyle = "#2a1506";
-          //ctx.fillRect(x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
           ctx.drawImage(imageLoader.darkCaveTile, x*this.blockSize, y*this.blockSize, this.blockSize, this.blockSize);
         }
       }
@@ -262,6 +291,10 @@ class CrystalCavernsMap{
 
     if(this.currentLocation[0] == this.initialLocation[0] && this.currentLocation[1] == this.initialLocation[1]){
       setGameMode(5);
+      player.malachite += crystalCavernsMap.treasuresCollected*10;
+      dialogueWindow.init(    ["You exit the caves with " + crystalCavernsMap.treasuresCollected*10 + " malachite collected!"],
+                              [null],
+                              200, 100, 1250, 280, false);
     }
     else{
       console.log("Not at the exit point!");
@@ -273,7 +306,6 @@ class CrystalCavernsMap{
   //
   //////////////////////////////////////////////////////////////////////////////
   crystalCavernsClickHandler(clickPositionX,clickPositionY){
-    console.log("CAVE!");
 
     //Check if the "Exit Cave" button was clicked
     if(clickPositionX > canvas.width-(this.blockSize) && clickPositionY < this.blockSize){

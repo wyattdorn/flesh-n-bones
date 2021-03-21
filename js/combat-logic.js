@@ -140,7 +140,7 @@ class CombatLogic{
           this.output = "~ " + head.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
         break;
         case 3:
-          this.output = "~ " + items.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
+          this.output = "~ " + items[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]].name;
         break;
         case 4:
           this.output = "~ " + mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0] + " malachite";
@@ -615,10 +615,15 @@ class CombatLogic{
     //First, we check to see if the unit has an Item equipped
     if(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem!=0){
       //Display message announcing that the unit has used their item
-      this.displayMessage = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].name + " uses " + items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1] + "!";
+      this.displayMessage = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].name +
+                            " uses " +
+                            items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].name +
+                            "!";
+      //this.displayMessage = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].name + " uses " + items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1] + "!";
       myCombatScreen.printMessageBar(this.displayMessage);
       //Execute the items associated function
-      items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][2](player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
+      items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].function(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
+      //items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][2](player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
       console.log("Using equipped item!");
       //Remove the item from the unit, and update the screen
       player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem = 0;

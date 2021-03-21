@@ -14,6 +14,7 @@ class ImageLoader{
 
       mediaLoader = new PxLoader();
 
+      this.malachiteVeinImg = mediaLoader.addImage('media/images/cave-tiles/malachite-vein-small.png'),
       this.directionArrowsImg = mediaLoader.addImage('media/images/cave-tiles/direction-arrows-hollow.png'),
       this.caveExitButtonActive = mediaLoader.addImage('media/images/cave-tiles/cave-exit-button-active.png'),
       this.caveExitButtonInactive = mediaLoader.addImage('media/images/cave-tiles/cave-exit-button-inactive.png'),
