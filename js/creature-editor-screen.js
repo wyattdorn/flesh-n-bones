@@ -244,19 +244,14 @@ class CreatureEditorScreen{
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Print the name of the organ
-        //console.log(player.inventoryList[x + this.organScrollIndex][x]);
-        //console.log(organs[this.selectedOrganType].list[player.inventoryList[x + this.organScrollIndex][1]][1]);
-        ctx.fillText(organs[this.selectedOrganType].list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][1], this.creatureListWidth + 160 + (200 * x), 650);
+        ctx.fillText(masterInventoryList[this.selectedOrganType][player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]].name, this.creatureListWidth + 160 + (200 * x), 650);
         ctx.font = "10px Arial";
         ctx.fillStyle = "#999999";
         ctx.fillText(x + this.organScrollIndex, this.creatureListWidth + 160 + (200 * x), 780);
         ctx.font = "15px Courier";
         ctx.fillStyle = "#aaaaaa";
         //Print the flavor text for the organ
-        //console.log(player.inventoryList[this.selectedOrganType] [x + this.organScrollIndex] [3]);
-        //organs[this.selectedOrganType].list[player.inventoryList[x + this.organScrollIndex]][2]
-        drawMultipleLines(organs[this.selectedOrganType].list[player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
-        //drawMultipleLines(player.inventoryList[this.selectedOrganType][x + this.organScrollIndex][3], 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
+        drawMultipleLines(masterInventoryList[this.selectedOrganType][player.inventoryList[this.selectedOrganType][x + this.organScrollIndex]].description, 20, 20, this.creatureListWidth + 160 + (200 * x), 675);
         ctx.font = "20px Arial";
         ctx.fillStyle = "#cccccc";
         //Draw the "EQUIP" buttons
@@ -367,7 +362,7 @@ class CreatureEditorScreen{
       if(player.myCreatures[this.selectedCreature].memorizedSkills.length < 6){this.max = player.myCreatures[this.selectedCreature].memorizedSkills.length;}
       else{this.max = 6;}
       for(var x = 0; x < this.max; x++){
-        ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[x + this.skillScrollIndex][0]][2], 880, 140 + (x * 50));
+        ctx.fillText(masterSkillList[player.myCreatures[this.selectedCreature].memorizedSkills[x + this.skillScrollIndex][0]].name, 880, 140 + (x * 50));
         //ctx.fillText(player.myCreatures[this.selectedCreature].memorizedSkills[x][1], 1080, 125 + (x * 50));
         this.drawMemorizationBar(x + this.skillScrollIndex);
       }
@@ -375,10 +370,10 @@ class CreatureEditorScreen{
 
     ctx.font = "20px Arial";
     ctx.fillStyle = "#cccccc";
-    ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][2], 880, 470);
+    ctx.fillText(masterSkillList[player.myCreatures[this.selectedCreature].skillList[3]].name, 880, 470);
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[3]][7], 32, 20, 880, 500);
+    drawMultipleLines(masterSkillList[player.myCreatures[this.selectedCreature].skillList[3]].description, 32, 20, 880, 500);
 
     //draw scroll arrows
     ctx.beginPath();
@@ -401,7 +396,7 @@ class CreatureEditorScreen{
   //////////////////////////////////////////////////////////////////////////////
   drawMemorizationBar(index){
     ctx.save();
-    var percentMemorized = player.myCreatures[this.selectedCreature].memorizedSkills[index][1] / skills.skillList[player.myCreatures[this.selectedCreature].memorizedSkills[index][0]][8]; //.currentHP/player.myCreatures[creature].maxHP;
+    var percentMemorized = player.myCreatures[this.selectedCreature].memorizedSkills[index][1] / masterSkillList[player.myCreatures[this.selectedCreature].memorizedSkills[index][0]].usesUntilMastered; //.currentHP/player.myCreatures[creature].maxHP;
     ctx.font = "12px Arial";
     //Draw outline of HP Bar
     ctx.fillStyle = "black";
@@ -468,10 +463,10 @@ class CreatureEditorScreen{
       //Print the name & description of the Creature's equipped Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      ctx.fillText(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][1], 435, 40 + (200 * x));
+      ctx.fillText(masterInventoryList[x][player.myCreatures[this.selectedCreature].myOrgans[x]].name, 435, 40 + (200 * x));
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      drawMultipleLines(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][3], 21, 20, 435, 65 + (200 * x));
+      drawMultipleLines(masterInventoryList[x][player.myCreatures[this.selectedCreature].myOrgans[x]].description, 21, 20, 435, 65 + (200 * x));
 
       ctx.font = "15px Arial";
       ctx.fillStyle = "#cccccc";
@@ -512,19 +507,19 @@ class CreatureEditorScreen{
       //Print the name & description of the skills associated with this Creature's Organs
       ctx.font = "20px Arial";
       ctx.fillStyle = "#cccccc";
-      ctx.fillText(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][2], 670, 40 + (200 * x));
+      ctx.fillText(masterSkillList[player.myCreatures[this.selectedCreature].skillList[x]].name, 670, 40 + (200 * x));
       ctx.fillText("Buff: ", 670, 195 + (200 * x));
 
       ctx.font = "15px Courier";
       ctx.fillStyle = "#aaaaaa";
-      drawMultipleLines(skills.skillList[player.myCreatures[this.selectedCreature].skillList[x]][7], 20, 20, 670, 65 + (200 * x));
+      drawMultipleLines(masterSkillList[player.myCreatures[this.selectedCreature].skillList[x]].description, 20, 20, 670, 65 + (200 * x));
 
       //If the organ provides a buff, display the buff, otherwise print "none"
-      if(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][4] == false){
+      if(masterInventoryList[x][player.myCreatures[this.selectedCreature].myOrgans[x]].buff == false){
         this.buffOutput = "none";
       }
       else{
-        this.buffOutput = this.printBuff(organs[x].list[player.myCreatures[this.selectedCreature].myOrgans[x]][4]);
+        this.buffOutput = this.printBuff(masterInventoryList[x][player.myCreatures[this.selectedCreature].myOrgans[x]].buff);
       }
       ctx.fillText(this.buffOutput, 720, 193 + (200 * x));
 

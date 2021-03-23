@@ -58,8 +58,8 @@ class Creature {
 
     //Search through all equippeditems to see if a buff exists
     for(let x = 0; x < 3; x++){
-      if(masterInventoryList[x].list[this.myInventory[x]][4]){
-        this.myBuffs[masterInventoryList[x].list[this.myInventory[x]][4][0]] += masterInventoryList[x].list[this.myInventory[x]][4][1];
+      if(masterInventoryList[x][this.myInventory[x]].buff){
+        this.myBuffs[masterInventoryList[x][this.myInventory[x]].buff[0]] += masterInventoryList[x][this.myInventory[x]].buff[1];
       }
     }
     //console.log(this.myBuffs);
@@ -122,7 +122,7 @@ class Creature {
     //Check all the skills in this Creature's list of memorized skills
     for(var x = 0; x < this.memorizedSkills.length; x++){
       if(this.memorizedSkills[x][0] == skillNum){
-        if(this.memorizedSkills[x][1] < skills.skillList[this.memorizedSkills[x][0]][8]){
+        if(this.memorizedSkills[x][1] < masterSkillList[this.memorizedSkills[x][0]].usesUntilMastered){
           this.memorizedSkills[x][1]++;
           console.log("ALL FULL!");
         }
@@ -185,14 +185,9 @@ class Creature {
   // Equips a given Item to this Creature, "index" is the item's index in the Player's inventory
   ////////////////////////////////////////////////////////////////////////////////
   equipFromInventory(index, type){
-    //TEMPORARY FIX tf01 - Until the data structures for organs are rewritten, this if/else is the workaround
-    if(type == 3){
-      console.log("Looking at items");
-      this.masterIndex = masterInventoryList[type][player.inventoryList[type][index]].idNum;
-    }
-    else {
-      this.masterIndex = masterInventoryList[type].list[player.inventoryList[type][index]][0];
-    }
+
+    this.masterIndex = masterInventoryList[type][player.inventoryList[type][index]].idNum;
+
     this.equip(this.masterIndex, type);
     player.removeInventoryItem(index, type);
   }//end equipFromInventory()
@@ -266,19 +261,19 @@ class Creature {
       player.inventoryList[organType].push(this.myOrgans[organType]);
     }
     switch (organType) {
-      case 0: //bone
+      case 0: //body
           this.myBody = index;
-          this.skillList[0] = body.list[this.myBody][2];
-          this.imgSrc = body.list[this.myBody][4];
+          this.skillList[0] = bodyList[this.myBody].function;
+          this.imgSrc = bodyList[this.myBody].image;
         break;
       case 1: //guts
           this.myGuts = index;
-          this.skillList[1] = guts.list[this.myGuts][2];
+          this.skillList[1] = gutsList[this.myGuts].function;
           //console.log(index + " ---guts--- " + organType);
         break;
       case 2: //head
           this.myHead = index;
-          this.skillList[2] = head.list[this.myHead][2];
+          this.skillList[2] = headList[this.myHead].function;
           //console.log(index + " ---head--- " + organType);
         break;
     }

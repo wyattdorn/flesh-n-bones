@@ -1,4 +1,4 @@
-
+//Written by Wyatt Dorn
 
 class MapLocations{
 

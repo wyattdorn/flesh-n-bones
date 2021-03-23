@@ -128,19 +128,11 @@ class CombatLogic{
     //Draw list of drops
     for(var x = 0; x < mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]].length; x++){
       //Check the type of loot, and print the information accordingly
-      this.output = ""
-      switch(mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1]){
-        case 0:
-          this.output = "~ " + body.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
-        break;
-        case 1:
-          this.output = "~ " + guts.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
-        break;
-        case 2:
-          this.output = "~ " + head.list[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]][1];
-        break;
-        case 3:
-          this.output = "~ " + items[mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]].name;
+      this.output = "";
+      this.dropType = mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][1];
+      switch(this.dropType){
+        case 0: case 1: case 2: case 3:
+          this.output = "~ " + masterInventoryList[this.dropType][mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0]].name;
         break;
         case 4:
           this.output = "~ " + mapLocations.lootList[this.combatLocation][player.locationProgress[this.combatLocation]][x][0] + " malachite";
@@ -149,8 +141,6 @@ class CombatLogic{
       //If there are more than 10 items dropped, print the rest in a second column
       if(x > 10){this.xOffset = 300; this.yOffset = -360;}
     }
-
-
 
     //Add the loot to the player's inventory
     this.giveDroppedItems();
@@ -272,8 +262,9 @@ class CombatLogic{
   // Pass in creature Object and execute the waiting skill upon the given target
   //////////////////////////////////////////////////////////////////////////////
   executeSkill(target){
-    if(player.myCreatures[ player.myCombatCreatures[this.waitingFunction[0]] ].currentSpirit >= skills.skillList[this.waitingFunction[1]][6]){
-      skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
+    if(player.myCreatures[ player.myCombatCreatures[this.waitingFunction[0]] ].currentSpirit >= masterSkillList[this.waitingFunction[1]].cost){
+      console.log(masterSkillList[this.waitingFunction[1]]);
+      masterSkillList[this.waitingFunction[1]].function(player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].hasAction = false;
       //this.update();
@@ -281,7 +272,7 @@ class CombatLogic{
       if(this.checkCreatureStatuses()){
         myCombatScreen.updateScreen(1,0,1);
       }*/
-      player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].removeSpirit(skills.skillList[this.waitingFunction[1]][6]);
+      player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].removeSpirit(masterSkillList[this.waitingFunction[1]].cost);
 
     }
     else{
@@ -298,7 +289,7 @@ class CombatLogic{
 
     if(unitNum < player.myCombatCreatures.length){
       //If there is a waiting defensive skill, we act upon it
-      if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+      if(this.waitingFunction[0] != -1 && masterSkillList[this.waitingFunction[1]].target == 3){
         //execute stored skill
         this.executeSkill(player.myCreatures[player.myCombatCreatures[unitNum]]);
         this.clearWaitingFunction();
@@ -320,7 +311,7 @@ class CombatLogic{
   selectEnemyUnit(unitNum){
     console.log("Clicked enemy: " + unitNum);
     //If there is a waiting offesnive skill, we act upon it
-    if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 4){
+    if(this.waitingFunction[0] != -1 && masterSkillList[this.waitingFunction[1]].target == 4){
       this.executeSkill(enemyCreatures[unitNum]);
       this.clearWaitingFunction();
       //this.update();
@@ -449,7 +440,7 @@ class CombatLogic{
           }
           //Have AI pick a target from the list of valid targets
           this.target = combatLogi.newAI.list[enemyCreatures[x].temperment][1](this.validTargets);
-          skills.skillList[1][1](enemyCreatures[x], player.myCreatures[this.validTargets[this.target]]);
+          masterSkillList[1].function(enemyCreatures[x], player.myCreatures[this.validTargets[this.target]]);
         }
         console.log(this.validTargets.length);
       }
@@ -524,13 +515,13 @@ class CombatLogic{
     }
 
     //First, we check that the unit has enough Spirit to use the selected ability
-    if(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].currentSpirit >= skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][6]){
-      switch(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][3]){
+    if(player.myCreatures[player.myCombatCreatures[this.selectedAlly]].currentSpirit >= masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]].cost){
+      switch(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]].target){
         //Skill requires a target and is then stored
         case 4: case 3:
         //We store the unit number and skill number for the skill waiting for a target to be selected
         combatLogi.waitingFunction = [this.selectedAlly, player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]];
-        console.log(skills.skillList[player.myCreatures[player.myCombatCreatures[this.selectedAlly]].skillList[skillNum]][2] + " stored for " + player.myCreatures[player.myCombatCreatures[this.selectedAlly]].name);
+        console.log(masterSkillList[player.myCreatures[player.myCombatCreatures[this.selectedAlly]].skillList[skillNum]].name + " stored for " + player.myCreatures[player.myCombatCreatures[this.selectedAlly]].name);
         //Spirit is not spent until the skill is actually used.
         break;
 
@@ -541,9 +532,9 @@ class CombatLogic{
         //Skill does not require a target and is executed immediately
         case 1: case 2: case 5: case 6: case 7:
           //Now we execute the skill, and decrement the unit's Spirit accordingly
-          skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][1](player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
+          masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]].function(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]]);
           player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].learnSkill(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]);
-          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].removeSpirit(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]][6]);
+          player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].removeSpirit(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[skillNum]].cost);
           //We note that the unit has acted this round
           player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].hasAction = false;
           //Update the Unit Bar to reflect the Spirit spent
@@ -726,7 +717,7 @@ class CombatLogic{
       else if(clickPositionX < myCombatScreen.unitBarWidth){
         this.clickedField = [2, 0, Math.floor(clickPositionY/90)];
 
-        if(this.waitingFunction[0] != -1 && skills.skillList[this.waitingFunction[1]][3] == 3){
+        if(this.waitingFunction[0] != -1 && masterSkillList[this.waitingFunction[1]].target == 3){
           //If we clicked on an ally, and the waiting function targets an ally
           console.log("Checking waiting function. " + Math.floor(clickPositionY/90));
           this.selectFriendlyUnit(Math.floor(clickPositionY/90));
@@ -799,8 +790,8 @@ class CombatLogic{
   //  Checks waiting function and acts upon it
   //////////////////////////////////////////////////////////////////////////////
   checkWaitingFunction(){
-    console.log("checkWaitingFunction() " + skills.skillList[combatLogi.waitingFunction[1]][3]);
-    switch(skills.skillList[combatLogi.waitingFunction[1]][3]){
+    console.log("checkWaitingFunction() " + masterSkillList[combatLogi.waitingFunction[1]].target);
+    switch(masterSkillList[combatLogi.waitingFunction[1]].target){
       case 4: //targets enemy
       combatLogi.waitingFunction = [player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]], player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2][0]];
       console.log(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2][0] + " to " + combatLogi.waitingFunction[1]);
@@ -809,7 +800,7 @@ class CombatLogic{
 
       case 3: //targets ally
         console.log(player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2][0] + " t3o " + combatLogi.waitingFunction[1]);
-        skills.skillList[combatLogi.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[combatLogi.waitingFunction[0]]], player.myCreatures[player.myCombatCreatures[target]]);
+        masterSkillList[combatLogi.waitingFunction[1]].function(player.myCreatures[player.myCombatCreatures[combatLogi.waitingFunction[0]]], player.myCreatures[player.myCombatCreatures[target]]);
       break;
 
 
@@ -820,7 +811,7 @@ class CombatLogic{
     }
 
     //console.log(skills.skillList[0][1](player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]));
-    skills.skillList[this.waitingFunction[1]][1](player.myCreatures[player.myCombatCreatures[this.selectedAlly]], enemyCreatures[this.selectedEnemy]);
+    masterSkillList[this.waitingFunction[1]].function(player.myCreatures[player.myCombatCreatures[this.selectedAlly]], enemyCreatures[this.selectedEnemy]);
     //skills.skillAttack(player.myCreatures[this.selectedAlly], enemyCreatures[this.selectedEnemy]);
     this.clearWaitingFunction();
     //this.update();

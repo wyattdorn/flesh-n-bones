@@ -1,4 +1,4 @@
-
+//Written by Wyatt Dorn
 
 class Equippable{
 
@@ -14,19 +14,19 @@ class Equippable{
 
 }
 
-class Head0 extends Equippable{
+class Head extends Equippable{
   Head0(idNum, name, myFunction, description, buff, image, cost){
     Equippable.call(this, idNum, name, myFunction, description, buff, image, cost);
   }//end constructor
 }
 
-class Body0 extends Equippable{
+class Body extends Equippable{
   Body0(idNum, name, myFunction, description, buff, image, cost){
     Equippable.call(this, idNum, name, myFunction, description, buff, image, cost);
   }//end constructor
 }
 
-class Guts0 extends Equippable{
+class Guts extends Equippable{
   Guts0(idNum, name, myFunction, description, buff, image, cost){
     Equippable.call(this, idNum, name, myFunction, description, buff, image, cost);
   }//end constructor

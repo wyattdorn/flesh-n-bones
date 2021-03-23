@@ -1,3 +1,5 @@
+//Written by Wyatt Dorn
+
 class ShopScreen{
 
   constructor(context, canvas){

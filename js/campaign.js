@@ -1,3 +1,4 @@
+//Written by Wyatt Dorn
 
 class Campaign{
 

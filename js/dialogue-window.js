@@ -124,7 +124,7 @@ class DialogueWindow{
 
     drawMultipleLines(this.text[this.currentDialogue], 40, 30, this.startLocation[0] + 10, this.startLocation[1] + 30);
 
-    console.log(this.text[this.currentDialogue]);
+    print(this.text[this.currentDialogue]);
 
   }//end drawText()
 

@@ -187,20 +187,20 @@ class CombatScreen{
       if(i%2==1){x = 675;}
       var y = 50;
       if(i>1){y=160;}
-      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][2], x + 30, canvas.height - this.controlBarHeight + y);
+      ctx.fillText(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]].name, x + 30, canvas.height - this.controlBarHeight + y);
       ctx.fillStyle = "#8099ff";
       ctx.font = "10px Arial";
       ctx.fillText("Cost: ", x - 12 , canvas.height - this.controlBarHeight + y - 12);
-      ctx.fillText(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]][6], x - 5 , canvas.height - this.controlBarHeight + y + 3);
+      ctx.fillText(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[i]].cost, x - 5 , canvas.height - this.controlBarHeight + y + 3);
     }
 
     //Drawing the descriptor text for the four skills
     ctx.font = "15px Courier";
     ctx.fillStyle = "#aaaaaa";
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0]][7], 42, 20, 265, canvas.height - this.controlBarHeight + 80);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1]][7], 42, 20, 665, canvas.height - this.controlBarHeight + 80);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2]][7], 42, 20, 265, canvas.height - this.controlBarHeight + 190);
-    drawMultipleLines(skills.skillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[3]][7], 42, 20, 665, canvas.height - this.controlBarHeight + 190);
+    drawMultipleLines(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[0]].description, 42, 20, 265, canvas.height - this.controlBarHeight + 80);
+    drawMultipleLines(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[1]].description, 42, 20, 665, canvas.height - this.controlBarHeight + 80);
+    drawMultipleLines(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[2]].description, 42, 20, 265, canvas.height - this.controlBarHeight + 190);
+    drawMultipleLines(masterSkillList[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].skillList[3]].description, 42, 20, 665, canvas.height - this.controlBarHeight + 190);
 
     //Print text to the "RUN" and "END TURN" buttons
     ctx.fillStyle = "#cccccc";

@@ -19,7 +19,8 @@ let campaign;
 var player;
 var enemyCreatures; //arrays of enemy and allied creatures
 
-let heads;
+let headList, bodyList, gutsList;
+let masterSkillList;
 let items;
 let itemFunctions;
 
@@ -40,10 +41,9 @@ let mediaLoader;
 
 function init(){
 
-
+  window.print = function(){};
 
   gameVolume = 100;
-
 
   //Add event listener for key presses
   window.addEventListener('keydown',this.keyboardEvent,false);
@@ -89,23 +89,22 @@ function init(){
   //An integer to represent the previous game state (for use with the "BACK" button)
   previousGameMode = 5;
 
-
-  heads = [];
-  items = [];
-  itemFunctions = [];
-
   generateItems();
+  generateHeads();
+  generateGuts();
+  generateBodies();
+  generateCombatSkills();
 
   campaign = new Campaign();
   souls = new Souls();
-  head = new Head();
-  body = new Body();
-  guts = new Guts();
+  //head = new Head();
+  //body = new Body();
+  //guts = new Guts();
   player = new Deity();
-  skills = new Skill();
+  //skills = new Skill();
   organs = [body, guts, head];
   statList = ["HP", "Spirit", "Dexterity", "Agility", "Might", "Fortitude", "Intel", "Wisdom"];
-  masterInventoryList = [organs[0], organs[1], organs[2], items];
+  masterInventoryList = [bodyList, gutsList, headList, items];
   masterInventoryListNames = ["Body", "Guts", "Head", "Items"];
 
   //The campaign has not been started, yet
@@ -117,6 +116,9 @@ function init(){
 
   //Define whetehr or not the game begins in the campaign
   campaignMode = false;
+
+  //If we are in campaign mode, disable all console.log calls
+  if(campaignMode){ console.log = function(){}};
 
   //for testing purposes, the game starts at the World Map Screen
   gameMode = 5;
