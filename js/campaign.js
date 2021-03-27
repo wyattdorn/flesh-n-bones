@@ -127,11 +127,11 @@ class Campaign{
         }
         break;
       case 3:
-        while(player.soulsOwned != 0){
-          player.removeLastSoul();
-        }
+        player.addSoul();
+        player.addSoul();
         dialogueWindow.init(  ["This concludes the tutorial... for now...",
-                                "Refresh the page to try again! Thank you for playing!"
+                                "Continue to explore Feragolis or the endless Crystal Caverns!",
+                                "Or, refresh the page to try again! Thank you for playing!"
                               ],
                               [],
                               200, 100, 1250, 280, true);

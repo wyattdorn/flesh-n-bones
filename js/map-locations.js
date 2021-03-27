@@ -28,7 +28,7 @@ class MapLocations{
     this.list[3] = [3, "Groknag's Caves",     400, 150, false, ["#452301", "#303030", "#201000", "#003000"], imageLoader.caveIcon,    imageLoader.caveIcon,      "The mighty orc chief Groknag has ruled these caves for years."];
     this.list[4] = [4, "Feragolis",           500, 400, false, ["#441111", "#220505", "#442222", "#773300"], imageLoader.feragolisIcon,imageLoader.feragolisIcon, "Home of the fire golems. None who enter leave unburned."];
     this.list[5] = [5, "Den of Thieves",      900, 400, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.thievesIcon, imageLoader.thievesIcon,   "A band of cuthroats and thieves once lived here. They remain even beyond death."];
-    this.list[6] = [6, "Crystal Caverns",     410, 540, false, ["#002040", "#999999", "#404070", "#000000"], imageLoader.cavernIcon,  imageLoader.cavernIcon,    "The crystals found underground here have a strange influence on their surroundings."];
+    this.list[6] = [6, "Crystal Caverns",     410, 540, false, ["#002040", "#999999", "#404070", "#000000"], imageLoader.cavernIcon,  imageLoader.cavernIcon,    "Precious Malachite can be found underground, but mosters lurk!"];
     this.list[7] = [7, "Abandoned Hatchery",  250, 20,  false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.hatcheryIcon, imageLoader.hatcheryIcon,  "This place was aboned for good reason."];
     this.list[8] = [8, "Harpy's Eyrie",       820, 550, false, ["#006994", "#999999", "#404070", "#000000"], imageLoader.eyrieIcon, imageLoader.eyrieIcon,     "Even at the best of times, harpies are not pleasant."];
     this.list[9] = [9, "Screaming Portal",    1000, 50, false, ["#40a9ff", "#999999", "#404070", "#000000"], imageLoader.portalIcon,  imageLoader.portalIcon,    "Tortured screaming eminates from this portal witout end."];
@@ -53,8 +53,7 @@ class MapLocations{
 
     //Feragolis
     this.encounterList[4] = [4, [["Aglar", 2, 1, 7, 1, 7, 7, 7, 7, 7, 7, imageLoader.fireElementalImg]],
-                                [[/*three goblins*/], [/*some loot*/]],
-                                [[/*Boss goblin*/], [/*good loot*/]]];
+                                ];
 
     //Den of Thieves
     this.encounterList[5] = [5, [["Pete", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Rolf", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg], ["Jorg", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.thiefImg]],

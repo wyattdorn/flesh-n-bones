@@ -17,7 +17,7 @@ function generateHeads(){
 function generateBodies(){
   bodyList = [];
   bodyList.push(new Body(0, "No Body", 0, "Creature has no body.", false, imageLoader.soulImg, 0));
-  bodyList.push(new Body(1, "Old Body", 1, "Any old pile of bones can attack.",[5,0], imageLoader.oldBodyImg, 16));
+  bodyList.push(new Body(1, "Old Body", 1, "Any old pile of bones can attack.",[5,1], imageLoader.oldBodyImg, 16));
   bodyList.push(new Body(2, "Brittle Body", 3, "Brittle body grants the Heal skill.",[7,0], imageLoader.brittleBodyImg, 16));
   bodyList.push(new Body(3, "Big Body", 2, "Big body grant the Defend skill.",[4,0], imageLoader.bigBodyImg, 16));
   bodyList.push(new Body(4, "Wooly Body", 0, "Big body grants additional fortitude.",[5,3], imageLoader.woolyBodyImg, 16));

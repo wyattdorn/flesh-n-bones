@@ -298,6 +298,7 @@ function keyboardEvent(e) {
 ///////////////////////////////////////////////////////////////////////////////\
 function logMouseClick(e){
   console.log("***Mouse clicked***");
+  console.log(player.myCreatures[0].maxSpirit);
   var clickPosition = [];
 
   //get mouse location at time of click

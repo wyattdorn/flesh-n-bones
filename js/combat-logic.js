@@ -435,9 +435,15 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   endCombat(){
 
+
+
     this.activeCombat = false;
 
     myCombatScreen.updateScreen(1,1,1);
+
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
+    }
 
   }//end endCombat()
 
@@ -471,7 +477,6 @@ class CombatLogic{
           this.target = combatLogi.newAI.list[enemyCreatures[x].temperment][1](this.validTargets);
           masterSkillList[1].function(enemyCreatures[x], player.myCreatures[this.validTargets[this.target]]);
         }
-        console.log(this.validTargets.length);
       }
     }
     this.endEnemyTurn();
@@ -492,6 +497,10 @@ class CombatLogic{
   //  Player flees combat
   //////////////////////////////////////////////////////////////////////////////
   runAway(){
+
+    for(var x = 0; x < player.myCombatCreatures.length; x++){
+      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs ();
+    }
     //Disable button if expanded message bar is on screen
     if(myCombatScreen.drawExpandedMessageBar){
       return;

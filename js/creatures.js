@@ -46,12 +46,17 @@ class Creature {
       this.myBuffs[x] = 0;
     }
 
+
+
     //Search through all equippeditems to see if a buff exists
     for(let x = 0; x < 3; x++){
       if(masterInventoryList[x][this.myInventory[x]].buff){
         this.myBuffs[masterInventoryList[x][this.myInventory[x]].buff[0]] += masterInventoryList[x][this.myInventory[x]].buff[1];
       }
     }
+
+    console.log(this.myBuffs);
+
   }//end calculateBuffs()
 
 
@@ -361,14 +366,13 @@ class PlayerCharacter extends Creature{
   ////////////////////////////////////////////////////////////////////////////////
   applyAllBuffs(){
 
-    this.maxHP += this.myBuffs[0];
-    this.maxSpirit += this.myBuffs[1];
-    this.dexterity += this.myBuffs[2];
-    this.agility += this.myBuffs[3];
-    this.might += this.myBuffs[4];
-    this.fortitude += this.myBuffs[5];
-    this.intelligence += this.myBuffs[6];
-    this.wits += this.myBuffs[7];
+    this.calculateBuffs();
+
+    for(let x = 0; x < this.statProgress.length; x++){
+      this.myStats[x] += this.myBuffs[x];
+    }
+
+    this.updateStats();
 
     this.speed = Math.floor((this.dexterity * this.agility)/2);
     this.strength = Math.floor((this.might * this.fortitude)/2);
@@ -380,6 +384,10 @@ class PlayerCharacter extends Creature{
   // At the end of combat, remove all equipment buffs to the creature
   ////////////////////////////////////////////////////////////////////////////////
   removeAllBuffs(){
+
+    console.log("Removing all buffs from: " + this.name);
+
+    this.calculateBuffs();
 
     for(let x = 0; x < this.statProgress.length; x++){
       this.myStats[x] -= this.myBuffs[x];
@@ -403,7 +411,7 @@ class PlayerCharacter extends Creature{
         this.statProgress[x] += amount;
         console.log("yap");
       }
-      if(this.statProgress[x] > 10){
+      if(this.statProgress[x] >= 10){
         this.statProgress[x] -= 10;
         console.log(this.myStats[x]);
         this.myStats[x]++;
