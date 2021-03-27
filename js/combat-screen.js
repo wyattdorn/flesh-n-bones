@@ -315,7 +315,7 @@ class CombatScreen{
         ctx.fillStyle = "#fcc201";
       }
       ctx.fillText(player.myCreatures[player.myCombatCreatures[i]].name, 10, 30+(90*i));
-      ctx.fillText('Level: ' + player.myCreatures[player.myCombatCreatures[i]].level, 10, 65+(90*i));
+      ctx.fillText('Age: ' + player.myCreatures[player.myCombatCreatures[i]].age, 10, 65+(90*i));
       ctx.restore();
 
   }//end drawUnitInfo()

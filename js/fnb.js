@@ -114,7 +114,7 @@ function init(){
   ctx.fillStyle = "#cccccc";
   ctx.fillText("LOADING...", 600, 300);
 
-  //Define whetehr or not the game begins in the campaign
+  //Define whether or not the game begins in the campaign
   campaignMode = false;
 
   //If we are in campaign mode, disable all console.log calls

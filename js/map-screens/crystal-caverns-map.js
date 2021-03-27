@@ -4,6 +4,9 @@ class CrystalCavernsMap{
 
   constructor(context, canvas){
 
+      //Count the number of times the Player has visited the caves
+      this.visits = 0;
+
       this.ctx = context;
       this.canvas = canvas;
 
@@ -14,6 +17,9 @@ class CrystalCavernsMap{
   }//end constructor()
 
   init(){
+
+    //Itterate the visits counter
+    this.visits++;
 
     this.treasuresCollected = 0;
 
@@ -47,6 +53,22 @@ class CrystalCavernsMap{
 
 
   }//end init()
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Upon leaving the caves monters reappear, making the location hostile again
+  //////////////////////////////////////////////////////////////////////////////
+  resetCavernMonsters(){
+
+    console.log("RESET CAVES");
+
+    player.locationProgress[6] = 1;
+    mapLocations.list[6][4] = false;
+
+    //Crystal Caverns
+    mapLocations.encounterList[6] = [6, [["Zipp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg], ["Zopp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.blueMonsterImg]],
+                                        [["Zapp", 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, imageLoader.skullKnightImg]] ];
+
+  }//end resetCavernMonsters()
 
   //////////////////////////////////////////////////////////////////////////////
   //  Redarwes map every time a graphical event occurs
@@ -292,7 +314,9 @@ class CrystalCavernsMap{
     if(this.currentLocation[0] == this.initialLocation[0] && this.currentLocation[1] == this.initialLocation[1]){
       setGameMode(5);
       player.malachite += crystalCavernsMap.treasuresCollected*10;
-      dialogueWindow.init(    ["You exit the caves with " + crystalCavernsMap.treasuresCollected*10 + " malachite collected!"],
+      this.resetCavernMonsters();
+      dialogueWindow.init(    ["You exit the caves with " + crystalCavernsMap.treasuresCollected*10 + " malachite collected!",
+                              "However, exploring the caves has unearthed new enemies and this location is hostile again."],
                               [null],
                               200, 100, 1250, 280, false);
     }

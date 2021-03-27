@@ -8,7 +8,7 @@ class WorldMap{
       this.canvas = canvas;
 
       //Boolean to enable/disable world map travel
-      this.travelEnabled = false;
+      this.travelEnabled = !campaignMode;
 
       //WHere on the map the camera is currently looking
       //By default, we start at the top left of the map (0,0)

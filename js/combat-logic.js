@@ -21,6 +21,8 @@ class CombatLogic{
 
   init(){
 
+    this.increasedStats = [];
+
     //This value will be stored in order to update the Player's progress if combat is won
     this.combatLocation = 0;
 
@@ -142,11 +144,21 @@ class CombatLogic{
       if(x > 10){this.xOffset = 300; this.yOffset = -360;}
     }
 
+    for(let x = 0; x < this.increasedStats.length; x++){
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(this.startLocation[0] + 620 , this.startLocation[1] + (50 * x), 252, 32);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(this.startLocation[0]+622, this.startLocation[1]+2 + (50 * x), 248, 28);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "13px Courier";
+      ctx.fillText(this.increasedStats[x], this.startLocation[0] + 625, this.startLocation[1] + 16 + (50 * x));
+    }
+
     //Add the loot to the player's inventory
     this.giveDroppedItems();
 
     ctx.restore();
-  }//end drawDroppedItemScreen()
+  }//end drawDroppedItemWindow()
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -263,15 +275,9 @@ class CombatLogic{
   //////////////////////////////////////////////////////////////////////////////
   executeSkill(target){
     if(player.myCreatures[ player.myCombatCreatures[this.waitingFunction[0]] ].currentSpirit >= masterSkillList[this.waitingFunction[1]].cost){
-      console.log(masterSkillList[this.waitingFunction[1]]);
       masterSkillList[this.waitingFunction[1]].function(player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]], target);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].learnSkill(this.waitingFunction[1]);
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].hasAction = false;
-      //this.update();
-      /*
-      if(this.checkCreatureStatuses()){
-        myCombatScreen.updateScreen(1,0,1);
-      }*/
       player.myCreatures[player.myCombatCreatures[this.waitingFunction[0]]].removeSpirit(masterSkillList[this.waitingFunction[1]].cost);
 
     }
@@ -300,8 +306,6 @@ class CombatLogic{
         this.selectedAlly = unitNum;
         console.log("Selected unit number: " + unitNum + ", Name: " + player.myCreatures[player.myCombatCreatures[unitNum]].name);
       }
-      //this.update();
-      //myCombatScreen.updateScreen(1,1,0);
     }
   }// end selectFriendlyUnit()
 
@@ -382,11 +386,18 @@ class CombatLogic{
       this.toggleCombatLog();
 
       myCombatScreen.updateScreen(1,1,1);
+
+      //Check if the Player won
       if(this.checkforCombatEnd()[1]){
         setTimeout(function() {
+          combatLogi.giveEquipmentBonuses();
           combatLogi.drawDroppedItemWindow();
         }, 100);
 
+        //Each friendly unit has their age increased by 1 for each combat won
+        for(let x = 0; x < player.myCombatCreatures.length; x++){
+          player.myCreatures[player.myCombatCreatures[x]].ageUp();
+        }
       }
       this.endCombat();
       return;
@@ -397,6 +408,29 @@ class CombatLogic{
   }//end update()
 
   //////////////////////////////////////////////////////////////////////////////
+  // At the end of combat, give each friendly unit their deserved stat bonuses from their equipment
+  //////////////////////////////////////////////////////////////////////////////
+  giveEquipmentBonuses(){
+
+    for(let x = 0; x < player.myCombatCreatures.length; x++){
+        for(let y = 0; y < 4; y++){
+          //check that the each organ provides stats
+          //console.log(masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]]);
+          if(masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]].buff){
+            console.log(masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]].buff);
+            if(player.myCreatures[player.myCombatCreatures[x]].progressStat(
+              masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]].buff[0],
+              masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]].buff[1] + 1)){
+                  this.increasedStats.push(player.myCreatures[player.myCombatCreatures[x]].name + ": +1 " + statList[masterInventoryList[y][player.myCreatures[player.myCombatCreatures[x]].myInventory[y]].buff[0]]);
+            }
+
+          }
+        }
+    }
+
+  }//end giveEquipmentBonuses()
+
+  //////////////////////////////////////////////////////////////////////////////
   //  Function is called when combat has ended for any reason
   //////////////////////////////////////////////////////////////////////////////
   endCombat(){
@@ -404,11 +438,6 @@ class CombatLogic{
     this.activeCombat = false;
 
     myCombatScreen.updateScreen(1,1,1);
-
-    //Remove equipment buffs from all friendly creatures
-    for(var x = 0; x < player.myCombatCreatures.length; x++){
-      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
-    }
 
   }//end endCombat()
 
@@ -473,11 +502,6 @@ class CombatLogic{
     console.log("Run away!");
 
     player.malachite -= this.malachiteLost;
-
-    //Remove equipment buffs from all friendly creatures
-    for(var x = 0; x < player.myCombatCreatures.length; x++){
-      player.myCreatures[player.myCombatCreatures[x]].removeAllBuffs();
-    }
 
     setGameMode(5);
 
@@ -639,6 +663,7 @@ class CombatLogic{
     if(this.activeCombat == false){
       console.log("COMBAT HAS COME TO AN END!!!!!!!!!!!!!!!");
       setGameMode(5);
+
     }
     //First, check if the click was in the Control Bar at the bottom of the screen
     else{

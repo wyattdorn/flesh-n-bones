@@ -16,7 +16,7 @@ function isWithinBounds(clickPositionX, clickPositionY, startX, startY, width, h
 
   return true;
 
-}
+}//end isWithinBounds()
 
 
 //////////////////////////////////////////////////////////////////////////////

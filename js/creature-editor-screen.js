@@ -137,7 +137,7 @@ class CreatureEditorScreen{
         ctx.fillStyle = "#fcc201";
       }
       ctx.fillText(player.myCreatures[this.creatureScrollIndex + i].name, 10, 60+(90*i));
-      ctx.fillText('Level: ' + player.myCreatures[this.creatureScrollIndex + i].level, 10, 95+(90*i));
+      ctx.fillText('Age: ' + player.myCreatures[this.creatureScrollIndex + i].age, 10, 95+(90*i));
 
       //If the Creature has a body, draw an "B" to indicate it
       if(player.myCreatures[this.creatureScrollIndex + i].myBody != 0){
@@ -581,7 +581,7 @@ class CreatureEditorScreen{
     ctx.fillStyle = "#cccccc";
     ctx.fillText(player.myCreatures[this.selectedCreature].name, this.statBlockStart[0] + 10, this.statBlockStart[1] + 30);
     ctx.font = "20px Courier";
-    ctx.fillText("Level:        " + player.myCreatures[this.selectedCreature].level,        this.statBlockStart[0]+10, this.statBlockStart[1] + 55);
+    ctx.fillText("Age:          " + player.myCreatures[this.selectedCreature].age,        this.statBlockStart[0]+10, this.statBlockStart[1] + 55);
     ctx.fillText("HP:           " + (player.myCreatures[this.selectedCreature].maxHP + player.myCreatures[this.selectedCreature].myBuffs[0]),        this.statBlockStart[0]+10, this.statBlockStart[1] + 80);
     ctx.fillText("Spirit:       " + (player.myCreatures[this.selectedCreature].maxSpirit + player.myCreatures[this.selectedCreature].myBuffs[1]),    this.statBlockStart[0]+10, this.statBlockStart[1] + 105);
     ctx.fillText("Dexterity:    " + (player.myCreatures[this.selectedCreature].dexterity + player.myCreatures[this.selectedCreature].myBuffs[2]),    this.statBlockStart[0]+10, this.statBlockStart[1] + 130);

@@ -158,11 +158,11 @@ function createDummyCreatures(){
   player.myCreatures[0].generateDummyStats(10, 5, 3);
   */
   //player.myCreatures[0].currentHP = 3;
-  player.myCreatures[0].levelUp();
-  player.myCreatures[0].levelUp();
+  player.myCreatures[0].ageUp();
+  player.myCreatures[0].ageUp();
   player.myCreatures[0].equip(1, 0); //old bones
   player.myCreatures[0].equip(1, 1); //explosive guts
-  player.myCreatures[0].equip(0, 2); //no skin
+  player.myCreatures[0].equip(1, 2); //no head
   player.myCreatures[0].equip(1, 3);// items.itemList[1];
 
 
@@ -189,7 +189,7 @@ function createDummyCreatures(){
   */
   //player.myCreatures[2].currentHP = 1;
   //player.myCreatures[2].currentSpirit = 1;
-  player.myCreatures[2].levelUp();
+  player.myCreatures[2].ageUp();
   player.myCreatures[2].equip(3, 0);
   player.myCreatures[2].equip(2, 1);
   player.myCreatures[2].equip(1, 2);
@@ -200,7 +200,7 @@ function createDummyCreatures(){
   */
   //player.myCreatures[3].currentHP = 6;
   //player.myCreatures[3].currentSpirit = 5;
-  player.myCreatures[3].levelUp();
+  player.myCreatures[3].ageUp();
   player.myCreatures[3].equip(3, 0);
   player.myCreatures[3].equip(1, 1);
   player.myCreatures[3].equip(1, 2);

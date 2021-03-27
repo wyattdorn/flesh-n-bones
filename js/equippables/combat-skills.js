@@ -45,7 +45,7 @@ function generateCombatSkills(){
   masterSkillList.push(new Skill(1, skillAttack,        "Attack",        4,      "strength",     1.5,       0,      "Damage a single enemy.", 1));
   masterSkillList.push(new Skill(2, skillDefend,        "Defend",        3,      "strength",     1.2,       0,     "Give an ally a buff to their defense for asingle turn.", 10));
   masterSkillList.push(new Skill(3, skillHeal,          "Heal",          3,      "mind" ,        1.5,       3,     "Heal a single unit.", 10));
-  masterSkillList.push(new Skill(4, skillExplode,       "Explode",       7,      "level",        1.0,       1,    "Damage all creature on the field, including allies.", 10));
+  masterSkillList.push(new Skill(4, skillExplode,       "Explode",       7,      "age",          1.0,       1,    "Damage all creature on the field, including allies.", 10));
   masterSkillList.push(new Skill(5, skillScythe,        "Scythe",        6,      "speed",        1.0,       2,    "Damage all enemy creatures on the field.", 10));
   masterSkillList.push(new Skill(6, skillOrcSmash,      "Orc Smash",     4,      "strength",     3.0,       1,     "Damage an enemy and yourself for the same amount (avaialble to orcs only).", 10));
   masterSkillList.push(new Skill(7, skillSpiritDagger,  "Spirit Dagger", 4,      "mind",         2.0,       1,     "Expend spirit to damage a single enemy.", 10));
@@ -133,13 +133,13 @@ function skillAttack(creature, target){
 }//end skillAttack()
 
 //////////////////////////////////////////////////////////////////////////////
-//  Explode skill - Damages all units on field an amount equal to the level of the unit that used the skill.
+//  Explode skill - Damages all units on field an amount equal to the age of the unit that used the skill.
 //////////////////////////////////////////////////////////////////////////////
 function skillExplode(creature){
-  combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.level) + " damage to all creatures!");
+  combatLogi.displayMessage = (creature.name + " deals " + Math.floor(creature.age) + " damage to all creatures!");
   myCombatScreen.printMessageBar(combatLogi.displayMessage);
-  console.log(creature.name + " deals " + Math.floor(creature.level) + " damage to all creatures!");
-  damageAll(creature.level);
+  console.log(creature.name + " deals " + Math.floor(creature.age) + " damage to all creatures!");
+  damageAll(creature.age);
 }//end skillExplode()
 
 //////////////////////////////////////////////////////////////////////////////

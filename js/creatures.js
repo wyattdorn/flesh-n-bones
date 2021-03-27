@@ -2,16 +2,6 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Deprecated class
-////////////////////////////////////////////////////////////////////////////////
-class Soul{
-  constructor(name, temperment){
-    this.temperment = temperment;
-    this.name = name;
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
 // Creature is a generic class for all units (enemy and ally) in game.
 ////////////////////////////////////////////////////////////////////////////////
 class Creature {
@@ -19,7 +9,7 @@ class Creature {
   constructor(name, path) {
     this.name = name;
     this.imgSrc = path;
-    this.level = 0;
+    this.age = 0;
     this.dexterity = 10;
     this.agility = 10;
     this.might = 10;
@@ -62,48 +52,7 @@ class Creature {
         this.myBuffs[masterInventoryList[x][this.myInventory[x]].buff[0]] += masterInventoryList[x][this.myInventory[x]].buff[1];
       }
     }
-    //console.log(this.myBuffs);
   }//end calculateBuffs()
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // At the start of combat, apply all equipment buffs to the creature
-  ////////////////////////////////////////////////////////////////////////////////
-  applyAllBuffs(){
-
-    this.maxHP += this.myBuffs[0];
-    this.maxSpirit += this.myBuffs[1];
-    this.dexterity += this.myBuffs[2];
-    this.agility += this.myBuffs[3];
-    this.might += this.myBuffs[4];
-    this.fortitude += this.myBuffs[5];
-    this.intelligence += this.myBuffs[6];
-    this.wits += this.myBuffs[7];
-
-    this.speed = Math.floor((this.dexterity * this.agility)/2);
-    this.strength = Math.floor((this.might * this.fortitude)/2);
-    this.mind = Math.floor((this.intelligence * this.wits)/2);
-
-  }//end applyAllBuffs()
-
-  ////////////////////////////////////////////////////////////////////////////////
-  // At the end of combat, remove all equipment buffs to the creature
-  ////////////////////////////////////////////////////////////////////////////////
-  removeAllBuffs(){
-
-    this.maxHP -= this.myBuffs[0];
-    this.maxSpirit -= this.myBuffs[1];
-    this.dexterity -= this.myBuffs[2];
-    this.agility -= this.myBuffs[3];
-    this.might -= this.myBuffs[4];
-    this.fortitude -= this.myBuffs[5];
-    this.intelligence -= this.myBuffs[6];
-    this.wits -= this.myBuffs[7];
-
-    this.speed = Math.floor((this.dexterity * this.agility)/2);
-    this.strength = Math.floor((this.might * this.fortitude)/2);
-    this.mind = Math.floor((this.intelligence * this.wits)/2);
-
-  }//end removeAllBuffs()
 
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -300,11 +249,11 @@ class Creature {
   }//end canAct()
 
   ////////////////////////////////////////////////////////////////////////////////
-  // Increases this Creature's level by 1
+  // Increases this Creature's age by 1
   ////////////////////////////////////////////////////////////////////////////////
-  levelUp(){
-    this.level++;
-  }//end levelUp()
+  ageUp(){
+    this.age++;
+  }//end ageUp()
 
   ////////////////////////////////////////////////////////////////////////////////
   // Returns a boolean, if the given creature's HP is less than half
@@ -369,7 +318,7 @@ class PlayerCharacter extends Creature{
     this.name = myname;
     this.imgSrc = path;
     this.exp = 0;         //Starting experience for all PlayerCharacters is 0
-    this.level = stats[0];       //Starting level for all PlayerCharacters is 1
+    this.age = stats[0];       //Starting age for all PlayerCharacters is 1
     this.maxHP = stats[1];
     this.maxSpirit = stats[2];
     this.dexterity = stats[3];
@@ -378,9 +327,26 @@ class PlayerCharacter extends Creature{
     this.fortitude = stats[6];
     this.intelligence = stats[7];
     this.wits = stats[8];
+
+    this.myStats = [this.maxHP, this.maxSpirit, this.dexterity, this.agility, this.might, this.fortitude, this.intelligence, this.wits];
+
+    this.updateStats();
+
     this.speed = Math.floor((this.dexterity * this.agility)/2);
     this.strength = Math.floor((this.might * this.fortitude)/2);
     this.mind = Math.floor((this.intelligence * this.wits)/2);
+
+    this.hpProgress = 0;
+    this.spiritProgress = 0;
+    this.dexterityProgress = 0;
+    this.agilityProgress = 0;
+    this.mightProgress = 0;
+    this.fortitudeProgress = 0;
+    this.intelligenceProgress = 0;
+    this.witsProgress = 0;
+
+    this.statProgress = [this.hpProgress, this.spiritProgress, this.dexterityProgress, this.agilityProgress, this.mightProgress, this.fortitudeProgress, this.intelligenceProgress, this.witsProgress];
+
 
     //Calculate the (nonexistant) buffs to avoid stats appearing as NaN in the Creature Editor
     this.calculateBuffs();
@@ -389,6 +355,85 @@ class PlayerCharacter extends Creature{
 
     this.currentSpirit = this.maxSpirit; //spirit is mana
   }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // At the start of combat, apply all equipment buffs to the creature
+  ////////////////////////////////////////////////////////////////////////////////
+  applyAllBuffs(){
+
+    this.maxHP += this.myBuffs[0];
+    this.maxSpirit += this.myBuffs[1];
+    this.dexterity += this.myBuffs[2];
+    this.agility += this.myBuffs[3];
+    this.might += this.myBuffs[4];
+    this.fortitude += this.myBuffs[5];
+    this.intelligence += this.myBuffs[6];
+    this.wits += this.myBuffs[7];
+
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
+
+  }//end applyAllBuffs()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // At the end of combat, remove all equipment buffs to the creature
+  ////////////////////////////////////////////////////////////////////////////////
+  removeAllBuffs(){
+
+    for(let x = 0; x < this.statProgress.length; x++){
+      this.myStats[x] -= this.myBuffs[x];
+    }
+
+    this.updateStats();
+
+    this.speed = Math.floor((this.dexterity * this.agility)/2);
+    this.strength = Math.floor((this.might * this.fortitude)/2);
+    this.mind = Math.floor((this.intelligence * this.wits)/2);
+
+  }//end removeAllBuffs()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Add to the stat's progress and check if it eligigble for an increase
+  ////////////////////////////////////////////////////////////////////////////////
+  progressStat(stat, amount){
+
+    for(let x = 0; x < this.statProgress.length; x++){
+      if(x == stat){
+        this.statProgress[x] += amount;
+        console.log("yap");
+      }
+      if(this.statProgress[x] > 10){
+        this.statProgress[x] -= 10;
+        console.log(this.myStats[x]);
+        this.myStats[x]++;
+        this.updateStats();
+        return true;
+        console.log("Progressed stat #" + x);
+      }
+    }
+
+    return false;
+
+  }//end progressStat()
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Ensure that the myStats aray and the individuals stats retain the same values
+  ////////////////////////////////////////////////////////////////////////////////
+  updateStats(){
+
+    this.maxHP = this.myStats[0];
+    this.maxSpirit = this.myStats[1];
+    this.dexterity = this.myStats[2];
+    this.agility = this.myStats[3];
+    this.might = this.myStats[4];
+    this.fortitude = this.myStats[5];
+    this.intelligence = this.myStats[6];
+    this.wits = this.myStats[7];
+
+    this.myStats = [this.maxHP, this.maxSpirit, this.dexterity, this.agility, this.might, this.fortitude, this.intelligence, this.wits];
+
+  }//end updateStats()
 
   //For use in testing only.
   generateDummyStats(hp, mana, attackPower){
@@ -414,7 +459,7 @@ class EnemyCreature extends Creature{
     this.maxHP = stats[3];
     this.imgSrc = stats[11];
     this.exp = 0;
-    this.level = 1;
+    this.age = 1;
     this.dexterity = stats[5];
     this.agility = stats[6];
     this.might = stats[7];
