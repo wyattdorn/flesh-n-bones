@@ -6,15 +6,22 @@
 	</head>
 	<body onload = "init()" oncontextmenu="return false;">
 
-		<canvas id="canvas" width="900" height="900"><font color="white">ERROR: Canvas not supported.</font></canvas>
+		<div style="position:absolute; top:10px; left:10px; z-index:2">
+			<canvas id="canvas" width="900" height="900">
+				<font color="white">ERROR: Canvas not supported.</font>
+			</canvas>
+		</div>
+
 
 		<script src="js\fnb.js"></script>
+		<script src="js\diamond-square.js"></script>
 		<script src="js\seedrandom.js"></script>
 		<script src="js\creatures.js"></script>
 		<script src="js\shop-screen.js"></script>
 		<script src="js\shop-inventory.js"></script>
-		<script src="js\combat-screen.js"></script>
-		<script src="js\combat-logic.js"></script>
+		<script src="js\combat\combat-screen.js"></script>
+		<script src="js\combat\combat-logic.js"></script>
+		<script src="js\canvent\canvent.js"></script>
 		<script src="js\player.js"></script>
 		<script src="js\enemyAI.js"></script>
 		<script src="js\equippables\equippables.js"></script>

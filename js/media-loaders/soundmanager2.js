@@ -120,7 +120,7 @@ function SoundManager(smURL, smID) {
     to: null,               // position to end playback within a sound (msec), default = end
     type: null,             // MIME-like hint for file pattern / canPlay() tests, eg. audio/mp3
     usePolicyFile: false,   // enable crossdomain.xml request for audio on remote domains (for ID3/waveform access)
-    volume: 100             // self-explanatory. 0-100, the latter being the max.
+    volume: 0             // self-explanatory. 0-100, the latter being the max.
 
   };
 

@@ -20,6 +20,8 @@ class CombatScreen{
 
   init(isPlayerTurn, context, canvas, locationIndex){
 
+    this.buttonList = [];
+
     this.drawExpandedMessageBar = false;
 
     //Setting the dimentions of te gui assets in the Combat Screen
@@ -145,6 +147,80 @@ class CombatScreen{
 
   }//end updateScreen()
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  //  Generate all buttons to be drawn to screen
+  //////////////////////////////////////////////////////////////////////////////
+  generateButtons(){
+
+    let selectedAlly_ = player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]];
+
+    ctx.fillStyle = "#000000";
+
+    this.buttonList.push( {
+      name: "Toggle Combat Log",
+      text: "Combat Log",
+      textOffset: [30, 55],
+      fontSize: 25,
+      fontStyle: "Arial",
+      fontColor: "#ccc",
+      buttonColor: "#000000",
+      xPos: 20,
+      yPos: canvas.height - this.controlBarHeight + 20,
+      width: 200,
+      height: 100,
+      function: function a(){
+        //tbd
+      }
+    });
+
+    this.buttonList.push( {
+      name: "Equipped Item",
+
+      text: items[selectedAlly_.myItem].name,
+      textOffset: [10, 30],
+      fontSize: 20,
+      fontStyle: "Arial",
+      fontColor: "#ccc",
+
+      imgSrc: items[selectedAlly_.myItem].image,
+      imgSize: [35, 25],
+      imgOffset: [145, 10],
+
+      //multipleLines:
+
+      buttonColor: "#000000",
+      xPos: 20,
+      yPos: canvas.height - this.controlBarHeight + 130,
+      width: 200,
+      height: 100,
+      function: function a(){
+        //tbd
+      }
+    });
+
+    let btn;
+
+    //Itterate through each button, drawing them to screen
+    for(let x = 0; x < this.buttonList.length; x++){
+
+      btn = this.buttonList[x];
+
+      ctx.fillStyle = btn.buttonColor;
+      ctx.fillRect(btn.xPos, btn.yPos, btn.width, btn.height);
+
+      ctx.fillStyle = btn.fontColor;
+      ctx.font = btn.fontSize + "px " + btn.fontStyle;
+      ctx.fillText(btn.text, btn.xPos + btn.textOffset[0], btn.yPos + btn.textOffset[1]);
+
+      if(btn.imgSrc){
+        ctx.drawImage(btn.imgSrc, btn.xPos + btn.imgOffset[0], btn.yPos + btn.imgOffset[1], btn.imgSize[0], btn.imgSize[1]);
+      }
+
+    }
+
+  }//end generateButtons()
+
   //////////////////////////////////////////////////////////////////////////////
   //  Draws the buttons in the Control Bar. Called by drawControlBar().
   //////////////////////////////////////////////////////////////////////////////
@@ -153,8 +229,6 @@ class CombatScreen{
 
     //Draw the buttons in black
     ctx.fillStyle = "#000000";
-    ctx.fillRect(20, canvas.height - this.controlBarHeight + 20 , 200, 100);
-    ctx.fillRect(20, canvas.height - this.controlBarHeight + 130 , 200, 100);
     ctx.fillRect(245, canvas.height - this.controlBarHeight + 20 , 400, 100);
     ctx.fillRect(245, canvas.height - this.controlBarHeight + 130 , 400, 100);
     ctx.fillRect(655, canvas.height - this.controlBarHeight + 20 , 400, 100);
@@ -162,21 +236,16 @@ class CombatScreen{
     ctx.fillRect(1080, canvas.height - this.controlBarHeight + 20 , 100, 100);
     ctx.fillRect(1080, canvas.height - this.controlBarHeight + 130 , 100, 100);
 
-    //Draw text for buttons in white
-    ctx.fillStyle = "#cccccc";
-    ctx.font = "25px Arial";
-    ctx.fillText("Combat Log", 50, canvas.height - this.controlBarHeight + 75);
-
     //Display info for the selected Creature's equipped Item
     ctx.fillStyle = "#cccccc";
     ctx.font = "20px Arial";
-    ctx.fillText(items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].name, 30, canvas.height - this.controlBarHeight + 160);
+    //ctx.fillText(items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].name, 30, canvas.height - this.controlBarHeight + 160);
     //ctx.fillText(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][1], 30, canvas.height - this.controlBarHeight + 160);
     ctx.font = "15px Courier";
     drawMultipleLines(items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].description, 20, 20, 30, canvas.height - this.controlBarHeight + 180);
     //drawMultipleLines(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][3], 20, 20, 30, canvas.height - this.controlBarHeight + 180);
 
-    ctx.drawImage(items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].image, 175, canvas.height - this.controlBarHeight + 140, 35, 25);
+    //ctx.drawImage(items[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem].image, 175, canvas.height - this.controlBarHeight + 140, 35, 25);
     //ctx.drawImage(items.list[player.myCreatures[player.myCombatCreatures[combatLogi.selectedAlly]].myItem][5], 175, canvas.height - this.controlBarHeight + 140, 35, 25);
 
     //Print Skill text to the skill buttons
@@ -208,6 +277,8 @@ class CombatScreen{
     drawMultipleLines("END TURN", 4, 25, 1095, canvas.height - this.controlBarHeight + 65);
 
     ctx.fillText("RUN", 1105, canvas.height - this.controlBarHeight + 185);
+
+    this.generateButtons();
 
   }//end drawButtons()
 

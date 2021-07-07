@@ -39,11 +39,17 @@ var testRoom;
 var imageLoader, audioLoader;
 let mediaLoader;
 
+let rootCanvent;
+
+let drawBuffer = [];
+
 function init(){
+
+  diamondSquare();
 
   window.print = function(){};
 
-  gameVolume = 100;
+  gameVolume = 0;
 
   //Add event listener for key presses
   window.addEventListener('keydown',this.keyboardEvent,false);
@@ -81,6 +87,9 @@ function init(){
   crystalCavernsMap = new CrystalCavernsMap(ctx, canvas);
   mapLocations = new MapLocations();
   dialogueWindow = new DialogueWindow(ctx, canvas);
+
+  //Create a root canvent that will be the parent of all other canvents
+  rootCanvent = new Canvent([0,0], [canvas.width, canvas.height], "#000");
 
 
   //Boolean for tracking if there is an active dialogue box on screen
@@ -154,7 +163,6 @@ function init(){
   //////////////////////////////////////////////////////////////////////////////////////
   //    This block of code is for testing only and does not belong in the final game  //
   //////////////////////////////////////////////////////////////////////////////////////
-
 
 
 
@@ -326,7 +334,8 @@ function logMouseClick(e){
     creatureEditorScreen.creatuerEditorClickHandler(clickPosition.x,clickPosition.y);
     break;
   case 4:
-    playerScreen.playerScreenClickHandler(clickPosition.x,clickPosition.y);
+    rootCanvent.checkForClick([clickPosition.x,clickPosition.y]);
+    //playerScreen.playerScreenClickHandler(clickPosition.x,clickPosition.y);
     break;
   case 5:
     worldMap.worldMapClickHandler(clickPosition.x,clickPosition.y);

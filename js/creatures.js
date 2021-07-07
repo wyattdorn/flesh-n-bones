@@ -55,7 +55,7 @@ class Creature {
       }
     }
 
-    console.log(this.myBuffs);
+    //console.log(this.myBuffs);
 
   }//end calculateBuffs()
 
