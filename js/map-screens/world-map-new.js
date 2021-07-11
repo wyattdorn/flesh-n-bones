@@ -1,5 +1,5 @@
 //Written by Wyatt Dorn
-/*
+
 class WorldMap{
 
   constructor(context, canvas){
@@ -18,6 +18,10 @@ class WorldMap{
 
   init(){
 
+    rootCanvent.children = [];
+    this.worldMapCanvent = new Canvent([0,0], [this.canvas.width, this.canvas.height], "#222");
+    rootCanvent.addChild(this.worldMapCanvent);
+
     this.scrollButtonLocation = [975, 710];
 
     //By default, we set the Forgotten Temple to the highlighted location
@@ -33,11 +37,21 @@ class WorldMap{
 
     this.updateScreen();
 
+    this.generateMenuBar();
+    this.generateScrollButtons();
+
     //Have dialogue box appear 1/10th a second after the page loads
     setTimeout(function() {
-      console.log("what am I looking at? " + player.campaignProgress[0]);
+      //console.log("Campaign progress: " + player.campaignProgress[0]);
       campaign.list[player.campaignProgress[0]](player.campaignProgress[1]);
-    }, 100);
+
+
+      rootCanvent.addToDrawBuffer();
+
+      console.log(drawBuffer);
+
+      executeDrawBuffer();
+    }, /*was 100*/ 200);
 
   }//end init()
 
@@ -161,6 +175,118 @@ class WorldMap{
 
     ctx.restore();
   }//end drawMenuButton()
+
+  generateMenuBar(){
+
+    //White "border" area//
+    this.worldMapCanvent.addChild(this.menuBar = new Canvent([0, 700], [this.canvas.width, this.canvas.height - 700], "#ccc"));
+
+    //menu button//
+    this.menuBar.addChild(this.menuButton = new Canvent([1105, 5], [100, this.menuBar.height - 5], "#170342"));
+    this.menuButton.addChild(new TextBox([7, 40], "#ccc", 15, "CREATURE"));
+    this.menuButton.addChild(new TextBox([22, 60], "#ccc", 15, "EDITOR"));
+
+    //map info bar//
+    this.menuBar.addChild(this.infoBar = new Canvent([0, 5], [1100, this.menuBar.height - 5], "#170342"));
+    this.infoBar.addChild(new TextBox([10, 25], "#ccc", 25, mapLocations.list[this.highlightedLocation][1]));
+    this.infoBar.addChild(new TextBox([10, 45], "#ccc", 15, mapLocations.list[this.highlightedLocation][8]));
+    //Notify the Player whether the location is friendly or hostile
+    if(mapLocations.list[this.highlightedLocation][4]){
+      this.infoBar.addChild(new TextBox([10, 65], "#40a040", 15, "You're safe here, this location is friendly."));
+      this.infoBar.addChild(new TextBox([10, 65], "#ccc", 15, "You're safe here, this location is"));
+    }
+    else{
+      this.infoBar.addChild(new TextBox([10, 65], "#a04040", 15, "There may be monsters, this location is hostile."));
+      this.infoBar.addChild(new TextBox([10, 65], "#ccc", 15, "There may be monsters, this location is"));
+    }
+    //Notify the Player whether the location is or isn't in their sphere of influence
+    if(this.checkIfInInfluence(this.highlightedLocation)){
+      this.infoBar.addChild(new TextBox([10, 85], "#ccc", 15, "This location is within your Sphere of Influence."));
+    }
+    else{
+      this.infoBar.addChild(new TextBox([10, 85], "#ccc", 15, "This location is outside your Sphere of Influence."));
+    }
+
+
+  }//end generateMenuBar()
+
+  generateScrollButtons(){
+
+    //up arrow
+    this.menuBar.addChild(this.northArrow = new SpecialCanvent(
+        [1010, 10],
+        [50, 35],
+        function(){
+          ctx.fillStyle = "#ccc";
+          let localPosition = worldMap.northArrow.position;
+          ctx.beginPath();
+          ctx.moveTo(localPosition[0] + 25, localPosition[1]);
+          ctx.lineTo(localPosition[0] + 50, localPosition[1] + 35);
+          ctx.lineTo(localPosition[0], localPosition[1] + 35);
+          ctx.fill();
+
+        },
+        function(){worldMap.scrollIndex[1] += 100;}));
+
+      this.northArrow.addChild(new TextBox([20, 28], "black", 15, "N"));
+
+      //down arrow
+      this.menuBar.addChild(this.southArrow = new SpecialCanvent(
+          [1010, 60],
+          [50, 35],
+          function(){
+            ctx.fillStyle = "#ccc";
+            let localPosition = worldMap.southArrow.position;
+            ctx.beginPath();
+            ctx.moveTo(localPosition[0] + 25, localPosition[1] + 35);
+            ctx.lineTo(localPosition[0] + 50, localPosition[1]);
+            ctx.lineTo(localPosition[0], localPosition[1]);
+            ctx.fill();
+
+          },
+          function(){worldMap.scrollIndex[1] -= 100;}));
+
+        this.southArrow.addChild(new TextBox([20, 18], "black", 15, "S"));
+
+
+        //right arrow
+        this.menuBar.addChild(this.eastArrow = new SpecialCanvent(
+            [1065, 25],
+            [50, 35],
+            function(){
+              ctx.fillStyle = "#ccc";
+              let localPosition = worldMap.eastArrow.position;
+              ctx.beginPath();
+              ctx.moveTo(localPosition[0], localPosition[1]);
+              ctx.lineTo(localPosition[0], localPosition[1] + 55);
+              ctx.lineTo(localPosition[0] + 30, localPosition[1] + 27.5);
+              ctx.fill();
+
+            },
+            function(){worldMap.scrollIndex[0] += 100;}));
+
+          this.eastArrow.addChild(new TextBox([5, 32], "black", 15, "E"));
+
+          //left arrow
+          this.menuBar.addChild(this.westArrow = new SpecialCanvent(
+              [975, 25],
+              [50, 35],
+              function(){
+                ctx.fillStyle = "#ccc";
+                let localPosition = worldMap.westArrow.position;
+                ctx.beginPath();
+                ctx.moveTo(localPosition[0] + 30, localPosition[1]);
+                ctx.lineTo(localPosition[0] + 30, localPosition[1] + 55);
+                ctx.lineTo(localPosition[0], localPosition[1] + 27.5);
+                ctx.fill();
+
+              },
+              function(){worldMap.scrollIndex[0] -= 100;}));
+
+            this.westArrow.addChild(new TextBox([12, 32], "black", 15, "W"));
+
+  }//end generateScrollButtons()
+
 
   //////////////////////////////////////////////////////////////////////////////
   //  Writes the location of the currently selected location to the screen
@@ -440,4 +566,3 @@ class WorldMap{
   }//end worldMapClickHandler()
 
 }
-*/

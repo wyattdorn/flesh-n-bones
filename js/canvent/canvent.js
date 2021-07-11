@@ -6,13 +6,20 @@ class Canvent{
     this.backgroundColor = bgColor;
     this.children = [];
     this.function = func;
-
     this.priority = 'medium';
-
     this.width = this.size[0];
     this.height = this.size[1];
-
+    this.isVisible = true;
     this.opacity = 1;
+  }//end constructor()
+
+  setVisibility(isVisible){
+    if(isVisible === true || isVisible === false){
+      this.isVisible = isVisible;
+    }
+    else{
+      console.log(isVisible + " is not a valid option (true/false only).");
+    }
   }
 
 
@@ -75,8 +82,8 @@ class Canvent{
 
   addToDrawBuffer(){
 
-    if(this.priority = 'high'){
-      drawBuffer.unshift(this);
+    if(this.priority == 'high'){
+      priorityDrawBuffer.push(this);
     }
     else{
       drawBuffer.push(this);
@@ -121,10 +128,9 @@ class TextBox{
     this.children = [];
     this.fontSize = fontSize;
     this.font = "Arial";
-
     this.text = text;
-
-  }
+    this.isVisible = true;
+  }//end constructor()
 
 
   setFont(font){
@@ -151,8 +157,8 @@ class TextBox{
 
   addToDrawBuffer(){
 
-    if(this.priority = 'high'){
-      drawBuffer.unshift(this);
+    if(this.priority == 'high'){
+      priorityDrawBuffer.push(this);
     }
     else{
       drawBuffer.push(this);
@@ -167,6 +173,7 @@ class TextBox{
   }
 
   drawFromBuffer(){
+    console.log(this.text);
     ctx.font = this.fontSize + "px " + this.font;
     ctx.fillStyle = this.fontColor;
     ctx.fillText(this.text, this.position[0], this.position[1]);
@@ -184,11 +191,17 @@ class SpecialCanvent{
     this.size = size;
     this.width = this.size[0];
     this.height = this.size[1];
-
     this.function = func;
+    this.isVisible = true;
+  }//end constructor()
 
-    console.log(this.function);
-
+  setVisibility(isVisible){
+    if(isVisible === true || isVisible === false){
+      this.isVisible = isVisible;
+    }
+    else{
+      console.log(isVisible + " is not a valid option (true/false only).");
+    }
   }
 
   addInstructions(instructions){
@@ -233,8 +246,8 @@ class SpecialCanvent{
 
   addToDrawBuffer(){
 
-    if(this.priority = 'high'){
-      drawBuffer.unshift(this);
+    if(this.priority == 'high'){
+      priorityDrawBuffer.push(this);
     }
     else{
       drawBuffer.push(this);
@@ -249,7 +262,9 @@ class SpecialCanvent{
   }
 
   drawFromBuffer(){
+    ctx.save();
     this.instructions(this.position);
+    ctx.restore();
   }
 
 
@@ -258,8 +273,17 @@ class SpecialCanvent{
 
 
 function executeDrawBuffer(){
-  for(let x = drawBuffer.length - 1; x >= 0; x--){
+  for(let x = 0; x < drawBuffer.length; x++){
     drawBuffer[x].drawFromBuffer();
   }
+  for(let x = 0; x < priorityDrawBuffer.length; x++){
+    priorityDrawBuffer[x].drawFromBuffer();
+  }
+
+  /*
+  for(let x = drawBuffer.length - 1; x >= 0; x--){
+    drawBuffer[x].drawFromBuffer();
+  }*/
+  priorityDrawBuffer = [];
   drawBuffer = [];
 }

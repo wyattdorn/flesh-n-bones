@@ -42,6 +42,7 @@ let mediaLoader;
 let rootCanvent;
 
 let drawBuffer = [];
+let priorityDrawBuffer = [];
 
 function init(){
 
